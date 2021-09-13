@@ -1,0 +1,180 @@
+@media(max-width: 1800px) {
+    .siteHeader__btn--register {
+        margin-left: 3%;
+        margin-right: 2%;
+    }
+
+    .siteHeader__menu {
+        width: 600px;
+        padding: 0 30px;
+    }
+}
+
+@media(max-width: 1600px) {
+    .siteHeader__menu {
+        width: 400px;
+        height: 60px;
+    }
+
+    .siteHeader__menu__link {
+        font-size: 15px;
+    }
+
+    .siteHeader__btn {
+        width: 200px;
+        height: 60px;
+        font-size: 17px;
+    }
+}
+
+@media(max-width: 1400px) {
+    .footer__inner {
+        width: var(--siteWidth);
+    }
+
+    .clubCarousel__item__img {
+        width: 90px;
+    }
+
+    .siteHeader__logo__img {
+        width: 200px;
+    }
+}
+
+@media(max-width: 1200px) {
+    .footer__col__header {
+        font-size: 18px;
+    }
+
+    .footer__col__list__item {
+        font-size: 14px;
+    }
+
+    .footer__col:first-of-type {
+        width: 200px;
+    }
+
+    .footer__contactItem .footer__col__list__item__link {
+        left: 40px;
+    }
+
+    .footer__col__socialMediaLink {
+        margin: 0 10px;
+    }
+
+    .siteHeader__logo__img {
+        width: 120px;
+    }
+
+    .siteHeader__menu {
+        width: 320px;
+        padding: 0 20px;
+    }
+
+    .siteHeader__btn {
+        width: 100px;
+        font-size: 15px;
+    }
+
+    .loginBox {
+        width: 250px;
+        padding: 20px;
+    }
+
+    .loginBox__form label, .loginBox__form .input {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .loginBox__form .input::placeholder,
+    .loginBox__passwordRemindLink, .loginBox__or
+    {
+        font-size: 14px;
+    }
+
+    .loginBox__form label {
+        margin-bottom: 10px;
+    }
+
+    .button--submit {
+        font-size: 17px;
+    }
+
+    .button--facebook, .button--google {
+        font-size: 12px;
+    }
+
+    .button--facebook__img, .button--google__img {
+        margin-right: 5%;
+    }
+
+    .loginBox::before {
+        right: 15%;
+    }
+}
+
+@media(max-width: 996px) {
+    .clubCarousel__item__img {
+        width: 60px;
+    }
+
+    .clubCarousel {
+        height: 180px;
+    }
+
+    .clubCarousel__header {
+        font-size: 15px;
+    }
+}
+
+@media(max-width: 768px) {
+    .d-mobile {
+        display: block;
+    }
+
+    .d-desktop {
+        display: none;
+    }
+
+    .footer__inner {
+        flex-direction: column;
+    }
+
+    .footer__inner .footer__col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .footer__col__header {
+        margin-bottom: 0;
+    }
+
+    .footer__col__list__item {
+        text-align: center;
+    }
+
+    .footer__col:last-of-type {
+        order: 1;
+    }
+
+    .footer__col:first-of-type {
+        order: 2;
+    }
+
+    .footer__col:nth-of-type(2) {
+        order: 3;
+    }
+
+    .footer__contactItem .footer__col__list__item__link {
+        position: relative;
+        left: 15px;
+    }
+}
+
+@media(max-width: 576px) {
+
+}
