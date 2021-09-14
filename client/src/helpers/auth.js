@@ -10,4 +10,16 @@ const loginUser = (email, password) => {
     });
 }
 
-export { loginUser }
+const loginFacebook = () => {
+    return axios.get(`${API_URL}/auth/facebook`, {
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
+    });
+}
+
+const loginGoogle = () => {
+    return axios.get(`${API_URL}/auth/google`);
+}
+
+export { loginUser, loginFacebook, loginGoogle }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import googleIcon from '../static/img/google.png'
 import facebookIcon from '../static/img/facebook.svg'
-import {loginUser} from "../helpers/auth";
+import {loginFacebook, loginGoogle, loginUser} from "../helpers/auth";
 
 const LoginBox = () => {
     const [email, setEmail] = useState("");
@@ -49,12 +49,12 @@ const LoginBox = () => {
             lub
         </span>
 
-        <button className="button button--facebook">
+        <button className="button button--facebook" onClick={() => { loginFacebook(); }}>
             <img className="button--facebook__img" src={facebookIcon} alt="facebook" />
             Continue with Facebook
         </button>
 
-        <button className="button button--google">
+        <button className="button button--google" onClick={() => { loginGoogle(); }}>
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
         </button>
