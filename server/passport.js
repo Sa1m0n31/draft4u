@@ -63,7 +63,7 @@ const init = (passport) => {
 
         db.query(query, values, (err, res) => {
             if(res) {
-                if(res.rows.length) done(null, res.rows[0]);
+                if(res.rows.length) done(null, res.rows[0].id);
             }
         });
     });

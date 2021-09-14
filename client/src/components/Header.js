@@ -3,7 +3,7 @@ import logo from '../static/img/logo.svg'
 import hamburger from '../static/img/hamburger.svg'
 import LoginBox from "./LoginBox";
 
-const Header = () => {
+const Header = ({loggedIn}) => {
     const [loginVisible, setLoginVisible] = useState(false);
 
     let loginBoxWrapper = useRef(null);
@@ -65,18 +65,20 @@ const Header = () => {
                 </ul>
             </menu>
 
-            <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
+            {loggedIn ? <section>
+
+            </section> : <><button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
                 Załóż konto
             </button>
-            <section className="loginBtnWrapper">
+                <section className="loginBtnWrapper">
                 <button className="siteHeader__btn siteHeader__btn--login" onClick={() => { toggleLogin(); }}>
-                    Logowanie
+                Logowanie
                 </button>
 
                 <section className="loginBoxWrapper" ref={loginBoxWrapper}>
-                    <LoginBox />
+                <LoginBox />
                 </section>
-            </section>
+                </section></>}
         </section>
     </header>
 }

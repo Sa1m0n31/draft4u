@@ -7,7 +7,7 @@ const Homepage = () => {
     return <div className="container container--homepage">
         <Header />
         <LandingPage />
-        <Footer />
+        <Footer theme="dark" />
     </div>
 }
 

@@ -7,15 +7,27 @@ import {loginFacebook, loginGoogle, loginUser} from "../helpers/auth";
 const LoginBox = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         loginUser(email, password)
             .then(res => {
-               console.log(res);
+               /* Login success */
+                window.location = "/rozpocznij";
+            })
+            .catch(err => {
+                /* Login failure */
+                setEmail("");
+                setPassword("");
+                setError(true);
             });
     }
+
+    useEffect(() => {
+        if(error) setError(false);
+    }, [email, password]);
 
     return <section className="loginBox">
         <form className="loginBox__form" onSubmit={(e) => { handleSubmit(e); }}>
@@ -28,8 +40,12 @@ const LoginBox = () => {
                        name="username" />
             </label>
             <label>
-                <input className="input"
-                       placeholder="Hasło"
+                {error ?
+                    <span className="loginBox__error">
+                    Niepoprawne dane logowania
+                </span> : ""}
+                <input className={!error ? "input" : "input input--error"}
+                       placeholder={!error ? "Hasło" : ""}
                        type="password"
                        value={password}
                        onChange={(e) => { setPassword(e.target.value); }}

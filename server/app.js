@@ -9,21 +9,31 @@ const passport = require("passport");
 const app = express();
 
 /* Middleware */
-app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(
     session({
         secret: "secretcode",
         resave: true,
-        saveUninitialized: true,
+        saveUninitialized: false,
+        cookie: { secure: false, expires: 1000 * 60 * 30 } /* Session expire in 30 minutes */
     })
 );
-app.use(cookieParser("secretcode"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+/* Check if user is logged in middleware */
+const isLoggedIn = (req, res, next) => {
+    if(req.user) next();
+    else res.redirect("/");
+}
+
 app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.get("/moje-konto", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 /* Routers */
 const authRouter = require("./routers/auth");

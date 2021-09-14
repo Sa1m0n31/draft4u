@@ -9,15 +9,30 @@ router.all('/', function(req, res, next) {
     next();
 });
 
+router.get("/auth", (request, response) => {
+    if(request.user) response.send({result: 1});
+    else response.send({result: 0});
+});
+
 router.post("/login",
-    passport.authenticate('local', { successRedirect: "/moje-konto",
-                                                    failureRedirect: "/"
-    })
+    passport.authenticate('local', { session: true }),
+    (request, response) => {
+        response.send({
+            result: 1
+        });
+    }
 );
 
-router.get("/facebook",
-    passport.authenticate('facebook')
-    );
+// router.get("/facebook",
+//     passport.authenticate('facebook')
+//     );
+
+router.get("/facebook", (request, response) => {
+   console.log("hi!");
+    console.log(request.user);
+    console.log(request.cookies);
+   console.log(request.session);
+});
 
 router.get("/google", passport.authenticate('google'));
 
