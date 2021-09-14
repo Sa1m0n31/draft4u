@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react'
 import logo from '../static/img/logo.svg'
 import hamburger from '../static/img/hamburger.svg'
 import LoginBox from "./LoginBox";
+import RegisterModal from "./RegisterModal";
 
 const Header = ({loggedIn}) => {
     const [loginVisible, setLoginVisible] = useState(false);
 
     let loginBoxWrapper = useRef(null);
+    let registerModal = useRef(null);
 
     const toggleLogin = () => {
         if(loginVisible) {
@@ -21,10 +23,14 @@ const Header = ({loggedIn}) => {
     }
 
     const openRegisterModal = () => {
-
+        registerModal.current.style.display = "block";
     }
 
     return <header className="siteHeader">
+        <section className="registerModal" ref={registerModal}>
+            <RegisterModal />
+        </section>
+
         <a className="siteHeader__logo" href="/">
             <img className="siteHeader__logo__img" src={logo} alt="draft4u" />
         </a>

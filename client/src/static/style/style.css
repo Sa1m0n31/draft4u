@@ -373,6 +373,14 @@ ul {
     position: relative;
 }
 
+.registerForm label {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    display: flex;
+    margin-bottom: 20px;
+}
+
 .loginBox__form .input {
     padding: 10px;
     border: 1px solid var(--grey);
@@ -482,4 +490,194 @@ ul {
 /* User starter page */
 .container--user {
     background: var(--light);
+}
+
+/* Register */
+.registerModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, .6);
+    z-index: 2;
+}
+
+.registerModal__inner {
+    width: 1200px;
+    height: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    background: #fff;
+    padding: 50px 70px;
+}
+
+.registerModal__closeBtn {
+    background: transparent;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    border: none;
+    outline: none;
+    z-index: 3;
+}
+
+.registerModal__closeBtn__img {
+    width: 100%;
+    height: auto;
+}
+
+.registerModal__header {
+    font-family: 'Oxanium', cursive;
+    font-size: 50px;
+    font-weight: 500;
+    color: rgba(194, 124, 59, .8);
+}
+
+.registerModal__img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.registerModal__step {
+    color: rgba(70, 70, 70, .8);
+    font-size: 24px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 30px;
+}
+
+.registerForm .input {
+    width: 100%;
+    height: 60px;
+    border: 1px solid var(--grey);
+    border-radius: 3px;
+    padding: 0 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    margin-bottom: 25px;
+}
+
+.registerForm .input::placeholder {
+    opacity: .4;
+}
+
+.registerForm label {
+    color: var(--grey);
+    font-size: 13px;
+}
+
+.registerForm--nextBtn {
+    width: 320px;
+    height: 60px;
+    display: block;
+    margin: 30px auto 15px;
+}
+
+.registerForm--nextBtn .registerForm--nextBtn__img {
+    width: 100%;
+    height: auto;
+}
+
+.registerForm__section {
+    width: 50%;
+}
+
+.label--checkBtn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.registerForm__checkBtn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--grey);
+    background: transparent;
+    border-radius: 3px;
+    margin-right: 15px;
+    flex-basis: 12%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerForm__checkBtn .registerModal__closeBtn__img {
+    width: 70%;
+}
+
+.registerForm__section--1 {
+    display: none;
+}
+
+.registerForm__flexFields {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registerForm__flexFields label {
+    width: 48%;
+}
+
+.registerForm__select {
+    width: 100%;
+    height: 60px;
+    font-family: 'Roboto', sans-serif;
+    color: rgba(70, 70, 70, .4);
+    font-size: 22px;
+    padding: 0 15px;
+    background: transparent;
+    text-align: left;
+    border: 1px solid var(--grey);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registerForm__select span {
+    color: #000000;
+}
+
+.registerForm__select__options {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+    z-index: 4;
+    background: #fff;
+    width: 100%;
+}
+
+.registerForm__select__option {
+    border-top: none;
+    color: #000;
+}
+
+.inputDateWrapper {
+    position: relative;
+}
+
+.input--date__overlay {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 15px;
+    top: 5%;
+    left: 0;
+    width: 50%;
+    height: 90%;
+    background: #fff;
+    z-index: 3;
+    color: rgba(70, 70, 70, .4);
+    font-size: 22px;
+    font-family: 'Roboto', sans-serif;
 }
