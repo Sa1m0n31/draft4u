@@ -39,6 +39,10 @@
     .siteHeader__logo__img {
         width: 200px;
     }
+
+    .registerModal__inner {
+        width: 90%;
+    }
 }
 
 @media(max-width: 1200px) {
@@ -111,6 +115,49 @@
     .loginBox::before {
         right: 15%;
     }
+
+    .registerForm label {
+        height: 40px;
+    }
+
+    .registerModal__inner {
+        height: 600px;
+    }
+
+    .registerModal__img {
+        width: 40%;
+    }
+
+    .registerForm .input {
+        height: 40px;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .sexFieldPlaceholder, .input--date__overlay {
+        font-size: 15px;
+    }
+
+    .inputDateWrapper, .registerForm__select {
+        height: 40px;
+    }
+
+    .registerForm .label--checkBtn {
+        font-size: 10px;
+    }
+
+    .triangleDownImg {
+        transform: scale(.7);
+    }
+
+    .label--checkBtn {
+        padding-left: 35px;
+    }
+
+    .registerForm__checkBtn {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 @media(max-width: 996px) {
@@ -125,6 +172,27 @@
     .clubCarousel__header {
         font-size: 15px;
     }
+
+    .registerModal__inner {
+        height: 550px;
+    }
+
+    .registerModal__header {
+        font-size: 32px;
+    }
+
+    .registerModal__step {
+        font-size: 17px;
+    }
+
+    .registerForm--nextBtn {
+        width: 220px;
+        height: auto;
+    }
+
+    .loginBox__error {
+        font-size: 12px;
+    }
 }
 
 @media(max-width: 768px) {
@@ -133,7 +201,7 @@
     }
 
     .d-desktop {
-        display: none;
+        display: none !important;
     }
 
     .footer__inner {

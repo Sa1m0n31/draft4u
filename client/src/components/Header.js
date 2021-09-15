@@ -16,18 +16,20 @@ const Header = ({loggedIn}) => {
             setLoginVisible(false);
         }
         else {
-            console.log(loginBoxWrapper);
             loginBoxWrapper.current.style.display = "block";
             setLoginVisible(true);
         }
     }
 
     const openRegisterModal = () => {
+        loginBoxWrapper.current.style.display = "none";
+        setLoginVisible(false);
+
         registerModal.current.style.display = "block";
     }
 
     return <header className="siteHeader">
-        <section className="registerModal" ref={registerModal}>
+        <section className="registerModal d-desktop" ref={registerModal}>
             <RegisterModal />
         </section>
 

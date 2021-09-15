@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import googleIcon from '../static/img/google.png'
 import facebookIcon from '../static/img/facebook.svg'
+import loginBtn from '../static/img/zaloguj-btn.png'
 import {loginFacebook, loginGoogle, loginUser} from "../helpers/auth";
 
 const LoginBox = () => {
@@ -18,6 +19,7 @@ const LoginBox = () => {
                 window.location = "/rozpocznij";
             })
             .catch(err => {
+                console.log(err);
                 /* Login failure */
                 setEmail("");
                 setPassword("");
@@ -29,7 +31,7 @@ const LoginBox = () => {
         if(error) setError(false);
     }, [email, password]);
 
-    return <section className="loginBox">
+    return <section className="loginBox d-desktop">
         <form className="loginBox__form" onSubmit={(e) => { handleSubmit(e); }}>
             <label>
                 <input className="input"
@@ -53,7 +55,7 @@ const LoginBox = () => {
             </label>
 
             <button className="button button--submit">
-                Zaloguj się
+                <img className="button--submit__img" src={loginBtn} alt="zaloguj-sie" />
             </button>
         </form>
 

@@ -29,4 +29,18 @@ const loginGoogle = () => {
     return axios.get(`${API_URL}/auth/google`);
 }
 
-export { isLoggedIn, loginUser, loginFacebook, loginGoogle }
+const registerUser = (email, password, firstName, lastName, sex, birthday, phoneNumber) => {
+    return axios.post(`${API_URL}/auth/register-local`, {
+        email, password, firstName, lastName, sex, birthday, phoneNumber
+    });
+}
+
+const verifyUser = (token) => {
+    return axios.get(`${API_URL}/auth/verification`, {
+        params: {
+            token
+        }
+    });
+}
+
+export { isLoggedIn, loginUser, loginFacebook, loginGoogle, registerUser, verifyUser }
