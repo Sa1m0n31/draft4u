@@ -11,7 +11,7 @@ import {isEmailAvailable} from "../helpers/user";
 import {registerUser} from "../helpers/auth";
 import Loader from "react-loader-spinner";
 
-const RegisterModal = () => {
+const RegisterModal = ({mobile}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -190,11 +190,11 @@ const RegisterModal = () => {
     }
 
     return <main className="registerModal__inner" ref={registerModal}>
-        <button className="registerModal__closeBtn" onClick={() => { closeModal(); }}>
+        <button className={mobile ? "d-none" : "registerModal__closeBtn"} onClick={() => { closeModal(); }}>
             <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" />
         </button>
 
-        <img className="registerModal__img" src={playerImg} alt="siatkarz" />
+        <img className={mobile ? "d-none" : "registerModal__img"} src={playerImg} alt="siatkarz" />
 
         <h3 className="registerModal__header">
             Rejestracja
@@ -251,7 +251,7 @@ const RegisterModal = () => {
 
             {/* STEP 2 */}
             <section className="registerForm__section registerForm__section--2" ref={formStep2}>
-                <span className="registerForm__flexFields">
+                <span className={mobile ? "registerForm__flexFields registerForm__flexFields--mobile" : "registerForm__flexFields"}>
                     <label>
                     {firstNameError !== "" ? <span className="loginBox__error">
                         {firstNameError}

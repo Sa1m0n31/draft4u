@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react'
 import googleIcon from '../static/img/google.png'
 import facebookIcon from '../static/img/facebook.svg'
 import loginBtn from '../static/img/zaloguj-btn.png'
-import {loginFacebook, loginGoogle, loginUser} from "../helpers/auth";
+import appleBtn from '../static/img/button-apple.png'
+import {loginApple, loginFacebook, loginGoogle, loginUser} from "../helpers/auth";
 
 const LoginBox = () => {
     const [email, setEmail] = useState("");
@@ -19,7 +20,6 @@ const LoginBox = () => {
                 window.location = "/rozpocznij";
             })
             .catch(err => {
-                console.log(err);
                 /* Login failure */
                 setEmail("");
                 setPassword("");
@@ -75,6 +75,10 @@ const LoginBox = () => {
         <button className="button button--google" onClick={() => { loginGoogle(); }}>
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
+        </button>
+        <button className="button button--apple" onClick={() => { loginApple(); }}>
+            <img className="button--apple__img" src={appleBtn} alt="apple" />
+            Continue with Apple
         </button>
     </section>
 }

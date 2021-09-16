@@ -348,6 +348,10 @@
     .clubCarousel__inner {
         width: 90%;
     }
+
+    .registerForm__select__option {
+        font-size: 15px;
+    }
 }
 
 @media(max-width: 576px) {
