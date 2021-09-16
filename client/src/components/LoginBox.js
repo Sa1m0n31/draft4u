@@ -59,7 +59,7 @@ const LoginBox = () => {
             </button>
         </form>
 
-        <a className="loginBox__passwordRemindLink" href="/przypomnienie-hasla">
+        <a className="loginBox__passwordRemindLink" href="/odzyskiwanie-hasla">
             Nie pamiętasz hasła?
         </a>
 

@@ -10,6 +10,8 @@ import MyAccountStart from "./pages/MyAccountStart";
 import AccountVerification from "./pages/AccountVerification";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import ResetPasswordEmailForm from "./pages/ResetPasswordEmailForm";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return <Router>
@@ -25,6 +27,12 @@ function App() {
     </Route>
     <Route path="/zaloz-konto">
         <RegisterPage />
+    </Route>
+    <Route path="/odzyskiwanie-hasla">
+        <ResetPasswordEmailForm />
+    </Route>
+    <Route path="/resetowanie-hasla">
+        <ResetPassword />
     </Route>
 
     {/* User routes */}

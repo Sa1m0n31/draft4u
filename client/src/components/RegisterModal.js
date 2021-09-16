@@ -9,7 +9,7 @@ import loginBtn from '../static/img/zaloguj-btn.png'
 import {isMail, isPasswordStrength} from "../helpers/validation";
 import {isEmailAvailable} from "../helpers/user";
 import {registerUser} from "../helpers/auth";
-import Loader from "react-loader-spinner";
+import DraftLoader from "./Loader";
 
 const RegisterModal = ({mobile}) => {
     const [email, setEmail] = useState("");
@@ -204,7 +204,7 @@ const RegisterModal = ({mobile}) => {
         </h4> : ""}
 
         {loading ? <div className="loaderWrapper--register">
-            <Loader type="ThreeDots" color="#D9AA66" height={80} width={80} />
+            <DraftLoader />
         </div> : (userRegistered === -1 ? <form className="registerForm">
             {/* STEP 1 */}
             <section className="registerForm__section registerForm__section--1" ref={formStep1}>

@@ -20,6 +20,7 @@
 }
 
 body {
+    background: var(--light);
     overflow-x: hidden;
 }
 
@@ -62,6 +63,10 @@ ul {
 
 .d-none {
     display: none !important;
+}
+
+.relative {
+    position: relative;
 }
 
 /* Header */
@@ -191,6 +196,10 @@ ul {
     margin: 20vh auto 30px;
     height: 240px;
     background: rgba(255, 255, 255, .7);
+}
+
+.page .clubCarousel {
+    margin-top: 5vh;
 }
 
 .clubCarousel__inner {
@@ -440,7 +449,7 @@ ul {
     text-align: center;
     font-family: 'Roboto', sans-serif;
     display: block;
-    margin: 15px auto;
+    margin: 25px auto 15px;
 }
 
 .loginBox__passwordRemindLink:hover {
@@ -853,7 +862,7 @@ ul {
     width: var(--siteWidth);
     margin: auto;
     padding: 0;
-    max-width: 350px;
+    max-width: 400px;
 }
 
 .loginMobile .loginBox::before {
@@ -885,7 +894,7 @@ ul {
     font-family: 'Oxanium', cursive;
     margin: 10px auto 20px;
     width: var(--siteWidth);
-    max-width: 350px;
+    max-width: 400px;
 }
 
 @media(min-width: 1200px) {
@@ -924,4 +933,94 @@ ul {
 
 .registerForm__flexFields--mobile label {
     width: 100%;
+}
+
+/* Password reset */
+.pageContent {
+    width: var(--siteWidth);
+    margin: auto;
+    padding: 50px 0;
+}
+
+.resetPassword {
+    width: clamp(300px, 90%, 1200px);
+    height: 500px;
+    background: #fff;
+    border-radius: 15px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4%;
+}
+
+.resetPassword__header {
+    color: var(--grey);
+    font-size: 21px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.button--resetPassword {
+    width: 300px;
+}
+
+.button--hover {
+    opacity: .9;
+}
+
+.button--hover:hover {
+    opacity: 1;
+}
+
+.resetPassword .input {
+    width: 500px;
+    height: 60px;
+    border: 1px solid var(--grey);
+    font-size: 18px;
+    padding: 0 10px;
+    margin: 50px 0;
+    max-width: 100%;
+}
+
+.resetPassword--newPassword .input {
+    margin: 15px 0;
+    width: 600px;
+}
+
+.loaderWrapper--remindPassword {
+    margin: 30px 0;
+}
+
+.resetPassword--newPassword .resetPassword__header {
+    margin-bottom: 30px;
+}
+
+.resetPassword--newPassword .button--resetPassword {
+    margin-top: 20px;
+}
+
+.resetPassword__flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 400px;
+}
+
+.resetPassword__flex .successImg {
+    width: 100px;
+    height: auto;
+    margin-right: 40px;
+}
+
+.resetPassword__flex .resetPassword__header {
+    margin-bottom: 10px;
+}
+
+.resetPassword__flex .button {
+    width: 350px;
+    height: 60px;
+    margin-top: 50px;
 }

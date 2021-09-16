@@ -193,6 +193,14 @@
     .loginBox__error {
         font-size: 12px;
     }
+
+    .resetPassword--newPassword label {
+        width: 90%;
+    }
+
+    .resetPassword--newPassword .input {
+        width: 100%;
+    }
 }
 
 @media(max-width: 768px) {
@@ -352,8 +360,35 @@
     .registerForm__select__option {
         font-size: 15px;
     }
+
+    .resetPassword__header {
+        font-size: 15px;
+    }
+
+    .label--remindPassword {
+        width: 80%;
+    }
+
+    .input--remindPassword {
+        width: 100%;
+    }
+
+    .button--resetPassword {
+        width: 80%;
+    }
+
+    .resetPassword .button--back {
+        width: 90%;
+    }
 }
 
 @media(max-width: 576px) {
+    .resetPassword .successImg {
+        width: 60px;
+    }
 
+    .resetPassword {
+        height: auto;
+        padding: 50px 4%;
+    }
 }
