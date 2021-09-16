@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import MyAccountStart from "./pages/MyAccountStart";
 import AccountVerification from "./pages/AccountVerification";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return <Router>
@@ -17,6 +19,12 @@ function App() {
     </Route>
     <Route path="/weryfikacja">
         <AccountVerification />
+    </Route>
+    <Route path="/logowanie">
+        <LoginPage />
+    </Route>
+    <Route path="/zaloz-konto">
+        <RegisterPage />
     </Route>
 
     {/* User routes */}

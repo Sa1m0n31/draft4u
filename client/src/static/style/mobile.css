@@ -204,6 +204,10 @@
         display: none !important;
     }
 
+    .footer {
+        bottom: -550px;
+    }
+
     .footer__inner {
         flex-direction: column;
     }
@@ -240,6 +244,109 @@
     .footer__contactItem .footer__col__list__item__link {
         position: relative;
         left: 15px;
+    }
+
+    .mobileMenu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        height: 100vh;
+        background: #474747;
+        z-index: 1000;
+        transform-origin: top right;
+        transform: scaleX(0);
+        transition: .5s all ease-in-out;
+    }
+
+    .mobileMenu > * {
+        opacity: 0;
+        transition: .5s all ease-in-out;
+    }
+
+    .mobileMenu__close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 20px;
+        height: auto;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+
+    .mobileMenu__close__img {
+        filter: brightness(0) invert(1);
+        width: 100%;
+    }
+
+    .mobileMenu__header {
+        text-align: center;
+        font-family: 'Oxanium', cursive;
+        font-weight: 500;
+        font-size: 30px;
+        color: #fff;
+        margin-top: 10vh;
+    }
+
+    .mobileMenu__list {
+        width: 80%;
+        margin: 30px auto;
+    }
+
+    .mobileMenu__list__item {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 2px solid var(--gold);
+    }
+
+    .mobileMenu__list__link {
+        color: rgba(212, 212, 212, .8);
+        font-size: 20px;
+    }
+
+    .mobileMenu__bottom {
+        position: absolute;
+        bottom: 5vh;
+        left: 10%;
+        width: 100%;
+    }
+
+    .mobileMenu__bottom__item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 75%;
+        margin: auto;
+    }
+
+    .mobileMenu__bottom__item {
+        margin-bottom: 25px;
+    }
+
+    .mobileMenu__bottom__link {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: rgba(212, 212, 212, 1);
+    }
+
+    .mobileMenu__bottom__img {
+        width: 35px;
+        height: auto;
+        margin-right: 25px;
+    }
+
+    .clubCarousel {
+        height: 140px;
+    }
+
+    .clubCarousel__header {
+        padding: 20px 0;
+    }
+
+    .clubCarousel__inner {
+        width: 90%;
     }
 }
 
