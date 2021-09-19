@@ -1,5 +1,5 @@
 const settings = {
-    API_URL: "http://localhost:5000"
+    API_URL: "https://drafcik.skylo-test1.pl"
 }
 
 export default settings;

@@ -1,15 +1,29 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const session = require('express-session');
-const passport = require("passport");
 
 const app = express();
 
+/* Redirect http to https */
+// app.enable('trust proxy');
+// app.use (function (req, res, next) {
+//     if (req.secure) {
+//         // request was via https, so do no special handling
+//         next();
+//     } else {
+//         // request was via http, so redirect to https
+//         res.redirect('https://' + req.headers.host + req.url);
+//     }
+// });
+
+
 /* Middleware */
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({
+    credentials: true,
+    origin: ['https://drafcik.skylo-test1.pl', 'http://drafcik.skylo-test1.pl']
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(
@@ -20,6 +34,7 @@ app.use(
         cookie: { secure: false, expires: 1000 * 60 * 30 } /* Session expire in 30 minutes */
     })
 );
+const passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -32,6 +47,24 @@ const isLoggedIn = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.get("/moje-konto", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/rozpocznij", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/logowanie", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/weryfikacja", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zaloz-konto", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/odzyskiwanie-hasla", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/resetowanie-hasla", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 

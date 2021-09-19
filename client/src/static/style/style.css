@@ -20,12 +20,19 @@
 }
 
 body {
-    background: var(--light);
+    position: relative;
+}
+
+html, body, .container {
     overflow-x: hidden;
 }
 
+body {
+    background: var(--light);
+}
+
 .container {
-    position: relative;
+    /*position: relative;*/
 }
 
 .container--light {
@@ -149,32 +156,27 @@ ul {
     height: auto;
 }
 
-/* tmp */
-/*.body, .container, .root {*/
-/*    min-height: 100vh;*/
-/*}*/
-
 /* Homepage */
 .container--homepage::before,
 .container--homepage::after {
     content:  "";
     position: absolute;
-    width: 65%;
-    height: 170vh;
+    width: 75%;
+    height: 180vh;
     max-height: 2800px;
     z-index: -1;
 }
 
 .container--homepage::before {
     top: -30vh;
-    left: -10vw;
+    left: -15vw;
     background: var(--light);
     transform: skewX(-15deg);
 }
 
 .container--homepage::after {
     top: -30vh;
-    right: -12vw;
+    right: -22vw;
     background: var(--dark);
     transform: skewX(-15deg);
 }
@@ -230,11 +232,11 @@ ul {
 
 /* Footer */
 .footer {
-    position: absolute;
-    bottom: -300px;
-    left: 0;
+    /*position: absolute;*/
+    /*bottom: -300px;*/
+    /*left: 0;*/
     width: 100%;
-    padding: 40px 0;
+    padding: 50px 0;
 }
 
 .footer__inner {
@@ -733,6 +735,11 @@ ul {
 
 .inputDateWrapper {
     position: relative;
+    background: transparent;
+}
+
+.input--date {
+    background: #fff !important;
 }
 
 .input--date__overlay {
@@ -830,7 +837,7 @@ ul {
 /* Login mobile */
 .loginMobile {
     position: relative;
-    margin: auto;
+    margin: auto auto 30px auto;
 }
 
 .registerPage::after,
@@ -916,8 +923,8 @@ ul {
     background: transparent;
     border: none;
     box-shadow: none;
-    width: 100%;
-    padding: 0 5%;
+    width: var(--siteWidth);
+    padding: 0;
     margin: 30px auto 0;
     height: auto;
     max-width: 700px;

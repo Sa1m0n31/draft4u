@@ -50,7 +50,6 @@ const ResetPassword = () => {
             changeUserPassword(email, password)
                 .then(res => {
                     setLoading(false);
-                    console.log(res.data.result);
                     if(res?.data?.result) {
                         setSuccess(1);
                     }

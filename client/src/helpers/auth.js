@@ -8,25 +8,39 @@ const isLoggedIn = () => {
 }
 
 const loginUser = (email, password) => {
-    return axios.post(`http://localhost:5000/auth/login`, {
+    return axios.post(`${API_URL}/auth/login`, {
         username: email,
         password: password
     }, {
-        withCredentials: true
-    });
-}
-
-const loginFacebook = () => {
-    return axios.get(`${API_URL}/auth/facebook`, {
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
         },
         withCredentials: true
     });
 }
 
+const loginFacebook = () => {
+    return axios.post(`${API_URL}/auth/facebook`, {
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+        withCredentials: true
+    })
+        .then(res => {
+            console.log(res.data.result);
+        });
+}
+
 const loginGoogle = () => {
-    return axios.get(`${API_URL}/auth/google`);
+    return axios.get(`${API_URL}/auth/google`)
+        .then(res => {
+            console.log("hi");
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+            console.log("err");
+        })
 }
 
 const loginApple = () => {

@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const crypto = require("crypto");
+const cors = require("cors");
 const db = require("../database/db");
 const { v4: uuidv4 } = require('uuid');
 require('../passport')(passport);
 const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
+
+const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
+const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
 
 const sendVerificationEmail = (email, token, response) => {
     let transporter = nodemailer.createTransport(smtpTransport ({
@@ -28,7 +32,7 @@ const sendVerificationEmail = (email, token, response) => {
         subject: 'Zweryfikuj swoje konto w serwisie Draft4U',
         html: '<h2>Cieszymy się, że jesteś z nami!</h2> ' +
             '<p>W celu weryfikacji Twojego konta, kliknij w poniższy link: </p> ' +
-            `<a href="http://localhost:3000/weryfikacja?token=${token}">http://draft4u.skylo-test3.pl/weryfikacja?token=${token}</a>` +
+            `<a href="https://drafcik.skylo-test3.pl/weryfikacja?token=${token}">http://drafcik.skylo-test1.pl/weryfikacja?token=${token}</a>` +
             `<p>Pozdrawiamy</p>` +
             `<p>Zespół Draft4U</p>`
     }
@@ -84,6 +88,7 @@ router.get('/verification', (request, response) => {
 
 router.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 });
@@ -94,7 +99,7 @@ router.get("/auth", (request, response) => {
 });
 
 router.post("/login",
-    passport.authenticate('local', { session: true }),
+    passport.authenticate('local', { session: true }), cors(),
     (request, response) => {
         response.send({
             result: 1
@@ -102,9 +107,17 @@ router.post("/login",
     }
 );
 
-router.get("/facebook", passport.authenticate('facebook'));
+router.post("/facebook", cors(), passport.authenticate('facebook', {
+    failureRedirect: '/#!/info',
+    scope:['email']
+}), (request, response) => {
+    request.headers["access-control-allow-origin"] = "https://drafcik.skylo-test1.pl";
+    response.headers["access-control-allow-origin"] = "https://drafcik.skylo-test1.pl";
+});
 
-router.get("/google", passport.authenticate('google'));
+router.get("/google", cors(), (request, response) => {
+    response.redirect(`https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https%3A%2F%2Fdrafcik.skylo-test1.pl&scope=openid%20profile%20email&client_id=${GOOGLE_APP_ID}&flowName=GeneralOAuthFlow`);
+});
 
 router.post("/register-local", (request, response) => {
    const { email, password, firstName, lastName, sex, birthday, phoneNumber } = request.body;

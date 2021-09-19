@@ -169,7 +169,6 @@ const RegisterModal = ({mobile}) => {
             setLoading(true);
 
             /* REGISTER USER */
-            setTimeout(() => {
                 registerUser(
                     email, password,
                     firstName, lastName, sex,
@@ -184,7 +183,6 @@ const RegisterModal = ({mobile}) => {
                             setUserRegistered(-1);
                         }
                     });
-            }, 5000);
 
         }
     }

@@ -59,7 +59,7 @@ const sendPasswordRemindLink = (email, token, response) => {
         subject: 'Odzyskaj hasło do swojego konta',
         html: '<h2>Odzyskaj hasło do swojego konta</h2> ' +
             '<p>W celu odzyskania hasła do swojego konta w serwisie Draf4U, kliknij w poniższy link:</p> ' +
-            `<a href="http://localhost:3000/resetowanie-hasla?email=${email}&token=${token}">http://draft4u.skylo-test3.pl/resetowanie-hasla?token=${token}</a>` +
+            `<a href="https://drafcik.skylo-test1.pl/resetowanie-hasla?email=${email}&token=${token}">http://drafcik.skylo-test1.pl/resetowanie-hasla?token=${token}</a>` +
             `<p>Pozdrawiamy</p>` +
             `<p>Zespół Draft4U</p>`
     }

@@ -104,11 +104,11 @@
         font-size: 17px;
     }
 
-    .button--facebook, .button--google {
+    .button--facebook, .button--google, .button--apple {
         font-size: 12px;
     }
 
-    .button--facebook__img, .button--google__img {
+    .button--facebook__img, .button--google__img, .button--apple__img {
         margin-right: 5%;
     }
 
@@ -214,6 +214,7 @@
 
     .footer {
         bottom: -550px;
+        padding-bottom: 0;
     }
 
     .footer__inner {
@@ -310,12 +311,12 @@
 
     .mobileMenu__list__link {
         color: rgba(212, 212, 212, .8);
-        font-size: 20px;
+        font-size: 17px;
     }
 
     .mobileMenu__bottom {
         position: absolute;
-        bottom: 5vh;
+        bottom: 10vh;
         left: 10%;
         width: 100%;
     }
@@ -379,6 +380,16 @@
 
     .resetPassword .button--back {
         width: 90%;
+    }
+
+    .container--homepage::before,
+    .container--homepage::after
+    {
+        transform: skewX(-8deg);
+    }
+
+    .container--homepage::after {
+        right: -24vw;
     }
 }
 

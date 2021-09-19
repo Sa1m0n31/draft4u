@@ -1,12 +1,15 @@
 const db = require("./database/db");
 const express = require("express");
 const crypto = require('crypto');
+const cors = require('cors');
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const FACEBOOK_APP_ID = '398060821923746';
-const FACEBOOK_SECRET = 'c2a1d5e0a92e010b5547a739a010f0ce';
+// const FACEBOOK_APP_ID = '398060821923746';
+const FACEBOOK_APP_ID = '915512152656525';
+// const FACEBOOK_SECRET = 'c2a1d5e0a92e010b5547a739a010f0ce';
+const FACEBOOK_SECRET = '12d3f21bfc7fcdd96de536fb40779f15';
 
 const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
 const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
@@ -37,20 +40,20 @@ const init = (passport) => {
 
     }
 
-    const facebookAuth = (accessToken, refreshToken, profile, cb) => {
-        console.log(profile);
+    const facebookAuth = (accessToken, refreshToken, profile, done) => {
+        return done(null, profile);
     }
 
     passport.use(new LocalStrategy(userAuth));
     passport.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_SECRET,
-        callbackURL: "http://localhost:3000/moje-konto"
+        callbackURL: "https://drafcik.skylo-test1.pl"
     }, facebookAuth));
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_APP_ID,
         clientSecret: GOOGLE_SECRET,
-        callbackURL: "http://localhost:3000/moje-konto"
+        callbackURL: "https://drafcik.skylo-test1.pl"
     }, googleAuth));
 
     passport.serializeUser((user, done) => {
