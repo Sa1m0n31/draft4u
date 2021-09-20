@@ -403,3 +403,18 @@
         padding: 50px 4%;
     }
 }
+
+@media(-webkit-min-device-pixel-ratio: 1.2) {
+    .loginBox {
+        transform: translateY(95%) scale(.9);
+    }
+
+    .registerModal__inner {
+        transform-origin: top left;
+        transform: scale(.85) translate(-50%, -50%);
+    }
+
+    .container--homepage::before, .container--homepage::after {
+        height: 190vh;
+    }
+}

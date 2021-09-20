@@ -32,7 +32,7 @@ const sendVerificationEmail = (email, token, response) => {
         subject: 'Zweryfikuj swoje konto w serwisie Draft4U',
         html: '<h2>Cieszymy się, że jesteś z nami!</h2> ' +
             '<p>W celu weryfikacji Twojego konta, kliknij w poniższy link: </p> ' +
-            `<a href="https://drafcik.skylo-test3.pl/weryfikacja?token=${token}">http://drafcik.skylo-test1.pl/weryfikacja?token=${token}</a>` +
+            `<a href="https://drafcik.skylo-test1.pl/weryfikacja?token=${token}">http://drafcik.skylo-test1.pl/weryfikacja?token=${token}</a>` +
             `<p>Pozdrawiamy</p>` +
             `<p>Zespół Draft4U</p>`
     }
