@@ -159,7 +159,6 @@ router.post("/change-password", (request, response) => {
             });
         }
         else {
-            console.log(err);
             response.send({
                 result: 0
             })

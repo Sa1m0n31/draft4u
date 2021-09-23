@@ -12,6 +12,10 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ResetPasswordEmailForm from "./pages/ResetPasswordEmailForm";
 import ResetPassword from "./pages/ResetPassword";
+import AboutUs from "./pages/AboutUs";
+import Player from "./pages/Player";
+import Club from "./pages/Club";
+import Map from "./pages/Map";
 
 function App() {
   return <Router>
@@ -33,6 +37,18 @@ function App() {
     </Route>
     <Route path="/resetowanie-hasla">
         <ResetPassword />
+    </Route>
+    <Route path="/o-nas">
+        <AboutUs />
+    </Route>
+    <Route path="/zawodnik">
+        <Player />
+    </Route>
+    <Route path="/klub">
+        <Club />
+    </Route>
+    <Route path="/mapa">
+        <Map />
     </Route>
 
     {/* User routes */}

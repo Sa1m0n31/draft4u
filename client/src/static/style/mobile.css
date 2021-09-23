@@ -8,6 +8,14 @@
         width: 600px;
         padding: 0 30px;
     }
+
+    .aboutUs__profileWrapper {
+        right: 0;
+    }
+
+    .aboutUs__profileWrapper--background {
+        right: -250px;
+    }
 }
 
 @media(max-width: 1600px) {
@@ -24,6 +32,54 @@
         width: 200px;
         height: 60px;
         font-size: 17px;
+    }
+
+    .aboutUs__header {
+        font-size: 36px;
+    }
+
+    .aboutUs__captionWrapper {
+        width: 350px;
+    }
+
+    .aboutUs__subheader {
+        font-size: 18px;
+    }
+
+    .aboutUs__desc {
+        font-size: 15px;
+    }
+
+    .aboutUs__buttons {
+        padding-right: 0;
+    }
+
+    .aboutUs__btn {
+        width: 25px;
+    }
+
+    .aboutUs__content {
+        width: 48%;
+    }
+
+    .aboutUs__images {
+        width: 55%;
+    }
+
+    .player__option {
+        width: 31%;
+    }
+
+    .player__option__price {
+        font-size: 75px;
+    }
+
+    .faq__btn, .faq__question__header__h {
+        font-size: 25px;
+    }
+
+    .faq__question__header__btn {
+        font-size: 50px;
     }
 }
 
@@ -158,6 +214,50 @@
         width: 20px;
         height: 20px;
     }
+
+    .aboutUs__captionWrapper {
+        width: 250px;
+    }
+
+    .aboutUs__content {
+        width: 45%;
+    }
+
+    .aboutUs__header {
+        font-size: 26px;
+    }
+
+    .aboutUs__content {
+        padding-bottom: 50px;
+    }
+
+    .player {
+        width: var(--siteWidth);
+    }
+
+    .player__flex--options {
+        margin: 30px 0;
+    }
+
+    .player__option__name {
+        font-size: 21px;
+    }
+
+    .player__option__price {
+        font-size: 70px;
+    }
+
+    .player__option__currency {
+        font-size: 25px;
+    }
+
+    .faq__btn, .faq__question__header__h {
+        font-size: 17px;
+    }
+
+    .faq__question__header__btn {
+        font-size: 30px;
+    }
 }
 
 @media(max-width: 996px) {
@@ -201,6 +301,50 @@
     .resetPassword--newPassword .input {
         width: 100%;
     }
+
+    .aboutUs__main {
+        width: var(--siteWidth);
+    }
+
+    .aboutUs__content {
+        width: 30%;
+    }
+
+    .aboutUs__images {
+        width: 70%;
+    }
+
+    .player__flex__imgWrapper {
+        width: 55%;
+    }
+
+    .tmpWrapper {
+        width: 45%;
+    }
+
+    .player__header {
+        font-size: 25px;
+    }
+
+    .player__flex__text {
+        font-size: 15px;
+    }
+
+    .player__step__header {
+        font-size: 17px;
+    }
+
+    .player__option__price {
+        font-size: 50px;
+    }
+
+    .player__option__currency {
+        font-size: 17px;
+    }
+
+    .faq__header {
+        padding: 0 20px;
+    }
 }
 
 @media(max-width: 768px) {
@@ -213,7 +357,7 @@
     }
 
     .footer {
-        bottom: -550px;
+        /*bottom: -550px;*/
         padding-bottom: 0;
     }
 
@@ -391,6 +535,180 @@
     .container--homepage::after {
         right: -24vw;
     }
+
+    .aboutUs__main {
+        flex-direction: column;
+        border-bottom: 5px solid #F1E9DA;
+    }
+
+    .aboutUs__main > * {
+        width: 100% !important;
+        max-width: 500px;
+    }
+
+    .aboutUs__images {
+        order: 1;
+    }
+
+    .aboutUs__content {
+        order: 2;
+        margin-top: 50px;
+        padding-bottom: 0;
+    }
+
+    .aboutUs__profileWrapper {
+        transform: none;
+    }
+
+    .aboutUs::after {
+        display: none;
+    }
+
+    .aboutUs__main {
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .aboutUs__header--mobile {
+        margin-bottom: 150px;
+    }
+
+    .aboutUs__profileWrapper {
+        transform: scale(1.9) translateX(10%);
+    }
+
+    .aboutUs__profileWrapper--background {
+        transform: scale(1.4) translateX(0);
+        filter: brightness(.4) opacity(.5);
+    }
+
+    .aboutUs__captionWrapper {
+        margin: 0 auto 40px;
+        width: 100vw;
+        transform: translateX(-5vw);
+        position: relative;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .aboutUs__caption {
+        width: 80%;
+        max-width: 400px;
+    }
+
+    .aboutUs__captionWrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -40%);
+        width: 100%;
+        height: 550px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.75) 35%, rgba(255,255,255,1) 100%);
+        z-index: -1;
+    }
+
+    .aboutUs__subheader, .aboutUs__desc {
+        position: relative;
+        z-index: 6;
+    }
+
+    .footer--light--mobile {
+        background: var(--light);
+    }
+
+    .footer--light--mobile .footer__col__header {
+        color: var(--goldDark);
+    }
+
+    .footer--light--mobile .footer__col__list__item {
+        color: #000;
+    }
+
+    .footer--light--mobile .footer__col__list__item__link:hover {
+        color: var(--goldDark);
+    }
+
+    .player__section, .player__flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .player__flex > *,
+    .player__section > * {
+        width: 100%;
+    }
+
+    .player__flex__imgWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 50px 0 30px;
+    }
+
+    .player__section--1 .player__flex__imgWrapper {
+        order: 2;
+    }
+
+    .player__section--1 .player__flex__content {
+        order: 1;
+    }
+
+    .player__flex--section {
+        margin: 50px 0;
+    }
+
+    .player__step {
+        margin-bottom: 30px;
+    }
+
+    .player__step__imgWrapper {
+        width: 70vw;
+        height: 70vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .player__option {
+        max-width: 350px;
+        margin-bottom: 25px;
+    }
+
+    .player__option__header {
+        font-size: 24px;
+    }
+
+    .player__option__price {
+        font-size: 90px;
+    }
+
+    .player__option__currency {
+        font-size: 30px;
+    }
+
+    .faq__header {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .faq__header__divider {
+        display: none;
+    }
+
+    .faq__btn {
+        margin: 5px 0;
+        height: 50px;
+    }
+
+    .faq__btn--current::after {
+        height: 5px;
+    }
+
+    .faq__question__header {
+        padding: 0 5%;
+    }
 }
 
 @media(max-width: 576px) {
@@ -401,6 +719,18 @@
     .resetPassword {
         height: auto;
         padding: 50px 4%;
+    }
+}
+
+@media(max-width: 400px) {
+    .aboutUs__header {
+        margin-bottom: 130px;
+    }
+}
+
+@media(max-width: 350px) {
+    .aboutUs__header {
+        font-size: 21px;
     }
 }
 
@@ -416,5 +746,11 @@
 
     .container--homepage::before, .container--homepage::after {
         height: 190vh;
+    }
+}
+
+@media(min-height: 1300px) {
+    .aboutUs__main {
+        padding: 150px 0 120px;
     }
 }

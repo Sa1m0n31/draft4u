@@ -22,7 +22,7 @@ const app = express();
 /* Middleware */
 app.use(cors({
     credentials: true,
-    origin: ['https://drafcik.skylo-test1.pl', 'http://drafcik.skylo-test1.pl']
+    origin: ['https://drafcik.skylo-test1.pl', 'http://drafcik.skylo-test1.pl', 'http://localhost:3000']
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

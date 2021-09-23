@@ -14,9 +14,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/MapContent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/PlayerFAQ.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/AboutUs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Club.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Map.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Player.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/bartek-napis.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/bartek-zdjecie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/btn-cta.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/buy-now.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/logo-dark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/michal-napis.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/michal-zdjecie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/poland.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/register-btn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/right-arrow.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/telefon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/tmpheader.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/clubs/zaksa.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +71,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hideisland" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/media/clubs" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\media\clubs" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\static\img" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\routers" />
     </key>
@@ -76,6 +104,7 @@
       <workItem from="1632052440052" duration="10380000" />
       <workItem from="1632123487439" duration="19000" />
       <workItem from="1632124512473" duration="1580000" />
+      <workItem from="1632384426487" duration="22947000" />
     </task>
     <servers />
   </component>
@@ -115,13 +144,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1632124525113" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1631543753889">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1632401876645">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1631543753889" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1632083865349">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1632401876645" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1632410658913">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1632083865349" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1632410658913" />
   </component>
 </project>

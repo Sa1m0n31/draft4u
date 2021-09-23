@@ -4,8 +4,8 @@ import fbIcon from '../static/img/facebook.svg'
 import instaIcon from '../static/img/instagram.svg'
 import ytIcon from '../static/img/youtube.svg'
 
-const Footer = ({theme}) => {
-    return <footer className={theme === "dark" ? "footer footer--dark" : "footer footer--light"}>
+const Footer = ({theme, border}) => {
+    return <footer id={border ? "footerBorder" : ""} className={theme === "dark" ? "footer footer--dark" : (theme === "light" ? "footer footer--light" : "footer footer--dark footer--light--mobile")}>
         <div className="footer__inner">
             <section className="footer__col">
                 <h4 className="footer__col__header">

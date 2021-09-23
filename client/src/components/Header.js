@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import logo from '../static/img/logo.svg'
+import logoDark from '../static/img/logo-dark.png'
 import closeIcon from '../static/img/close-grey.svg'
 import hamburger from '../static/img/hamburger.svg'
 import LoginBox from "./LoginBox";
@@ -7,7 +8,7 @@ import RegisterModal from "./RegisterModal";
 import loginIcon from '../static/img/log-in.svg'
 import registerIcon from '../static/img/register.svg'
 
-const Header = ({loggedIn, menu}) => {
+const Header = ({loggedIn, menu, theme, clubPage}) => {
     const [loginVisible, setLoginVisible] = useState(false);
 
     let loginBoxWrapper = useRef(null);
@@ -57,7 +58,7 @@ const Header = ({loggedIn, menu}) => {
         }, 500);
     }
 
-    return <header className="siteHeader">
+    return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>
                 <img className="mobileMenu__close__img" src={closeIcon} alt="zamknij" />
@@ -106,7 +107,7 @@ const Header = ({loggedIn, menu}) => {
         </section>
 
         <a className="siteHeader__logo" href="/">
-            <img className="siteHeader__logo__img" src={logo} alt="draft4u" />
+            <img className="siteHeader__logo__img" src={theme === "dark" ? logoDark : logo} alt="draft4u" />
         </a>
 
         {/* Mobile menu */}
@@ -115,7 +116,7 @@ const Header = ({loggedIn, menu}) => {
         </button>
 
         <section className="siteHeader__content d-desktop">
-            <menu className="siteHeader__menu">
+            <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark" : "siteHeader__menu"}>
                 <ul className="siteHeader__menu__list">
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/">
@@ -147,11 +148,12 @@ const Header = ({loggedIn, menu}) => {
 
             {loggedIn ? <section>
 
-            </section> : <><button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
-                Załóż konto
-            </button>
-                <section className="loginBtnWrapper">
-                <button className="siteHeader__btn siteHeader__btn--login" onClick={() => { toggleLogin(); }}>
+            </section> : <>
+                {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
+                    Załóż konto
+                </button> : ""}
+                <section className={!clubPage ? "loginBtnWrapper" : "loginBtnWrapper loginBtnWrapper--clubPage"}>
+                <button className={theme === "dark" ? "siteHeader__btn siteHeader__btn--login siteHeader__btn--login--dark" : "siteHeader__btn siteHeader__btn--login"} onClick={() => { toggleLogin(); }}>
                 Logowanie
                 </button>
 
