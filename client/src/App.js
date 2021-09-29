@@ -16,6 +16,7 @@ import AboutUs from "./pages/AboutUs";
 import Player from "./pages/Player";
 import Club from "./pages/Club";
 import Map from "./pages/Map";
+import PlayerProfileEdition from "./pages/PlayerProfileEdition";
 
 function App() {
   return <Router>
@@ -54,6 +55,9 @@ function App() {
     {/* User routes */}
     <Route path="/rozpocznij">
         <MyAccountStart />
+    </Route>
+    <Route path="/edycja-profilu">
+        <PlayerProfileEdition />
     </Route>
 
   </Router>

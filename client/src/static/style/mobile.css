@@ -79,6 +79,18 @@
     .faq__question__header__btn {
         font-size: 50px;
     }
+
+    .userInfoEdition__fullName {
+        font-size: 28px;
+    }
+
+    .userInfoEdition__form__field {
+        font-size: 21px;
+    }
+
+    .userInfoEdition__section {
+        margin-right: 3vw;
+    }
 }
 
 @media(max-width: 1400px) {
@@ -96,6 +108,19 @@
 
     .registerModal__inner {
         width: 90%;
+    }
+
+    .userInfoEdition, .playerInfoEdition {
+        width: var(--siteWidth);
+    }
+
+    .userInfoEdition__section {
+        width: 250px;
+    }
+
+    .userInfoEdition__imgWrapper {
+        width: 240px;
+        height: 240px;
     }
 }
 
@@ -342,6 +367,10 @@
 
     .faq__header {
         padding: 0 20px;
+    }
+
+    .userInfoEdition__key {
+        width: 160px;
     }
 }
 

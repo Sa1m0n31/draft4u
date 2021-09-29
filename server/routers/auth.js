@@ -107,9 +107,11 @@ router.get("/auth", isLoggedIn, (request, response) => {
 });
 
 router.get("/logout", (request, response) => {
-    request.logout();
+    request.logOut();
     request.session.destroy((err) => {
-        response.redirect("http://localhost:3000");
+        response.send({
+            result: 1
+        });
     });
 });
 
