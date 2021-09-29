@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 
 const app = express();
 
@@ -22,6 +23,7 @@ const app = express();
 /* Middleware */
 app.use(cors({
     credentials: true,
+    //origin: "*"
     origin: ['https://drafcik.skylo-test1.pl', 'http://drafcik.skylo-test1.pl', 'http://localhost:3000']
 }));
 app.use(bodyParser.json());
@@ -29,8 +31,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(
     session({
         secret: "secretcode",
-        resave: true,
-        saveUninitialized: false,
+        resave: false,
+        saveUninitialized: true,
         cookie: { secure: false, expires: 1000 * 60 * 30 } /* Session expire in 30 minutes */
     })
 );

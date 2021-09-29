@@ -7,9 +7,19 @@ import LoginBox from "./LoginBox";
 import RegisterModal from "./RegisterModal";
 import loginIcon from '../static/img/log-in.svg'
 import registerIcon from '../static/img/register.svg'
+import envelope from '../static/img/envelope.svg'
+import bell from '../static/img/bell.svg'
+import padlock from '../static/img/padlock.svg'
+import question from '../static/img/question.svg'
+import logoutIcon from '../static/img/logout.svg'
+import profilePicture from '../static/img/man.webp'
+import {logoutUser} from "../helpers/auth";
 
-const Header = ({loggedIn, menu, theme, clubPage}) => {
+const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
     const [loginVisible, setLoginVisible] = useState(false);
+    const [profileMenuVisible, setProfileMenuVisible] = useState(false);
+    const [notificationsVisible, setNotificationsVisible] = useState(false);
+    const [messagesVisible, setMessagesVisible] = useState(false);
 
     let loginBoxWrapper = useRef(null);
     let registerModal = useRef(null);
@@ -58,6 +68,15 @@ const Header = ({loggedIn, menu, theme, clubPage}) => {
         }, 500);
     }
 
+    const logout = () => {
+        logoutUser()
+            .then(res => {
+               if(res?.data?.result) {
+                   window.location = "/";
+               }
+            });
+    }
+
     return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>
@@ -68,7 +87,8 @@ const Header = ({loggedIn, menu, theme, clubPage}) => {
                 Menu
             </h3>
 
-            <ul className="mobileMenu__list" ref={mobileMenuList}>
+            {/* Homepage menu */}
+            {!club && !player ? <ul className="mobileMenu__list" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/">Home</a>
                 </li>
@@ -84,7 +104,7 @@ const Header = ({loggedIn, menu, theme, clubPage}) => {
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/mapa">Mapa</a>
                 </li>
-            </ul>
+            </ul> : ""}
 
             <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
                 <li className="mobileMenu__bottom__item">
@@ -117,7 +137,8 @@ const Header = ({loggedIn, menu, theme, clubPage}) => {
 
         <section className="siteHeader__content d-desktop">
             <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark" : "siteHeader__menu"}>
-                <ul className="siteHeader__menu__list">
+                {/* Homepage menu */}
+                {!player && !club ? <ul className="siteHeader__menu__list">
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/">
                             Home
@@ -143,12 +164,72 @@ const Header = ({loggedIn, menu, theme, clubPage}) => {
                             Mapa
                         </a>
                     </li>
-                </ul>
+                </ul> : ""}
+
+                {/* Player menu */}
+                {player ? <ul className="siteHeader__menu__list">
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/">
+                            Home
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/o-nas">
+                            Profil
+                        </a>
+                    </li>
+                </ul> : ""}
+
+                {/* Club menu */}
+                {club ? <ul className="siteHeader__menu__list">
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/">
+                            Home
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/o-nas">
+                            Profil
+                        </a>
+                    </li>
+                </ul> : ""}
             </menu>
 
-            {loggedIn ? <section>
+            {loggedIn ? (player ? <section className="siteHeader__player">
+                <button className="siteHeader__player__btn">
+                    <img className="siteHeader__player__btn__img" src={bell} alt="powiadomienia" />
+                </button>
+                <button className="siteHeader__player__btn">
+                    <img className="siteHeader__player__btn__img img--envelope" src={envelope} alt="wiadomosci" />
+                </button>
 
-            </section> : <>
+                <button className="siteHeader__player__btn siteHeader__player__btn--profile"
+                        onClick={() => { setProfileMenuVisible(!profileMenuVisible); }}
+                >
+                    <img className="siteHeader__player__btn--profile__img" src={profilePicture} alt="profile" />
+                </button>
+
+                {profileMenuVisible ? <menu className="profileMenu">
+                    <ul className="profileMenu__list">
+                        <li className="profileMenu__list__item">
+                            <a className="profileMenu__list__link" href="/">
+                                <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
+                                Zmiana hasła
+                            </a>
+                            <a className="profileMenu__list__link" href="/">
+                                <img className="profileMenu__list__img" src={question} alt="faq" />
+                                Pomoc online
+                            </a>
+                            <button className="profileMenu__list__link" onClick={() => { logout(); }}>
+                                <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />
+                                Wyloguj się
+                            </button>
+                        </li>
+                    </ul>
+                </menu> : ""}
+            </section> : <section>
+
+            </section>) : <>
                 {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
                     Załóż konto
                 </button> : ""}

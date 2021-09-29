@@ -12,6 +12,14 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
 const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
 
+const isLoggedIn = (req, res, next) => {
+    console.log("Am i Logged ing?");
+    console.log(req.user);
+    console.log(req.isAuthenticated());
+    if(req.user) next();
+    else res.redirect("/");
+}
+
 const sendVerificationEmail = (email, token, response) => {
     let transporter = nodemailer.createTransport(smtpTransport ({
         auth: {
@@ -86,20 +94,27 @@ router.get('/verification', (request, response) => {
    }
 });
 
-router.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
+// router.all('/', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+// });
 
-router.get("/auth", (request, response) => {
+router.get("/auth", isLoggedIn, (request, response) => {
     if(request.user) response.send({result: 1});
     else response.send({result: 0});
 });
 
+router.get("/logout", (request, response) => {
+    request.logout();
+    request.session.destroy((err) => {
+        response.redirect("http://localhost:3000");
+    });
+});
+
 router.post("/login",
-    passport.authenticate('local', { session: true }), cors(),
+    passport.authenticate('local', { session: true }),
     (request, response) => {
         response.send({
             result: 1

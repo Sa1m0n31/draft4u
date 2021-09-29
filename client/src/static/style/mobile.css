@@ -5,8 +5,11 @@
     }
 
     .siteHeader__menu {
-        width: 600px;
-        padding: 0 30px;
+        padding: 0 20px;
+    }
+
+    .siteHeader__menu__link {
+        padding: 0 7px;
     }
 
     .aboutUs__profileWrapper {
@@ -19,11 +22,6 @@
 }
 
 @media(max-width: 1600px) {
-    .siteHeader__menu {
-        width: 400px;
-        height: 60px;
-    }
-
     .siteHeader__menu__link {
         font-size: 15px;
     }

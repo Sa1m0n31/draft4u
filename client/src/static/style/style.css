@@ -17,6 +17,7 @@
     --yellow: #FFDC00;
     --siteWidth: clamp(200px, 85vw, 2300px);
     --siteWidthNarrow: clamp(200px, 75vw, 2100px);
+    --siteWidthSuperNarrow: clamp(200px, 65vw, 1800px);
 }
 
 body {
@@ -80,6 +81,14 @@ ul {
     position: relative;
 }
 
+.gold {
+    color: var(--gold);
+}
+
+.bold {
+    font-weight: 700;
+}
+
 /* Header */
 .siteHeader {
     width: var(--siteWidth);
@@ -116,7 +125,7 @@ ul {
     border-radius: 4px;
     height: 70px;
     padding: 0 50px;
-    width: 670px;
+    width: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -132,6 +141,7 @@ ul {
 .siteHeader__menu__link {
     color: var(--grey);
     font-size: 21px;
+    padding: 0 20px;
     opacity: .8;
 }
 
@@ -191,6 +201,113 @@ ul {
 .mobileMenu__btn__img {
     width: 100%;
     height: auto;
+}
+
+.siteHeader__player {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    height: 70px;
+    margin-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.siteHeader__player__btn {
+    background: transparent;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 15px;
+    position: relative;
+}
+
+.siteHeader__player__btn__img {
+    width: 100%;
+}
+
+.img--envelope {
+    margin-bottom: -12px;
+}
+
+.siteHeader__player__btn--profile {
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #707070;
+}
+
+.siteHeader__player__btn--profile__img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.profileMenu {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    transform: translate(0, 100%);
+    background: #fff;
+    width: 200px;
+    padding: 15px 0;
+}
+
+.profileMenu::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 17%;
+    transform: translateY(-100%);
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid #fff;
+    background: transparent;
+    z-index: 3;
+}
+
+.profileMenu__list {
+    list-style-type: none;
+}
+
+.profileMenu__list__link {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: transparent;
+    width: 100%;
+    transition: .2s all;
+}
+
+.profileMenu__list__link:hover {
+    background: #f1f1f1;
+}
+
+.profileMenu__list__img {
+    width: 30px;
+    height: auto;
+    margin-right: 25px;
+}
+
+.siteWidth {
+    width: var(--siteWidth);
+    margin: 40px auto;
+}
+
+.siteWidthNarrow {
+    width: var(--siteWidthNarrow);
+    margin: 40px auto;
+}
+
+.siteWidthSuperNarrow {
+    width: var(--siteWidthSuperNarrow);
+    margin: 40px auto;
 }
 
 /* Homepage */
@@ -1478,11 +1595,99 @@ ul {
 .mapDot {
     width: 25px;
     height: 25px;
-    background: #fff;
-    box-shadow: 0 3px 6px #00000040;
-    border-radius: 50%;
+    background: transparent;
     position: absolute;
 
     top: 45%;
     left: 30%;
+}
+
+.mapDot__btn {
+    box-shadow: 0 3px 6px #00000040;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* My account start page */
+.player__flex__imgWrapper--profile {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    overflow: hidden;
+}
+
+.player__flex__imgWrapper--profile .player__flex__img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.blogSection__title {
+    text-transform: uppercase;
+    color: var(--gold);
+    font-size: 40px;
+}
+
+.blogSection__imgWrapper {
+    width: 100%;
+    overflow: hidden;
+    margin: 30px 0;
+}
+
+.blogSection__img {
+    width: 100%;
+}
+
+.blogSection__extract {
+    font-size: 18px;
+    color: #707070;
+}
+
+.button--readMore {
+    background: transparent;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+
+.clubActivities {
+    padding: 30px 0;
+    margin: 30px auto;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+}
+
+.clubActivities__header {
+    color: var(--gold);
+    font-size: 40px;
+    text-transform: uppercase;
+}
+
+.clubActivities__subheader {
+    margin-top: 60px;
+    font-size: 32px;
+    color: #3D3D3D;
+}
+
+.clubActivities__list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 25px 0;
+}
+
+.clubActivities__img {
+    margin-right: 35px;
+    width: 120px;
+    height: auto;
+}
+
+.myAccountStart__bottom__subscriptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

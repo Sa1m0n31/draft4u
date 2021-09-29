@@ -11,7 +11,9 @@ const MapContent = () => {
         getAllClubs()
             .then(res => {
                 if(res?.data?.result) {
+                    console.log(res.data.result);
                     setClubs(res.data.result);
+                    setDots(res.data.result);
                 }
             });
     }, []);
@@ -39,11 +41,11 @@ const MapContent = () => {
                 });
             });
 
-            setDots(buttons.filter((item, index) => {
-                return index === buttons.findIndex(obj => {
-                    return obj.x === item.x && obj.y === item.y;
-                });
-            }));
+            // setDots(buttons.filter((item, index) => {
+            //     return index === buttons.findIndex(obj => {
+            //         return obj.x === item.x && obj.y === item.y;
+            //     });
+            // }));
 
             // console.log(clubs);
             // clubs.forEach((clubItem) => {
@@ -88,9 +90,12 @@ const MapContent = () => {
             <img className="mapImg__img" src={poland} alt="mapa-polski" />
 
             {dots.map((item, index) => {
-                return <button className="mapDot" key={index} style={{top: `${item.y}%`, left: `${item.x}%`}}>
+                console.log(item);
+                return <section className="mapDot" key={index} style={{top: `${item.y}%`, left: `${item.x}%`}}>
+                    <button className="mapDot__btn">
 
-                </button>
+                    </button>
+                </section>
             })}
         </section>
     </main>

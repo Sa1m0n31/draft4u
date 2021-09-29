@@ -4,7 +4,9 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const isLoggedIn = () => {
-    return axios.get(`${API_URL}/auth/auth`);
+    return axios.get(`${API_URL}/auth/auth`, {
+        withCredentials: true
+    });
 }
 
 const loginUser = (email, password) => {
@@ -13,7 +15,7 @@ const loginUser = (email, password) => {
         password: password
     }, {
         headers: {
-            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
+            'Access-Control-Allow-Origin': 'http://localhost:3000'
         },
         withCredentials: true
     });
@@ -61,4 +63,8 @@ const verifyUser = (token) => {
     });
 }
 
-export { isLoggedIn, loginUser, loginFacebook, loginGoogle, loginApple, registerUser, verifyUser }
+const logoutUser = () => {
+    return axios.get(`${API_URL}/auth/logout`);
+}
+
+export { isLoggedIn, loginUser, loginFacebook, loginGoogle, loginApple, registerUser, verifyUser, logoutUser }
