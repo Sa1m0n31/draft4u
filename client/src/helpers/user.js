@@ -31,4 +31,57 @@ const changeUserPassword = (email, password) => {
     });
 }
 
-export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword }
+const getUserData = () => {
+    return axios.get(`${API_URL}/user/get-user-data`, {
+        headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:3000'
+        },
+        withCredentials: true
+    });
+}
+
+const putConfig = { headers: {'Content-Type': 'application/json'} };
+
+const updateUserLicenceNumber = (licenceNumber) => {
+    return axios.put(`${API_URL}/user/update-user-license-number`, {
+        licenceNumber
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserPhoneNumber = (phoneNumber) => {
+    return axios.put(`${API_URL}/user/update-user-phone-number`, {
+        phoneNumber
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserClub = (club) => {
+    return axios.put(`${API_URL}/user/update-user-club`, {
+        club
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserSalary = (salaryFrom, salaryTo) => {
+    return axios.put(`${API_URL}/user/update-user-salary`, {
+        salaryFrom, salaryTo
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserBirthday = (birthday) => {
+    return axios.put(`${API_URL}/user/update-user-birthday`, {
+        birthday
+    }, {
+        withCredentials: true
+    });
+}
+
+export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
+    updateUserLicenceNumber, updateUserPhoneNumber,
+    updateUserClub, updateUserSalary, updateUserBirthday }

@@ -166,4 +166,156 @@ router.post("/change-password", (request, response) => {
     });
 });
 
+router.get("/get-user-data", (request, response) => {
+   const userId = request.user;
+
+   if(userId) {
+       const query = 'SELECT * FROM users WHERE id = $1';
+       const values = [userId];
+
+       db.query(query, values, (err, res) => {
+          if(res) {
+              response.send({
+                  result: res.rows[0]
+              });
+          }
+          else {
+              response.send({
+                  result: 0
+              });
+          }
+       });
+   }
+   else {
+       response.send({
+           result: 0
+       });
+   }
+});
+
+const updateQuery = (query, values, response) => {
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: 0
+            });
+        }
+        else {
+            response.send({
+                result: 1
+            });
+        }
+    });
+}
+
+router.put("/update-user-birthday", (request, response) => {
+   const { birthday } = request.body;
+   const userId = request.user;
+
+   const query = 'UPDATE users SET birthday = $1 WHERE id = $2';
+   const values = [birthday, userId];
+
+   updateQuery(query, values, response);
+});
+
+router.put("/update-user-license-number", (request, response) => {
+   const { licenceNumber } = request.body;
+   const userId = request.user;
+
+   const query = 'UPDATE users SET licence_number = $1 WHERE id = $2';
+   const values = [licenceNumber, userId];
+
+   updateQuery(query, values, response);
+});
+
+router.put("/update-user-club", (request, response) => {
+    const { club } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET club = $1 WHERE id = $2';
+    const values = [club, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-phone-number", (request, response) => {
+    const { phoneNumber } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET phone_number = $1 WHERE id = $2';
+    const values = [phoneNumber, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-salary", (request, response) => {
+    const { salaryFrom, salaryTo } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET salary_from = $1, salary_to = $2 WHERE id = $3';
+    const values = [salaryFrom, salaryTo, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-attack-range", (request, response) => {
+    const { attackRange } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET attack_range = $1 WHERE id = $2';
+    const values = [attackRange, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-vertical-range", (request, response) => {
+    const { verticalRange } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET vertical_range = $1 WHERE id = $2';
+    const values = [verticalRange, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-block-range", (request, response) => {
+    const { blockRange } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET block_range = $1 WHERE id = $2';
+    const values = [blockRange, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-weight", (request, response) => {
+    const { weight } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET weight = $1 WHERE id = $2';
+    const values = [weight, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-height", (request, response) => {
+    const { height } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET height = $1 WHERE id = $2';
+    const values = [height, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-position", (request, response) => {
+    const { position } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users SET position = $1 WHERE id = $2';
+    const values = [position, userId];
+
+    updateQuery(query, values, response);
+});
+
 module.exports = router;

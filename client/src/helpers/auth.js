@@ -64,7 +64,12 @@ const verifyUser = (token) => {
 }
 
 const logoutUser = () => {
-    return axios.get(`${API_URL}/auth/logout`);
+    return axios.get(`${API_URL}/auth/logout`, {
+        headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:3000'
+        },
+        withCredentials: true
+    });
 }
 
 export { isLoggedIn, loginUser, loginFacebook, loginGoogle, loginApple, registerUser, verifyUser, logoutUser }
