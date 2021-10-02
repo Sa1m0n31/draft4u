@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import example from '../static/img/man.webp'
+import example from '../static/img/profile.png'
 import camera from '../static/img/camera.svg'
 import pen from '../static/img/pen.svg'
 import check from '../static/img/check.svg'
@@ -171,7 +171,7 @@ const UserInfoEdition = ({player}) => {
                 <span className="userInfoEdition__key">
                     Honorarium
                 </span>
-                <span className="userInfoEdition__value">
+                <span className="userInfoEdition__value userInfoEdition__value--salary">
                     {values[0]} - {values[1]}
                     {!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
                         <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />

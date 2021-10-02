@@ -12,7 +12,7 @@ import bell from '../static/img/bell.svg'
 import padlock from '../static/img/padlock.svg'
 import question from '../static/img/question.svg'
 import logoutIcon from '../static/img/logout.svg'
-import profilePicture from '../static/img/man.webp'
+import profilePicture from '../static/img/profile.png'
 import {logoutUser} from "../helpers/auth";
 
 const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
@@ -174,7 +174,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/o-nas">
+                        <a className="siteHeader__menu__link" href="/edycja-profilu">
                             Profil
                         </a>
                     </li>

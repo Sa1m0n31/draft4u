@@ -1,72 +1,66 @@
 import React, { useEffect, useState, useRef } from 'react'
+import faq from "../data/faq";
 
 const PlayerFAQ = () => {
     const [category, setCategory] = useState(0);
 
-    const questionWrapper1 = useRef(null);
-    const questionWrapper2 = useRef(null);
-    const questionWrapper3 = useRef(null);
-    const questionWrapper4 = useRef(null);
+    const toggleQuestion = (index) => {
+        const currentQuestion = document.getElementById(`faq__question-${category}-${index}`);
+        const currentButton = document.getElementById(`faq__button-${category}-${index}`);
+
+        if(window.getComputedStyle(currentQuestion).getPropertyValue("opacity") === "0") {
+            currentQuestion.style.padding = "3%";
+            currentQuestion.style.border = "1px solid #707070"
+            currentQuestion.style.margin = "5px 0";
+            currentQuestion.style.height = "auto";
+            currentButton.style.transform = "rotate(45deg)";
+            setTimeout(() => {
+                currentQuestion.style.opacity = "1";
+            }, 400);
+        }
+        else {
+            currentButton.style.transform = "none";
+            currentQuestion.style.opacity = "0";
+            setTimeout(() => {
+                currentQuestion.style.padding = "0";
+                currentQuestion.style.margin = "0";
+                currentQuestion.style.height = "0";
+                currentQuestion.style.border = "none";
+            }, 400);
+        }
+    }
 
     return <section className="faq">
         <header className="faq__header">
-            <button className={category !== 0 ? "faq__btn" : "faq__btn faq__btn--current"} onClick={() => { setCategory(0); }}>
-                Jak to działa?
-            </button>
-            <span className="faq__header__divider"></span>
-            <button className={category !== 1 ? "faq__btn" : "faq__btn faq__btn--current"} onClick={() => { setCategory(1); }}>
-                Rejestracja
-            </button>
-            <span className="faq__header__divider"></span>
-            <button className={category !== 2 ? "faq__btn" : "faq__btn faq__btn--current"} onClick={() => { setCategory(2); }}>
-                Konto profilowe
-            </button>
-            <span className="faq__header__divider"></span>
-            <button className={category !== 3 ? "faq__btn" : "faq__btn faq__btn--current"} onClick={() => { setCategory(3); }}>
-                Opłaty
-            </button>
+            {faq.map((item, index, array) => {
+                return <><button className={category !== index ? "faq__btn" : "faq__btn faq__btn--current"} onClick={() => { setCategory(index); }}>
+                    {faq[index].header}
+                </button>
+                {index !== array.length-1 ? <span className="faq__header__divider"></span> : ""}
+                </>
+            })}
         </header>
 
-        <main className="faq__questions" ref={questionWrapper1}>
-            <section className="faq__question">
-                <button className="faq__question__header">
-                    <h4 className="faq__question__header__h">
-                        Jak działa Draft4U?
-                    </h4>
-                    <button className="faq__question__header__btn">
-                        +
-                    </button>
-                </button>
-                <article className="faq__question__main">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu vulputate augue. Quisque elementum efficitur tellus, id auctor orci tincidunt id. In ac nunc sodales, congue libero at, aliquet augue. Donec interdum ullamcorper convallis. Aliquam scelerisque, purus sit amet pellentesque viverra
-                </article>
-            </section>
-            <section className="faq__question">
-                <header className="faq__question__header">
-                    <h4 className="faq__question__header__h">
-                        Jak odbywa się kontakt pomiędzy klubem a zawodnikiem?
-                    </h4>
-                    <button className="faq__question__header__btn">
-                        +
-                    </button>
-                </header>
-                <article className="faq__question__main">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu vulputate augue. Quisque elementum efficitur tellus, id auctor orci tincidunt id. In ac nunc sodales, congue libero at, aliquet augue. Donec interdum ullamcorper convallis. Aliquam scelerisque, purus sit amet pellentesque viverra
-                </article>
-            </section>
-            <section className="faq__question">
-                <header className="faq__question__header">
-                    <h4 className="faq__question__header__h">
-                        Z jakimi ligami współpracujemy?
-                    </h4>
-                    <button className="faq__question__header__btn">
-                        +
-                    </button>
-                </header>
-                <article className="faq__question__main">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu vulputate augue. Quisque elementum efficitur tellus, id auctor orci tincidunt id. In ac nunc sodales, congue libero at, aliquet augue. Donec interdum ullamcorper convallis. Aliquam scelerisque, purus sit amet pellentesque viverra
-                </article>
-            </section>
+        <main className="faq__questions">
+            {faq.map((item, index) => {
+                if(index === category) {
+                    return item.questions.map((item, index) => {
+                        return <section className="faq__question">
+                            <label className="faq__question__header">
+                                <h4 className="faq__question__header__h">
+                                    {item.q}
+                                </h4>
+                                <button className="faq__question__header__btn" id={`faq__button-${category}-${index}`} onClick={() => { toggleQuestion(index); }}>
+                                    +
+                                </button>
+                            </label>
+                            <article className="faq__question__main" id={`faq__question-${category}-${index}`}>
+                                {item.a}
+                            </article>
+                        </section>
+                    })
+                }
+            })}
         </main>
     </section>
 }

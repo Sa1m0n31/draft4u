@@ -82,6 +82,63 @@ const updateUserBirthday = (birthday) => {
     });
 }
 
+const updateUserAttackRange = (attackRange) => {
+    return axios.put(`${API_URL}/user/update-user-attack-range`, {
+        attackRange
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserVerticalRange = (verticalRange) => {
+    return axios.put(`${API_URL}/user/update-user-vertical-range`, {
+        verticalRange
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserBlockRange = (blockRange) => {
+    return axios.put(`${API_URL}/user/update-user-block-range`, {
+        blockRange
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserWeight = (weight) => {
+    return axios.put(`${API_URL}/user/update-user-weight`, {
+        weight
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserHeight = (height) => {
+    return axios.put(`${API_URL}/user/update-user-height`, {
+        height
+    }, {
+        withCredentials: true
+    });
+}
+
+const updateUserPosition = (position) => {
+    console.log(position);
+    return axios.put(`${API_URL}/user/update-user-position`, {
+        position
+    }, {
+        withCredentials: true
+    });
+}
+
+const getAllPositions = () => {
+    return axios.get(`${API_URL}/user/get-all-positions`);
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber,
-    updateUserClub, updateUserSalary, updateUserBirthday }
+    updateUserClub, updateUserSalary, updateUserBirthday,
+    updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
+    updateUserHeight, updateUserWeight, updateUserPosition,
+    getAllPositions
+}

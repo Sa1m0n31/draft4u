@@ -6,6 +6,7 @@ import PlayerInfoEdition from "../components/PlayerInfoEdition";
 import ClubSlider from "../components/ClubSlider";
 import {getUserData} from "../helpers/user";
 import {isLoggedIn} from "../helpers/auth";
+import LoadingPage from "./LoadingPage";
 
 const PlayerProfileEdition = () => {
     const [loaded, setLoaded] = useState(false);
@@ -15,29 +16,26 @@ const PlayerProfileEdition = () => {
         isLoggedIn()
             .then(res => {
                 if(!res?.data?.result) window.location = "/";
-                else setLoaded(true);
             });
-
-        // setLoaded(true);
 
         getUserData()
             .then(res => {
-                console.log(res.data.result);
                 setPlayer(res?.data?.result);
+                setLoaded(true);
             });
 
     }, []);
 
     return <div className="container container--light">
-        <Header loggedIn={true} player={true} />
-
         {loaded ? <>
+            <Header loggedIn={true} player={true} />
+
             <UserInfoEdition player={player} />
             <PlayerInfoEdition player={player} />
             <ClubSlider />
-        </> : ""}
 
-        <Footer theme="light" border={true} />
+            <Footer theme="light" border={true} />
+        </> : <LoadingPage />}
     </div>
 }
 

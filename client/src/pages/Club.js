@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import tmpImg from "../static/img/tmpheader.png";
+import tmpImg from "../static/img/placeholder.png"
 import phone from "../static/img/telefon.png";
 import ctaBtn from '../static/img/btn-cta.png'
 

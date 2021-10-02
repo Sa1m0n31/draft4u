@@ -3,16 +3,57 @@ import pen from "../static/img/pen.svg";
 
 import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css'
+import check from "../static/img/check.svg";
+import {
+    getAllPositions,
+    updateUserAttackRange,
+    updateUserBlockRange,
+    updateUserHeight, updateUserPosition,
+    updateUserVerticalRange,
+    updateUserWeight
+} from "../helpers/user";
 
-const PlayerInfoEdition = () => {
+const PlayerInfoEdition = ({player}) => {
+    const [editAttackRange, setEditAttackRange] = useState(false);
+    const [editVerticalRange, setEditVerticalRange] = useState(false);
+    const [editBlockRange, setEditBlockRange] = useState(false);
+    const [editHeight, setEditHeight] = useState(false);
+    const [editWeight, setEditWeight] = useState(false);
+    const [editPosition, setEditPosition] = useState(false);
+
+    const [attackRange, setAttackRange] = useState(null);
+    const [verticalRange, setVerticalRange] = useState(null);
+    const [blockRange, setBlockRange] = useState(null);
+    const [weight, setWeight] = useState(null);
+    const [height, setHeight] = useState(null);
+    const [position, setPosition] = useState(null);
+
+    const [positions, setPositions] = useState([]);
+
+    useEffect(() => {
+        getAllPositions()
+            .then(res => {
+                setPositions(res?.data?.result);
+            });
+    }, []);
+
+    useEffect(() => {
+        setAttackRange(player.attack_range);
+        setVerticalRange(player.vertical_range);
+        setBlockRange(player.block_range);
+        setWeight(player.weight);
+        setHeight(player.height);
+        setPosition(player.name);
+    }, [player]);
+
     const data = [
         {
             data: {
-                wzrost: 0.7,
-                waga: .8,
-                zasiegWAtaku: 0.9,
-                zasiegDosiezny: 0.67,
-                zasiegWBloku: 0.8
+                wzrost: height ? height / 500 : 1,
+                waga: weight ? weight / 500 : 1,
+                zasiegWAtaku: attackRange ? attackRange / 500 : 1,
+                zasiegDosiezny: verticalRange ? verticalRange / 500 : 1,
+                zasiegWBloku: blockRange ? blockRange / 500 : 1
             },
             meta: { color: '#E2B76D' }
         }
@@ -27,6 +68,36 @@ const PlayerInfoEdition = () => {
         zasiegWBloku: 'Zasięg w bloku'
     };
 
+    const changeUserAttackRange = () => {
+        setEditAttackRange(false);
+        updateUserAttackRange(attackRange);
+    }
+
+    const changeUserVerticalRange = () => {
+        setEditVerticalRange(false);
+        updateUserVerticalRange(verticalRange);
+    }
+
+    const changeUserBlockRange = () => {
+        setEditBlockRange(false);
+        updateUserBlockRange(blockRange);
+    }
+
+    const changeUserWeight = () => {
+        setEditWeight(false);
+        updateUserWeight(weight);
+    }
+
+    const changeUserHeight = () => {
+        setEditHeight(false);
+        updateUserHeight(height);
+    }
+
+    const changeUserPosition = () => {
+        setEditPosition(false);
+        updateUserPosition(position);
+    }
+
     return <section className="playerInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__form">
             <label className="userInfoEdition__form__field">
@@ -34,10 +105,20 @@ const PlayerInfoEdition = () => {
                     Zasięg w ataku
                 </span>
                 <span className="userInfoEdition__value">
-                    23
-                    <button className="userInfoEdition__btn">
-                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button>
+                    <label className={editAttackRange ? "label--edit" : ""}>
+                        <input value={attackRange}
+                               type="number"
+                               onChange={(e) => { setAttackRange(e.target.value); }}
+                               disabled={!editAttackRange}
+                               max={400}
+                               className="input--editProfile"
+                               name="attackRange" />
+                        {!editAttackRange ? <button className="userInfoEdition__btn" onClick={() => { setEditAttackRange(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserAttackRange(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
                 </span>
             </label>
             <label className="userInfoEdition__form__field">
@@ -45,10 +126,20 @@ const PlayerInfoEdition = () => {
                     Zasięg dosiężny
                 </span>
                 <span className="userInfoEdition__value">
-                    das@wp.pl
-                    <button className="userInfoEdition__btn">
-                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button>
+                    <label className={editVerticalRange ? "label--edit" : ""}>
+                        <input value={verticalRange}
+                               type="number"
+                               onChange={(e) => { setVerticalRange(e.target.value); }}
+                               disabled={!editVerticalRange}
+                               className="input--editProfile"
+                               max={400}
+                               name="verticalRange" />
+                        {!editVerticalRange ? <button className="userInfoEdition__btn" onClick={() => { setEditVerticalRange(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserVerticalRange(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
                 </span>
             </label>
             <label className="userInfoEdition__form__field">
@@ -56,10 +147,41 @@ const PlayerInfoEdition = () => {
                     Zasięg w bloku
                 </span>
                 <span className="userInfoEdition__value">
-                    600 179 174
-                    <button className="userInfoEdition__btn">
-                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button>
+                    <label className={editBlockRange ? "label--edit" : ""}>
+                        <input value={blockRange}
+                               type="number"
+                               onChange={(e) => { setBlockRange(e.target.value); }}
+                               disabled={!editBlockRange}
+                               className="input--editProfile"
+                               max={400}
+                               name="blockRange" />
+                        {!editBlockRange ? <button className="userInfoEdition__btn" onClick={() => { setEditBlockRange(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserBlockRange(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
+                </span>
+            </label>
+            <label className="userInfoEdition__form__field">
+                <span className="userInfoEdition__key">
+                    Wzrost
+                </span>
+                <span className="userInfoEdition__value">
+                    <label className={editHeight ? "label--edit" : ""}>
+                        <input value={height}
+                               type="number"
+                               onChange={(e) => { setHeight(e.target.value); }}
+                               disabled={!editHeight}
+                               className="input--editProfile"
+                               max={300}
+                               name="height" />
+                        {!editHeight ? <button className="userInfoEdition__btn" onClick={() => { setEditHeight(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserHeight(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
                 </span>
             </label>
             <label className="userInfoEdition__form__field">
@@ -67,10 +189,20 @@ const PlayerInfoEdition = () => {
                     Waga
                 </span>
                 <span className="userInfoEdition__value">
-                    Lorem ipsum
-                    <button className="userInfoEdition__btn">
-                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button>
+                    <label className={editWeight ? "label--edit" : ""}>
+                        <input value={weight}
+                               type="number"
+                               onChange={(e) => { setWeight(e.target.value); }}
+                               disabled={!editWeight}
+                               className="input--editProfile"
+                               max={200}
+                               name="weight" />
+                        {!editWeight ? <button className="userInfoEdition__btn" onClick={() => { setEditWeight(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserWeight(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
                 </span>
             </label>
             <label className="userInfoEdition__form__field">
@@ -78,10 +210,27 @@ const PlayerInfoEdition = () => {
                     Pozycja na boisku
                 </span>
                 <span className="userInfoEdition__value">
-                    przyjmujący
-                    <button className="userInfoEdition__btn">
-                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button>
+                    <label className={editPosition ? "label--edit" : ""}>
+                        {editPosition ? <select className="select--editProfile"
+                                                disabled={!editPosition}
+                                                value={position}
+                                                onChange={(e) => { console.log(e.target); setPosition(e.target.value); }}
+                        >
+                            {positions?.map((item, index) => {
+                                return <option value={item.name} key={index}>
+                                    {item.name}
+                                </option>
+                            })}
+                        </select> : <input className="input--editProfile"
+                                           disabled={true}
+                                           value={position} />}
+
+                        {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPosition(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
                 </span>
             </label>
         </section>
@@ -90,7 +239,7 @@ const PlayerInfoEdition = () => {
             <RadarChart
                 captions={captions}
                 data={data}
-                size={550}
+                size={450}
             />
         </section>
     </section>

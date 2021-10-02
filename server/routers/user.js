@@ -170,10 +170,12 @@ router.get("/get-user-data", (request, response) => {
    const userId = request.user;
 
    if(userId) {
-       const query = 'SELECT * FROM users WHERE id = $1';
+       const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name FROM users u LEFT OUTER JOIN positions p ON u.position = p.id WHERE u.id = $1';
        const values = [userId];
 
        db.query(query, values, (err, res) => {
+           console.log(err);
+           console.log(res.rows);
           if(res) {
               response.send({
                   result: res.rows[0]
@@ -258,12 +260,14 @@ router.put("/update-user-salary", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-attack-range", (request, response) => {
+router.put("/update-user-attack-range", (request, response) => {
     const { attackRange } = request.body;
     const userId = request.user;
 
     const query = 'UPDATE users SET attack_range = $1 WHERE id = $2';
     const values = [attackRange, userId];
+
+    console.log(attackRange);
 
     updateQuery(query, values, response);
 });
@@ -312,10 +316,29 @@ router.put("/update-user-position", (request, response) => {
     const { position } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET position = $1 WHERE id = $2';
+    console.log(position);
+
+    const query = 'UPDATE users SET position = (SELECT id FROM positions WHERE name = $1) WHERE id = $2';
     const values = [position, userId];
 
     updateQuery(query, values, response);
 });
+
+router.get("/get-all-positions", (request, response) => {
+    const query = 'SELECT * FROM positions';
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            })
+        }
+    });
+})
 
 module.exports = router;

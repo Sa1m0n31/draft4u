@@ -64,8 +64,10 @@ ul {
     list-style-type: none;
 }
 
-.d-mobile {
-    display: none;
+.d-mobile,
+.d-mobile-900-flex
+{
+    display: none !important;
 }
 
 .btn__img {
@@ -1335,7 +1337,8 @@ ul {
 .player__firstImgWrapper {
     /*background: #fff;*/
     width: 100%;
-    min-height: 450px;
+    height: 400px;
+    overflow: hidden;
 }
 
 .player__flex {
@@ -1518,6 +1521,9 @@ ul {
     padding: 0 2%;
     background: #fff;
     width: 100%;
+    cursor: pointer;
+    z-index: 10;
+    position: relative;
 }
 
 .faq__question__header__h {
@@ -1534,14 +1540,11 @@ ul {
 }
 
 .faq__question__main {
-    /*border: 1px solid var(--grey);*/
-    /*padding: 2%;*/
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5px 0;
+    margin: 0;
     height: 0;
-    padding: 0;
     opacity: 0;
     transition: .4s all;
 }
@@ -1553,6 +1556,7 @@ ul {
 .player__firstImgWrapper__img {
     width: 100%;
     height: auto;
+    min-width: 100%;
 }
 
 /* Club */
@@ -1561,6 +1565,7 @@ ul {
 }
 
 .button--club {
+    display: block;
     margin: 35px 0;
     max-width: 450px;
 }
@@ -1575,8 +1580,8 @@ ul {
 
 /* Map */
 .mapContent {
-    width: var(--siteWidthNarrow);
-    margin: 50px auto;
+    width: var(--siteWidthSuperNarrow);
+    margin: 50px auto 100px;
 }
 
 .mapContent__header {
@@ -1586,15 +1591,28 @@ ul {
     margin-bottom: 50px;
 }
 
+.mapContent__header__item__header {
+    font-weight: 400;
+    font-size: 17px;
+    margin-bottom: 20px;
+    color: var(--grey);
+}
+
 .mapImg {
    width: fit-content;
     width: -moz-max-content;
     position: relative;
+    transform-origin: top left;
+    width: 55%;
+}
+
+.mapImg__img {
+    width: 100%;
 }
 
 .mapDot {
-    width: 25px;
-    height: 25px;
+    width: 4%;
+    height: 4%;
     background: transparent;
     position: absolute;
 
@@ -1605,10 +1623,104 @@ ul {
 .mapDot__btn {
     box-shadow: 0 3px 6px #00000040;
     cursor: pointer;
-    width: 25px;
-    height: 25px;
+    width: 100%;
+    height: 100%;
     background: #fff;
     border-radius: 50%;
+    position: relative;
+}
+
+.mapDot__btn__details {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 300px;
+    height: 50px;
+    border-radius: 9px;
+    background: #fff;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.mapDot__btn__details::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #fff;
+    background: transparent;
+    z-index: 3;
+}
+
+.mapContent__header__item__labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.mapContent__header__item__labels__img {
+    width: 15px;
+    height: auto;
+}
+
+.mapContent__header__item > div > div {
+    transform: translate(0, -2.5px);
+}
+
+.mapContent__filters,
+.mapContent__header__item {
+    max-width: 100%;
+}
+
+.mapContent__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mapContent__header__item {
+    margin-left: 100px;
+}
+
+.mapContent__header__item__labels span {
+    color: var(--grey);
+    font-family: 'Oxanium', sans-serif;
+    font-size: 17px;
+}
+
+.mapContent__clubsWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.mapContent__clubs figure {
+    display: block;
+}
+
+.mapContent__clubs {
+    width: 230px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 40px;
+}
+
+.mapContent__clubs__img {
+    width: 80px;
+    height: auto;
+    margin-left: 15px;
 }
 
 /* My account start page */
@@ -1746,6 +1858,7 @@ ul {
 
 .userInfoEdition__fullName {
     font-size: 40px;
+    color: #3D3D3D;
     margin-bottom: 25px;
 }
 
@@ -1783,6 +1896,10 @@ ul {
     margin-top: 100px;
 }
 
+.playerInfoEdition .input--editProfile {
+    max-width: 200px;
+}
+
 .userInfoEdition__graphSection {
     margin-left: 10vw;
 }
@@ -1801,10 +1918,10 @@ ul {
 }
 
 .userInfoEdition__graphSection > svg {
-    overflow: visible;
+    /*overflow: visible;*/
 }
 
-.input--editProfile {
+.input--editProfile, .select--editProfile {
     border: none !important;
     outline: none !important;
     font-size: 28px;
@@ -1814,9 +1931,18 @@ ul {
     background: transparent;
 }
 
+.select--editProfile option {
+    font-size: 17px;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
 .userInfoEdition__value label {
     padding: 5px;
     border: 1px solid transparent;
+    white-space: nowrap;
 }
 
 .label--edit {
@@ -1827,4 +1953,14 @@ ul {
 
 .label--marginRightMinus .input--editProfile {
     margin-right: -62px;
+}
+
+/* Loading page */
+.loadingPage {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--light);
 }

@@ -170,8 +170,7 @@
     }
 
     .loginBox__form .input::placeholder,
-    .loginBox__passwordRemindLink, .loginBox__or
-    {
+    .loginBox__passwordRemindLink, .loginBox__or {
         font-size: 14px;
     }
 
@@ -281,9 +280,29 @@
     .faq__question__header__btn {
         font-size: 30px;
     }
+
+    .mapContent {
+        width: var(--siteWidth);
+    }
+
+    .mapContent .player__header {
+        font-size: 32px;
+    }
+
+    .input--editProfile, .select--editProfile {
+        font-size: 17px;
+    }
 }
 
 @media(max-width: 996px) {
+    .d-desktop-900 {
+        display: none !important;
+    }
+
+    .d-mobile-900-flex {
+        display: flex !important;
+    }
+
     .clubCarousel__item__img {
         width: 60px;
     }
@@ -371,6 +390,107 @@
 
     .userInfoEdition__key {
         width: 160px;
+    }
+
+    .mapContent__header, .mapContent__filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mapContent__header__item {
+        margin-left: 0;
+        margin-bottom: 25px;
+    }
+
+    .mapContent__header__item__header {
+        font-size: 14px;
+        margin-bottom: 7px;
+    }
+
+    .mapContent .player__header {
+        margin-bottom: 20px;
+    }
+
+    .mapContent__header__item__labels span {
+        font-size: 14px;
+    }
+
+    .mapContent__clubsWrapper {
+        flex-direction: column;
+    }
+
+    .mapImg {
+        order: 2;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 40px;
+    }
+
+    .mapContent__clubs {
+        order: 1;
+        width: 100%;
+    }
+
+    .userInfoEdition, .playerInfoEdition {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .playerInfoEdition {
+        margin-top: 30px;
+    }
+
+    .userInfoEdition__graphSection {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .playerInfoEdition .userInfoEdition__btn {
+        margin-left: 0;
+    }
+
+    .userInfoEdition__graphSection > svg {
+        max-width: 80vw;
+    }
+
+    .label--marginRightMinus .input--editProfile {
+        margin-right: -52px;
+    }
+
+    .userInfoEdition__form {
+        width: 100%;
+        border-radius: 0;
+        max-width: 700px;
+    }
+
+    .userInfoEdition .userInfoEdition__form {
+        margin-top: 50px;
+    }
+
+    .userInfoEdition__key, .userInfoEdition__value *, .userInfoEdition__value {
+        font-size: 14px;
+    }
+
+    .userInfoEdition__btn {
+        width: 10px;
+    }
+
+    .userInfoEdition__imgWrapper, .userInfoEdition__section {
+        margin-right: 0;
+    }
+
+    .userInfoEdition__section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .userInfoEdition__value--salary .userInfoEdition__btn {
+        margin-right: 5px;
+    }
+
+    .playerInfoEdition .userInfoEdition__btn--position {
+        margin-left: 10px;
     }
 }
 
@@ -735,6 +855,10 @@
 
     .faq__question__header {
         padding: 0 5%;
+    }
+
+    .faq__question__main {
+        font-size: 13px;
     }
 }
 

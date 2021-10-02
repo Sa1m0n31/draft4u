@@ -6,15 +6,26 @@ import MyAccountStartHeader from "../components/MyAccountStartHeader";
 import BlogSection from "../components/BlogSection";
 import ClubActivities from "../components/ClubActivities";
 import MyAccountStartBottom from "../components/MyAccountStartBottom";
+import {getUserData} from "../helpers/user";
 
 const MyAccountStart = () => {
     const [loaded, setLoaded] = useState(false);
+    const [fullName, setFullName] = useState("");
 
     useEffect(() => {
         isLoggedIn()
             .then(res => {
                 if(!res?.data?.result) window.location = "/";
-                else setLoaded(true);
+                else {
+                    setLoaded(true);
+                    getUserData()
+                        .then(res => {
+                            const result = res?.data?.result;
+                            if(result) {
+                                setFullName(result.first_name + " " + result.last_name);
+                            }
+                        })
+                }
             })
     }, []);
 
@@ -22,7 +33,7 @@ const MyAccountStart = () => {
         <Header loggedIn={true} player={true} />
 
         {loaded ? <>
-            <MyAccountStartHeader />
+            <MyAccountStartHeader fullName={fullName} />
             <BlogSection />
             <ClubActivities />
             <MyAccountStartBottom />
