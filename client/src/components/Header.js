@@ -53,19 +53,27 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
     const openMobileMenu = () => {
         mobileMenu.current.style.transform = "scaleX(1)";
         setTimeout(() => {
-            mobileMenuChildren.forEach((item) => {
-                item.current.style.opacity = "1";
-            });
+            if(mobileMenuChildren) {
+                mobileMenuChildren.forEach((item) => {
+                    if(item?.current?.style) {
+                        item.current.style.opacity = "1";
+                    }
+                });
+            }
         }, 500);
     }
 
     const closeMobileMenu = () => {
-        mobileMenuChildren.forEach((item) => {
-            item.current.style.opacity = "0";
-        });
-        setTimeout(() => {
-            mobileMenu.current.style.transform = "scaleX(0)";
-        }, 500);
+        if (mobileMenuChildren) {
+            mobileMenuChildren.forEach((item) => {
+                if (item?.current?.style) {
+                    item.current.style.opacity = "0";
+                }
+            });
+            setTimeout(() => {
+                mobileMenu.current.style.transform = "scaleX(0)";
+            }, 500);
+        }
     }
 
     const logout = () => {
@@ -106,7 +114,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                 </li>
             </ul> : ""}
 
-            <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
+            {!player && !club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/logowanie">
                         <img className="mobileMenu__bottom__img" src={loginIcon} alt="logowanie" />
@@ -119,7 +127,37 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                         Załóż konto
                     </a>
                 </li>
-            </ul>
+            </ul> : ""}
+
+            {player ? <ul className="mobileMenu__list" ref={mobileMenuList}>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/">Home</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/edycja-profilu">Profil</a>
+                </li>
+            </ul> : ""}
+
+            {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
+                <li className="mobileMenu__bottom__item">
+                    <a className="mobileMenu__bottom__link" href="/odzyskiwanie-hasla">
+                        <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
+                        Zmiana hasła
+                    </a>
+                </li>
+                <li className="mobileMenu__bottom__item">
+                    <a className="mobileMenu__bottom__link" href="/faq">
+                        <img className="mobileMenu__bottom__img" src={question} alt="zmien-haslo" />
+                        Pomoc online
+                    </a>
+                </li>
+                <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { logout(); }}>
+                        <img className="mobileMenu__bottom__img" src={logoutIcon} alt="zmien-haslo" />
+                        Wyloguj się
+                    </button>
+                </li>
+                </ul> : ""}
         </menu>
 
         <section className="registerModal d-desktop" ref={registerModal}>
@@ -130,13 +168,8 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
             <img className="siteHeader__logo__img" src={theme === "dark" ? logoDark : logo} alt="draft4u" />
         </a>
 
-        {/* Mobile menu */}
-        <button className="mobileMenu__btn d-mobile" onClick={() => { openMobileMenu(); }}>
-            <img className={menu === "dark" ? "mobileMenu__btn__img mobileMenu__btn__img--dark" : "mobileMenu__btn__img"} src={hamburger} alt="menu" />
-        </button>
-
-        <section className="siteHeader__content d-desktop">
-            <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark" : "siteHeader__menu"}>
+        <section className="siteHeader__content">
+            <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark d-desktop" : "siteHeader__menu d-desktop"}>
                 {/* Homepage menu */}
                 {!player && !club ? <ul className="siteHeader__menu__list">
                     <li className="siteHeader__menu__list__item">
@@ -203,7 +236,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                     <img className="siteHeader__player__btn__img img--envelope" src={envelope} alt="wiadomosci" />
                 </button>
 
-                <button className="siteHeader__player__btn siteHeader__player__btn--profile"
+                <button className="siteHeader__player__btn siteHeader__player__btn--profile d-desktop"
                         onClick={() => { setProfileMenuVisible(!profileMenuVisible); }}
                 >
                     <img className="siteHeader__player__btn--profile__img" src={profilePicture} alt="profile" />
@@ -212,11 +245,11 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                 {profileMenuVisible ? <menu className="profileMenu">
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
-                            <a className="profileMenu__list__link" href="/">
+                            <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
                                 <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
                                 Zmiana hasła
                             </a>
-                            <a className="profileMenu__list__link" href="/">
+                            <a className="profileMenu__list__link" href="/faq">
                                 <img className="profileMenu__list__img" src={question} alt="faq" />
                                 Pomoc online
                             </a>
@@ -229,7 +262,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                 </menu> : ""}
             </section> : <section>
 
-            </section>) : <>
+            </section>) : <span className="d-desktop-flex">
                 {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
                     Załóż konto
                 </button> : ""}
@@ -241,7 +274,13 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
                 <section className="loginBoxWrapper" ref={loginBoxWrapper}>
                 <LoginBox />
                 </section>
-                </section></>}
+                </section></span>}
+
+            {/* Mobile menu */}
+            <button className="mobileMenu__btn d-mobile" onClick={() => { openMobileMenu(); }}>
+                <img className={menu === "dark" ? "mobileMenu__btn__img mobileMenu__btn__img--dark" : "mobileMenu__btn__img"} src={hamburger} alt="menu" />
+            </button>
+
         </section>
     </header>
 }

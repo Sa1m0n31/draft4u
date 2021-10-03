@@ -70,6 +70,10 @@ ul {
     display: none !important;
 }
 
+.d-desktop-flex {
+    display: flex;
+}
+
 .btn__img {
     width: 100%;
     height: auto;
@@ -89,6 +93,11 @@ ul {
 
 .bold {
     font-weight: 700;
+}
+
+.d-below-1200 {
+    display: none;
+    position: relative;
 }
 
 /* Header */
@@ -1455,6 +1464,11 @@ ul {
     font-family: 'Oxanium', cursive;
 }
 
+.faqPage {
+    margin-top: 140px;
+    margin-bottom: 140px;
+}
+
 .faq__header {
     display: flex;
     justify-content: space-between;
@@ -1715,6 +1729,8 @@ ul {
     align-items: center;
     flex-wrap: wrap;
     padding-top: 40px;
+    opacity: 1;
+    transition: .4s all;
 }
 
 .mapContent__clubs__img {
@@ -1725,8 +1741,8 @@ ul {
 
 /* My account start page */
 .player__flex__imgWrapper--profile {
-    width: 300px;
-    height: 300px;
+    width: 300px !important;
+    height: 300px !important;
     border-radius: 50%;
     border: 4px solid #fff;
     overflow: hidden;
@@ -1766,11 +1782,72 @@ ul {
     text-transform: uppercase;
 }
 
+.myAccountStart__bottom__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+.myAccountStart__bottom__content__section {
+    width: 42%;
+    position: relative;
+}
+
+.myAccountStart__bottom__content__days {
+    font-size: 50px;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.myAccountStart__bottom__content__days span {
+    font-family: 'Oxanium', cursive;
+}
+
+.myAccountStart__bottom__content__days span {
+    display: block;
+    text-align: center;
+}
+
+.myAccountStart__bottom__content__days--big {
+    font-size: 160px;
+}
+
+.myAccountStart__subheader {
+    margin: 30px 0;
+    color: #3D3D3D;
+    font-size: 26px;
+}
+
+.myAccountStart__text {
+    color: var(--grey);
+    font-size: 18px;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+    stroke: var(--gold) !important;
+}
+
+.CircularProgressbar .CircularProgressbar-trail {
+    stroke: #ECECEC !important;
+}
+
 .clubActivities {
     padding: 30px 0;
     margin: 30px auto;
     border-top: 2px solid var(--gold);
     border-bottom: 2px solid var(--gold);
+}
+
+.clubActivities__empty {
+    margin: 10px 0;
+    font-weight: 400;
+    color: #3D3D3D;
 }
 
 .clubActivities__header {
@@ -1918,7 +1995,7 @@ ul {
 }
 
 .userInfoEdition__graphSection > svg {
-    /*overflow: visible;*/
+    overflow: visible;
 }
 
 .input--editProfile, .select--editProfile {

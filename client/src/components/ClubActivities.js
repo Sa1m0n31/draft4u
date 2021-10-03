@@ -4,7 +4,7 @@ import zaksa from '../static/img/zzaksa.png'
 
 const ClubActivities = () => {
     const clubs = [
-        zaksa, zaksa, zaksa, zaksa, zaksa, zaksa
+
     ]
 
     return <section className="clubActivities siteWidthSuperNarrow">
@@ -15,18 +15,22 @@ const ClubActivities = () => {
             Twój profil odwiedzili
         </h3>
         <section className="clubActivities__list">
-            {clubs.map((item, index) => {
+            {clubs.length ? clubs.map((item, index) => {
                 return <img key={index} className="clubActivities__img" src={item} alt="klub" />
-            })}
+            }) : <h3 className="clubActivities__empty">
+                Póki co nikt nie odwiedził Twojego profilu...
+            </h3>}
         </section>
 
         <h3 className="clubActivities__subheader">
             Twój profil polubili
         </h3>
         <section className="clubActivities__list">
-            {clubs.map((item, index) => {
+            {clubs.length ? clubs.map((item, index) => {
                 return <img key={index} className="clubActivities__img" src={item} alt="klub" />
-            })}
+            }) : <h3 className="clubActivities__empty">
+                Póki co nikt nie odwiedził Twojego profilu...
+            </h3> }
         </section>
 
     </section>

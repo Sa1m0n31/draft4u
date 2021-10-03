@@ -12,6 +12,7 @@
     "embla-carousel-react": "^5.0.1",
     "react": "^17.0.2",
     "react-chartjs-2": "^3.0.5",
+    "react-circular-progressbar": "^2.0.4",
     "react-dom": "^17.0.2",
     "react-loader-spinner": "^4.0.0",
     "react-modal": "^3.14.3",

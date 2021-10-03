@@ -28,7 +28,7 @@ const PlayerProfileEdition = () => {
 
     return <div className="container container--light">
         {loaded ? <>
-            <Header loggedIn={true} player={true} />
+            <Header loggedIn={true} player={true} menu="dark" />
 
             <UserInfoEdition player={player} />
             <PlayerInfoEdition player={player} />

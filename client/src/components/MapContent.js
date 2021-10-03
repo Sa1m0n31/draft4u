@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
 import poland from '../static/img/poland.svg'
 import { getAllClubs } from '../helpers/club'
@@ -12,9 +12,12 @@ const MapContent = () => {
     const [clubs, setClubs] = useState([]);
     const [filteredClubs, setFilteredClubs] = useState([]);
     const [dots, setDots] = useState([]);
+    const [loaded, setLoaded] = useState(false);
 
     const [sex, setSex] = useState([0]);
     const [league, setLeague] = useState([0]);
+
+    const clubsWrapper = useRef(null);
 
     const [clubCarousel, setClubCarousel] = useEmblaCarousel({
         loop: true,
@@ -26,18 +29,40 @@ const MapContent = () => {
         getAllClubs()
             .then(res => {
                 if(res?.data?.result) {
-                    console.log(res.data.result);
-                    setClubs(res.data.result);
-                    setFilteredClubs(res.data.result.filter((item) => {
+                    const allClubs = res.data.result;
+                    setClubs(allClubs);
+                    setFilteredClubs(allClubs.filter((item) => {
                         return item.sex;
                     }));
-                    setDots(res.data.result);
+                    setDots(allClubs);
+                    setLoaded(true);
+
+                    /* Divide clubs by coordinates */
+                    allClubs
+                        .sort((a, b) => {
+                            if(a.x > b.x) return 1;
+                            else if(a.x < b.x) return -1;
+                            else if(a.y > b.y) return 1;
+                            else return -1;
+                        });
+
+                    let prevX = -1, prevY = -1;
+                    for(let i=0; i<allClubs.length; i++) {
+                        if(prevX > 0) {
+                            if((prevX === allClubs[i].x)&&(prevY === allClubs[i].y)) {
+                                if(i > 1) allClubs.splice(i+1, 0, {});
+                            }
+                        }
+
+                        prevX = allClubs[i].x;
+                        prevY = allClubs[i].y;
+                    }
+                    console.log(allClubs);
                 }
             });
     }, []);
 
     const sortClubsByCoordinates = (a, b) => {
-        console.log(a.x + " " + b.x);
         if(a.x > b.x) {
             return 1;
         }
@@ -62,17 +87,29 @@ const MapContent = () => {
     }, [clubs]);
 
     useEffect(() => {
-        if(sex[0] === 0) {
-            setFilteredClubs(clubs.filter((item) => {
-                return item.sex;
-            }));
+        if(loaded) {
+            clubsWrapper.current.style.opacity = "0";
+
+            if(sex[0] === 0) {
+                setTimeout(() => {
+                    setFilteredClubs(clubs.filter((item) => {
+                        if(!league[0]) return item.sex;
+                        else return item.sex && parseInt(item.league) === league[0];
+                    }));
+                    clubsWrapper.current.style.opacity = "1";
+                }, 500);
+            }
+            else {
+                setTimeout(() => {
+                    setFilteredClubs(clubs.filter((item) => {
+                        if(!league[0]) return !item.sex;
+                        else return !item.sex && parseInt(item.league) === league[0];
+                    }));
+                    clubsWrapper.current.style.opacity = "1";
+                }, 500);
+            }
         }
-        else {
-            setFilteredClubs(clubs.filter((item) => {
-                return !item.sex;
-            }));
-        }
-    }, [sex]);
+    }, [sex, league]);
 
     const showClubsOnMap = (index) => {
         document.querySelectorAll(".mapDot__btn").forEach((item, i, array) => {
@@ -213,7 +250,7 @@ const MapContent = () => {
                 })}
             </section>
 
-            <section className="mapContent__clubs d-desktop-900">
+            <section className="mapContent__clubs d-desktop-900" ref={clubsWrapper}>
                 {filteredClubs.map((item, index) => {
                     return <figure key={index}>
                         <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />

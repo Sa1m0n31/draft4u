@@ -122,9 +122,35 @@
         width: 240px;
         height: 240px;
     }
+
+    .myAccountStart__bottom__content__days {
+        font-size: 30px;
+    }
+
+    .myAccountStart__bottom__content__days--big {
+        font-size: 100px;
+    }
 }
 
 @media(max-width: 1200px) {
+    .d-over-1200 {
+        display: none;
+    }
+
+    .d-below-1200 {
+        display: block;
+        padding: 40px 0;
+    }
+
+    .myAccountStart__bottom__content__section {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .myAccountStart__bottom__content {
+        flex-direction: column;
+    }
+
     .footer__col__header {
         font-size: 18px;
     }
@@ -150,7 +176,6 @@
     }
 
     .siteHeader__menu {
-        width: 320px;
         padding: 0 20px;
     }
 
@@ -292,6 +317,34 @@
     .input--editProfile, .select--editProfile {
         font-size: 17px;
     }
+
+    .siteWidthSuperNarrow {
+        width: var(--siteWidth);
+    }
+
+    .myAccountStart__bottom__subscriptions > section {
+        margin: auto;
+    }
+
+    .myAccountStart__text, .blogSection__extract, .clubActivities__empty {
+        font-size: 14px;
+    }
+
+    .button--readMore {
+        font-size: 15px;
+    }
+
+    .blogSection__title {
+        font-size: 21px;
+    }
+
+    .clubActivities__header {
+        font-size: 24px;
+    }
+
+    .clubActivities__subheader {
+        font-size: 17px;
+    }
 }
 
 @media(max-width: 996px) {
@@ -301,6 +354,11 @@
 
     .d-mobile-900-flex {
         display: flex !important;
+    }
+
+    .faqPage {
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 
     .clubCarousel__item__img {
@@ -496,7 +554,7 @@
 
 @media(max-width: 768px) {
     .d-mobile {
-        display: block;
+        display: block !important;
     }
 
     .d-desktop {
@@ -629,6 +687,8 @@
         justify-content: flex-start;
         align-items: center;
         color: rgba(212, 212, 212, 1);
+        background: transparent;
+        font-size: 15px;
     }
 
     .mobileMenu__bottom__img {
@@ -859,6 +919,14 @@
 
     .faq__question__main {
         font-size: 13px;
+    }
+
+    .siteHeader__player {
+        background: transparent;
+    }
+
+    .d-desktop-flex {
+        display: none;
     }
 }
 

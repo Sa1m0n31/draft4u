@@ -17,6 +17,9 @@ import Player from "./pages/Player";
 import Club from "./pages/Club";
 import Map from "./pages/Map";
 import PlayerProfileEdition from "./pages/PlayerProfileEdition";
+import PlayerFAQ from "./components/PlayerFAQ";
+import Header from "./components/Header";
+import FAQPage from "./pages/FAQPage";
 
 function App() {
   return <Router>
@@ -58,6 +61,9 @@ function App() {
     </Route>
     <Route path="/edycja-profilu">
         <PlayerProfileEdition />
+    </Route>
+    <Route path="/faq">
+      <FAQPage />
     </Route>
 
   </Router>

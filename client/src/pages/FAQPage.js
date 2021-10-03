@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import PlayerFAQ from "../components/PlayerFAQ";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {isLoggedIn} from "../helpers/auth";
-import MyAccountStartHeader from "../components/MyAccountStartHeader";
-import BlogSection from "../components/BlogSection";
-import ClubActivities from "../components/ClubActivities";
-import MyAccountStartBottom from "../components/MyAccountStartBottom";
 import {getUserData} from "../helpers/user";
+import LoadingPage from "./LoadingPage";
 
-const MyAccountStart = () => {
+const FAQPage = () => {
     const [loaded, setLoaded] = useState(false);
     const [fullName, setFullName] = useState("");
 
@@ -29,18 +27,15 @@ const MyAccountStart = () => {
             })
     }, []);
 
-    return <div className="container container--user">
-        <Header loggedIn={true} player={true} menu="dark" />
-
+    return <div className="container container--light">
         {loaded ? <>
-            <MyAccountStartHeader fullName={fullName} />
-            <BlogSection />
-            <ClubActivities />
-            <MyAccountStartBottom />
-        </> : ""}
-
-        <Footer theme="light" border={true} />
+            <Header player={true} loggedIn={true} menu="dark" />
+            <main className="siteWidthSuperNarrow faqPage">
+                <PlayerFAQ />
+            </main>
+            <Footer theme="dark" />
+        </> : <LoadingPage />}
     </div>
 }
 
-export default MyAccountStart;
+export default FAQPage;
