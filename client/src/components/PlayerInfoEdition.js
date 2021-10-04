@@ -38,6 +38,7 @@ const PlayerInfoEdition = ({player}) => {
     }, []);
 
     useEffect(() => {
+        console.log(player.vertical_range);
         setAttackRange(player.attack_range);
         setVerticalRange(player.vertical_range);
         setBlockRange(player.block_range);
@@ -106,7 +107,7 @@ const PlayerInfoEdition = ({player}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editAttackRange ? "label--edit" : ""}>
-                        <input value={attackRange}
+                        <input value={attackRange ? attackRange : 0}
                                type="number"
                                onChange={(e) => { setAttackRange(e.target.value); }}
                                disabled={!editAttackRange}
@@ -127,7 +128,7 @@ const PlayerInfoEdition = ({player}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editVerticalRange ? "label--edit" : ""}>
-                        <input value={verticalRange}
+                        <input value={verticalRange ? verticalRange : 0}
                                type="number"
                                onChange={(e) => { setVerticalRange(e.target.value); }}
                                disabled={!editVerticalRange}
@@ -148,7 +149,7 @@ const PlayerInfoEdition = ({player}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editBlockRange ? "label--edit" : ""}>
-                        <input value={blockRange}
+                        <input value={blockRange ? blockRange : 0}
                                type="number"
                                onChange={(e) => { setBlockRange(e.target.value); }}
                                disabled={!editBlockRange}
@@ -168,8 +169,8 @@ const PlayerInfoEdition = ({player}) => {
                     Wzrost
                 </span>
                 <span className="userInfoEdition__value">
-                    <label className={editHeight ? "label--edit" : ""}>
-                        <input value={height}
+                    <label className={editHeight ? "label--edit" : 0}>
+                        <input value={height ? height : 0}
                                type="number"
                                onChange={(e) => { setHeight(e.target.value); }}
                                disabled={!editHeight}
@@ -189,8 +190,8 @@ const PlayerInfoEdition = ({player}) => {
                     Waga
                 </span>
                 <span className="userInfoEdition__value">
-                    <label className={editWeight ? "label--edit" : ""}>
-                        <input value={weight}
+                    <label className={editWeight ? "label--edit" : 0}>
+                        <input value={weight ? weight : 0}
                                type="number"
                                onChange={(e) => { setWeight(e.target.value); }}
                                disabled={!editWeight}
@@ -223,7 +224,7 @@ const PlayerInfoEdition = ({player}) => {
                             })}
                         </select> : <input className="input--editProfile"
                                            disabled={true}
-                                           value={position} />}
+                                           value={position ? position : "-"} />}
 
                         {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />

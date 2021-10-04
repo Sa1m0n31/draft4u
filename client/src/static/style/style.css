@@ -1237,7 +1237,8 @@ ul {
 
 .aboutUs__content {
     padding-bottom: 100px;
- }
+    z-index: 6;
+}
 
 .aboutUs__header {
     font-family: 'Oxanium', cursive;
@@ -1287,6 +1288,8 @@ ul {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+    transition: .4s all;
+    z-index: 5;
 }
 
 .aboutUs__profileWrapper {
@@ -1346,7 +1349,7 @@ ul {
 .player__firstImgWrapper {
     /*background: #fff;*/
     width: 100%;
-    height: 400px;
+    max-height: 400px;
     overflow: hidden;
 }
 
@@ -1978,7 +1981,9 @@ ul {
 }
 
 .userInfoEdition__graphSection {
-    margin-left: 10vw;
+    /*margin-left: 10vw;*/
+    position: relative;
+    z-index: -10;
 }
 
 .userInfoEdition__graphSection .scale {

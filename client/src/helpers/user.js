@@ -34,7 +34,7 @@ const changeUserPassword = (email, password) => {
 const getUserData = () => {
     return axios.get(`${API_URL}/user/get-user-data`, {
         headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:3000'
+            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
         },
         withCredentials: true
     });

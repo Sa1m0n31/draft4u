@@ -24,7 +24,7 @@ const app = express();
 app.use(cors({
     credentials: true,
     //origin: "*"
-    origin: ['https://drafcik.skylo-test1.pl', 'http://drafcik.skylo-test1.pl', 'http://localhost:3000']
+    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl']
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -67,6 +67,21 @@ app.get("/odzyskiwanie-hasla", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 app.get("/resetowanie-hasla", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/edycja-profilu", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/faq", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/o-nas", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zawodnik", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/klub", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 

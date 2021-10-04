@@ -503,10 +503,6 @@
         margin-top: 10px;
     }
 
-    .playerInfoEdition .userInfoEdition__btn {
-        margin-left: 0;
-    }
-
     .userInfoEdition__graphSection > svg {
         max-width: 80vw;
     }

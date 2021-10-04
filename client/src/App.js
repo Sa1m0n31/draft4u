@@ -51,9 +51,9 @@ function App() {
     <Route path="/klub">
         <Club />
     </Route>
-    <Route path="/mapa">
-        <Map />
-    </Route>
+    {/*<Route path="/mapa">*/}
+    {/*    <Map />*/}
+    {/*</Route>*/}
 
     {/* User routes */}
     <Route path="/rozpocznij">

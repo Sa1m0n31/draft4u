@@ -33,6 +33,7 @@ const UserInfoEdition = ({player}) => {
     const MAX = 30000;
 
     useEffect(() => {
+        console.log(player.licence_number);
         setFullName(player.first_name + " " + player.last_name);
         setEmail(player.email);
         setPhoneNumber(player.phone_number);
@@ -154,7 +155,7 @@ const UserInfoEdition = ({player}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editLicence ? "label--edit" : ""}>
-                        <input value={licence}
+                        <input value={licence ? licence : "-"}
                                onChange={(e) => { setLicence(e.target.value); }}
                                disabled={!editLicence}
                                className="input--editProfile"

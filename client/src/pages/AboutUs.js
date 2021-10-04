@@ -10,7 +10,7 @@ import bartekImg from '../static/img/bartek-zdjecie.png'
 const AboutUs = () => {
     useEffect(() => {
         document.querySelector(".aboutUs__content").addEventListener('touchstart', handleTouchStart, false);
-        document.querySelector(".aboutUs__content").addEventListener('touchmove', handleTouchStart, false);
+        document.querySelector(".aboutUs__content").addEventListener('touchmove', handleTouchMove, false);
     }, []);
 
     let xDown = null;
@@ -65,21 +65,28 @@ const AboutUs = () => {
         desc: "Od 12 lat profesjonalnie gram w siatkówkę. Zaczynałem swoją przygodę na plaży - reprezentowałem Polskę na arenie krajowej i międzynarodowej. Obecnie gram na parkietach ligowych - doskonale wiem jak wygląda praca zawodnika od podszewki."
     }
 
-    // document.addEventListener("click", () => {
-    //     nextPlayer();
-    // });
-
     const [foregroundPlayer, setForegroundPlayer] = useState(player1);
     const [backgroundPlayer, setBackgroundPlayer] = useState(player2);
 
     const nextPlayer = () => {
         /* Animation */
-
-        /* Content */
-        let tmp;
-        tmp = foregroundPlayer;
-        setForegroundPlayer(backgroundPlayer);
-        setBackgroundPlayer(tmp);
+        document.querySelector(".aboutUs__images").style.opacity = "0";
+        document.querySelector(".aboutUs__captionWrapper").style.opacity = "0";
+        document.querySelector(".aboutUs__subheader").style.opacity = "0";
+        document.querySelector(".aboutUs__desc").style.opacity = "0";
+        setTimeout(() => {
+            /* Content */
+            let tmp;
+            tmp = foregroundPlayer;
+            setForegroundPlayer(backgroundPlayer);
+            setBackgroundPlayer(tmp);
+            setTimeout(() => {
+                document.querySelector(".aboutUs__images").style.opacity = "1";
+                document.querySelector(".aboutUs__captionWrapper").style.opacity = "1";
+                document.querySelector(".aboutUs__subheader").style.opacity = "1";
+                document.querySelector(".aboutUs__desc").style.opacity = "1";
+            }, 50);
+        }, 500);
     }
 
     return <div className="container container--light">

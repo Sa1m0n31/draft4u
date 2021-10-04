@@ -15,7 +15,7 @@ const loginUser = (email, password) => {
         password: password
     }, {
         headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:3000'
+            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
         },
         withCredentials: true
     });
@@ -66,7 +66,7 @@ const verifyUser = (token) => {
 const logoutUser = () => {
     return axios.get(`${API_URL}/auth/logout`, {
         headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:3000'
+            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
         },
         withCredentials: true
     });
