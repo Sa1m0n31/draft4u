@@ -20,6 +20,7 @@ import PlayerProfileEdition from "./pages/PlayerProfileEdition";
 import PlayerFAQ from "./components/PlayerFAQ";
 import Header from "./components/Header";
 import FAQPage from "./pages/FAQPage";
+import VideoUploadPage from "./pages/VideoUploadPage";
 
 function App() {
   return <Router>
@@ -64,6 +65,9 @@ function App() {
     </Route>
     <Route path="/faq">
       <FAQPage />
+    </Route>
+    <Route path="/dodaj-video">
+        <VideoUploadPage />
     </Route>
 
   </Router>

@@ -924,6 +924,24 @@
     .d-desktop-flex {
         display: none;
     }
+
+    .playerVideoView {
+        width: 100%;
+    }
+
+    .playerVideoView__btnWrapper {
+        justify-content: center;
+    }
+
+    .embla__slide--video {
+        height: 140px;
+        margin: 0 15px;
+    }
+
+    .embla__slide--video__playBtn {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 @media(max-width: 576px) {

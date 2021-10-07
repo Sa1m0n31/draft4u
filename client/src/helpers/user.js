@@ -135,10 +135,43 @@ const getAllPositions = () => {
     return axios.get(`${API_URL}/user/get-all-positions`);
 }
 
+
+/*
+INSERT INTO video_categories VALUES (1, 'atak');
+INSERT INTO video_categories VALUES (2, 'blok');
+INSERT INTO video_categories VALUES (3, 'serwis');
+INSERT INTO video_categories VALUES (4, 'highlights');
+INSERT INTO video_categories VALUES (5, 'pełen mecz');
+INSERT INTO video_categories VALUES (6, 'rozegranie');
+INSERT INTO video_categories VALUES (7, 'obrona');
+INSERT INTO video_categories VALUES (8, 'przyjęcie');
+ */
+const getPlayElementsByPosition = (position) => {
+    switch(position) {
+        case 'atakujący':
+            return ['atak', 'blok', 'serwis', 'highlights', 'pełen mecz'];
+            break;
+        case 'przyjmujący':
+            return ['atak', 'przyjęcie', 'serwis', 'blok', 'highlights'];
+            break;
+        case 'rozgrywający':
+            return ['rozegranie', 'blok', 'serwis', 'highlights', 'pełen mecz'];
+            break;
+        case 'libero':
+            return ['przyjęcie', 'oborona', 'rozegranie', 'highlights', 'pełen mecz'];
+            break;
+        case 'środkowy':
+            return ['blok', 'atak', 'serwis', 'highlights', 'pełen mecz'];
+            break;
+        default:
+            break;
+    }
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,
-    getAllPositions
+    getAllPositions, getPlayElementsByPosition
 }

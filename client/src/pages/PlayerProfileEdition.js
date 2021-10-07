@@ -7,6 +7,7 @@ import ClubSlider from "../components/ClubSlider";
 import {getUserData} from "../helpers/user";
 import {isLoggedIn} from "../helpers/auth";
 import LoadingPage from "./LoadingPage";
+import PlayerVideoView from "../components/PlayerVideosView";
 
 const PlayerProfileEdition = () => {
     const [loaded, setLoaded] = useState(false);
@@ -32,6 +33,7 @@ const PlayerProfileEdition = () => {
 
             <UserInfoEdition player={player} />
             <PlayerInfoEdition player={player} />
+            <PlayerVideoView id={player.id} />
             <ClubSlider />
 
             <Footer theme="light" border={true} />

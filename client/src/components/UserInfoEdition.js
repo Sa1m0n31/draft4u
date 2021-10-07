@@ -11,6 +11,7 @@ import {
     updateUserPhoneNumber,
     updateUserSalary
 } from "../helpers/user";
+import UserProfileImage from "./UserProfileImage";
 
 const UserInfoEdition = ({player}) => {
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
@@ -70,12 +71,7 @@ const UserInfoEdition = ({player}) => {
 
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
-            <figure className="userInfoEdition__imgWrapper">
-                <img className="userInfoEdition__img" src={example} alt="alt" />
-                <button className="userInfoEdition__imgBtn">
-                    <img className="userInfoEdition__imgBtn__img" src={camera} alt="zmien-zdjecie" />
-                </button>
-            </figure>
+            <UserProfileImage />
         </section>
 
         <section className="userInfoEdition__form">
