@@ -14,35 +14,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/ModalVideoPlayer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/ProfileImagePreview.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/UserProfileImage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/VideoUploadContent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/VideoUploader.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/helpers/video.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/VideoUploadPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/failure.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/play-button.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/trash-black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/upload-black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/upload.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/video" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/wgraj-filmik.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/wybierz-plik.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/DeleteVideoModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/PaymentForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/helpers/others.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/PaymentPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/karty-platnicze.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/przelewy24.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/triangle-down-black.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ModalVideoPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ModalVideoPlayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/MyAccountStartBottom.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MyAccountStartBottom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/MyAccountStartHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MyAccountStartHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/UserInfoEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UserInfoEdition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UserProfileImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UserProfileImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/VideoUploadContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/VideoUploadContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/VideoUploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/VideoUploader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/helpers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/video.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/video.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/FAQPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/FAQPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/MyAccountStart.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MyAccountStart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/PlayerProfileEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/PlayerProfileEdition.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/VideoUploadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/VideoUploadPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/video.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/video.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/0b0f780fbba67f65db202507efba7672" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/0db7a59c6c4092635974683c476f756f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/12c4ae61a862d9c88512077d5984aed4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/1b83a97f25b89da799c6b9bd51fee06e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/1efaf9373b6a9c2a925db3038de85072" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/230a670bd3e6f023305793880d47601e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/3e4dbc846468709c5883ad2dd32d8651" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/41bb3c20266fd921b503b830529aeb0a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/47a431b1b5956283dddd14ba9a5abd15" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/4814297970573818caf217f8eba94740" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/48845943605900b484640f6d53998d42" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/53f38c3148f0774adfd8f3afffd1aa23" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/7147bbdf0bc72c40cf676ed214f54d2f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/72650db4142c1e4d9501012bfb408aca" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/7ad65218e7a8f19d23a6ea81589e4926" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/82622e903984629c7d7a68a00a44abb6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/98f3e5c928fedcef8aa8163759152689" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/a7aca33bed84cb178ed73a6f239644a0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/aaa29c42b5f44e7a509d845ebc1347b0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/b1815b27282c0b5f51f57ed9d9f7371a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/b56e0e330ada4424c2bd038597967f50" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/ba271cf72f5ed9b4f69c55f9882e4f0c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/d0b5d9f0cebb183a1297f2e9c5fa3132" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/dd5aba7f7b28171dd824a937cc8b42f9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/f3f0ad773f55f2f76d60bc9c50e9aa8c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/f7f6bae245e1daf68a50cbc8c09ae32c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/f969308679654b94a4dce171a7017974" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/videos/fab337e39047b3816710711b300b5275" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +108,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\static\img" />
+      <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\lib" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\media\clubs" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\routers" />
     </key>
@@ -115,6 +146,8 @@
       <workItem from="1633365181310" duration="101000" />
       <workItem from="1633389812138" duration="687000" />
       <workItem from="1633606770280" duration="24325000" />
+      <workItem from="1633793733850" duration="7245000" />
+      <workItem from="1633901437210" duration="11134000" />
     </task>
     <servers />
   </component>
@@ -134,33 +167,33 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1633629667116">
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1633799463224">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1633629667116" />
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1633799463224" />
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1633287008314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633287008314" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1633634619535">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1633907001039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633634619535" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1633907001039" />
     <state x="384" y="0" width="624" height="1027" key="dock-window-1" timestamp="1631571429351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="384" y="0" width="624" height="1027" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1631571429351" />
-    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1633632084651">
+    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1633912520765">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633632084651" />
+    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633912520765" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1633289633645">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633289633645" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1633639114425">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1633910790768">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633639114425" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1633910790768" />
   </component>
 </project>

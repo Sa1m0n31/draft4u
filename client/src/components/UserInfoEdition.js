@@ -34,7 +34,6 @@ const UserInfoEdition = ({player}) => {
     const MAX = 30000;
 
     useEffect(() => {
-        console.log(player.licence_number);
         setFullName(player.first_name + " " + player.last_name);
         setEmail(player.email);
         setPhoneNumber(player.phone_number);
@@ -71,7 +70,7 @@ const UserInfoEdition = ({player}) => {
 
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
-            <UserProfileImage />
+            <UserProfileImage user={player} />
         </section>
 
         <section className="userInfoEdition__form">

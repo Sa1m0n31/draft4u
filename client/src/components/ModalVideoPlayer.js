@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Player } from 'video-react'
 import closeIcon from "../static/img/close-grey.svg";
 
 const ModalVideoPlayer = ({source, closeModal}) => {
+    useEffect(() => {
+        document.addEventListener("keyup", (e) => {
+            if(e.key === "Escape") {
+                closeModal();
+            }
+        });
+    }, []);
+
     return <main className="modalVideoPlayer">
         <main className="modalVideoPlayer__video">
             <button className="registerModal__closeBtn" onClick={() => { closeModal(); }}>

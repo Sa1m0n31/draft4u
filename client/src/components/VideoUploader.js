@@ -7,8 +7,9 @@ import {getUserVideos, uploadVideo} from "../helpers/video";
 import DraftLoader from "./Loader";
 import successIcon from '../static/img/success.svg'
 import failureIcon from '../static/img/failure.png'
+import {removePolishChars} from "../helpers/others";
 
-const VideoUploader = ({closeUploader, userId, play}) => {
+const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play}) => {
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(-1);
 
@@ -17,6 +18,7 @@ const VideoUploader = ({closeUploader, userId, play}) => {
         uploadVideo(file, userId, play)
             .then((res) => {
                 setLoading(false);
+                setVideoUpload(videoUpload+1);
                 if(res?.data?.result) setResponse(1);
                 else setResponse(0);
             });

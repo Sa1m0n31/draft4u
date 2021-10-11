@@ -21,4 +21,12 @@ const getUserVideos = (userId) => {
     });
 }
 
-export { uploadVideo, getUserVideos }
+const deletePlayerVideo = (userId, play) => {
+    return axios.delete(`${API_URL}/video/delete`, {
+        data: {
+            userId, play
+        }
+    });
+}
+
+export { uploadVideo, getUserVideos, deletePlayerVideo }

@@ -12,14 +12,17 @@ import bell from '../static/img/bell.svg'
 import padlock from '../static/img/padlock.svg'
 import question from '../static/img/question.svg'
 import logoutIcon from '../static/img/logout.svg'
-import profilePicture from '../static/img/profile.png'
+import profilePictureExample from '../static/img/profile.png'
 import {logoutUser} from "../helpers/auth";
+import settings from "../settings";
+import {getUserProfileImage} from "../helpers/user";
 
-const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
+const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) => {
     const [loginVisible, setLoginVisible] = useState(false);
     const [profileMenuVisible, setProfileMenuVisible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
     const [messagesVisible, setMessagesVisible] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(profilePictureExample);
 
     let loginBoxWrapper = useRef(null);
     let registerModal = useRef(null);
@@ -31,6 +34,10 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club}) => {
     let mobileMenuBottom = useRef(null);
 
     const mobileMenuChildren = [mobileMenuCloseBtn, mobileMenuHeader, mobileMenuList, mobileMenuBottom];
+
+    useEffect(() => {
+        if(profileImage) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
+    }, []);
 
     const toggleLogin = () => {
         if(loginVisible) {

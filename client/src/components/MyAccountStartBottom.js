@@ -12,7 +12,7 @@ const MyAccountStartBottom = () => {
                     Twoja subskrypcja
                 </h3>
                 <span className="d-below-1200">
-                    <CircularProgressbar value={34}
+                    <CircularProgressbar value={1}
                                          text={<span>14dni<br/>14</span>} />
 
                     <span className="myAccountStart__bottom__content__days">
@@ -62,9 +62,9 @@ const MyAccountStartBottom = () => {
                                 PLN
                             </span>
                     </h4>
-                    <button className="button button--hover button--buyNow">
+                    <a className="button button--hover button--buyNow" href="/zaplac?pakiet=1">
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                    </button>
+                    </a>
                 </section>
                 <section className="player__option">
                     <h3 className="player__option__name">
@@ -76,9 +76,9 @@ const MyAccountStartBottom = () => {
                                 PLN
                             </span>
                     </h4>
-                    <button className="button button--hover button--buyNow">
+                    <a className="button button--hover button--buyNow" href="/zaplac?pakiet=2">
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                    </button>
+                    </a>
                 </section>
                 <section className="player__option">
                     <h3 className="player__option__name">
@@ -90,9 +90,9 @@ const MyAccountStartBottom = () => {
                                 PLN
                             </span>
                     </h4>
-                    <button className="button button--hover button--buyNow">
+                    <a className="button button--hover button--buyNow" href="/zaplac?pakiet=3">
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                    </button>
+                    </a>
                 </section>
             </section>
         </menu>

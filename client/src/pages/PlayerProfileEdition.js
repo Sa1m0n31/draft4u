@@ -9,35 +9,16 @@ import {isLoggedIn} from "../helpers/auth";
 import LoadingPage from "./LoadingPage";
 import PlayerVideoView from "../components/PlayerVideosView";
 
-const PlayerProfileEdition = () => {
-    const [loaded, setLoaded] = useState(false);
-    const [player, setPlayer] = useState({});
-
-    useEffect(() => {
-        isLoggedIn()
-            .then(res => {
-                if(!res?.data?.result) window.location = "/";
-            });
-
-        getUserData()
-            .then(res => {
-                setPlayer(res?.data?.result);
-                setLoaded(true);
-            });
-
-    }, []);
-
+const PlayerProfileEdition = ({user}) => {
     return <div className="container container--light">
-        {loaded ? <>
-            <Header loggedIn={true} player={true} menu="dark" />
+        <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} />
 
-            <UserInfoEdition player={player} />
-            <PlayerInfoEdition player={player} />
-            <PlayerVideoView id={player.id} />
-            <ClubSlider />
+        <UserInfoEdition player={user} />
+        <PlayerInfoEdition player={user} />
+        <PlayerVideoView id={user.id} />
+        <ClubSlider />
 
-            <Footer theme="light" border={true} />
-        </> : <LoadingPage />}
+        <Footer theme="light" border={true} />
     </div>
 }
 

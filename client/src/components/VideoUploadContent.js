@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import uploadIcon from '../static/img/upload.svg'
+import trashIcon from '../static/img/trash-black.svg'
 import uploadBlackIcon from '../static/img/upload-black.svg'
 import {getPlayElementsByPosition, getUserData} from "../helpers/user";
 import VideoUploader from "./VideoUploader";
-import {getUserVideos} from "../helpers/video";
+import {deletePlayerVideo, getUserVideos} from "../helpers/video";
 import settings from "../settings";
 import { Player } from 'video-react';
 import ModalVideoPlayer from "./ModalVideoPlayer";
+import DeleteVideoModal from "./DeleteVideoModal";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
@@ -15,6 +17,9 @@ const VideoUploadContent = () => {
     const [userId, setUserId] = useState("");
     const [playVideo, setPlayVideo] = useState(-1);
     const [videoName, setVideoName] = useState("");
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [playToDelete, setPlayToDelete] = useState("");
+    const [videoUpload, setVideoUpload] = useState(0);
 
     useEffect(() => {
         getUserData()
@@ -24,11 +29,19 @@ const VideoUploadContent = () => {
                 setUserId(res.data.result.id);
                 getUserVideos(res.data.result.id)
                     .then((res) => {
-                        console.log(res.data.result);
                         setVideos(res.data.result);
                     })
             });
     }, []);
+
+    useEffect(() => {
+        if(videoUpload) {
+            getUserVideos(userId)
+                .then((res) => {
+                    setVideos(res.data.result);
+                });
+        }
+    }, [videoUpload]);
 
     const openUploader = (play) => {
         setVideoName(play);
@@ -49,9 +62,16 @@ const VideoUploadContent = () => {
         });
     }
 
+    const deleteVideo = (play) => {
+        setPlayToDelete(play);
+        setDeleteModal(true);
+    }
+
     return <main className="siteWidthSuperNarrow videoUploadContent">
-        {uploaderOpen ? <VideoUploader closeUploader={closeUploader} userId={userId} play={videoName} /> : ""}
+        {uploaderOpen ? <VideoUploader setVideoUpload={setVideoUpload} videoUpload={videoUpload} closeUploader={closeUploader} userId={userId} play={videoName} /> : ""}
         {playVideo !== -1 ? <ModalVideoPlayer closeModal={closeModalVideoPlayer} source={`${settings.API_URL}/video/get?url=/videos/${videos[playVideo].file_path}`} /> : ""}
+
+        {deleteModal ? <DeleteVideoModal setVideoUpload={setVideoUpload} videoUpload={videoUpload} userId={userId} play={playToDelete} setModalClose={setDeleteModal} /> : ""}
 
         <h2 className="player__header">
             Dodaj akcje
@@ -91,6 +111,9 @@ const VideoUploadContent = () => {
                 </h3>
 
                 <section className="videoTable__buttons">
+                    {getVideoIndexByPlay(item) !== -1 ? <button className="videoTable__uploadBtn videoTable__uploadBtn--trash" onClick={(e) => { e.stopPropagation(); deleteVideo(item) }}>
+                        <img className="btn__img" src={trashIcon} alt="usun" />
+                    </button> : ""}
                     <button className="videoTable__uploadBtn">
                         <img className="btn__img" src={uploadBlackIcon} alt="dodaj-video" />
                     </button>

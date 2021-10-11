@@ -4,7 +4,7 @@ const path = require("path");
 const db = require("../database/db");
 
 const multer  = require('multer')
-const upload = multer({ dest: 'videos/' })
+const upload = multer({ dest: 'videos/' });
 
 router.get("/get", (request, response) => {
     const { url } = request.query;
@@ -15,11 +15,16 @@ router.get("/get", (request, response) => {
 router.post("/upload", upload.single('file'), (request, response) => {
     const { userId, play } = request.body;
 
+    console.log(userId);
+    console.log(play);
+
     /* Get video category id */
     const query = `SELECT id FROM video_categories WHERE name = $1`;
     const values = [play];
 
     db.query(query, values, (err, res) => {
+        console.log(err);
+        console.log(res);
         if(res.rows[0].id) {
             /* Check if video already exists */
             const playId = res.rows[0].id;
@@ -27,13 +32,18 @@ router.post("/upload", upload.single('file'), (request, response) => {
             const values = [userId, playId];
 
             db.query(query, values, (err, res) => {
+                console.log(err);
+                console.log(res);
                 if(res) {
-                    if(res.rows) {
+                    if(res.rows.length) {
+                        console.log("update old video");
                         /* Update old video */
                         const query = `UPDATE videos SET file_path = $1 WHERE user_id = $2 AND video_category = $3`;
                         const values = [request.file.filename, userId, playId];
 
                         db.query(query, values, (err, res) => {
+                            console.log(err);
+                            console.log(res);
                             if(res) {
                                 response.send({
                                     result: 1
@@ -48,10 +58,13 @@ router.post("/upload", upload.single('file'), (request, response) => {
                     }
                     else {
                         /* Add new video */
+                        console.log("add new video");
                         const query = `INSERT INTO videos VALUES (nextval('videos_id_sequence'), $1, $2, $3)`;
                         const values = [request.file.filename, userId, playId];
 
                         db.query(query, values, (err, res) => {
+                            console.log(err);
+                            console.log(res);
                             if(res) {
                                 response.send({
                                     result: 1

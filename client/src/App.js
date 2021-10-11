@@ -21,6 +21,8 @@ import PlayerFAQ from "./components/PlayerFAQ";
 import Header from "./components/Header";
 import FAQPage from "./pages/FAQPage";
 import VideoUploadPage from "./pages/VideoUploadPage";
+import PaymentPage from "./pages/PaymentPage";
+import UserWrapper from "./wrappers/UserWrapper";
 
 function App() {
   return <Router>
@@ -57,18 +59,24 @@ function App() {
     {/*</Route>*/}
 
     {/* User routes */}
-    <Route path="/rozpocznij">
-        <MyAccountStart />
-    </Route>
-    <Route path="/edycja-profilu">
-        <PlayerProfileEdition />
-    </Route>
-    <Route path="/faq">
-      <FAQPage />
-    </Route>
-    <Route path="/dodaj-video">
-        <VideoUploadPage />
-    </Route>
+      <Route path="/rozpocznij">
+          <UserWrapper page={1} />
+      </Route>
+      <Route path="/edycja-profilu">
+          <UserWrapper page={2} />
+      </Route>
+      <Route path="/faq">
+          <UserWrapper page={3} />
+          {/*<FAQPage />*/}
+      </Route>
+      <Route path="/dodaj-video">
+          <UserWrapper page={4} />
+          {/*<VideoUploadPage />*/}
+      </Route>
+      <Route path="/zaplac">
+          <UserWrapper page={5} />
+          {/*<PaymentPage />*/}
+      </Route>
 
   </Router>
 }

@@ -6,6 +6,9 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const smtpTransport = require('nodemailer-smtp-transport');
 
+const multer  = require('multer')
+const upload = multer({ dest: 'media/users' })
+
 router.get("/is-email-available", (request, response) => {
    const email = request.query.email;
 
@@ -170,7 +173,7 @@ router.get("/get-user-data", (request, response) => {
    const userId = request.user;
 
    if(userId) {
-       const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name FROM users u LEFT OUTER JOIN positions p ON u.position = p.id WHERE u.id = $1';
+       const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id WHERE u.id = $1';
        const values = [userId];
 
        db.query(query, values, (err, res) => {
@@ -339,6 +342,60 @@ router.get("/get-all-positions", (request, response) => {
             })
         }
     });
-})
+});
+
+router.post("/edit-profile-image", upload.single("image"), (request, response) => {
+   const { userId } = request.body;
+
+   const query = `INSERT INTO images VALUES (nextval('images_id_sequence'), $1) RETURNING id`;
+   const values = [request.file.filename];
+
+   db.query(query, values, (err, res) => {
+       if(res) {
+           const query = 'UPDATE users SET profile_picture = $1 WHERE id = $2';
+           const values = [res.rows[0].id, userId];
+
+           db.query(query, values, (err, res) => {
+               if(res) {
+                   response.send({
+                       result: 1
+                   });
+               }
+               else {
+                   response.send({
+                       result: 0
+                   });
+               }
+           })
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
+   });
+});
+
+router.get("/get-user-profile-image", (request, response) => {
+   const { userId } = request.query;
+
+   console.log(userId);
+
+   const query = 'SELECT i.file_path FROM images i JOIN users u ON u.profile_picture = i.id WHERE u.id = $1';
+   const values = [userId];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: res.rows
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
 
 module.exports = router;

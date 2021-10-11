@@ -141,7 +141,7 @@ INSERT INTO video_categories VALUES (1, 'atak');
 INSERT INTO video_categories VALUES (2, 'blok');
 INSERT INTO video_categories VALUES (3, 'serwis');
 INSERT INTO video_categories VALUES (4, 'highlights');
-INSERT INTO video_categories VALUES (5, 'pełen mecz');
+INSERT INTO video_categories VALUES (5, 'pelen mecz');
 INSERT INTO video_categories VALUES (6, 'rozegranie');
 INSERT INTO video_categories VALUES (7, 'obrona');
 INSERT INTO video_categories VALUES (8, 'przyjęcie');
@@ -149,23 +149,40 @@ INSERT INTO video_categories VALUES (8, 'przyjęcie');
 const getPlayElementsByPosition = (position) => {
     switch(position) {
         case 'atakujący':
-            return ['atak', 'blok', 'serwis', 'highlights', 'pełen mecz'];
+            return ['atak', 'blok', 'serwis', 'highlights', 'pelen mecz'];
             break;
         case 'przyjmujący':
             return ['atak', 'przyjęcie', 'serwis', 'blok', 'highlights'];
             break;
         case 'rozgrywający':
-            return ['rozegranie', 'blok', 'serwis', 'highlights', 'pełen mecz'];
+            return ['rozegranie', 'blok', 'serwis', 'highlights', 'pelen mecz'];
             break;
         case 'libero':
-            return ['przyjęcie', 'oborona', 'rozegranie', 'highlights', 'pełen mecz'];
+            return ['przyjecie', 'obrona', 'rozegranie', 'highlights', 'pelen mecz'];
             break;
         case 'środkowy':
-            return ['blok', 'atak', 'serwis', 'highlights', 'pełen mecz'];
+            return ['blok', 'atak', 'serwis', 'highlights', 'pelen mecz'];
             break;
         default:
             break;
     }
+}
+
+const editProfileImage = (userId, image) => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    let formData = new FormData();
+    formData.append('userId', userId);
+    formData.append('image', image);
+
+    return axios.post(`${API_URL}/user/edit-profile-image`, formData, config);
+}
+
+const getUserProfileImage = (userId) => {
+    return axios.get(`${API_URL}/user/get-user-profile-image`, {
+        params: {
+            userId
+        }
+    });
 }
 
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
@@ -173,5 +190,5 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,
-    getAllPositions, getPlayElementsByPosition
+    getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage
 }
