@@ -512,7 +512,7 @@
     }
 
     .userInfoEdition__form {
-        width: 100%;
+        width: 100% !important;
         border-radius: 0;
         max-width: 700px;
     }
@@ -545,6 +545,40 @@
 
     .playerInfoEdition .userInfoEdition__btn--position {
         margin-left: 10px;
+    }
+
+    #apexchartsbasicxbar {
+        width: 100% !important;
+    }
+
+    #playerGraph > div {
+        margin-top: 0;
+    }
+
+    .playerVideoView .video-react {
+        height: 150px;
+        margin: 0 8px;
+    }
+
+    .userInfoEdition__graphSection {
+        height: auto;
+    }
+
+    .video-react-big-play-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .playerVideoView {
+        margin-bottom: -120px;
+    }
+
+    .videoTable__header__h, .videoTable__item__element {
+        font-size: 15px;
+    }
+
+    .videoTable__uploadBtn {
+        width: 15px !important;
     }
 }
 
@@ -942,6 +976,165 @@
         width: 40px;
         height: 40px;
     }
+
+    .videoUploadContent {
+        width: 100%;
+    }
+
+    .videoTable__item {
+        border-left: none;
+        border-right: none;
+    }
+
+    .player__header {
+        margin-left: 5vw;
+    }
+
+    .videoUpload__backBtn, .videoTable__header {
+        display: none;
+    }
+
+    .videoTable__mobile__more {
+        width: 15px;
+        height: auto;
+        background: transparent;
+    }
+
+    .videoTable__mobile__more__img {
+        width: 100%;
+    }
+
+    .videoTable__item {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        position: relative;
+    }
+
+    .videoTable__item__miniature {
+        grid-row: 1 / span 2;
+        grid-column: 1;
+    }
+
+    .videoTable__item__element:first-of-type {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .videoTable__item__element:last-of-type {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .videoTable__mobileButtons {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .videoTable__item__element {
+        width: 90%;
+    }
+
+    .videoUploadContent {
+        margin-bottom: -100px;
+    }
+
+    .videoUploader__imgWrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .videoUploader__text {
+        font-size: 16px;
+    }
+
+    .player__header--videoUploader {
+        margin-left: 0;
+        left: 50px;
+    }
+
+    .videoTable__mobile__activity {
+        font-size: 12px;
+        background: #5E5D5D;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-transform: uppercase;
+        padding: 3px 5px 0;
+        font-family: 'Oxanium', cursive;
+        font-weight: 300;
+    }
+
+    .modal__inner__header {
+        font-size: 17px;
+    }
+
+    .payment__header {
+        font-size: 21px;
+    }
+
+    .payment__text, .payment__item__header {
+        font-size: 14px;
+    }
+
+    .payment {
+        padding-top: 15px;
+    }
+
+    .payment__item {
+        padding: 15px;
+        height: 80px;
+    }
+
+    .input--couponCode {
+        width: 200px;
+    }
+
+    .payment__item__icon {
+        width: 50px;
+    }
+
+    .payment__item__iconAbsolute {
+        width: 12px;
+    }
+
+    .paymentMethod {
+        padding: 15px;
+    }
+
+    .payment__item__formWrapper {
+        width: calc(100% - 30px);
+    }
+
+    .input--payment {
+        height: 40px;
+        font-size: 15px;
+    }
+
+    .input--payment::placeholder {
+        font-size: 15px;
+    }
+
+    .button--payment--card {
+        margin-top: 10px;
+    }
+
+    .paymentItemWrapper {
+        margin-bottom: 10px;
+    }
+
+    .input--couponCode {
+        margin-top: 15px;
+        margin-left: 0;
+        width: 100%;
+        display: block;
+    }
+
+    .payment__couponCode label, .payment__couponCode__error, .payment__couponCode__result span {
+        font-size: 17px;
+    }
 }
 
 @media(max-width: 576px) {
@@ -952,6 +1145,45 @@
     .resetPassword {
         height: auto;
         padding: 50px 4%;
+    }
+
+    #playerGraph > div {
+        margin-left: 5vw;
+    }
+
+    .dzu-dropzone::after {
+        width: 70px;
+        height: 70px;
+        background-size: 40px;
+    }
+
+    .videoTable__item {
+        height: 110px;
+    }
+
+    .videoTable__item__miniature {
+        width: 120px;
+        height: 67px;
+    }
+
+    .player__header--videoUploader {
+        width: 100%;
+        left: 0;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .paymentMethod__btn {
+        width: 30%;
+        height: 65px;
+    }
+
+    .paymentMethod__name {
+        font-size: 8px;
+    }
+
+    .payment__item {
+        padding-right: 70px;
     }
 }
 

@@ -101,6 +101,7 @@ const blogRouter = require("./routers/blog");
 const priceRouter = require("./routers/price");
 const leagueRouter = require("./routers/league");
 const adminRouter = require("./routers/admin");
+const paymentRouter = require("./routers/payment");
 
 app.use("/auth", authRouter);
 app.use("/image", imageRouter);
@@ -117,5 +118,6 @@ app.use("/blog", blogRouter);
 app.use("/price", priceRouter);
 app.use("/league", leagueRouter);
 app.use("/admin", adminRouter);
+app.use("/payment", paymentRouter);
 
 app.listen(5000);

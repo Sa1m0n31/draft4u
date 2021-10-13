@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import pen from "../static/img/pen.svg";
 
-import RadarChart from 'react-svg-radar-chart';
-import 'react-svg-radar-chart/build/css/index.css'
 import check from "../static/img/check.svg";
 import {
     getAllPositions,
@@ -12,6 +10,8 @@ import {
     updateUserVerticalRange,
     updateUserWeight
 } from "../helpers/user";
+
+import Chart from "react-apexcharts";
 
 const PlayerInfoEdition = ({player}) => {
     const [editAttackRange, setEditAttackRange] = useState(false);
@@ -30,12 +30,20 @@ const PlayerInfoEdition = ({player}) => {
 
     const [positions, setPositions] = useState([]);
 
+    const chartRef = useRef(null);
+
     useEffect(() => {
         getAllPositions()
             .then(res => {
                 setPositions(res?.data?.result);
             });
     }, []);
+
+    useEffect(() => {
+        const div = document.createElement("div");
+        div.textContent = "test";
+       document.querySelector(".apexcharts-grid").appendChild(div);
+    }, [height]);
 
     useEffect(() => {
         console.log(player.vertical_range);
@@ -47,27 +55,101 @@ const PlayerInfoEdition = ({player}) => {
         setPosition(player.name);
     }, [player]);
 
-    const data = [
-        {
-            data: {
-                wzrost: height ? height / 500 : 1,
-                waga: weight ? weight / 500 : 1,
-                zasiegWAtaku: attackRange ? attackRange / 500 : 1,
-                zasiegDosiezny: verticalRange ? verticalRange / 500 : 1,
-                zasiegWBloku: blockRange ? blockRange / 500 : 1
+    const options = {
+        chart: {
+            id: "basic-bar"
+        },
+        responsive: [
+            {
+              breakpoint: 1400,
+              options: {
+                  chart: {
+                      width: 800
+                  }
+              }
             },
-            meta: { color: '#E2B76D' }
+            {
+                breakpoint: 958,
+                options: {
+                    chart: {
+                        width: 700
+                    },
+                    xaxis: {
+                        labels: {
+                            style: {
+                                fontSize: '13px'
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                breakpoint: 576,
+                options: {
+                    chart: {
+                        width: 500
+                    },
+                    xaxis: {
+                        labels: {
+                            style: {
+                                fontSize: '10px'
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        xaxis: {
+            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Zasięg dosiężny", "Zasięg w bloku"],
+            labels: {
+                show: true,
+                style: {
+                    colors: ["#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d"],
+                    fontSize: "18px",
+                    fontFamily: 'Arial'
+                }
+            }
+        },
+        fill: {
+            colors: ['#D9AA66'],
+            opacity: 1
+        },
+        stroke: {
+            show: false
+        },
+        markers: {
+            colors: "#fff",
+            strokeColors: "#fff",
+            size: 2
+        },
+        plotOptions: {
+            radar: {
+                polygons: {
+                    connectorColors: 'rgba(255, 255, 255, .3)',
+                    strokeColors: '#3d3d3d',
+                    fill: {
+                        colors: ['#3d3d3d']
+                    }
+                }
+            }
+        },
+        yaxis: {
+            show: false
         }
-    ];
+        // dataLabels: {
+        //     enabled: true,
+        //     textAnchor: 'end',
+        //     offsetY: 50,
+        //     distributed: true
+        // }
+    }
 
-    const captions = {
-        // columns
-        wzrost: 'Wzrost',
-        waga: 'Waga',
-        zasiegWAtaku: 'Zasięg w ataku',
-        zasiegDosiezny: 'Zasięg dosiężny',
-        zasiegWBloku: 'Zasięg w bloku'
-    };
+    const series = [
+        {
+            name: "Twój wynik",
+            data: [height, weight, attackRange, verticalRange, blockRange]
+        }
+    ]
 
     const changeUserAttackRange = () => {
         setEditAttackRange(false);
@@ -236,11 +318,12 @@ const PlayerInfoEdition = ({player}) => {
             </label>
         </section>
 
-        <section className="userInfoEdition__graphSection">
-            <RadarChart
-                captions={captions}
-                data={data}
-                size={450}
+        <section className="userInfoEdition__graphSection" id="playerGraph">
+            <Chart
+                options={options}
+                series={series}
+                type="radar"
+                width="900"
             />
         </section>
     </section>

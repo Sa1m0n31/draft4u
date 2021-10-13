@@ -15,9 +15,6 @@ router.get("/get", (request, response) => {
 router.post("/upload", upload.single('file'), (request, response) => {
     const { userId, play } = request.body;
 
-    console.log(userId);
-    console.log(play);
-
     /* Get video category id */
     const query = `SELECT id FROM video_categories WHERE name = $1`;
     const values = [play];
@@ -38,7 +35,7 @@ router.post("/upload", upload.single('file'), (request, response) => {
                     if(res.rows.length) {
                         console.log("update old video");
                         /* Update old video */
-                        const query = `UPDATE videos SET file_path = $1 WHERE user_id = $2 AND video_category = $3`;
+                        const query = `UPDATE videos SET file_path = $1, date = NOW() WHERE user_id = $2 AND video_category = $3`;
                         const values = [request.file.filename, userId, playId];
 
                         db.query(query, values, (err, res) => {
@@ -59,7 +56,7 @@ router.post("/upload", upload.single('file'), (request, response) => {
                     else {
                         /* Add new video */
                         console.log("add new video");
-                        const query = `INSERT INTO videos VALUES (nextval('videos_id_sequence'), $1, $2, $3)`;
+                        const query = `INSERT INTO videos VALUES (nextval('videos_id_sequence'), $1, $2, $3, NOW())`;
                         const values = [request.file.filename, userId, playId];
 
                         db.query(query, values, (err, res) => {
@@ -122,7 +119,7 @@ router.delete("/delete", (request, response) => {
 router.get("/get-user-videos", (request, response) => {
    const userId = request.query.id;
 
-   const query = 'SELECT v.file_path, c.name FROM videos v JOIN video_categories c ON v.video_category = c.id WHERE v.user_id = $1';
+   const query = `SELECT v.file_path, c.name, v.date + interval '1' day as date FROM videos v JOIN video_categories c ON v.video_category = c.id WHERE v.user_id = $1`;
    const values = [userId];
 
    db.query(query, values, (err, res) => {

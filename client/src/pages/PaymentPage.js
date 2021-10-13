@@ -2,10 +2,14 @@ import React, {useEffect, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PaymentForm from "../components/PaymentForm";
+import {getPaymentMethods} from "../helpers/payment";
+import {getAllCoupons} from "../helpers/coupon";
 
 const PaymentPage = ({user}) => {
     const [cost, setCost] = useState(0);
     const [type, setType] = useState("");
+    const [paymentMethods, setPaymentMethods] = useState([]);
+    const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -23,11 +27,25 @@ const PaymentPage = ({user}) => {
                 setType("roczny");
                 break;
         }
+
+        getPaymentMethods()
+            .then((res) => {
+                setPaymentMethods(res?.data?.result);
+            });
+
+        getAllCoupons()
+            .then((res) => {
+                setCoupons(res?.data?.result);
+            });
     }, []);
 
     return <div className="container container--light">
         <Header player={true} loggedIn={true} menu="dark" profileImage={user.file_path} />
-        <PaymentForm cost={cost} type={type} />
+        <PaymentForm cost={cost}
+                     type={type}
+                     methods={paymentMethods}
+                     coupons={coupons}
+                     email={user.email} />
         <Footer theme="light" />
     </div>
 }

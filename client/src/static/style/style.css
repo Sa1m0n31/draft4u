@@ -751,7 +751,7 @@ ul {
     right: 30px;
     border: none;
     outline: none;
-    z-index: 3;
+    z-index: 100;
 }
 
 .registerModal__closeBtn__img {
@@ -1889,7 +1889,7 @@ ul {
 .playerInfoEdition
 {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -2004,6 +2004,11 @@ ul {
     background: #fff;
     border-radius: 15px;
     padding: 30px;
+    width: 60%;
+}
+
+.playerInfoEdition .userInfoEdition__form {
+    width: 45%;
 }
 
 .userInfoEdition__fullName {
@@ -2051,9 +2056,10 @@ ul {
 }
 
 .userInfoEdition__graphSection {
-    /*margin-left: 10vw;*/
     position: relative;
-    z-index: -10;
+    z-index: 1;
+    width: 500px;
+    height: 500px;
 }
 
 .userInfoEdition__graphSection .scale {
@@ -2122,10 +2128,19 @@ select::-ms-expand {
     margin-top: 50px;
 }
 
+.playerVideoView__btnWrapper--center {
+    justify-content: center;
+}
+
 .playerVideoView__btn {
     width: 400px;
     max-width: 75%;
     height: auto;
+    display: block;
+}
+
+.playerVideoView__btnWrapper--center .playerVideoView__btn {
+    margin: auto;
 }
 
 .embla__container--videos {
@@ -2185,6 +2200,16 @@ select::-ms-expand {
     margin: 15px 0;
     font-weight: 300;
     display: inline-block;
+}
+
+.videoTable__mobileGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.videoTable__uploadIcon {
+    width: 40% !important;
 }
 
 .videoTable__header {
@@ -2328,6 +2353,7 @@ select::-ms-expand {
 
 .button--videoUploader {
     width: 400px;
+    max-width: 80%;
 }
 
 .videoUploader .dzu-dropzone {
@@ -2361,8 +2387,24 @@ select::-ms-expand {
     height: 100%;
 }
 
-.video-react-control-bar, .video-react-big-play-button {
+.video-react-control-bar {
     visibility: hidden;
+}
+
+.videoUploadContent .video-react-big-play-button,
+.video-react-control-text {
+    display: none !important;
+}
+
+.video-react-big-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: url("../img/play-button.svg");
+    background-size: 100%;
 }
 
 .modalVideoPlayer {
@@ -2385,8 +2427,25 @@ select::-ms-expand {
     overflow: hidden;
 }
 
+.playerVideoView .modalVideoPlayer__video .video-react {
+    background: transparent;
+    height: 80vh;
+}
+
 .modalVideoPlayer__video *, .embla__slide--video * {
     padding-top: 0 !important;
+}
+
+.playerVideoView__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    display: block;
+    cursor: pointer;
+    z-index: 3;
 }
 
 .modalVideoPlayer__video .video-react {
@@ -2411,6 +2470,21 @@ select::-ms-expand {
     max-width: 100%;
     height: 100%;
     padding-top: 0 !important;
+}
+
+.playerVideoView .video-react {
+    height: 400px;
+    background: #3d3d3d;
+    position: relative;
+    margin: 0 20px;
+    border-radius: 15px;
+}
+
+.playerVideoView .video-react-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .slick-track {
@@ -2482,23 +2556,29 @@ select::-ms-expand {
     margin-bottom: 50px;
 }
 
-.payment__item {
-    width: clamp(200px, 100%, 800px);
-    height: 110px;
+.paymentItemWrapper {
     background: #fff;
     border: 1px solid var(--grey);
+    width: clamp(200px, 100%, 800px);
+    margin: 0 auto 30px;
+}
+
+.payment__item {
+    background: transparent;
+    width: 100%;
+    height: 110px;
     border-radius: 3px;
     padding: 10px 50px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    margin: 20px auto;
 }
 
 .payment__item__header {
     color: var(--grey);
     font-size: 18px;
+    text-align: left;
     margin-right: 25px;
 }
 
@@ -2519,9 +2599,17 @@ select::-ms-expand {
     margin: 30px auto;
 }
 
-.payment__couponCode label {
+.payment__couponCode label, .payment__couponCode__result span {
     color: var(--grey);
     font-size: 20px;
+}
+
+.payment__couponCode__result {
+    margin-top: 30px;
+}
+
+.payment__couponCode__result span {
+    padding-right: 30px;
 }
 
 .input--couponCode {
@@ -2536,4 +2624,123 @@ select::-ms-expand {
 .input--couponCode::placeholder {
     color: var(--grey);
     opacity: .7;
+}
+
+.input--couponCode[disabled] {
+    opacity: .7;
+}
+
+.payment__couponCode__error {
+    font-weight: 400;
+    color: #9c4543;
+    margin-top: 20px;
+}
+
+.paymentMethod {
+    background: #fff;
+    width: clamp(200px, 100%, 800px);
+    margin: auto;
+    padding: 20px 50px;
+}
+
+.paymentMethod__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.paymentMethod__btn {
+    background: transparent;
+    width: 130px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(70, 70, 70, .5);
+    padding: 20px 10px;
+    margin-bottom: 15px;
+    transition: .2s all;
+}
+
+.paymentMethod__btn__img {
+    height: 60%;
+    width: auto;
+    max-width: 80%;
+}
+
+.paymentMethod__name {
+    font-size: 11px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.paymentMethod__btn--selected {
+    border: 2px solid #FF8205;
+}
+
+.paymentMethod__btn:hover {
+    border-color: #FF8205;
+}
+
+.button--payment {
+    width: 400px;
+    max-width: 90%;
+    display: block;
+    margin: 30px auto;
+}
+
+.payment__item__formWrapper {
+    width: 80%;
+    margin: auto;
+}
+
+.input--payment {
+    width: 100%;
+    height: 60px;
+    border: 1px solid var(--grey);
+    border-radius: 3px;
+    background: #fff;
+    outline: none;
+    font-size: 20px;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+}
+
+.input--payment::placeholder {
+    opacity: .4;
+}
+
+.payment__item__form__flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.payment__item__form__flex label {
+    width: 48%;
+}
+
+.payment__disclaimer {
+    color: var(--grey);
+    font-size: 12px;
+    text-align: center;
+    margin: 20px auto 40px;
+}
+
+/* Chart */
+.apexcharts-toolbar {
+    display: none !important;
+}
+
+#playerGraph > div {
+    margin-top: -5vh;
+    margin-left: -7vw;
+}
+
+.splide__pagination, .splide__arrows {
+    display: none !important;
 }
