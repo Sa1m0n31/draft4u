@@ -4,9 +4,6 @@ import Footer from "../components/Footer";
 import UserInfoEdition from "../components/UserInfoEdition";
 import PlayerInfoEdition from "../components/PlayerInfoEdition";
 import ClubSlider from "../components/ClubSlider";
-import {getUserData} from "../helpers/user";
-import {isLoggedIn} from "../helpers/auth";
-import LoadingPage from "./LoadingPage";
 import PlayerVideoView from "../components/PlayerVideosView";
 
 const PlayerProfileEdition = ({user}) => {

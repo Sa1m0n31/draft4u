@@ -19,7 +19,7 @@ const UserInfoEdition = ({player}) => {
     const [fullName, setFullName] = useState("");
     const [age, setAge] = useState("");
     const [phoneNumber, setPhoneNumber] = useState(player.phone_number);
-    const [club, setClub] = useState("1");
+    const [club, setClub] = useState("-");
     const [email, setEmail] = useState(player.email);
     const [licence, setLicence] = useState("");
 
@@ -168,7 +168,7 @@ const UserInfoEdition = ({player}) => {
                     Honorarium
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--salary">
-                    {values[0]} - {values[1]}
+                    {values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}
                     {!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
                         <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                     </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserSalary(); }}>
@@ -185,7 +185,7 @@ const UserInfoEdition = ({player}) => {
                 }}
             >
                 <Range
-                    values={values}
+                    values={values[0] ? values : [1000, 3000]}
                     step={STEP}
                     min={MIN}
                     max={MAX}
@@ -217,7 +217,7 @@ const UserInfoEdition = ({player}) => {
                                     borderRadius: '4px',
                                     border: '1px solid #707070',
                                     background: getTrackBackground({
-                                        values,
+                                        values: values[0] ? values : [1000, 3000],
                                         colors: ['#474747', '#E2B76D', '#474747'],
                                         min: MIN,
                                         max: MAX,

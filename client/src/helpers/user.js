@@ -185,10 +185,18 @@ const getUserProfileImage = (userId) => {
     });
 }
 
+const getUserSubscription = (userId) => {
+    return axios.get(`${API_URL}/auth/get-user-subscription`, {
+        params: {
+            user: userId
+        }
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,
-    getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage
+    getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription
 }

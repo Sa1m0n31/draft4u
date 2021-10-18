@@ -9,6 +9,7 @@ import FAQPage from "../pages/FAQPage";
 import VideoUploadPage from "../pages/VideoUploadPage";
 import PaymentPage from "../pages/PaymentPage";
 import {render} from "@testing-library/react";
+import PaymentReturnPage from "../pages/PaymentReturnPage";
 
 const UserContext = React.createContext(5);
 
@@ -42,6 +43,9 @@ const UserWrapper = ({page}) => {
                                     break;
                                 case 5:
                                     setRenderSwitch(<PaymentPage user={user} />);
+                                    break;
+                                case 6:
+                                    setRenderSwitch(<PaymentReturnPage user={user} />);
                                     break;
                                 default:
                                     setRenderSwitch(<PlayerProfileEdition user={user} />);

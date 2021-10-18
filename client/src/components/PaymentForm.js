@@ -5,14 +5,19 @@ import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
 import {registerPayment} from "../helpers/payment";
 
-const PaymentForm = ({type, cost, methods, coupons, email}) => {
+const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [coupon, setCoupon] = useState("");
     const [paymentItem, setPaymentItem] = useState(-1);
     const [przelewy24Method, setPrzelewy24Method] = useState(-1);
     const [discount, setDiscount] = useState(0);
+    const [amount, setAmount] = useState(cost);
 
     const arrow1 = useRef(null);
     const arrow2 = useRef(null);
+
+    useEffect(() => {
+        setAmount(cost);
+    }, [])
 
     const changePaymentItem = (n) => {
         if(n === 1) {
@@ -43,16 +48,17 @@ const PaymentForm = ({type, cost, methods, coupons, email}) => {
         });
         if(index !== -1) {
             setDiscount(coupons[index].value);
+            setAmount(Math.round(cost - cost * (coupons[index].value / 100)));
         }
     }, [coupon]);
 
     const pay = () => {
         if(przelewy24Method !== -1) {
-            registerPayment(cost, przelewy24Method, email)
+            console.log(amount);
+            registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
                 .then((res) => {
                     const paymentUri = "https://sandbox.przelewy24.pl/trnRequest/";
                     const token = res.data.result;
-                    console.log(token);
                     window.location = `${paymentUri}${token}`;
                 })
         }
@@ -70,7 +76,7 @@ const PaymentForm = ({type, cost, methods, coupons, email}) => {
             Członkostwo rozpocznie się po skonfigurowaniu płatności.
         </p>
         <p className="payment__text payment__text--marginBottom">
-            Wybrałeś pakiet {type} w kwocie <b>{cost} PLN</b>
+            Wybrałeś pakiet {type} w kwocie <b>{amount ? amount : cost} PLN</b>
         </p>
 
         <section className="paymentItemWrapper">
@@ -83,7 +89,7 @@ const PaymentForm = ({type, cost, methods, coupons, email}) => {
                 <img ref={arrow1} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
             </button>
 
-            {paymentItem === 1 ?  <section className="paymentMethod paymentMethod--1">
+             <section className={paymentItem === 1 ? "paymentMethod paymentMethod--1" : "hidden"}>
                 <main className="paymentMethod__list">
                     {methods.map((item, index) => {
                         return <button key={index} className={przelewy24Method === item.id ? "paymentMethod__btn paymentMethod__btn--selected" : "paymentMethod__btn"} onClick={() => { setPrzelewy24Method(item.id); }}>
@@ -98,7 +104,7 @@ const PaymentForm = ({type, cost, methods, coupons, email}) => {
                 <button className="button button--hover button--payment" onClick={() => { pay(); }}>
                     <img className="btn__img" src={payBtn} alt="zaplac" />
                 </button>
-            </section> : ""}
+            </section>
         </section>
 
         <section className="paymentItemWrapper">

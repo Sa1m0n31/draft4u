@@ -19,7 +19,7 @@ const MyAccountStart = ({user}) => {
         <MyAccountStartHeader fullName={fullName} image={user.file_path} />
         <BlogSection />
         <ClubActivities />
-        <MyAccountStartBottom />
+        <MyAccountStartBottom userId={user.id} />
 
         <Footer theme="light" border={true} />
     </div>

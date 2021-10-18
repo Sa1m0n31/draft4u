@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const CLIENT_ID = '138354';
 const CRC = 'ef7a62121d72feb8';
-const API_KEY = '54786dbb9ffa663808ff4a15db32713f'
+const API_KEY = '0f29ea02277d56caa4696ad7838fb87f'
 
 router.get("/get-payment-methods", (request, response) => {
     got.get("https://sandbox.przelewy24.pl/api/v1/payment/methods/pl", {
@@ -25,7 +25,12 @@ router.get("/get-payment-methods", (request, response) => {
 });
 
 router.post("/register-payment", (request, response) => {
-    const { amount, method, email } = request.body;
+    const { amount, method, email, userId, type } = request.body;
+    let paymentType;
+
+    if(type === 'miesięczny') paymentType = 1;
+    else if(type === '3 miesięczny') paymentType = 2;
+    else paymentType = 3;
 
     let hash, data, gen_hash;
     const sessionId = uuidv4();
@@ -33,43 +38,124 @@ router.post("/register-payment", (request, response) => {
     data = hash.update(`{"sessionId":"${sessionId}","merchantId":${CLIENT_ID},"amount":${parseFloat(amount)*100},"currency":"PLN","crc":"${CRC}"}`, 'utf-8');
     gen_hash = data.digest('hex');
 
-    /* Dane */
-    let postData = {
-        sessionId: sessionId,
-        posId: CLIENT_ID,
-        merchantId: CLIENT_ID,
-        amount: parseFloat(request.body.amount) * 100,
-        currency: "PLN",
-        description: "Platnosc za subskrypcje na portalu Draft4U",
-        email: email,
-        country: "PL",
-        language: "pl",
-        method: method,
-        urlReturn: "http://localhost:3000",
-        urlStatus: "http://drafcik.skylo-test1.pl/payment/verify",
-        sign: gen_hash
-    };
+    const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
+    const values = [userId, sessionId, paymentType];
 
-    console.log(postData);
+    db.query(query, values, (err, res) => {
+        if(res) {
+            /* Dane */
+            let postData = {
+                sessionId: sessionId,
+                posId: CLIENT_ID,
+                merchantId: CLIENT_ID,
+                amount: parseFloat(request.body.amount) * 100,
+                currency: "PLN",
+                description: "Platnosc za subskrypcje na portalu Draft4U",
+                email: email,
+                country: "PL",
+                language: "pl",
+                method: method,
+                urlReturn: "https://drafcik.skylo-test1.pl",
+                urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                sign: gen_hash
+            };
 
-    got.post("https://sandbox.przelewy24.pl/api/v1/transaction/register", {
-        json: postData,
-        responseType: 'json',
-        headers: {
-            'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm'
+            got.post("https://sandbox.przelewy24.pl/api/v1/transaction/register", {
+                json: postData,
+                responseType: 'json',
+                headers: {
+                    'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm'
+                }
+            })
+                .then((res) => {
+                    let responseToClient = res.body.data.token;
+
+                    response.send({
+                        result: responseToClient
+                    });
+                });
         }
-    })
-        .then((res) => {
-            let responseToClient = res.body.data.token;
-
+        else {
             response.send({
-                result: responseToClient
+                result: 0
             });
-        });
+        }
+    });
 });
 
 router.post("/verify", (request, response) => {
+    let { merchantId, posId, sessionId, amount, currency, orderId } = request.body;
 
+    /* Calculate SHA384 checksum */
+    let hash, data, gen_hash;
+    hash = crypto.createHash('sha384');
+    data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${CRC}"}`, 'utf-8');
+    gen_hash= data.digest('hex');
+
+    got.put("https://sandbox.przelewy24.pl/api/v1/transaction/verify", {
+        json: {
+            merchantId,
+            posId,
+            sessionId,
+            amount,
+            currency,
+            orderId,
+            sign: gen_hash
+        },
+        responseType: 'json',
+        headers: {
+            'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
+        }
+    })
+        .then(res => {
+            if(res.body.data.status === 'success') {
+                const query = 'SELECT user_id, type FROM payments WHERE session_id = $1';
+                const values = [sessionId];
+
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        const { user_id, type } = res.rows[0];
+                        let query = '';
+                        const values = [type, user_id];
+
+                        switch(type) {
+                            case 1:
+                                query = `UPDATE subscriptions SET expire = expire + INTERVAL '30 DAY', type = $1 WHERE user_id = $2`;
+                                break;
+                            case 2:
+                                query = `UPDATE subscriptions SET expire = expire + INTERVAL '90 DAY', type = $1 WHERE user_id = $2`;
+                                break;
+                            default:
+                                query = `UPDATE subscriptions SET expire = expire + INTERVAL '365 DAY', type = $1 WHERE user_id = $2`;
+                                break;
+                        }
+
+                        db.query(query, values, (err, res) => {
+                            if(res) {
+                                response.send({
+                                    status: "OK"
+                                });
+                            }
+                            else {
+                                response.send({
+                                    status: 0
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        response.send({
+                            status: 0
+                        });
+                    }
+                });
+            }
+            else {
+                response.send({
+                    status: 0
+                });
+            }
+        });
 });
 
 module.exports = router;

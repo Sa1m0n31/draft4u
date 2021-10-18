@@ -24,7 +24,7 @@ const app = express();
 app.use(cors({
     credentials: true,
     //origin: "*"
-    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl']
+    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'http://skylo-test4.pl']
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -82,6 +82,16 @@ app.get("/zawodnik", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 app.get("/klub", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+app.get("/dodaj-video", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zaplac", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/subskrypcja-przedluzona", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 

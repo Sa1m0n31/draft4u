@@ -1,6 +1,4 @@
 import React from 'react'
-import camera from "../static/img/camera.svg";
-import Dropzone from "react-dropzone-uploader";
 
 const ProfileImagePreview = (meta) => {
     return <figure className="userInfoEdition__previewWrapper">

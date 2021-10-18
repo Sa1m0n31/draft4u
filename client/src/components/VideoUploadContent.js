@@ -10,6 +10,7 @@ import { Player } from 'video-react';
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import DeleteVideoModal from "./DeleteVideoModal";
 import threeDotsMenu from '../static/img/threeDotsMenu.svg'
+import DraftLoader from "./Loader";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
@@ -22,18 +23,21 @@ const VideoUploadContent = () => {
     const [playToDelete, setPlayToDelete] = useState("");
     const [videoUpload, setVideoUpload] = useState(0);
     const [mobileMenuVisible, setMobileMenuVisible] = useState(-1);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         getUserData()
             .then(res => {
                 const position = res.data.result.name;
-                setVideoNames(getPlayElementsByPosition(position));
+                if(position) {
+                    setVideoNames(getPlayElementsByPosition(position));
+                }
                 setUserId(res.data.result.id);
                 getUserVideos(res.data.result.id)
                     .then((res) => {
-                        console.log(res.data.result);
                         setVideos(res.data.result);
-                    })
+                        setLoader(false);
+                    });
             });
     }, []);
 
@@ -42,6 +46,7 @@ const VideoUploadContent = () => {
             getUserVideos(userId)
                 .then((res) => {
                     setVideos(res.data.result);
+                    setLoader(false);
                 });
         }
     }, [videoUpload]);
@@ -82,7 +87,7 @@ const VideoUploadContent = () => {
         <a className="videoUpload__backBtn" href="/edycja-profilu">
             wróć do profilu
         </a>
-        <header className="videoTable__header">
+        {videoNames?.length ? <header className="videoTable__header">
             <h3 className="videoTable__header__h videoTable__header__h--first">
                 Film
             </h3>
@@ -93,9 +98,9 @@ const VideoUploadContent = () => {
             <h3 className="videoTable__header__h videoTable__header__h--third">
                 Data dodania
             </h3>
-        </header>
+        </header> : ""}
 
-        {videoNames?.map((item, index) => {
+        {videoNames?.length ? videoNames?.map((item, index) => {
             return <section className="videoTable__item" id={item} key={index} onClick={() => { setMobileMenuVisible(-1); openUploader(item); }}>
                 <section className="videoTable__item__miniature" onClick={(e) => { if(getVideoIndexByPlay(item) !== -1) e.stopPropagation(); setPlayVideo(getVideoIndexByPlay(item)); }}>
                     {getVideoIndexByPlay(item) !== -1 ? <Player
@@ -135,7 +140,9 @@ const VideoUploadContent = () => {
                     </button>
                 </section>
             </section>
-        })}
+        }) : (!loader ? <h2 className="videoTable__error">
+            Aby dodawać filmiki, wybierz swoją pozycję na boisku
+        </h2> : "")}
     </main>
 }
 

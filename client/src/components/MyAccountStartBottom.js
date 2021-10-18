@@ -1,10 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import buyNowBtn from "../static/img/buy-now.png";
-
+import lockRed from '../static/img/lock-red.svg'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {getUserSubscription} from "../helpers/user";
 
-const MyAccountStartBottom = () => {
+const MyAccountStartBottom = ({userId}) => {
+    const [days, setDays] = useState(0);
+
+    useEffect(() => {
+        getUserSubscription(userId)
+            .then((res) => {
+                const result = res?.data?.result[0];
+                if(result) {
+                    const currentDate = new Date();
+                    const expireDate = new Date(Date.parse(result.expire));
+
+                    const daysToExpire = Math.abs(Math.floor((currentDate - expireDate) / 86400000));
+                    setDays(daysToExpire);
+                }
+            });
+    }, []);
+
     return <section className="myAccountStart__bottom siteWidthSuperNarrow">
         <main className="myAccountStart__bottom__content">
             <section className="myAccountStart__bottom__content__section">
@@ -12,21 +29,23 @@ const MyAccountStartBottom = () => {
                     Twoja subskrypcja
                 </h3>
                 <span className="d-below-1200">
-                    <CircularProgressbar value={1}
-                                         text={<span>14dni<br/>14</span>} />
+                    {days >= 1 ? <>
+                        <CircularProgressbar value={days / 30 * 100}
+                                             text={<span>14dni<br/>{days}</span>} />
 
-                    <span className="myAccountStart__bottom__content__days">
+                        <span className="myAccountStart__bottom__content__days">
                         <span className="myAccountStart__bottom__content__days--big">
-                            14
+                            {days}
                         </span>
                         <span>
                             dni
                         </span>
                     </span>
+                    </> : <img className="myAccountStart__bottom__content__lock" src={lockRed} alt="konto-wygaslo" />}
                 </span>
 
                 <h4 className="myAccountStart__subheader">
-                    Pozostało 14 dni do końca Twojego pakietu
+                    {days <= 0 ? "Twoje konto straciło ważność" : (`Pozostało ${days} ${days > 1 ? "dni" : "dzień"} do końca Twojego pakietu`)}
                 </h4>
                 <p className="myAccountStart__text">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis pretium dolor. Nam eu odio et turpis volutpat congue in ac metus. Integer consectetur justo lorem, quis consectetur nisi ultricies ut. Maecenas auctor mauris tristique justo volutpat imperdiet. Proin commodo mi sapien, vita Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis pretium dolor. Nam eu odio et turpis volutpat congue in ac metus. Integer consectetur justo lorem, quis consectetur nisi ultricies ut. Maecenas auctor mauris tristique justo volutpat imperdiet. Proin commodo mi sapien, vita
@@ -35,17 +54,19 @@ const MyAccountStartBottom = () => {
 
             <section className="myAccountStart__bottom__content__section">
                 <span className="d-over-1200">
-                    <CircularProgressbar value={34}
-                                         text={<span>14dni<br/>14</span>} />
+                    {days >= 1 ? <>
+                        <CircularProgressbar value={days / 30 * 100}
+                                             text={<span>{days}dni<br/>{days}</span>} />
 
-                    <span className="myAccountStart__bottom__content__days">
+                        <span className="myAccountStart__bottom__content__days">
                         <span className="myAccountStart__bottom__content__days--big">
-                            14
+                            {days}
                         </span>
                         <span>
                             dni
                         </span>
                     </span>
+                    </> : <img className="myAccountStart__bottom__content__lock" src={lockRed} alt="konto-wygaslo" />}
                 </span>
             </section>
         </main>

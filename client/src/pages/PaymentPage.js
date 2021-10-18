@@ -30,7 +30,9 @@ const PaymentPage = ({user}) => {
 
         getPaymentMethods()
             .then((res) => {
-                setPaymentMethods(res?.data?.result);
+                setPaymentMethods(res?.data?.result?.filter((item) => {
+                    return item.status;
+                }));
             });
 
         getAllCoupons()
@@ -45,6 +47,7 @@ const PaymentPage = ({user}) => {
                      type={type}
                      methods={paymentMethods}
                      coupons={coupons}
+                     userId={user.id}
                      email={user.email} />
         <Footer theme="light" />
     </div>

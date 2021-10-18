@@ -55,6 +55,10 @@ button, a {
     cursor: pointer;
 }
 
+* {
+    -webkit-tap-highlight-color: transparent !important;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -98,6 +102,14 @@ ul {
 .d-below-1200 {
     display: none;
     position: relative;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
 }
 
 /* Header */
@@ -1792,6 +1804,12 @@ ul {
     margin-bottom: 50px;
 }
 
+.myAccountStart__bottom__content__lock {
+    max-width: 90%;
+    margin-left: 100%;
+    transform: translateX(-100%);
+}
+
 .myAccountStart__bottom__content__section {
     width: 42%;
     position: relative;
@@ -1892,6 +1910,14 @@ ul {
     justify-content: space-between;
     align-items: center;
 }
+
+/*.userInfoEdition__imgWrapper > div {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
 
 .userInfoEdition__section {
     position: relative;
@@ -2200,6 +2226,12 @@ select::-ms-expand {
     margin: 15px 0;
     font-weight: 300;
     display: inline-block;
+}
+
+.videoTable__error {
+    color: #3d3d3d;
+    text-align: center;
+    margin: 90px auto 30px;
 }
 
 .videoTable__mobileGroup {
@@ -2743,4 +2775,27 @@ select::-ms-expand {
 
 .splide__pagination, .splide__arrows {
     display: none !important;
+}
+
+/* Payment return */
+.pageContent--paymentReturn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 200px 0 30vh;
+}
+
+.pageContent__header, .pageContent__subheader {
+    text-align: center;
+    color: #3d3d3d;
+}
+
+.pageContent__header {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.pageContent__subheader {
+    font-size: 24px;
 }

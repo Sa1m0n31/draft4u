@@ -23,6 +23,7 @@ import FAQPage from "./pages/FAQPage";
 import VideoUploadPage from "./pages/VideoUploadPage";
 import PaymentPage from "./pages/PaymentPage";
 import UserWrapper from "./wrappers/UserWrapper";
+import PaymentReturnPage from "./pages/PaymentReturnPage";
 
 function App() {
   return <Router>
@@ -76,6 +77,10 @@ function App() {
       <Route path="/zaplac">
           <UserWrapper page={5} />
           {/*<PaymentPage />*/}
+      </Route>
+      <Route path="/subskrypcja-przedluzona">
+          <UserWrapper page={6} />
+          {/*<PaymentReturnPage />*/}
       </Route>
 
   </Router>

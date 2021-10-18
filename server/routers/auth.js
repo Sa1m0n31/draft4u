@@ -137,6 +137,13 @@ router.get("/google", cors(), (request, response) => {
     response.redirect(`https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https%3A%2F%2Fdrafcik.skylo-test1.pl&scope=openid%20profile%20email&client_id=${GOOGLE_APP_ID}&flowName=GeneralOAuthFlow`);
 });
 
+const add14DaysSubscription = (userId) => {
+    const query = `INSERT INTO subscriptions VALUES ($1, NOW() + INTERVAL '14 DAY', 0)`;
+    const values = [userId];
+
+    db.query(query, values);
+}
+
 router.post("/register-local", (request, response) => {
    const { email, password, firstName, lastName, sex, birthday, phoneNumber } = request.body;
 
@@ -155,6 +162,8 @@ router.post("/register-local", (request, response) => {
            const values = [id, insertedUserId, hash];
            db.query(query, values, (err, res) => {
                if(res) {
+                   add14DaysSubscription(insertedUserId);
+
                    const token = uuidv4();
                    const query = 'INSERT INTO verification VALUES ($1, $2, NOW())';
                    const values = [id, token];
@@ -181,6 +190,25 @@ router.post("/register-local", (request, response) => {
                result: 0
            });
        }
+   });
+});
+
+router.get("/get-user-subscription", (request, response) => {
+   const userId = request.query.user;
+   const query = 'SELECT expire, type FROM subscriptions WHERE user_id = $1';
+   const values = [userId];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: res.rows
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
    });
 });
 
