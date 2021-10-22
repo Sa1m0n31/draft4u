@@ -13,4 +13,11 @@ const registerPayment = (amount, method, email, userId, type) => {
     });
 }
 
-export { getPaymentMethods, registerPayment }
+const chargeCard = (token, cardNumber, cardDate, cvv, clientName) => {
+    console.log("charge card...");
+    return axios.post(`${API_URL}/payment/charge-card`, {
+        token, cardNumber, cardDate, cvv, clientName
+    });
+}
+
+export { getPaymentMethods, registerPayment, chargeCard }

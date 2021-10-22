@@ -3,8 +3,8 @@ import React, {useState, useEffect, useRef} from 'react'
 import poland from '../static/img/poland.svg'
 import { getAllClubs } from '../helpers/club'
 import { Range, getTrackBackground } from 'react-range';
-import manIcon from '../static/img/man.svg'
-import womanIcon from '../static/img/women.svg'
+import manIcon from '../static/img/woman.svg'
+import womanIcon from '../static/img/man.svg'
 import settings from "../settings";
 import useEmblaCarousel from 'embla-carousel-react'
 

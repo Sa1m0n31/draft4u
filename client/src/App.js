@@ -24,6 +24,7 @@ import VideoUploadPage from "./pages/VideoUploadPage";
 import PaymentPage from "./pages/PaymentPage";
 import UserWrapper from "./wrappers/UserWrapper";
 import PaymentReturnPage from "./pages/PaymentReturnPage";
+import ClubWrapper from "./wrappers/ClubWrapper";
 
 function App() {
   return <Router>
@@ -68,19 +69,23 @@ function App() {
       </Route>
       <Route path="/faq">
           <UserWrapper page={3} />
-          {/*<FAQPage />*/}
       </Route>
       <Route path="/dodaj-video">
           <UserWrapper page={4} />
-          {/*<VideoUploadPage />*/}
       </Route>
       <Route path="/zaplac">
           <UserWrapper page={5} />
-          {/*<PaymentPage />*/}
       </Route>
       <Route path="/subskrypcja-przedluzona">
           <UserWrapper page={6} />
-          {/*<PaymentReturnPage />*/}
+      </Route>
+
+      {/* Club routes */}
+      <Route path="/konto-klubu">
+          <ClubWrapper page={1} />
+      </Route>
+      <Route path="/szukaj">
+          <ClubWrapper page={2} />
       </Route>
 
   </Router>

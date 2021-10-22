@@ -93,6 +93,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
     }
 
     return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
+        {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>
                 <img className="mobileMenu__close__img" src={closeIcon} alt="zamknij" />
@@ -167,6 +168,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                 </ul> : ""}
         </menu>
 
+        {/* REGISTER MODAL */}
         <section className="registerModal d-desktop" ref={registerModal}>
             <RegisterModal />
         </section>
@@ -228,8 +230,23 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/o-nas">
-                            Profil
+                        <a className="siteHeader__menu__link" href="/szukaj">
+                            Szukaj
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/ulubieni">
+                            Ulubieni
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/sklady">
+                            Składy
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/zapisane-druzyny">
+                            Zapisane drużyny
                         </a>
                     </li>
                 </ul> : ""}
@@ -268,6 +285,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                     </ul>
                 </menu> : ""}
             </section> : <section>
+                {/* CLUB */}
 
             </section>) : <span className="d-desktop-flex">
                 {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>

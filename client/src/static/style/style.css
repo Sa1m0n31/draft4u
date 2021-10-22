@@ -92,7 +92,7 @@ ul {
 }
 
 .gold {
-    color: var(--gold);
+    color: var(--gold) !important;
 }
 
 .bold {
@@ -2797,5 +2797,320 @@ select::-ms-expand {
 }
 
 .pageContent__subheader {
+    font-size: 24px;
+}
+
+/* Club account */
+.clubAccountHeader__img {
+    border-radius: 15px;
+}
+
+.player__header--findNewPlayer {
+    color: rgba(255, 255, 255, .8);
+    text-transform: none;
+    font-size: 50px;
+    font-weight: 500;
+    margin: 60px 0;
+}
+
+.findNewPlayer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.findNewPlayerWrapper {
+    padding-bottom: 40px;
+    border-bottom: 2px solid var(--gold);
+}
+
+.playerCard {
+    background: #474747;
+    width: 31%;
+    border: 1px solid var(--grey);
+}
+
+.playerCard__imgWrapper {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    position: relative;
+}
+
+.playerCard__balanceBtn {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, .5);
+}
+
+.playerCard__balanceBtn--added {
+    background: black;
+}
+
+.playerCard__balanceBtn__img {
+    width: 60%;
+}
+
+.playerCard__img {
+    width: clamp(100%, 110%, 400px);
+    height: clamp(100%, 110%, 500px);
+}
+
+.playerCard__header {
+    background: var(--gold);
+    position: relative;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playerCard__header--favorite {
+    background: #474747;
+}
+
+.playerCard__header__h {
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 26px;
+    font-family: 'Oxanium', cursive;
+    font-weight: 500;
+    margin-left: -30px;
+}
+
+.playerCard__addToFavorites {
+    background: transparent;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: auto;
+}
+
+.playerCard__stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    padding: 30px 10px;
+}
+
+.playerCard--favorite {
+    background: var(--gold);
+}
+
+.playerCard__stats__item {
+    width: 32%;
+    padding-bottom: 30px;
+}
+
+.playerCard__stats__item--borderRight {
+    border-right: 2px solid #fff;
+}
+
+.playerCard__stats__item > * {
+    color: #fff;
+    display: block;
+    text-align: center;
+}
+
+.playerCard__stats__item__value {
+    font-family: 'Oxanium', cursive;
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.playerCard__stats__item__label {
+    font-family: 'Oxanium', cursive;
+    font-weight: 400;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.playerCard__moreBtn {
+    width: calc(100% - 40px);
+    height: 40px;
+    margin: 0 auto 20px;
+    border: 3px solid #fff;
+    color: #fff;
+    background: transparent;
+    font-family: 'Oxanium', cursive;
+    font-weight: 700;
+    font-size: 17px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .4s all;
+}
+
+.playerCard__moreBtn:hover {
+    background: #fff;
+    color: var(--dark);
+}
+
+.button--showPlayersPage {
+    display: block;
+    width: 400px;
+    height: auto;
+    margin: 80px auto 50px;
+}
+
+.clubAccountStart__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.clubAccountStart__bottom__section {
+    width: 45%;
+}
+
+.clubAccountStart__bottom__text {
+    font-size: 18px;
+    color: #fff;
+    margin: -30px 0 50px;
+    max-width: 470px;
+}
+
+.button--clubAccountBottom {
+    display: block;
+    width: 450px;
+    height: auto;
+}
+
+.orSpan {
+    color: #fff;
+    display: block;
+    width: 450px;
+    margin: 20px 0;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Search page */
+.searchFilters {
+
+}
+
+.searchFilters__position {
+    background: #474747;
+    border: 1px solid var(--grey);
+    border-radius: 3px;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.searchFilters__position__positions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: clamp(300px, 90%, 1000px);
+    margin-left: 50px;
+}
+
+.searchFilters__position__header, .searchFilters__position__button {
+    font-size: 18px;
+    color: rgba(255, 255, 255, .6);
+    background: transparent;
+    transition: .2s all;
+}
+
+.searchFilters__position__button:hover {
+    color: #fff;
+}
+
+.singleFilter {
+    margin-bottom: 40px;
+}
+
+.singleFilter__header {
+    font-family: 'Oxanium', cursive;
+    font-size: 17px;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.searchFilters__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.singleFilter__values__img {
+    width: 15px;
+}
+
+.singleFilter__values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.singleFilter__values__min, .singleFilter__values__max {
+    color: rgba(255, 255, 255, .6);
+    font-size: 15px;
+    font-family: 'Oxanium', cursive;
+}
+
+.playersWall {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.playersWall .playerCard {
+    margin-bottom: 50px;
+}
+
+.playersWall--nextPageBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 15px;
+    width: 200px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    font-family: 'Oxanium', cursive;
+    background: transparent;
+    text-transform: uppercase;
+}
+
+.playersWall__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playersWall--nextPageBtn__arrow {
+    color: var(--gold);
+    display: block;
+    margin-left: 15px;
+    margin-top: -8px;
+    font-size: 24px;
+}
+
+.playersWall--nextPageBtn__arrowBack {
+    transform: rotateY(180deg);
+    margin-right: 15px;
+    color: var(--gold);
+    display: block;
+    margin-top: -8px;
     font-size: 24px;
 }

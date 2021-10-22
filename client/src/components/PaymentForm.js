@@ -3,7 +3,7 @@ import przelewy24Icon from '../static/img/przelewy24.svg'
 import kartyIcon from '../static/img/karty-platnicze.png'
 import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
-import {registerPayment} from "../helpers/payment";
+import {chargeCard, registerPayment} from "../helpers/payment";
 
 const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [coupon, setCoupon] = useState("");
@@ -11,6 +11,12 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [przelewy24Method, setPrzelewy24Method] = useState(-1);
     const [discount, setDiscount] = useState(0);
     const [amount, setAmount] = useState(cost);
+
+    const [cardNumber, setCardNumber] = useState("");
+    const [cardDate, setCardDate] = useState("");
+    const [cvv, setCvv] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
 
     const arrow1 = useRef(null);
     const arrow2 = useRef(null);
@@ -54,7 +60,6 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
 
     const pay = () => {
         if(przelewy24Method !== -1) {
-            console.log(amount);
             registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
                 .then((res) => {
                     const paymentUri = "https://sandbox.przelewy24.pl/trnRequest/";
@@ -64,8 +69,16 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
         }
     }
 
-    const addCart = () => {
-
+    const addCard = () => {
+        registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
+            .then((res) => {
+                const token = res.data.result;
+                console.log(token);
+                chargeCard(token, cardNumber, cardDate, cvv, `${firstName} ${lastName}`)
+                    .then((res) => {
+                        console.log(res.data);
+                    });
+            });
     }
 
     return <main className="payment siteWidthSuperNarrow">
@@ -122,32 +135,41 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
                     <label>
                         <input className="input input--payment"
                                name="firstName"
+                               value={firstName}
+                               onChange={(e) => { setFirstName(e.target.value); }}
                                placeholder="Imię" />
                     </label>
                     <label>
                         <input className="input input--payment"
                                name="lastName"
+                               value={lastName}
+                               onChange={(e) => { setLastName(e.target.value); }}
                                placeholder="Nazwisko" />
                     </label>
                     <label>
                         <input className="input input--payment"
-                               name="cartNumber"
+                               name="cardNumber"
+                               value={cardNumber}
+                               onChange={(e) => { setCardNumber(e.target.value); }}
                                placeholder="Numer karty" />
                     </label>
                     <span className="payment__item__form__flex">
                         <label>
                             <input className="input input--payment"
-                                   name="expirationDate"
+                                   name="cardDate"
+                                   value={cardDate}
+                                   onChange={(e) => { setCardDate(e.target.value); }}
                                    placeholder="Data wygaśnięcia (MM/RR)" />
                          </label>
                         <label>
                             <input className="input input--payment"
-                                   name="cvv"
+                                   name={cvv}
+                                   onChange={(e) => { setCvv(e.target.value); }}
                                    placeholder="Kod zabezpieczający (CVV)" />
                         </label>
                     </span>
 
-                    <button className="button button--hover button--payment button--payment--card" onClick={() => { addCart(); }}>
+                    <button type="button" className="button button--hover button--payment button--payment--card" onClick={() => { addCard(); }}>
                         <img className="btn__img" src={payBtn} alt="dodaj-karte" />
                     </button>
 

@@ -17,7 +17,6 @@ router.get("/get-payment-methods", (request, response) => {
         }
     })
         .then((res) => {
-            console.log(res.body.data);
             response.send({
                 result: res.body.data
             });
@@ -156,6 +155,34 @@ router.post("/verify", (request, response) => {
                 });
             }
         });
+});
+
+router.post("/charge-card", (request, response) => {
+   const { token, cardNumber, cardDate, cvv, clientName } = request.body;
+
+   const postData = {
+       transactionToken: token, cardNumber, cardDate: "042024", cvv, clientName
+   }
+
+   console.log(postData);
+
+   response.send({
+       result: postData
+   });
+
+   got.post("https://sandbox.przelewy24.pl/api/v1/card/pay", {
+       json: postData,
+       responseType: 'json',
+       headers: {
+           'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm'
+       }
+   })
+       .then((res) => {
+          console.log(res.body);
+          response.send({
+              result: 1
+          });
+       });
 });
 
 module.exports = router;

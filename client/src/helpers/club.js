@@ -7,4 +7,8 @@ const getAllClubs = () => {
     return axios.get(`${API_URL}/club/get-all`);
 }
 
+const isClubLoggedIn = () => {
+    return axios
+}
+
 export { getAllClubs }

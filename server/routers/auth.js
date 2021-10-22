@@ -107,7 +107,6 @@ router.get("/auth", isLoggedIn, (request, response) => {
 });
 
 router.get("/logout", (request, response) => {
-    console.log(request.user);
     request.logOut();
     request.session.destroy((err) => {
         response.send({
