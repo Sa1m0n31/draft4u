@@ -237,6 +237,10 @@ ul {
     align-items: center;
 }
 
+.siteHeader__player--club {
+    background: #3D3D3D;
+}
+
 .siteHeader__player__btn {
     background: transparent;
     width: 30px;
@@ -253,6 +257,10 @@ ul {
 
 .img--envelope {
     margin-bottom: -12px;
+}
+
+.siteHeader__player--club .img--envelope {
+    margin-bottom: 0;
 }
 
 .siteHeader__player__btn--profile {
@@ -294,6 +302,14 @@ ul {
     z-index: 3;
 }
 
+.profileMenu--club::before {
+    border-bottom-color: #3d3d3d;
+}
+
+.profileMenu--club {
+    background: #3d3d3d;
+}
+
 .profileMenu__list {
     list-style-type: none;
 }
@@ -310,6 +326,14 @@ ul {
 
 .profileMenu__list__link:hover {
     background: #f1f1f1;
+}
+
+.profileMenu--club .profileMenu__list__link {
+    color: #fff;
+}
+
+.profileMenu--club .profileMenu__list__link:hover {
+    background: #707070;
 }
 
 .profileMenu__list__img {

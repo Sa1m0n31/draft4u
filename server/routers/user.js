@@ -5,6 +5,7 @@ const db = require("../database/db");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const smtpTransport = require('nodemailer-smtp-transport');
+const got = require("got");
 
 const multer  = require('multer')
 const upload = multer({ dest: 'media/users' })
@@ -173,16 +174,25 @@ router.get("/get-user-data", (request, response) => {
    const userId = request.user;
 
    if(userId) {
-       const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id WHERE u.id = $1';
+       const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1';
        const values = [userId];
 
        db.query(query, values, (err, res) => {
-           console.log(err);
-           console.log(res.rows);
           if(res) {
-              response.send({
-                  result: res.rows[0]
-              });
+              if(res.rows.length) {
+                  response.send({
+                      result: res.rows[0]
+                  });
+              }
+              else {
+                  got.get(`http://localhost:5000/club/get-club-data?id=${userId}`)
+                      .then((res) => {
+                          const result = res.body.result;
+                          response.send({
+                              result: result
+                          });
+                      });
+              }
           }
           else {
               response.send({
@@ -217,7 +227,7 @@ router.put("/update-user-birthday", (request, response) => {
    const { birthday } = request.body;
    const userId = request.user;
 
-   const query = `UPDATE users SET birthday = $1 WHERE id = $2`;
+   const query = `UPDATE users u SET birthday = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2`;
    const values = [birthday, userId];
 
    db.query(query, values, (err, res) => {
@@ -231,7 +241,7 @@ router.put("/update-user-license-number", (request, response) => {
    const { licenceNumber } = request.body;
    const userId = request.user;
 
-   const query = 'UPDATE users SET licence_number = $1 WHERE id = $2';
+   const query = 'UPDATE users u SET licence_number = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
    const values = [licenceNumber, userId];
 
    updateQuery(query, values, response);
@@ -241,7 +251,7 @@ router.put("/update-user-club", (request, response) => {
     const { club } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET club = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET club = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [club, userId];
 
     updateQuery(query, values, response);
@@ -251,7 +261,7 @@ router.put("/update-user-phone-number", (request, response) => {
     const { phoneNumber } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET phone_number = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET phone_number = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [phoneNumber, userId];
 
     updateQuery(query, values, response);
@@ -261,7 +271,7 @@ router.put("/update-user-salary", (request, response) => {
     const { salaryFrom, salaryTo } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET salary_from = $1, salary_to = $2 WHERE id = $3';
+    const query = 'UPDATE users u SET salary_from = $1, salary_to = $2 FROM identities i WHERE u.id = i.user_id AND i.id = $3';
     const values = [salaryFrom, salaryTo, userId];
 
     updateQuery(query, values, response);
@@ -271,7 +281,7 @@ router.put("/update-user-attack-range", (request, response) => {
     const { attackRange } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET attack_range = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET attack_range = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [attackRange, userId];
 
     console.log(attackRange);
@@ -283,7 +293,7 @@ router.put("/update-user-vertical-range", (request, response) => {
     const { verticalRange } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET vertical_range = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET vertical_range = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [verticalRange, userId];
 
     updateQuery(query, values, response);
@@ -293,7 +303,7 @@ router.put("/update-user-block-range", (request, response) => {
     const { blockRange } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET block_range = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET block_range = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [blockRange, userId];
 
     updateQuery(query, values, response);
@@ -303,7 +313,7 @@ router.put("/update-user-weight", (request, response) => {
     const { weight } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET weight = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET weight = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [weight, userId];
 
     updateQuery(query, values, response);
@@ -313,7 +323,7 @@ router.put("/update-user-height", (request, response) => {
     const { height } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users SET height = $1 WHERE id = $2';
+    const query = 'UPDATE users u SET height = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [height, userId];
 
     updateQuery(query, values, response);
@@ -325,7 +335,7 @@ router.put("/update-user-position", (request, response) => {
 
     console.log(position);
 
-    const query = 'UPDATE users SET position = (SELECT id FROM positions WHERE name = $1) WHERE id = $2';
+    const query = 'UPDATE users u SET position = (SELECT id FROM positions WHERE name = $1) FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [position, userId];
 
     updateQuery(query, values, response);
@@ -356,7 +366,7 @@ router.post("/edit-profile-image", upload.single("image"), (request, response) =
 
    db.query(query, values, (err, res) => {
        if(res) {
-           const query = 'UPDATE users SET profile_picture = $1 WHERE id = $2';
+           const query = 'UPDATE users u SET profile_picture = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
            const values = [res.rows[0].id, userId];
 
            db.query(query, values, (err, res) => {
@@ -385,7 +395,7 @@ router.get("/get-user-profile-image", (request, response) => {
 
    console.log(userId);
 
-   const query = 'SELECT i.file_path FROM images i JOIN users u ON u.profile_picture = i.id WHERE u.id = $1';
+   const query = 'SELECT i.file_path FROM images i JOIN users u ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1';
    const values = [userId];
 
    db.query(query, values, (err, res) => {

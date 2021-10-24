@@ -1,15 +1,28 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import man from "../static/img/profile-picture.png";
 import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
 import balanceIcon from '../static/img/balance.svg'
+import {calculateAge} from "../helpers/others";
+import settings from "../settings";
+import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 
-const PlayerCard = ({index, player, favoriteView, balance}) => {
-    const [favorite, setFavorite] = useState(false);
+const PlayerCard = ({index, player, favoriteView, favorite, balance}) => {
+    const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
 
-    const addPlayerToFavorites = (id) => {
-        setFavorite(!favorite);
+    useEffect(() => {
+        if(favorite) setFavoritePlayer(true);
+    }, []);
+
+    const addPlayerToFavorites = () => {
+        if(!favoritePlayer) {
+            addToFavorites(player.user_id);
+        }
+        else {
+            deleteFromFavorites(player.user_id);
+        }
+        setFavoritePlayer(!favoritePlayer);
     }
 
     const addPlayerToComparator = (id) => {
@@ -21,20 +34,20 @@ const PlayerCard = ({index, player, favoriteView, balance}) => {
             {balance ? <button className={comparator ? "playerCard__balanceBtn playerCard__balanceBtn--added" : "playerCard__balanceBtn"} onClick={() => { addPlayerToComparator("123"); }}>
                 <img className="playerCard__balanceBtn__img" src={balanceIcon} alt="dodaj-do-porownywarki" />
             </button> : ""}
-            <img className="playerCard__img" src={man} alt="zdjecie-profilowe" />
+            <img className="playerCard__img" src={player.file_path ?`${settings.API_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
         </figure>
         <header className={favoriteView ? "playerCard__header playerCard__header--favorite" : "playerCard__header"}>
             <h3 className="playerCard__header__h">
-                Jan Kowalski
+                {player.first_name} {player.last_name}
             </h3>
             <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites("123"); }}>
-                {!favorite ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}
+                {!favoritePlayer ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}
             </button>
         </header>
         <main className="playerCard__stats">
             <section className="playerCard__stats__item playerCard__stats__item--borderRight">
                             <span className="playerCard__stats__item__value">
-                                27
+                                {calculateAge(player.birthday)}
                             </span>
                 <span className="playerCard__stats__item__label">
                                 Wiek
@@ -42,7 +55,7 @@ const PlayerCard = ({index, player, favoriteView, balance}) => {
             </section>
             <section className="playerCard__stats__item playerCard__stats__item--borderRight">
                             <span className="playerCard__stats__item__value">
-                                92
+                                {player.weight ? player.weight : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
                                 Waga
@@ -50,7 +63,7 @@ const PlayerCard = ({index, player, favoriteView, balance}) => {
             </section>
             <section className="playerCard__stats__item">
                             <span className="playerCard__stats__item__value">
-                                198
+                                {player.height ? player.height : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
                                 Wzrost
@@ -59,15 +72,15 @@ const PlayerCard = ({index, player, favoriteView, balance}) => {
 
             <section className="playerCard__stats__item playerCard__stats__item--borderRight">
                             <span className="playerCard__stats__item__value">
-                                245
+                                {player.block_range ? player.block_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Zasięg ataku
+                                Zasięg bloku
                             </span>
             </section>
             <section className="playerCard__stats__item playerCard__stats__item--borderRight">
                             <span className="playerCard__stats__item__value">
-                                200
+                                {player.vertical_range ? player.vertical_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
                                 Zasięg dosiężny
@@ -75,10 +88,10 @@ const PlayerCard = ({index, player, favoriteView, balance}) => {
             </section>
             <section className="playerCard__stats__item">
                             <span className="playerCard__stats__item__value">
-                                192
+                                {player.attack_range ? player.attack_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Zasięg dosiężny
+                                Zasięg w ataku
                             </span>
             </section>
         </main>

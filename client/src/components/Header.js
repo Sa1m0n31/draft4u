@@ -9,6 +9,8 @@ import loginIcon from '../static/img/log-in.svg'
 import registerIcon from '../static/img/register.svg'
 import envelope from '../static/img/envelope.svg'
 import bell from '../static/img/bell.svg'
+import envelopeGold from '../static/img/envelope-gold.svg'
+import bellGold from '../static/img/bell-gold.svg'
 import padlock from '../static/img/padlock.svg'
 import question from '../static/img/question.svg'
 import logoutIcon from '../static/img/logout.svg'
@@ -252,12 +254,12 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                 </ul> : ""}
             </menu>
 
-            {loggedIn ? (player ? <section className="siteHeader__player">
+            {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
                 <button className="siteHeader__player__btn">
-                    <img className="siteHeader__player__btn__img" src={bell} alt="powiadomienia" />
+                    <img className="siteHeader__player__btn__img" src={club ? bellGold : bell} alt="powiadomienia" />
                 </button>
                 <button className="siteHeader__player__btn">
-                    <img className="siteHeader__player__btn__img img--envelope" src={envelope} alt="wiadomosci" />
+                    <img className="siteHeader__player__btn__img img--envelope" src={club ? envelopeGold : envelope} alt="wiadomosci" />
                 </button>
 
                 <button className="siteHeader__player__btn siteHeader__player__btn--profile d-desktop"
@@ -266,7 +268,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                     <img className="siteHeader__player__btn--profile__img" src={profilePicture} alt="profile" />
                 </button>
 
-                {profileMenuVisible ? <menu className="profileMenu">
+                {profileMenuVisible ? <menu className={club ? "profileMenu profileMenu--club" : "profileMenu"}>
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
                             <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
@@ -284,10 +286,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                         </li>
                     </ul>
                 </menu> : ""}
-            </section> : <section>
-                {/* CLUB */}
-
-            </section>) : <span className="d-desktop-flex">
+            </section> : "") : <span className="d-desktop-flex">
                 {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
                     Załóż konto
                 </button> : ""}

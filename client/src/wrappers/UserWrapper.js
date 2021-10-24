@@ -10,6 +10,7 @@ import VideoUploadPage from "../pages/VideoUploadPage";
 import PaymentPage from "../pages/PaymentPage";
 import {render} from "@testing-library/react";
 import PaymentReturnPage from "../pages/PaymentReturnPage";
+import {getClubData} from "../helpers/club";
 
 const UserContext = React.createContext(5);
 
@@ -20,7 +21,9 @@ const UserWrapper = ({page}) => {
     useEffect(() => {
         isLoggedIn()
             .then((res) => {
-                if(!res?.data?.result) window.location = "/";
+                if(!res?.data?.result) {
+                    window.location = "/";
+                }
                 else {
                     getUserData()
                         .then((res) => {
@@ -28,28 +31,41 @@ const UserWrapper = ({page}) => {
 
                             const user = res?.data?.result;
 
-                            switch(page) {
-                                case 1:
-                                    setRenderSwitch(<MyAccountStart user={user} />);
-                                    break;
-                                case 2:
-                                    setRenderSwitch(<PlayerProfileEdition user={user} />);
-                                    break;
-                                case 3:
-                                    setRenderSwitch(<FAQPage user={user} />);
-                                    break;
-                                case 4:
-                                    setRenderSwitch(<VideoUploadPage user={user} />);
-                                    break;
-                                case 5:
-                                    setRenderSwitch(<PaymentPage user={user} />);
-                                    break;
-                                case 6:
-                                    setRenderSwitch(<PaymentReturnPage user={user} />);
-                                    break;
-                                default:
-                                    setRenderSwitch(<PlayerProfileEdition user={user} />);
-                                    break;
+                            if(user) {
+                                switch(page) {
+                                    case 1:
+                                        setRenderSwitch(<MyAccountStart user={user} />);
+                                        break;
+                                    case 2:
+                                        setRenderSwitch(<PlayerProfileEdition user={user} />);
+                                        break;
+                                    case 3:
+                                        setRenderSwitch(<FAQPage user={user} />);
+                                        break;
+                                    case 4:
+                                        setRenderSwitch(<VideoUploadPage user={user} />);
+                                        break;
+                                    case 5:
+                                        setRenderSwitch(<PaymentPage user={user} />);
+                                        break;
+                                    case 6:
+                                        setRenderSwitch(<PaymentReturnPage user={user} />);
+                                        break;
+                                    default:
+                                        setRenderSwitch(<PlayerProfileEdition user={user} />);
+                                        break;
+                                }
+                            }
+                            else {
+                                getClubData()
+                                    .then((res) => {
+                                        if(res?.data?.result) {
+                                            window.location = "/konto-klubu";
+                                        }
+                                        else {
+                                            window.location = "/";
+                                        }
+                                    });
                             }
                         });
                 }

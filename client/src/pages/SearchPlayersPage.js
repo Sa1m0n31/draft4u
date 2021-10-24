@@ -7,12 +7,12 @@ import { Range, getTrackBackground } from 'react-range';
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import PlayerCard from "../components/PlayerCard";
+import {getAllPlayers, isPlayerFavorite} from "../helpers/club";
+import {calculateAge} from "../helpers/others";
 
-const SearchPlayersPage = () => {
-    const players = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+const SearchPlayersPage = ({club, favorites}) => {
+    const [players, setPlayers] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-
     const [positionFilters, setPositionFilters] = useState([0]);
 
     const [sex, setSex] = useState([0]);
@@ -23,6 +23,13 @@ const SearchPlayersPage = () => {
     const [attackRange, setAttackRange] = useState([150, 350]);
     const [verticalRange, setVerticalRange] = useState([150, 350]);
     const [salary, setSalary] = useState([1000, 30000]);
+
+    useEffect(() => {
+        getAllPlayers()
+            .then((res) => {
+                setPlayers(res?.data?.result);
+            });
+    }, []);
 
     const filterPosition = (n) => {
         if(isPositionActive(n)) {
@@ -125,7 +132,7 @@ const SearchPlayersPage = () => {
         {/* DESKTOP */}
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {players.map((item, index) => {
-                return <PlayerCard key={index} player={item} favoriteView={false} balance={true} />
+                return <PlayerCard key={index} player={item} favoriteView={false} favorite={isPlayerFavorite(favorites, item.user_id)} balance={true} />
             })}
         </main>
 

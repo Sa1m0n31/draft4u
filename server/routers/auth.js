@@ -94,14 +94,9 @@ router.get('/verification', (request, response) => {
    }
 });
 
-// router.all('/', function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "*");
-//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//     next();
-// });
-
 router.get("/auth", isLoggedIn, (request, response) => {
+   console.log("/auth123");
+   console.log(request.user);
     if(request.user) response.send({result: 1});
     else response.send({result: 0});
 });

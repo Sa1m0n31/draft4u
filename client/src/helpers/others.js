@@ -12,4 +12,11 @@ const removePolishChars = (str) => {
         .replace("ż", "z")
 }
 
-export { removePolishChars }
+const calculateAge = (dateOfBirth) => {
+    const birthday = new Date(dateOfBirth);
+    const ageDifMs = Date.now() - birthday;
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+export { removePolishChars, calculateAge }

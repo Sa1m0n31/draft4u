@@ -17,14 +17,14 @@ const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
 const init = (passport) => {
     const userAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
-        const query = 'SELECT * FROM identities i JOIN users u ON i.user_id = u.id WHERE u.email = $1 AND i.hash = $2';
+        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE u.email = $1 OR c.login = $1 AND i.hash = $2';
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {
             if(res) {
                 const user = res.rows[0];
                 if(!user) {
-                    return done(null, false, { message: 'Niepoprawna nazwa użytkownika' });
+                    return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
                 }
                 else {
                     return done(null, user);
@@ -61,7 +61,7 @@ const init = (passport) => {
     });
 
     passport.deserializeUser((id, done) => {
-        const query = 'SELECT * FROM identities i JOIN users u ON i.user_id = u.id WHERE u.id = $1';
+        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON i.id = c.id WHERE i.id = $1';
         const values = [id];
 
         db.query(query, values, (err, res) => {
