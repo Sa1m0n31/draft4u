@@ -25,6 +25,7 @@ import PaymentPage from "./pages/PaymentPage";
 import UserWrapper from "./wrappers/UserWrapper";
 import PaymentReturnPage from "./pages/PaymentReturnPage";
 import ClubWrapper from "./wrappers/ClubWrapper";
+import ComparatorPage from "./pages/ComparatorPage";
 
 function App() {
   return <Router>
@@ -86,6 +87,9 @@ function App() {
       </Route>
       <Route path="/szukaj">
           <ClubWrapper page={2} />
+      </Route>
+      <Route path="/porownywarka">
+          <ComparatorPage />
       </Route>
 
   </Router>

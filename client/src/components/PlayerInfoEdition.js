@@ -30,8 +30,6 @@ const PlayerInfoEdition = ({player}) => {
 
     const [positions, setPositions] = useState([]);
 
-    const chartRef = useRef(null);
-
     useEffect(() => {
         getAllPositions()
             .then(res => {

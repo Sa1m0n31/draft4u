@@ -135,7 +135,6 @@ const getAllPositions = () => {
     return axios.get(`${API_URL}/user/get-all-positions`);
 }
 
-
 /*
 INSERT INTO video_categories VALUES (1, 'atak');
 INSERT INTO video_categories VALUES (2, 'blok');
@@ -193,10 +192,19 @@ const getUserSubscription = (userId) => {
     });
 }
 
+const getUserById = (userId) => {
+    return axios.get(`${API_URL}/user/get-user-by-id`, {
+        params: {
+            id: userId
+        }
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,
-    getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription
+    getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
+    getUserById
 }

@@ -43,21 +43,42 @@ router.post("/register-payment", (request, response) => {
     db.query(query, values, (err, res) => {
         if(res) {
             /* Dane */
-            let postData = {
-                sessionId: sessionId,
-                posId: CLIENT_ID,
-                merchantId: CLIENT_ID,
-                amount: parseFloat(request.body.amount) * 100,
-                currency: "PLN",
-                description: "Platnosc za subskrypcje na portalu Draft4U",
-                email: email,
-                country: "PL",
-                language: "pl",
-                method: method,
-                urlReturn: "https://drafcik.skylo-test1.pl",
-                urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
-                sign: gen_hash
-            };
+            let postData;
+            if(method !== -1) {
+                postData = {
+                    sessionId: sessionId,
+                    posId: CLIENT_ID,
+                    merchantId: CLIENT_ID,
+                    amount: parseFloat(request.body.amount) * 100,
+                    currency: "PLN",
+                    description: "Platnosc za subskrypcje na portalu Draft4U",
+                    email: email,
+                    country: "PL",
+                    language: "pl",
+                    method: method,
+                    urlReturn: "https://drafcik.skylo-test1.pl",
+                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    sign: gen_hash
+                };
+            }
+            else {
+                postData = {
+                    sessionId: sessionId,
+                    posId: CLIENT_ID,
+                    merchantId: CLIENT_ID,
+                    amount: parseFloat(request.body.amount) * 100,
+                    currency: "PLN",
+                    description: "Platnosc za subskrypcje na portalu Draft4U",
+                    email: email,
+                    country: "PL",
+                    language: "pl",
+                    urlReturn: "https://drafcik.skylo-test1.pl",
+                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    sign: gen_hash
+                };
+            }
+
+            console.log(postData);
 
             got.post("https://sandbox.przelewy24.pl/api/v1/transaction/register", {
                 json: postData,

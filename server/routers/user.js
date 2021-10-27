@@ -170,42 +170,52 @@ router.post("/change-password", (request, response) => {
     });
 });
 
+const getUserData = (request, response, userId) => {
+    if(userId) {
+        const query = `SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
+        const values = [userId];
+
+        db.query(query, values, (err, res) => {
+            if(res) {
+                if(res.rows.length) {
+                    response.send({
+                        result: res.rows[0]
+                    });
+                }
+                else {
+                    got.get(`http://localhost:5000/club/get-club-data?id=${userId}`)
+                        .then((res) => {
+                            const result = res.body.result;
+                            response.send({
+                                result: result
+                            });
+                        });
+                }
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        });
+    }
+    else {
+        response.send({
+            result: 0
+        });
+    }
+}
+
 router.get("/get-user-data", (request, response) => {
    const userId = request.user;
 
-   if(userId) {
-       const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1';
-       const values = [userId];
+   getUserData(request, response, userId);
+});
 
-       db.query(query, values, (err, res) => {
-          if(res) {
-              if(res.rows.length) {
-                  response.send({
-                      result: res.rows[0]
-                  });
-              }
-              else {
-                  got.get(`http://localhost:5000/club/get-club-data?id=${userId}`)
-                      .then((res) => {
-                          const result = res.body.result;
-                          response.send({
-                              result: result
-                          });
-                      });
-              }
-          }
-          else {
-              response.send({
-                  result: 0
-              });
-          }
-       });
-   }
-   else {
-       response.send({
-           result: 0
-       });
-   }
+router.get("/get-user-by-id", (request, response) => {
+    const userId = request.query.id;
+
+    getUserData(request, response, userId);
 });
 
 const updateQuery = (query, values, response) => {
@@ -393,8 +403,6 @@ router.post("/edit-profile-image", upload.single("image"), (request, response) =
 router.get("/get-user-profile-image", (request, response) => {
    const { userId } = request.query;
 
-   console.log(userId);
-
    const query = 'SELECT i.file_path FROM images i JOIN users u ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1';
    const values = [userId];
 
@@ -402,6 +410,26 @@ router.get("/get-user-profile-image", (request, response) => {
       if(res) {
           response.send({
               result: res.rows
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
+router.get("/get-user-highlight-video", (request, response) => {
+   const { userId } = request.query;
+
+   const query = '';
+   const values = [userId];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: res.rows[0]
           });
       }
       else {

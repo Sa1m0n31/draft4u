@@ -7,7 +7,7 @@ import {calculateAge} from "../helpers/others";
 import settings from "../settings";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 
-const PlayerCard = ({index, player, favoriteView, favorite, balance}) => {
+const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerToComparator}) => {
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
 
@@ -25,16 +25,12 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance}) => {
         setFavoritePlayer(!favoritePlayer);
     }
 
-    const addPlayerToComparator = (id) => {
-        setComparator(!comparator);
-    }
-
     return <section key={index} className={favoriteView ? "playerCard playerCard--favorite" : "playerCard"}>
         <figure className="playerCard__imgWrapper">
-            {balance ? <button className={comparator ? "playerCard__balanceBtn playerCard__balanceBtn--added" : "playerCard__balanceBtn"} onClick={() => { addPlayerToComparator("123"); }}>
+            {balance ? <button className={comparator ? "playerCard__balanceBtn playerCard__balanceBtn--added" : "playerCard__balanceBtn"} onClick={() => { addPlayerToComparator(player); setComparator(!comparator); }}>
                 <img className="playerCard__balanceBtn__img" src={balanceIcon} alt="dodaj-do-porownywarki" />
             </button> : ""}
-            <img className="playerCard__img" src={player.file_path ?`${settings.API_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
+            <img className="playerCard__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
         </figure>
         <header className={favoriteView ? "playerCard__header playerCard__header--favorite" : "playerCard__header"}>
             <h3 className="playerCard__header__h">

@@ -381,6 +381,20 @@
     .findNewPlayerWrapper .playerCard:last-of-type {
         display: none;
     }
+
+    .playersWall__compareSection__item__imgWrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .button--compare {
+        width: 200px;
+    }
+
+    .playersWall__compareSection__item__name {
+        margin-top: 10px;
+        font-size: 17px;
+    }
 }
 
 @media(max-width: 996px) {

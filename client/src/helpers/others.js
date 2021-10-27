@@ -19,4 +19,27 @@ const calculateAge = (dateOfBirth) => {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
-export { removePolishChars, calculateAge }
+const isElementInArray = (arr, el) => {
+    return arr.findIndex((item) => {
+        return el === item;
+    }) !== -1;
+}
+
+const getPositionById = (id) => {
+    switch(id) {
+        case 1:
+            return 'przyjmujący';
+        case 2:
+            return 'atakujący';
+        case 3:
+            return 'środkowy';
+        case 4:
+            return 'rozgrywający';
+        case 5:
+            return 'libery';
+        default:
+            return null;
+    }
+}
+
+export { removePolishChars, calculateAge, isElementInArray, getPositionById }

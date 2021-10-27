@@ -3138,3 +3138,135 @@ select::-ms-expand {
     margin-top: -8px;
     font-size: 24px;
 }
+
+.playersWall__compareSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.playersWall__compareSection__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.playersWall__compareSection__item__imgWrapper {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.playersWall__compareSection__item__img {
+    width: 100%;
+    min-height: 100%;
+}
+
+.playersWall__compareSection__item__name {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.button--compare {
+    width: 300px;
+    height: auto;
+}
+
+/* Comparator page */
+.comparedPlayer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 28%;
+}
+
+.comparedPlayer__imgWrapper {
+    width: 300px;
+    height: 300px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#comparedPlayer--brown .comparedPlayer__imgWrapper {
+    border-color: #AE5D0D;
+}
+
+#comparedPlayer--gold .comparedPlayer__imgWrapper {
+    border-color: #D4C289;
+}
+
+#comparedPlayer--silver .comparedPlayer__imgWrapper {
+    border-color: #A9A9A9;
+}
+
+.comparedPlayer__img {
+    width: 100%;
+    height: auto;
+}
+
+.comparedPlayer__fullName {
+    color: #DFDFDF;
+    font-size: 38px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.comparedPlayer__section {
+    width: 100%;
+    border-radius: 15px;
+    background: #474747;
+    padding: 0 20px;
+    margin: 20px 0;
+}
+
+.comparedPlayer__section__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.comparedPlayer__section__item > * {
+    font-size: 22px;
+}
+
+.comparedPlayer__section__key {
+    color: #fff;
+    text-align: left;
+}
+
+.comparedPlayer__section__value {
+    color: #D9AA66;
+    text-align: right;
+}
+
+.button--comparedPlayer {
+    width: 100%;
+}
+
+.comparator__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.comparator__chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comparator__chart > div {
+    margin-right: -5%;
+}
+
+.apexcharts-legend {
+    display: none !important;
+}
