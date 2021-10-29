@@ -139,6 +139,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                 </li>
             </ul> : ""}
 
+            {/* Player menu */}
             {player ? <ul className="mobileMenu__list" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/">Home</a>
@@ -168,6 +169,46 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                     </button>
                 </li>
                 </ul> : ""}
+
+            {/* Club menu */}
+            {club ? <ul className="mobileMenu__list" ref={mobileMenuList}>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/">Home</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/szukaj">Szukaj</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/ulubieni">Ulubieni</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/sklady">Składy</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">Zapisane drużyny</a>
+                </li>
+            </ul> : ""}
+
+            {club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
+                <li className="mobileMenu__bottom__item">
+                    <a className="mobileMenu__bottom__link" href="/odzyskiwanie-hasla">
+                        <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
+                        Zmiana hasła
+                    </a>
+                </li>
+                <li className="mobileMenu__bottom__item">
+                    <a className="mobileMenu__bottom__link" href="/faq">
+                        <img className="mobileMenu__bottom__img" src={question} alt="zmien-haslo" />
+                        Pomoc online
+                    </a>
+                </li>
+                <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { logout(); }}>
+                        <img className="mobileMenu__bottom__img" src={logoutIcon} alt="zmien-haslo" />
+                        Wyloguj się
+                    </button>
+                </li>
+            </ul> : ""}
         </menu>
 
         {/* REGISTER MODAL */}

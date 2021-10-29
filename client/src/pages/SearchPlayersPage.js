@@ -12,10 +12,15 @@ import {calculateAge, isElementInArray} from "../helpers/others";
 import compareBtn from '../static/img/compare-btn.png'
 import settings from "../settings";
 import man from '../static/img/profile-picture.png'
+import filterIcon from '../static/img/filter.svg'
+import rightArrow from '../static/img/right-arrow.svg'
+import pokazWynikiBtn from '../static/img/pokaz-wyniki-btn.png'
 
 const SearchPlayersPage = ({club, favorites}) => {
     const [players, setPlayers] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
+
+    const [mobileFilters, setMobileFilters] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(0);
     const [numberOfPages, setNumberOfPages] = useState(0);
@@ -166,14 +171,85 @@ const SearchPlayersPage = ({club, favorites}) => {
         }
     }
 
+    const showFilters = () => {
+        setMobileFilters(true);
+    }
+
+    const hideFilters = () => {
+        setMobileFilters(false);
+    }
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={example} />
 
-        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400">
+        {/* DESKTOP HEADER */}
+        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
             <img className="btn__img clubAccountHeader__img" src={placeholder} alt="klub" />
         </header>
 
-        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters">
+        {/* MOBILE HEADER */}
+        <header className="playersWall__mobileHeader d-mobile">
+            <h2 className="playersWall__mobileHeader__header">
+                Zawodnicy
+            </h2>
+            <button className="playersWall__mobileHeader__filterBtn" onClick={() => { showFilters(); }}>
+                <img className="playersWall__mobileHeader__filterBtn__img" src={filterIcon} alt="filtruj" />
+                Filtry
+            </button>
+        </header>
+        {mobileFilters ? <aside className="playersWall__mobileFilters d-mobile">
+            <header className="playersWall__mobileFilters__header">
+                <button className="playersWall__mobileFilters__header__btn" onClick={() => { hideFilters(); }}>
+                    <img className="btn__img playersWall__mobileFilters__header__btn__img" src={rightArrow} alt="wroc" />
+                </button>
+                <h3 className="playersWall__mobileFilters__header__h">
+                    Filtry
+                </h3>
+            </header>
+            <section className="searchFilters__filters">
+                <SingleFilter mobile={true} value={sex} changeValue={setSex} min={0} max={1} step={1} width="25%" header="Płeć" />
+                <SingleFilter mobile={true} value={age} changeValue={setAge} min={16} max={50} step={1} width="65%" header="Wiek" />
+                <SingleFilter mobile={true} value={weight} changeValue={setWeight} min={40} max={150} step={1} width="100%" header="Waga" />
+                <SingleFilter mobile={true} value={height} changeValue={setHeight} min={140} max={250} step={1} width="100%" header="Wzrost" />
+
+                <SingleFilter mobile={true} value={attackRange} changeValue={setAttackRange} min={150} max={350} step={1} width="100%" header="Zasięg w ataku" />
+                <SingleFilter mobile={true} value={verticalRange} changeValue={setVerticalRange} min={150} max={350} step={1} width="100%" header="Zasięg dosiężny" />
+                <SingleFilter mobile={true} value={blockRange} changeValue={setBlockRange} min={150} max={350} step={1} width="100%" header="Zasięg w bloku" />
+
+                <SingleFilter mobile={true} value={salary} changeValue={setSalary} min={1000} max={30000} step={1} width="100%" header="Wynagrodzenie" />
+            </section>
+            <section className="searchFilters__position searchFilters__position--mobile">
+                <span className="searchFilters__position__header">
+                    Pozycja:
+                </span>
+
+                <span className="searchFilters__position__positions">
+                    <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
+                    Wszyscy
+                </button>
+                <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                    Przyjmujący
+                </button>
+                <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                    Atakujący
+                </button>
+                <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                    Środkowy
+                </button>
+                <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                    Rozgrywający
+                </button>
+                <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
+                    Libero
+                </button>
+                </span>
+            </section>
+            <button className="button playersWall__mobileFilters__btn" onClick={() => { hideFilters() }}>
+                <img className="btn__img" src={pokazWynikiBtn} alt="pokaz-wyniki" />
+            </button>
+        </aside> : ""}
+
+        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters d-desktop">
             <section className="searchFilters__filters">
                 <SingleFilter value={sex} changeValue={setSex} min={0} max={1} step={1} width="5%" header="Płeć" />
                 <SingleFilter value={age} changeValue={setAge} min={16} max={50} step={1} width="20%" header="Wiek" />
@@ -216,22 +292,26 @@ const SearchPlayersPage = ({club, favorites}) => {
 
         {/* MOBILE */}
         <main className="playersWall--mobile d-mobile">
-            <Splide options={options}>
+            {filteredPlayers?.length ? <Splide options={options}>
                 {filteredPlayers.map((item, index) => {
                     return <SplideSlide key={index}>
                         <PlayerCard key={index} player={item} favoriteView={false} />
                     </SplideSlide>
                 })}
-            </Splide>
+            </Splide> : (players?.length ? <h3 className="playersWall__playersNotFoundHeader">
+                Nie znaleziono zawodników o podanych parametrach
+            </h3> : "") }
         </main>
 
         {/* DESKTOP */}
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
-            {filteredPlayers.map((item, index) => {
-               if(isIndexOnCurrentPage(index)) {
+            {filteredPlayers?.length ? filteredPlayers.map((item, index) => {
+                if(isIndexOnCurrentPage(index)) {
                     return <PlayerCard key={index} player={item} favoriteView={false} favorite={isPlayerFavorite(favorites, item.user_id)} balance={true} addPlayerToComparator={addPlayerToComparator} />
                 }
-            })}
+            }) : <h3 className="playersWall__playersNotFoundHeader">
+                Nie znaleziono zawodników o podanych parametrach
+            </h3>}
         </main>
 
         <nav className="playersWall__buttons">

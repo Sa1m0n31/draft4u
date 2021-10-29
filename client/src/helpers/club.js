@@ -20,7 +20,9 @@ const getClubData = () => {
 }
 
 const getAllPlayers = () => {
-    return axios.get(`${API_URL}/club/get-all-players`);
+    return axios.get(`${API_URL}/club/get-all-players`, {
+        withCredentials: true
+    });
 }
 
 const getFavoritesByClub = () => {
@@ -46,4 +48,18 @@ const deleteFromFavorites = (userId) => {
     });
 }
 
-export { getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, isPlayerFavorite, addToFavorites, deleteFromFavorites }
+const addToVisited = (userId) => {
+
+}
+
+const getThreeNewest = () => {
+    return axios.get(`${API_URL}/club/get-three-newest`);
+}
+
+const getThreeFavorites = () => {
+    return axios.get(`${API_URL}/club/get-three-favorites`, {
+        withCredentials: true
+    });
+}
+
+export { getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest }

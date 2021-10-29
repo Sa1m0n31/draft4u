@@ -1,10 +1,18 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PlayerCard from "./PlayerCard";
 import przegladajBtn from "../static/img/zobacz-btn.png";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
+import {getThreeFavorites} from "../helpers/club";
 
 const ClubAccountFavorites = () => {
-    const players = [1, 2, 3];
+    const [players, setPlayers] = useState([]);
+
+    useEffect(() => {
+        getThreeFavorites()
+            .then((res) => {
+                setPlayers(res?.data?.result);
+            });
+    }, []);
 
     const options = {
         perPage: 1.2,
@@ -21,7 +29,7 @@ const ClubAccountFavorites = () => {
             <Splide options={options}>
                 {players.map((item, index) => {
                     return <SplideSlide key={index}>
-                        <PlayerCard key={index} player={item} favoriteView={true} />
+                        <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
                     </SplideSlide>
                 })}
             </Splide>
@@ -30,7 +38,7 @@ const ClubAccountFavorites = () => {
         {/* DESKTOP */}
         <main className="findNewPlayer d-desktop">
             {players.map((item, index) => {
-                return <PlayerCard key={index} player={item} favoriteView={true} />
+                return <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
             })}
         </main>
 

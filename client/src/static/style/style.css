@@ -2890,6 +2890,7 @@ select::-ms-expand {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 5px 50px 5px 20px;
 }
 
 .playerCard__header--favorite {
@@ -2903,7 +2904,6 @@ select::-ms-expand {
     font-size: 26px;
     font-family: 'Oxanium', cursive;
     font-weight: 500;
-    margin-left: -30px;
 }
 
 .playerCard__addToFavorites {
@@ -3175,6 +3175,13 @@ select::-ms-expand {
 .button--compare {
     width: 300px;
     height: auto;
+}
+
+.playersWall__playersNotFoundHeader {
+    color: #fff;
+    text-align: center;
+    margin: 20px auto;
+    font-size: 32px;
 }
 
 /* Comparator page */

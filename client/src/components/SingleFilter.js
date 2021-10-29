@@ -3,7 +3,7 @@ import {getTrackBackground, Range} from "react-range";
 import man from '../static/img/man.svg'
 import woman from '../static/img/woman.svg'
 
-const SingleFilter = ({value, changeValue, step, min, max, width, header}) => {
+const SingleFilter = ({mobile, value, changeValue, step, min, max, width, header}) => {
     return <section className="singleFilter" style={{flexBasis: width}}>
         <h4 className="singleFilter__header">
             {header}
@@ -23,7 +23,7 @@ const SingleFilter = ({value, changeValue, step, min, max, width, header}) => {
                     onTouchStart={props.onTouchStart}
                     style={{
                         ...props.style,
-                        height: '20px',
+                        height: !mobile ? '20px' : '10px',
                         width: "100%",
                         borderRadius: '50%',
                         display: 'flex',
@@ -32,9 +32,9 @@ const SingleFilter = ({value, changeValue, step, min, max, width, header}) => {
                     <div
                         ref={props.ref}
                         style={{
-                            height: '15px',
+                            height: !mobile ? '15px' : '10px',
                             width: '100%',
-                            borderRadius: '15px',
+                            borderRadius: !mobile ? '15px' : '10px',
                             border: '1px solid #707070',
                             background: getTrackBackground({
                                 values: value[0] ? value : [1000, 3000],
@@ -55,9 +55,9 @@ const SingleFilter = ({value, changeValue, step, min, max, width, header}) => {
                     {...props}
                     style={{
                         ...props.style,
-                        height: '20px',
+                        height: !mobile ? '20px' : '15px',
                         outline: 'none',
-                        width: '20px',
+                        width: !mobile ? '20px' : '15px',
                         borderRadius: '50%',
                         backgroundColor: '#fff',
                         border: '1px solid #707070'

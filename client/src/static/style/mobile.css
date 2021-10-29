@@ -630,6 +630,14 @@
     .videoTable__uploadBtn {
         width: 15px !important;
     }
+
+    .playerCard {
+        width: 48%;
+    }
+
+    .searchFilters__position__header, .searchFilters__position__button {
+        font-size: 14px;
+    }
 }
 
 @media(max-width: 768px) {
@@ -1244,6 +1252,151 @@
     .playerCard__imgWrapper {
         height: 270px;
     }
+
+    .playersWall--mobile {
+        width: 100% !important;
+        padding-bottom: 50px;
+    }
+
+    .playersWall__mobileHeader {
+        margin: 30px auto;
+        width: 90%;
+    }
+
+    .playersWall__mobileHeader__header {
+        color: rgba(255, 255, 255, .8);
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 28px;
+    }
+
+    .playersWall__mobileHeader__filterBtn {
+        margin: 25px 0;
+        width: 150px;
+        height: 40px;
+        background: #474747;
+        color: #fff;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        margin-left: -5vw;
+    }
+
+    .playersWall__mobileHeader__filterBtn__img {
+        width: 25px;
+        height: auto;
+        margin-right: 30px;
+    }
+
+    .playersWall__mobileFilters {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #282828;
+        z-index: 12;
+    }
+
+    .playersWall__mobileFilters__header {
+        background: #474747;
+        padding: 5px 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+        position: relative;
+    }
+
+    .playersWall__mobileFilters__header__btn {
+        background: transparent;
+        width: 20px;
+        height: auto;
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .playersWall__mobileFilters__header__btn__img {
+        filter: brightness(0) invert(1);
+        transform: rotate(180deg);
+    }
+
+    .playersWall__mobileFilters__header__h {
+        color: #fff;
+        font-size: 21px;
+        font-weight: 400;
+        font-family: 'Oxanium', cursive;
+        text-align: center;
+    }
+
+    .playersWall__mobileFilters .searchFilters__filters {
+        width: 85%;
+        margin: 20px auto;
+    }
+
+    .singleFilter__values__min, .singleFilter__values__max,
+    .playersWall__mobileFilters .singleFilter__header {
+        font-size: 14px;
+    }
+
+    .playersWall__mobileFilters .singleFilter {
+        margin-bottom: 20px;
+    }
+
+    .playersWall--mobile {
+        min-height: 80vh;
+    }
+
+    .playersWall__playersNotFoundHeader {
+        color: #fff;
+        text-align: center;
+        margin: 50px auto 20px;
+        max-width: 90%;
+        font-size: 21px;
+    }
+
+    .playersWall__mobileFilters__btn {
+        width: 90%;
+        display: block;
+        margin: 20px auto;
+        background: transparent;
+    }
+
+    .searchFilters__position--mobile {
+        background: transparent;
+        border: none;
+        display: grid;
+        height: auto;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        padding: 0 5vw;
+    }
+
+    .searchFilters__position--mobile .searchFilters__position__header {
+        grid-column: 1 / span 2;
+        margin-bottom: 20px;
+    }
+
+    .searchFilters__position--mobile .searchFilters__position__positions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-left: 0;
+        width: 85vw;
+    }
+
+    .searchFilters__position--mobile .searchFilters__position__button {
+        display: block;
+        width: 48%;
+        margin-bottom: 20px;
+    }
+
+
 }
 
 @media(max-width: 576px) {
@@ -1293,6 +1446,11 @@
 
     .payment__item {
         padding-right: 70px;
+    }
+
+    .findNewPlayer--mobile {
+        width: 100vw;
+        margin-left: -5vw;
     }
 }
 

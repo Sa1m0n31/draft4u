@@ -5,9 +5,17 @@ import heartFilled from '../static/img/heart-filled.svg'
 import przegladajBtn from '../static/img/przegladaj-btn.png'
 import PlayerCard from "./PlayerCard";
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import {getThreeNewest} from "../helpers/club";
 
 const ClubAccountStartFindPlayer = () => {
-    const players = [1, 2, 3];
+    const [players, setPlayers] = useState([]);
+
+    useEffect(() => {
+        getThreeNewest()
+            .then((res) => {
+                setPlayers(res?.data?.result);
+            });
+    }, []);
 
     const options = {
         perPage: 1.2,
@@ -24,7 +32,7 @@ const ClubAccountStartFindPlayer = () => {
             <Splide options={options}>
                 {players.map((item, index) => {
                     return <SplideSlide key={index}>
-                        <PlayerCard key={index} player={item} favoriteView={false} />
+                        <PlayerCard key={index} player={item} favoriteView={false} favorite={item.club_id} />
                     </SplideSlide>
                 })}
             </Splide>
@@ -33,7 +41,7 @@ const ClubAccountStartFindPlayer = () => {
         {/* DESKTOP */}
         <main className="findNewPlayer d-desktop">
             {players.map((item, index) => {
-                return <PlayerCard key={index} player={item} favoriteView={false} />
+                return <PlayerCard key={index} player={item} favoriteView={false} favorite={item.club_id} />
             })}
         </main>
 

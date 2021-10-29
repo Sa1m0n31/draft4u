@@ -385,7 +385,7 @@ router.post("/edit-profile-image", upload.single("image"), (request, response) =
                        result: 1
                    });
                }
-               else {
+               else {c
                    response.send({
                        result: 0
                    });

@@ -16,6 +16,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
     }, []);
 
     const addPlayerToFavorites = () => {
+        console.log("add to favorites: " + player.user_id);
         if(!favoritePlayer) {
             addToFavorites(player.user_id);
         }
@@ -36,7 +37,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
             <h3 className="playerCard__header__h">
                 {player.first_name} {player.last_name}
             </h3>
-            <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites("123"); }}>
+            <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites(); }}>
                 {!favoritePlayer ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}
             </button>
         </header>

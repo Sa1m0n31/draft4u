@@ -39,9 +39,12 @@ router.get("/get-club-data", (request, response) => {
 });
 
 router.get("/get-all-players", (request, response) => {
-   const query = 'SELECT u.id as user_id, * FROM users u LEFT OUTER JOIN images i ON u.profile_picture = i.id';
+   const club = request.user;
 
-   db.query(query, [], (err, res) => {
+   const query = 'SELECT u.id as user_id, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range, f.club_id FROM users u LEFT OUTER JOIN images i ON u.profile_picture = i.id LEFT OUTER JOIN favorites f ON f.user_id = u.id WHERE f.club_id = $1 OR f.club_id IS NULL';
+   const values = [club];
+
+   db.query(query, values, (err, res) => {
        if(res) {
            response.send({
                result: res.rows
@@ -53,6 +56,66 @@ router.get("/get-all-players", (request, response) => {
            });
        }
    });
+});
+
+router.get("/get-three-newest", (request, response) => {
+   const club = request.user;
+
+   const query = 'SELECT u.id as user_id, u.first_name, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range, f.club_id FROM users u LEFT OUTER JOIN images i ON u.profile_picture = i.id LEFT OUTER JOIN favorites f ON f.user_id = u.id WHERE f.club_id = $1 OR f.club_id IS NULL ORDER BY u.id DESC LIMIT 3';
+   const values = [club];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: res.rows
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
+router.get("/get-three-favorites", (request, response) => {
+    const club = request.user;
+
+    const query = 'SELECT u.first_name, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range FROM favorites f JOIN users u ON f.user_id = u.id LEFT OUTER JOIN images i ON u.profile_picture = i.id WHERE f.club_id = $1 ORDER BY f.created_at DESC LIMIT 3';
+    const values = [club];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.get("/get-favorites", (request, response) => {
+    const club = request.user;
+
+    const query = 'SELECT * FROM favorites f JOIN users u ON f.user_id = u.id WHERE f.club_id = $1 ORDER BY f.created_at';
+    const values = [club];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
 });
 
 module.exports = router;

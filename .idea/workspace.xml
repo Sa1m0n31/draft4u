@@ -14,7 +14,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/filter.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/pokaz-wyniki-btn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/users/3d297374e79837ec9e39f5e4bdc64acd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/users/54afcb699e9e5e081d0098a341b2a9d5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/users/6f664e6fccfbb9f286636db41d2488dc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/users/a0bdd8cde01f89589101079cd9d81b4f" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/users/c53d71ba9f32af179494e1d3bfc66126" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/media/users/e165604ec9c91bf81fe48669fd148bb7" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountFavorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountFavorites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountStartFindPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountStartFindPlayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SingleFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SingleFilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/media/users/2599faaa5e8379f9075164f1e168a3aa" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/2599faaa5e8379f9075164f1e168a3aa" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/media/users/522b0a1465d07cda3e8b510578cb013b" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/522b0a1465d07cda3e8b510578cb013b" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/media/users/7fa548500a3be40701a2a0e8cb6e5863" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/7fa548500a3be40701a2a0e8cb6e5863" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/media/users/bdd1d3b5ffb21996f76dba541ed93e75" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/bdd1d3b5ffb21996f76dba541ed93e75" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/media/users/e286b4b193a123d3bcec5b16b86b4678" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/e286b4b193a123d3bcec5b16b86b4678" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/media/users/ed7148bfbd62242e785814d54edb05a3" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/ed7148bfbd62242e785814d54edb05a3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +67,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../aloes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/static/img" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -50,6 +75,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\static\img" />
+      <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\media\users" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\lib" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\media\clubs" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\routers" />
@@ -100,6 +126,9 @@
       <workItem from="1635079347019" duration="13368000" />
       <workItem from="1635194349738" duration="34000" />
       <workItem from="1635258395603" duration="700000" />
+      <workItem from="1635267786198" duration="17302000" />
+      <workItem from="1635328811040" duration="16000" />
+      <workItem from="1635501126131" duration="9868000" />
     </task>
     <servers />
   </component>
@@ -119,18 +148,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1633799463224">
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1635506875260">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1633799463224" />
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1635506875260" />
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1633287008314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633287008314" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1635266323811">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1635328825635">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1635266323811" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1635328825635" />
     <state x="384" y="0" width="624" height="1027" key="dock-window-1" timestamp="1631571429351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -143,9 +172,21 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635116763839" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1635114850173">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1635511336823">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635114850173" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635511336823" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/routers/user.js</url>
+          <line>379</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
