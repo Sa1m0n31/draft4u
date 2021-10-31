@@ -81,7 +81,7 @@ router.get("/get-three-newest", (request, response) => {
 router.get("/get-three-favorites", (request, response) => {
     const club = request.user;
 
-    const query = 'SELECT u.first_name, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range FROM favorites f JOIN users u ON f.user_id = u.id LEFT OUTER JOIN images i ON u.profile_picture = i.id WHERE f.club_id = $1 ORDER BY f.created_at DESC LIMIT 3';
+    const query = 'SELECT u.id, u.first_name, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range FROM favorites f JOIN users u ON f.user_id = u.id LEFT OUTER JOIN images i ON u.profile_picture = i.id WHERE f.club_id = $1 ORDER BY f.created_at DESC LIMIT 3';
     const values = [club];
 
     db.query(query, values, (err, res) => {
@@ -115,6 +115,26 @@ router.get("/get-favorites", (request, response) => {
                 result: 0
             });
         }
+    });
+});
+
+router.get("/get-player-highlight", (request, response) => {
+    const userId = request.query.player;
+
+    const query = 'SELECT v.file_path FROM videos v JOIN users u ON v.user_id = u.id WHERE u.id = $1 AND v.video_category = 4';
+    const values = [userId];
+
+    db.query(query, values, (err, res) => {
+       if(res) {
+           response.send({
+               result: res.rows[0]
+           });
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
     });
 });
 

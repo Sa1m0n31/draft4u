@@ -395,6 +395,19 @@
         margin-top: 10px;
         font-size: 17px;
     }
+
+    .comparedPlayer__imgWrapper {
+        width: 200px;
+        height: 200px;
+    }
+
+    .comparedPlayer__fullName {
+        font-size: 24px;
+    }
+
+    .comparedPlayer__section__key, .comparedPlayer__section__value {
+        font-size: 16px;
+    }
 }
 
 @media(max-width: 996px) {
@@ -620,7 +633,7 @@
     }
 
     .playerVideoView {
-        margin-bottom: -120px;
+        margin-bottom: -40px;
     }
 
     .videoTable__header__h, .videoTable__item__element {
@@ -1396,7 +1409,11 @@
         margin-bottom: 20px;
     }
 
-
+    .noVideosHeader {
+        font-size: 21px;
+        max-width: 90%;
+        margin: auto;
+    }
 }
 
 @media(max-width: 576px) {

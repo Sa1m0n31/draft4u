@@ -16,12 +16,11 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
     }, []);
 
     const addPlayerToFavorites = () => {
-        console.log("add to favorites: " + player.user_id);
         if(!favoritePlayer) {
-            addToFavorites(player.user_id);
+            addToFavorites(player.id ? player.id : player.user_id);
         }
         else {
-            deleteFromFavorites(player.user_id);
+            deleteFromFavorites(player.id ? player.id : player.user_id);
         }
         setFavoritePlayer(!favoritePlayer);
     }
@@ -92,7 +91,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                             </span>
             </section>
         </main>
-        <a className="playerCard__moreBtn" href="">
+        <a className="playerCard__moreBtn" href={`/profil-zawodnika?id=${player.user_id ? player.user_id : player.id}`}>
             Więcej
         </a>
     </section>

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
-import { Player } from 'video-react'
+import { Player, ControlBar } from 'video-react'
+import 'video-react/dist/video-react.css'
 import closeIcon from "../static/img/close-grey.svg";
 
 const ModalVideoPlayer = ({source, closeModal}) => {
@@ -17,7 +18,10 @@ const ModalVideoPlayer = ({source, closeModal}) => {
                 <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" />
             </button>
 
-            <Player src={source} playsInline autoPlay={true} controls={true} />
+            <Player src={source} playsInline autoPlay={true} controls={false} >
+                <source src={source} />
+                <ControlBar autoHide={false} />
+            </Player>
         </main>
     </main>
 }

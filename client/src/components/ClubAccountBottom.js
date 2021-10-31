@@ -15,12 +15,12 @@ const ClubAccountBottom = () => {
             <p className="clubAccountStart__bottom__text">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam blandit nisl sit amet venenatis facilisis. Ut imperdiet nunc cursus eros posuere molestie. Nullam ultrices augue at leo pellentesque pretium.
             </p>
-            <a className="button button--hover button--clubAccountBottom">
+            <a className="button button--hover button--clubAccountBottom" href="/sklady">
                 <img className="btn__img" src={btn1} alt="sprawdz" />
             </a>
             <span className="orSpan">lub</span>
 
-            <a className="button button--hover button--clubAccountBottom">
+            <a className="button button--hover button--clubAccountBottom" href="/zapisane-druzyny">
                 <img className="btn__img" src={btn2} alt="zobacz-sklady" />
             </a>
         </section>

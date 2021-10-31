@@ -47,9 +47,7 @@ router.delete("/delete", (request, response) => {
 router.get("/get-favorites-by-club", (request, response) => {
     const clubId = request.user;
 
-    console.log(clubId);
-
-    const query = 'SELECT * FROM favorites WHERE club_id = $1';
+    const query = 'SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, i.file_path FROM favorites f JOIN users u ON f.user_id = u.id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE f.club_id = $1';
     const values = [clubId];
 
     db.query(query, values, (err, res) => {
@@ -64,6 +62,64 @@ router.get("/get-favorites-by-club", (request, response) => {
                result: 0
            });
        }
+    });
+});
+
+router.get("/is-player-favorite", (request, response) => {
+   const userId = request.query.id;
+   const club = request.user;
+
+   const query = 'SELECT * FROM favorites WHERE user_id = $1 AND club_id = $2';
+   const values = [userId, club];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          if(res.rows) {
+              if(res.rows.length) {
+                  response.send({
+                      result: 1
+                  });
+              }
+              else {
+                  response.send({
+                      result: 0
+                  });
+              }
+          }
+          else {
+              response.send({
+                  result: 0
+              });
+          }
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
+router.get('/get-favorites-by-player', (request, response) => {
+    const userId = request.user;
+
+    const query = 'SELECT c.name, i.file_path FROM favorites f JOIN clubs c ON c.id = f.club_id JOIN users u ON u.id = f.user_id JOIN identities id ON id.user_id = u.id LEFT OUTER JOIN images i ON i.id = c.logo WHERE id.id = $1';
+    const values = [userId];
+
+    console.log(userId);
+
+    db.query(query, values, (err, res) => {
+        console.log(err);
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
     });
 });
 

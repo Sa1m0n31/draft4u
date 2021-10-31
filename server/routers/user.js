@@ -170,9 +170,25 @@ router.post("/change-password", (request, response) => {
     });
 });
 
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
 const getUserData = (request, response, userId) => {
     if(userId) {
-        const query = `SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
+        console.log(userId);
+        console.log(isNumeric(userId));
+
+        let query = '';
+        if(!isNumeric(userId)) {
+            query = `SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1`;
+        }
+        else {
+            query = `SELECT u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
+        }
+
         const values = [userId];
 
         db.query(query, values, (err, res) => {

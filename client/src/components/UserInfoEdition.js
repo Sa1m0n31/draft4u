@@ -12,8 +12,13 @@ import {
     updateUserSalary
 } from "../helpers/user";
 import UserProfileImage from "./UserProfileImage";
+import {calculateAge} from "../helpers/others";
+import heart from "../static/img/heart.svg";
+import heartFilled from "../static/img/heart-filled.svg";
+import balance from "../static/img/balance.svg";
+import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 
-const UserInfoEdition = ({player}) => {
+const UserInfoEdition = ({player, theme, favorite}) => {
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
     const [fullName, setFullName] = useState("");
@@ -29,9 +34,21 @@ const UserInfoEdition = ({player}) => {
     const [editSalary, setEditSalary] = useState(false);
     const [editLicence, setEditLicence] = useState(false);
 
+    const [favoritePlayer, setFavoritePlayer] = useState(false);
+
     const STEP = 1;
     const MIN = 1000;
     const MAX = 30000;
+
+    useEffect(() => {
+        if(theme === 'dark') {
+            setFavoritePlayer(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        setFavoritePlayer(favorite);
+    }, [favorite]);
 
     useEffect(() => {
         setFullName(player.first_name + " " + player.last_name);
@@ -68,24 +85,39 @@ const UserInfoEdition = ({player}) => {
         updateUserLicenceNumber(licence);
     }
 
+    const addPlayerToFavorites = () => {
+        if(!favoritePlayer) {
+            addToFavorites(player.id ? player.id : player.user_id);
+        }
+        else {
+            deleteFromFavorites(player.id ? player.id : player.user_id);
+        }
+        setFavoritePlayer(!favoritePlayer);
+    }
+
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
-            <UserProfileImage user={player} />
+            <UserProfileImage user={player} club={true} />
         </section>
 
-        <section className="userInfoEdition__form">
+        <section className={theme === 'dark' ? "userInfoEdition__form userInfoEdition__form--dark" : "userInfoEdition__form"}>
             <h2 className="userInfoEdition__fullName">
                 {fullName}
+                {theme === 'dark' ? <section className="comparedPlayer__icons">
+                    <button className="comparedPlayer__icons__item" onClick={() => { addPlayerToFavorites(); }}>
+                        <img className="btn__img" src={!favoritePlayer ? heart : heartFilled} alt="dodaj-do-ulubionych" />
+                    </button>
+                </section> : ""}
             </h2>
 
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Data urodzenia
+                    {theme === "dark" ? "Wiek" : "Data urodzenia"}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editAge ? "label--edit" : "label--marginRightMinus"}>
-                        <input value={age}
-                               type="date"
+                        <input value={theme === "dark" ? calculateAge(age) : age}
+                               type={theme === "dark" ? "number" : "date"}
                                onChange={(e) => { setAge(e.target.value); }}
                                disabled={!editAge}
                                className="input--editProfile"
@@ -98,19 +130,20 @@ const UserInfoEdition = ({player}) => {
                     </label>
                 </span>
             </label>
-            <label className="userInfoEdition__form__field">
+            {!theme === 'dark' ? <>
+                <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     Mail
                 </span>
-                <span className="userInfoEdition__value">
+                    <span className="userInfoEdition__value">
                     {email}
                 </span>
-            </label>
-            <label className="userInfoEdition__form__field">
+                </label>
+                <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     Telefon
                 </span>
-                <span className="userInfoEdition__value">
+                    <span className="userInfoEdition__value">
                     <label className={editPhoneNumber ? "label--edit" : ""}>
                         <input value={phoneNumber}
                                onChange={(e) => { setPhoneNumber(e.target.value); }}
@@ -124,7 +157,8 @@ const UserInfoEdition = ({player}) => {
                         </button>}
                     </label>
                 </span>
-            </label>
+                </label>
+            </> : ""}
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     Aktualny klub

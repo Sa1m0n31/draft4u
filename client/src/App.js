@@ -26,6 +26,8 @@ import UserWrapper from "./wrappers/UserWrapper";
 import PaymentReturnPage from "./pages/PaymentReturnPage";
 import ClubWrapper from "./wrappers/ClubWrapper";
 import ComparatorPage from "./pages/ComparatorPage";
+import PlayerPage from "./pages/PlayerPage";
+import Favorites from "./pages/Favorites";
 
 function App() {
   return <Router>
@@ -89,7 +91,19 @@ function App() {
           <ClubWrapper page={2} />
       </Route>
       <Route path="/porownywarka">
-          <ComparatorPage />
+          <ClubWrapper page={3} />
+      </Route>
+      <Route path="/profil-zawodnika">
+          <ClubWrapper page={4} />
+      </Route>
+      <Route path="/ulubieni">
+          <ClubWrapper page={5} />
+      </Route>
+      <Route path="/sklady">
+          <ClubWrapper page={6} />
+      </Route>
+      <Route path="/zapisane-druzyny">
+          <ClubWrapper page={7} />
       </Route>
 
   </Router>

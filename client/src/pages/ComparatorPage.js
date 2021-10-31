@@ -5,11 +5,22 @@ import Footer from "../components/Footer";
 import ComparedPlayer from "../components/ComparedPlayer";
 import ComparatorChart from "../components/ComparatorChart";
 import {getUserById} from "../helpers/user";
+import {getFavoritesByClub, getPlayerHighlight, isPlayerFavorite} from "../helpers/club";
 
-const ComparatorPage = () => {
+const ComparatorPage = ({club}) => {
+    const colors = ["#AE5D0D", "#D4C289", "#A9A9A9"];
+
+    const [favorites, setFavorites] = useState([]);
+
     const [firstPlayer, setFirstPlayer] = useState(0);
     const [secondPlayer, setSecondPlayer] = useState(0);
     const [thirdPlayer, setThirdPlayer] = useState(0);
+
+    const [firstPlayerVideo, setFirstPlayerVideo] = useState(0);
+    const [secondPlayerVideo, setSecondPlayerVideo] = useState(0);
+    const [thirdPlayerVideo, setThirdPlayerVideo] = useState(0);
+
+    const [videosArray, setVideosArray] = useState([0, 0, 0]);
     const [playersArray, setPlayersArray] = useState([0, 0, 0]);
 
     useEffect(() => {
@@ -25,6 +36,24 @@ const ComparatorPage = () => {
         else {
             const comparedIds = [parseInt(params.get('first')), parseInt(params.get('second')), parseInt(params.get('third'))];
             comparedIds.forEach((item, index) => {
+              getPlayerHighlight(item)
+                  .then((res) => {
+                      const result = res.data.result;
+                      switch(index) {
+                          case 0:
+                              setFirstPlayerVideo(result);
+                              break;
+                          case 1:
+                              setSecondPlayerVideo(result);
+                              break;
+                          case 2:
+                              setThirdPlayerVideo(result);
+                              break;
+                          default:
+                              break;
+                      }
+                  })
+
                getUserById(item)
                    .then((res) => {
                        const result = res.data.result;
@@ -48,15 +77,18 @@ const ComparatorPage = () => {
 
     useEffect(() => {
         setPlayersArray([firstPlayer, secondPlayer, thirdPlayer]);
-        console.log(playersArray);
-    }, [firstPlayer, secondPlayer, thirdPlayer]);
+    }, [firstPlayer, secondPlayer, thirdPlayer, favorites]);
+
+    useEffect(() => {
+        setVideosArray([firstPlayerVideo, secondPlayerVideo, thirdPlayerVideo]);
+    }, [firstPlayerVideo, secondPlayerVideo, thirdPlayerVideo]);
 
     return <div className="container container--dark">
-        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={example} />
+        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
-        <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400">
+        <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
             {playersArray.map((item, index) => {
-                return <ComparedPlayer player={item} color="silver" />
+                return <ComparedPlayer player={item} video={videosArray[index]} color={colors[index]} />
             })}
         </main>
 

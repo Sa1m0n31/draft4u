@@ -14,32 +14,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/filter.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/pokaz-wyniki-btn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/users/3d297374e79837ec9e39f5e4bdc64acd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/users/54afcb699e9e5e081d0098a341b2a9d5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/users/6f664e6fccfbb9f286636db41d2488dc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/users/a0bdd8cde01f89589101079cd9d81b4f" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/users/c53d71ba9f32af179494e1d3bfc66126" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/users/e165604ec9c91bf81fe48669fd148bb7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/Favorites.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/PlayerPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/boisko.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/check-white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/direct-download.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/pen-white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/player-draggable.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/player-placeholder.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/save.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountBottom.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountBottom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountFavorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountFavorites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountStartFindPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountStartFindPlayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ClubActivities.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubActivities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ComparatorChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ComparatorChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ComparedPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ComparedPlayer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ModalVideoPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ModalVideoPlayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PaymentForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PaymentForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/PlayerCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/SingleFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SingleFilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerInfoEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerInfoEdition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ProfileImagePreview.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ProfileImagePreview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UserInfoEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UserInfoEdition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UserProfileImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UserProfileImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/others.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/others.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/ClubAccountStart.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ClubAccountStart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/ComparatorPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ComparatorPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Homepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Homepage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/users/2599faaa5e8379f9075164f1e168a3aa" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/2599faaa5e8379f9075164f1e168a3aa" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/users/522b0a1465d07cda3e8b510578cb013b" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/522b0a1465d07cda3e8b510578cb013b" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/users/7fa548500a3be40701a2a0e8cb6e5863" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/7fa548500a3be40701a2a0e8cb6e5863" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/users/bdd1d3b5ffb21996f76dba541ed93e75" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/bdd1d3b5ffb21996f76dba541ed93e75" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/users/e286b4b193a123d3bcec5b16b86b4678" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/e286b4b193a123d3bcec5b16b86b4678" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/users/ed7148bfbd62242e785814d54edb05a3" beforeDir="false" afterPath="$PROJECT_DIR$/server/media/users/ed7148bfbd62242e785814d54edb05a3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/favorite.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/favorite.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/payment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/visited.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/visited.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,10 +93,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\static\img" />
+      <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\static" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\media\users" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\client\src\lib" />
       <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\media\clubs" />
-      <recent name="C:\Users\sajmo\Desktop\Programowanie\Projekty\draft4u\server\routers" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -128,7 +146,8 @@
       <workItem from="1635258395603" duration="700000" />
       <workItem from="1635267786198" duration="17302000" />
       <workItem from="1635328811040" duration="16000" />
-      <workItem from="1635501126131" duration="9868000" />
+      <workItem from="1635501126131" duration="10468000" />
+      <workItem from="1635585820875" duration="29299000" />
     </task>
     <servers />
   </component>
@@ -156,34 +175,33 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633287008314" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1635328825635">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1635587635920">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1635328825635" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1635587635920" />
     <state x="384" y="0" width="624" height="1027" key="dock-window-1" timestamp="1631571429351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="384" y="0" width="624" height="1027" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1631571429351" />
-    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1635116659344">
+    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1635627671822">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635116659344" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1635116763839">
+    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635627671822" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1635611057398">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635116763839" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1635511336823">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635611057398" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1635637886516">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635511336823" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635637886516" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/server/routers/user.js</url>
-          <line>379</line>
-          <properties lambdaOrdinal="-1" />
+          <line>395</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

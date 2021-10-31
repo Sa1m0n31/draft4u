@@ -13,7 +13,7 @@ import {
 
 import Chart from "react-apexcharts";
 
-const PlayerInfoEdition = ({player}) => {
+const PlayerInfoEdition = ({player, theme}) => {
     const [editAttackRange, setEditAttackRange] = useState(false);
     const [editVerticalRange, setEditVerticalRange] = useState(false);
     const [editBlockRange, setEditBlockRange] = useState(false);
@@ -102,7 +102,7 @@ const PlayerInfoEdition = ({player}) => {
             labels: {
                 show: true,
                 style: {
-                    colors: ["#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d"],
+                    colors: theme === 'dark' ? ["#fff", "#fff", "#fff", "#fff", "#fff", "#fff"] : ["#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d"],
                     fontSize: "18px",
                     fontFamily: 'Arial'
                 }
@@ -124,9 +124,9 @@ const PlayerInfoEdition = ({player}) => {
             radar: {
                 polygons: {
                     connectorColors: 'rgba(255, 255, 255, .3)',
-                    strokeColors: '#3d3d3d',
+                    strokeColors: theme === 'dark' ? ['#fff', '#282828', '#282828', '#fff'] : '#3d3d3d',
                     fill: {
-                        colors: ['#3d3d3d']
+                        colors: theme === 'dark' ? ['#282828'] : ['#3d3d3d']
                     }
                 }
             }
@@ -134,17 +134,11 @@ const PlayerInfoEdition = ({player}) => {
         yaxis: {
             show: false
         }
-        // dataLabels: {
-        //     enabled: true,
-        //     textAnchor: 'end',
-        //     offsetY: 50,
-        //     distributed: true
-        // }
     }
 
     const series = [
         {
-            name: "Twój wynik",
+            name: theme === 'dark' ? 'Wynik' : "Twój wynik",
             data: [height, weight, attackRange, verticalRange, blockRange]
         }
     ]
@@ -180,7 +174,7 @@ const PlayerInfoEdition = ({player}) => {
     }
 
     return <section className="playerInfoEdition siteWidthSuperNarrow">
-        <section className="userInfoEdition__form">
+        <section className={theme === 'dark' ? "userInfoEdition__form userInfoEdition__form--dark" : "userInfoEdition__form"}>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     Zasięg w ataku

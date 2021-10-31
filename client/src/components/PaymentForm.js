@@ -4,6 +4,7 @@ import kartyIcon from '../static/img/karty-platnicze.png'
 import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
 import {chargeCard, registerPayment} from "../helpers/payment";
+import axios from "axios";
 
 const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [coupon, setCoupon] = useState("");
@@ -11,6 +12,8 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [przelewy24Method, setPrzelewy24Method] = useState(-1);
     const [discount, setDiscount] = useState(0);
     const [amount, setAmount] = useState(cost);
+
+    const [p24Sign, setP24Sign] = useState("");
 
     const [cardNumber, setCardNumber] = useState("");
     const [cardDate, setCardDate] = useState("");
@@ -23,7 +26,17 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
 
     useEffect(() => {
         setAmount(cost);
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        axios.get('https://sandbox.przelewy24.pl/inchtml/ajaxPayment/ajax.js?token=DAE5321760-1E4253-191246-7F58D19E7C')
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     const changePaymentItem = (n) => {
         if(n === 1) {
@@ -59,21 +72,23 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     }, [coupon]);
 
     const pay = () => {
-        if(przelewy24Method !== -1) {
+        // if(przelewy24Method !== -1) {
             registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
                 .then((res) => {
                     const paymentUri = "https://sandbox.przelewy24.pl/trnRequest/";
                     const token = res.data.result;
-                    window.location = `${paymentUri}${token}`;
+                    setP24Sign(res.data.sign);
+                    console.log(token);
+                    console.log(res.data.sign);
+                    //window.location = `${paymentUri}${token}`;
                 })
-        }
+        // }
     }
 
     const addCard = () => {
         registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
             .then((res) => {
                 const token = res.data.result;
-                console.log(token);
                 chargeCard(token, cardNumber, cardDate, cvv, `${firstName} ${lastName}`)
                     .then((res) => {
                         console.log(res.data);
@@ -130,54 +145,69 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
                 <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
             </button>
 
-            {paymentItem === 2 ? <main className="payment__item__formWrapper">
-                <form className="payment__item__form">
-                    <label>
-                        <input className="input input--payment"
-                               name="firstName"
-                               value={firstName}
-                               onChange={(e) => { setFirstName(e.target.value); }}
-                               placeholder="Imię" />
-                    </label>
-                    <label>
-                        <input className="input input--payment"
-                               name="lastName"
-                               value={lastName}
-                               onChange={(e) => { setLastName(e.target.value); }}
-                               placeholder="Nazwisko" />
-                    </label>
-                    <label>
-                        <input className="input input--payment"
-                               name="cardNumber"
-                               value={cardNumber}
-                               onChange={(e) => { setCardNumber(e.target.value); }}
-                               placeholder="Numer karty" />
-                    </label>
-                    <span className="payment__item__form__flex">
-                        <label>
-                            <input className="input input--payment"
-                                   name="cardDate"
-                                   value={cardDate}
-                                   onChange={(e) => { setCardDate(e.target.value); }}
-                                   placeholder="Data wygaśnięcia (MM/RR)" />
-                         </label>
-                        <label>
-                            <input className="input input--payment"
-                                   name={cvv}
-                                   onChange={(e) => { setCvv(e.target.value); }}
-                                   placeholder="Kod zabezpieczający (CVV)" />
-                        </label>
-                    </span>
+            {paymentItem === 2 ? <div
+                id="P24FormContainer"
+                data-sign={p24Sign}
+                data-successCallback="finishCardPayment"
+                data-failureCallback="paymentCardError"
+                data-dictionary={{
+        cardHolderLabel: "string",
+        cardNumberLabel: 0,
+        cvvLabel: 0,
+        expDateLabel: "string",
+        payButtonCaption: "string",
+        threeDSAuthMessage: "string"
+}} >
+            </div> : ""}
 
-                    <button type="button" className="button button--hover button--payment button--payment--card" onClick={() => { addCard(); }}>
-                        <img className="btn__img" src={payBtn} alt="dodaj-karte" />
-                    </button>
+            {/*{paymentItem === 2 ? <main className="payment__item__formWrapper">*/}
+            {/*    <form className="payment__item__form">*/}
+            {/*        <label>*/}
+            {/*            <input className="input input--payment"*/}
+            {/*                   name="firstName"*/}
+            {/*                   value={firstName}*/}
+            {/*                   onChange={(e) => { setFirstName(e.target.value); }}*/}
+            {/*                   placeholder="Imię" />*/}
+            {/*        </label>*/}
+            {/*        <label>*/}
+            {/*            <input className="input input--payment"*/}
+            {/*                   name="lastName"*/}
+            {/*                   value={lastName}*/}
+            {/*                   onChange={(e) => { setLastName(e.target.value); }}*/}
+            {/*                   placeholder="Nazwisko" />*/}
+            {/*        </label>*/}
+            {/*        <label>*/}
+            {/*            <input className="input input--payment"*/}
+            {/*                   name="cardNumber"*/}
+            {/*                   value={cardNumber}*/}
+            {/*                   onChange={(e) => { setCardNumber(e.target.value); }}*/}
+            {/*                   placeholder="Numer karty" />*/}
+            {/*        </label>*/}
+            {/*        <span className="payment__item__form__flex">*/}
+            {/*            <label>*/}
+            {/*                <input className="input input--payment"*/}
+            {/*                       name="cardDate"*/}
+            {/*                       value={cardDate}*/}
+            {/*                       onChange={(e) => { setCardDate(e.target.value); }}*/}
+            {/*                       placeholder="Data wygaśnięcia (MM/RR)" />*/}
+            {/*             </label>*/}
+            {/*            <label>*/}
+            {/*                <input className="input input--payment"*/}
+            {/*                       name={cvv}*/}
+            {/*                       onChange={(e) => { setCvv(e.target.value); }}*/}
+            {/*                       placeholder="Kod zabezpieczający (CVV)" />*/}
+            {/*            </label>*/}
+            {/*        </span>*/}
 
-                    <p className="payment__disclaimer">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam blandit nisl sit amet venenatis facilisis. Ut imperdiet nunc cursus eros posuere molestie. Nullam ultrices augue at leo pellentesque pretium. Morbi tincidunt magna ultricies nisl blandit, ut pulvinar sem fermentum.
-                    </p>
-                </form>
-            </main> : ""}
+            {/*        <button type="button" className="button button--hover button--payment button--payment--card" onClick={() => { addCard(); }}>*/}
+            {/*            <img className="btn__img" src={payBtn} alt="dodaj-karte" />*/}
+            {/*        </button>*/}
+
+            {/*        <p className="payment__disclaimer">*/}
+            {/*            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam blandit nisl sit amet venenatis facilisis. Ut imperdiet nunc cursus eros posuere molestie. Nullam ultrices augue at leo pellentesque pretium. Morbi tincidunt magna ultricies nisl blandit, ut pulvinar sem fermentum.*/}
+            {/*        </p>*/}
+            {/*    </form>*/}
+            {/*</main> : ""}*/}
         </section>
 
         <section className="payment__couponCode">

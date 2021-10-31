@@ -30,6 +30,7 @@ const UserWrapper = ({page}) => {
                             setLoaded(true);
 
                             const user = res?.data?.result;
+                            console.log(user);
 
                             if(user) {
                                 switch(page) {

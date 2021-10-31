@@ -42,7 +42,7 @@ const ClubAccountFavorites = () => {
             })}
         </main>
 
-        <a className="button button--hover button--showPlayersPage" href="/szukaj">
+        <a className="button button--hover button--showPlayersPage" href="/ulubieni">
             <img className="btn__img" src={przegladajBtn} alt="przegladaj" />
         </a>
     </section>

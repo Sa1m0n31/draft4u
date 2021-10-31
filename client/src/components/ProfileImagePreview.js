@@ -1,8 +1,8 @@
 import React from 'react'
 
-const ProfileImagePreview = (meta) => {
+const ProfileImagePreview = (meta, { club }) => {
     return <figure className="userInfoEdition__previewWrapper">
-        <img className="userInfoEdition__img" src={meta.meta.previewUrl} alt="alt" />
+        {!club ? <img className="userInfoEdition__img" src={meta.meta.previewUrl} alt="alt" /> : ""}
     </figure>
 }
 

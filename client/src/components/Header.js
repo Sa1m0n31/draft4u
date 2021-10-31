@@ -38,7 +38,10 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
     const mobileMenuChildren = [mobileMenuCloseBtn, mobileMenuHeader, mobileMenuList, mobileMenuBottom];
 
     useEffect(() => {
-        if(profileImage) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
+        if(profileImage) {
+            if(player) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
+            else setProfilePicture(`${settings.API_URL}/image?url=/media/clubs/${profileImage}`);
+        }
     }, []);
 
     const toggleLogin = () => {

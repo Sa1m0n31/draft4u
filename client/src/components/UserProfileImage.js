@@ -8,7 +8,7 @@ import {editProfileImage, getUserProfileImage} from "../helpers/user";
 import settings from "../settings";
 import DraftLoader from "./Loader";
 
-const UserProfileImage = ({user}) => {
+const UserProfileImage = ({user, club}) => {
     const [profilePicture, setProfilePicture] = useState(example);
     const [loader, setLoader] = useState(false);
 
@@ -28,12 +28,12 @@ const UserProfileImage = ({user}) => {
     return <figure className="userInfoEdition__imgWrapper">
         <span className={loader ? "hidden" : ""}>
             <img className="userInfoEdition__img" src={profilePicture} alt="alt" />
-            <Dropzone
+            {!club ? <Dropzone
                 getUploadParams={getUploadParams}
                 accept="image/*"
                 maxFiles={1}
-                PreviewComponent={props => <ProfileImagePreview {...props} extraProp={10} />}
-            />
+                PreviewComponent={props => <ProfileImagePreview {...props} />}
+            /> : ""}
         </span>
 
         <span className={!loader ? "hidden" : ""}>

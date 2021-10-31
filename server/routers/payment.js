@@ -55,9 +55,12 @@ router.post("/register-payment", (request, response) => {
                     email: email,
                     country: "PL",
                     language: "pl",
+                    encoding: "utf-8",
                     method: method,
-                    urlReturn: "https://drafcik.skylo-test1.pl",
+                    urlReturn: "https://platnosci.skylo-test1.pl/return.html",
                     urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    // urlReturn: "https://drafcik.skylo-test1.pl",
+                    // urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
                     sign: gen_hash
                 };
             }
@@ -72,8 +75,11 @@ router.post("/register-payment", (request, response) => {
                     email: email,
                     country: "PL",
                     language: "pl",
-                    urlReturn: "https://drafcik.skylo-test1.pl",
+                    encoding: "utf-8",
+                    urlReturn: "https://platnosci.skylo-test1.pl/return.html",
                     urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    // urlReturn: "https://drafcik.skylo-test1.pl",
+                    // urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
                     sign: gen_hash
                 };
             }
@@ -91,7 +97,8 @@ router.post("/register-payment", (request, response) => {
                     let responseToClient = res.body.data.token;
 
                     response.send({
-                        result: responseToClient
+                        result: responseToClient,
+                        sign: gen_hash
                     });
                 });
         }
@@ -111,6 +118,21 @@ router.post("/verify", (request, response) => {
     hash = crypto.createHash('sha384');
     data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${CRC}"}`, 'utf-8');
     gen_hash= data.digest('hex');
+
+    console.log("/verify");
+
+    /* Get card refId */
+    got.get(`https://sandbox.przelewy24.pl/api/v1/card/info/${orderId}`, {
+        headers: {
+            'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
+        }
+    })
+        .then((res) => {
+           console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 
     got.put("https://sandbox.przelewy24.pl/api/v1/transaction/verify", {
         json: {

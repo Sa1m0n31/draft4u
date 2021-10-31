@@ -11,7 +11,7 @@
 :root {
     --dark: #282828;
     --light: #F5F5F5;
-    --gold: #E2B76D;
+    --gold: #e2b76d;
     --goldDark: #D9AA66;
     --grey: #707070;
     --yellow: #FFDC00;
@@ -2057,6 +2057,34 @@ ul {
     width: 60%;
 }
 
+.userInfoEdition__form--dark {
+    background: #474747;
+}
+
+.userInfoEdition__form--dark .label--marginRightMinus .input--editProfile {
+    margin-right: -20px;
+}
+
+.userInfoEdition__form--dark .userInfoEdition__fullName,
+.userInfoEdition__form--dark .userInfoEdition__value,
+.userInfoEdition__form--dark .userInfoEdition__value .input--editProfile {
+    color: #fff !important;
+}
+
+.userInfoEdition__form--dark .userInfoEdition__fullName {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.userInfoEdition__form--dark .comparedPlayer__icons {
+    margin: 0 0 0 25px;
+}
+
+.userInfoEdition__form--dark .userInfoEdition__btn {
+    display: none !important;
+}
+
 .playerInfoEdition .userInfoEdition__form {
     width: 45%;
 }
@@ -2164,11 +2192,20 @@ select::-ms-expand {
 }
 
 .playerVideoView {
-
+    /*height: 400px;*/
 }
 
 .playerVideoView__carousel {
+    height: 400px;
+}
 
+.playerVideoView__carousel .splide,
+.playerVideoView__carousel .splide-track {
+    height: 400px;
+}
+
+.playerVideoView__carousel .video-react {
+    height: 400px !important;
 }
 
 .playerVideoView__btnWrapper {
@@ -2447,6 +2484,10 @@ select::-ms-expand {
     visibility: hidden;
 }
 
+.playerVideoView__carousel .video-react-big-play-button {
+    display: none !important;
+}
+
 .videoUploadContent .video-react-big-play-button,
 .video-react-control-text {
     display: none !important;
@@ -2480,12 +2521,18 @@ select::-ms-expand {
     width: clamp(200px, 80vw, 1200px);
     height: auto;
     max-height: 80vh;
-    overflow: hidden;
+}
+
+.video-react {
+    padding-top: 0 !important;
 }
 
 .playerVideoView .modalVideoPlayer__video .video-react {
     background: transparent;
-    height: 80vh;
+}
+
+.playerVideoView .splide__slide {
+    margin: 0 20px;
 }
 
 .modalVideoPlayer__video *, .embla__slide--video * {
@@ -2514,9 +2561,24 @@ select::-ms-expand {
     max-height: 80vh;
 }
 
-.modalVideoPlayer__video .video-react *:not(video) {
-    display: none;
+.playBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    z-index: 5;
+    background: transparent;
 }
+
+.playBtn--marginTopMinus {
+    margin-top: -5%;
+}
+
+/*.modalVideoPlayer__video .video-react *:not(video) {*/
+/*    display: none;*/
+/*}*/
 
 .modalVideoPlayer__video .registerModal__closeBtn__img {
     filter: brightness(0) invert(1);
@@ -2534,13 +2596,6 @@ select::-ms-expand {
     position: relative;
     margin: 0 20px;
     border-radius: 15px;
-}
-
-.playerVideoView .video-react-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .slick-track {
@@ -3157,6 +3212,7 @@ select::-ms-expand {
     height: 200px;
     overflow: hidden;
     border-radius: 50%;
+    background: #3d3d3d;
 }
 
 .playersWall__compareSection__item__img {
@@ -3196,7 +3252,7 @@ select::-ms-expand {
 .comparedPlayer__imgWrapper {
     width: 300px;
     height: 300px;
-    border: 3px solid transparent;
+    border: 8px solid transparent;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -3276,4 +3332,275 @@ select::-ms-expand {
 
 .apexcharts-legend {
     display: none !important;
+}
+
+.comparedPlayer .video-react {
+    width: 100%;
+    background: #3d3d3d;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.comparedPlayer .video-react-video {
+    width: 100%;
+    height: auto;
+}
+
+.comparedPlayer .video-react-big-play-button {
+    width: 60px;
+    height: 60px;
+}
+
+.comparedPlayer__videoSection {
+    width: 100%;
+    position: relative;
+}
+
+.noVideo {
+    background: #3d3d3d;
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.noVideo span {
+    color: #fff;
+    font-size: 21px;
+    text-align: center;
+}
+
+.comparedPlayer__videoSection > div > .video-react {
+    min-height: 300px;
+}
+
+.comparedPlayer__videoSection .video-react .video-react-big-play-button {
+    display: none;
+}
+
+.modalVideoPlayer__video > .video-react {
+    min-height: 70vh;
+}
+
+.comparedPlayer__icons {
+    margin: 5px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comparedPlayer__icons__item {
+    width: 30px;
+    height: auto;
+    background: transparent;
+    margin: 0 15px;
+}
+
+.noVideosHeader {
+    color: #fff;
+    text-align: center;
+    font-size: 32px;
+}
+
+.playerVideoView__carousel--empty {
+    height: auto;
+    margin-bottom: 90px;
+}
+
+.playerVideoView__btn--club {
+    margin-left: 100%;
+    transform: translateX(-100%);
+    margin-top: 30px;
+}
+
+.playerVideoView__btn--club--center {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 50px;
+}
+
+/* Create squad page */
+.createSquad {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.createSquad__main {
+    position: relative;
+}
+
+.createSquad__main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: rgb(40,40,40);
+    background: linear-gradient(180deg, rgba(40,40,40,1) 0%, rgba(40,40,40,0.7) 66%, rgba(40,40,40,0) 100%);
+    display: block;
+    z-index: 3;
+}
+
+.createSquad .userInfoEdition__value .input--editProfile {
+    color: #fff;
+}
+
+.createSquad .label--edit {
+    border: none !important;
+    border-bottom: 1px solid #fff !important;
+}
+
+.createSquad__main {
+    width: 60%;
+    position: relative;
+}
+
+.createSquad__line {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.createSquad__btn {
+    width: 30px;
+    height: auto;
+    background: transparent;
+    margin-right: 20px;
+}
+
+.createSquad__teamCostHeader {
+    color: #fff;
+    font-size: 28px;
+    margin: 10px 0;
+}
+
+.createSquad__teamCostHeader__value {
+    color: var(--gold);
+    font-size: 28px;
+}
+
+.createSquad > section {
+    width: 15%;
+}
+
+.createSquad .input--editProfile {
+    text-align: left;
+    width: 85%;
+}
+
+.dropzone {
+    position: absolute;
+    width: 15%;
+    z-index: 100;
+}
+
+.dropzone--player--1 {
+    top: 13%;
+    left: 15%;
+}
+
+.dropzone--player--2 {
+    top: 5%;
+    left: 40%;
+}
+
+.dropzone--player--3 {
+    top: 15%;
+    left: 65%;
+}
+
+.dropzone--player--4 {
+    top: 58%;
+    left: 15%;
+}
+
+.dropzone--player--5 {
+    top: 50%;
+    left: 40%;
+}
+
+.dropzone--player--6 {
+    top: 58%;
+    left: 65%;
+}
+
+.dropzone--player--7 {
+    top: 43%;
+    left: 86%;
+}
+
+.createSquad__squad {
+    background: #474747;
+    height: 200px;
+    margin-top: 20px;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+.createSquad__squad__track {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: transparent;
+    height: 200px;
+}
+
+.createSquad__squad__item {
+    background: var(--gold);
+    width: 370px;
+    height: 170px;
+    margin-right: 30px;
+    flex-basis: 50%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.createSquad__scrollbar {
+    margin-top: 20px;
+    position: relative;
+}
+
+.createSquad__scrollbar::before,
+.createSquad__scrollbar::after {
+    content: "";
+    position: absolute;
+    background: #474747;
+    top: 50%;
+    transform: translateY(calc(-50% - 1px));
+    height: 13px;
+    width: 100px;
+    border: 1px solid rgb(112, 112, 112);
+    z-index: 0;
+}
+
+.createSquad__scrollbar::before {
+    left: -100px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: none;
+}
+
+.createSquad__scrollbar::after {
+    right: -100px;
+    border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.createSquad__scrollbar {
+    width: calc(100% - 200px);
+    margin: 20px auto;
+}
+
+.createSquad__scrollbar > div {
+    position: relative;
+    z-index: 3;
 }

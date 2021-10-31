@@ -36,7 +36,7 @@ const getPositionById = (id) => {
         case 4:
             return 'rozgrywający';
         case 5:
-            return 'libery';
+            return 'libero';
         default:
             return null;
     }

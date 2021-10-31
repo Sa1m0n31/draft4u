@@ -5,6 +5,12 @@ import SearchPlayersPage from "../pages/SearchPlayersPage";
 import {isLoggedIn} from "../helpers/auth";
 import {getClubData, getFavoritesByClub} from "../helpers/club";
 import {getUserData} from "../helpers/user";
+import Player from "../pages/Player";
+import PlayerPage from "../pages/PlayerPage";
+import ComparatorPage from "../pages/ComparatorPage";
+import Favorites from "../pages/Favorites";
+import CreateSquadPage from "../pages/CreateSquadPage";
+import ClubTeamsPage from "../pages/ClubTeamsPage";
 
 const ClubContext = React.createContext(5);
 
@@ -26,7 +32,6 @@ const ClubWrapper = ({page}) => {
                             getFavoritesByClub()
                                 .then((res) => {
                                     const favorites = res?.data?.result;
-                                    console.log(res.data);
 
                                     if(club) {
                                         switch(page) {
@@ -36,18 +41,21 @@ const ClubWrapper = ({page}) => {
                                             case 2:
                                                 setRenderSwitch(<SearchPlayersPage club={club} favorites={favorites} />);
                                                 break;
-                                            // case 3:
-                                            //     setRenderSwitch(<FAQPage user={user} />);
-                                            //     break;
-                                            // case 4:
-                                            //     setRenderSwitch(<VideoUploadPage user={user} />);
-                                            //     break;
-                                            // case 5:
-                                            //     setRenderSwitch(<PaymentPage user={user} />);
-                                            //     break;
-                                            // case 6:
-                                            //     setRenderSwitch(<PaymentReturnPage user={user} />);
-                                            //     break;
+                                            case 3:
+                                                setRenderSwitch(<ComparatorPage club={club} />);
+                                                break;
+                                            case 4:
+                                                setRenderSwitch(<PlayerPage club={club} />);
+                                                break;
+                                            case 5:
+                                                setRenderSwitch(<Favorites club={club} />);
+                                                break;
+                                            case 6:
+                                                setRenderSwitch(<CreateSquadPage club={club} />);
+                                                break;
+                                            case 7:
+                                                setRenderSwitch(<ClubTeamsPage club={club} />);
+                                                break;
                                             default:
                                                 setRenderSwitch(<ClubAccountStart user={{}} />);
                                                 break;

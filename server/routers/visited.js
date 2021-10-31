@@ -23,4 +23,24 @@ router.post("/add", (request, response) => {
     });
 });
 
+router.get("/get-visited-by-player", (request, response) => {
+   const userId = request.user;
+
+   const query = 'SELECT c.name, i.file_path FROM visited v JOIN clubs c ON c.id = v.club_id JOIN users u ON u.id = v.user_id JOIN identities id ON id.user_id = u.id LEFT OUTER JOIN images i ON i.id = c.logo WHERE id.id = $1';
+   const values = [userId];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: res.rows
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
 module.exports = router;

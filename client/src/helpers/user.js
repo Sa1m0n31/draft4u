@@ -200,11 +200,23 @@ const getUserById = (userId) => {
     });
 }
 
+const getUserFavorites = () => {
+    return axios.get(`${API_URL}/favorite/get-favorites-by-player`, {
+       withCredentials: true
+    });
+}
+
+const getUserVisited = () => {
+    return axios.get(`${API_URL}/visited/get-visited-by-player`, {
+        withCredentials: true
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
-    getUserById
+    getUserById, getUserFavorites, getUserVisited
 }

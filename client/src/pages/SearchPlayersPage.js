@@ -15,6 +15,7 @@ import man from '../static/img/profile-picture.png'
 import filterIcon from '../static/img/filter.svg'
 import rightArrow from '../static/img/right-arrow.svg'
 import pokazWynikiBtn from '../static/img/pokaz-wyniki-btn.png'
+import profileImg from '../static/img/profile-picture.png'
 
 const SearchPlayersPage = ({club, favorites}) => {
     const [players, setPlayers] = useState([]);
@@ -179,8 +180,16 @@ const SearchPlayersPage = ({club, favorites}) => {
         setMobileFilters(false);
     }
 
+    const areThreeToCompare = (e) => {
+        if(comparator?.findIndex((item) => {
+            return !item;
+        }) !== -1) {
+            e.preventDefault();
+        }
+    }
+
     return <div className="container container--dark">
-        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={example} />
+        <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 
         {/* DESKTOP HEADER */}
         <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
@@ -327,14 +336,14 @@ const SearchPlayersPage = ({club, favorites}) => {
             {comparator.map((item, index) => {
                 return <section className="playersWall__compareSection__item" key={index}>
                     <figure className="playersWall__compareSection__item__imgWrapper">
-                        <img className="playersWall__compareSection__item__img" src={!item ? placeholder : item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : man} alt="porownaj-graczy" />
+                        {item ? <img className="playersWall__compareSection__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profileImg} alt="porownaj-graczy" /> : ""}
                     </figure>
                     <h3 className="playersWall__compareSection__item__name">
                         {!item ? "Imię i nazwisko" : item.first_name + " " + item.last_name}
                     </h3>
                 </section>
             })}
-            <a className="button button--hover button--compare" href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}&third=${comparator[2].user_id}`}>
+            <a className="button button--hover button--compare" onClick={(e) => { areThreeToCompare(e); }} href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}&third=${comparator[2].user_id}`}>
                 <img className="btn__img" src={compareBtn} alt="porownaj" />
             </a>
         </section>

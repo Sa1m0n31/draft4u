@@ -1,11 +1,28 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import zaksa from '../static/img/zzaksa.png'
+import {getUserFavorites, getUserVisited} from "../helpers/user";
+import settings from "../settings";
 
 const ClubActivities = () => {
     const clubs = [
 
     ]
+
+    const [visitors, setVisitors] = useState([]);
+    const [favorites, setFavorites] = useState([]);
+
+    useEffect(() => {
+        getUserVisited()
+            .then((res) => {
+                setVisitors(res?.data?.result);
+            });
+
+        getUserFavorites()
+            .then((res) => {
+                setFavorites(res?.data?.result);
+            });
+    }, []);
 
     return <section className="clubActivities siteWidthSuperNarrow">
         <h2 className="clubActivities__header">
@@ -15,8 +32,8 @@ const ClubActivities = () => {
             Twój profil odwiedzili
         </h3>
         <section className="clubActivities__list">
-            {clubs.length ? clubs.map((item, index) => {
-                return <img key={index} className="clubActivities__img" src={item} alt="klub" />
+            {visitors.length ? visitors.map((item, index) => {
+                return <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
             }) : <h3 className="clubActivities__empty">
                 Póki co nikt nie odwiedził Twojego profilu...
             </h3>}
@@ -26,8 +43,8 @@ const ClubActivities = () => {
             Twój profil polubili
         </h3>
         <section className="clubActivities__list">
-            {clubs.length ? clubs.map((item, index) => {
-                return <img key={index} className="clubActivities__img" src={item} alt="klub" />
+            {favorites.length ? favorites.map((item, index) => {
+                return <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
             }) : <h3 className="clubActivities__empty">
                 Póki co nikt nie odwiedził Twojego profilu...
             </h3> }

@@ -11,6 +11,7 @@ const Homepage = () => {
     useEffect(() => {
         isLoggedIn()
             .then(res => {
+                console.log("homepage: " + res?.data?.result);
                 if(res?.data?.result) window.location = "/rozpocznij";
                 else setLoaded(true);
             })
