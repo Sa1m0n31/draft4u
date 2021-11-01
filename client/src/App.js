@@ -1,9 +1,9 @@
 import React from 'react'
-
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 import './static/style/style.css'
 import './static/style/mobile.css'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import MyAccountStart from "./pages/MyAccountStart";
@@ -100,7 +100,9 @@ function App() {
           <ClubWrapper page={5} />
       </Route>
       <Route path="/sklady">
-          <ClubWrapper page={6} />
+          <DndProvider backend={HTML5Backend}>
+              <ClubWrapper page={6} />
+          </DndProvider>
       </Route>
       <Route path="/zapisane-druzyny">
           <ClubWrapper page={7} />

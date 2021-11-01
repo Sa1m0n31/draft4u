@@ -19,6 +19,23 @@
     .aboutUs__profileWrapper--background {
         right: -250px;
     }
+
+    .createSquad__squad__item__name {
+        font-size: 24px;
+    }
+
+    .createSquad__squad__item__position {
+        font-size: 17px;
+    }
+
+    .createSquad__squad__item__data__key, .createSquad__squad__item__data__value {
+        font-size: 13px;
+    }
+
+    .createSquad__squad__item__imgWrapper {
+        width: 80px;
+        height: 80px;
+    }
 }
 
 @media(max-width: 1600px) {

@@ -13,6 +13,11 @@ import downloadIcon from '../static/img/direct-download.svg'
 import saveIcon from '../static/img/save.svg'
 import {getFavoritesByClub} from "../helpers/club";
 import {getTrackBackground, Range} from "react-range";
+import settings from "../settings";
+import profilePicture from '../static/img/profile-picture.png'
+import {getPositionById, isElementInArray} from "../helpers/others";
+import { useDrag, useDrop } from "react-dnd";
+import interact from 'interactjs'
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -21,16 +26,69 @@ const CreateSquadPage = ({club}) => {
     const [players, setPlayers] = useState([]);
     const [scrollbar, setScrollbar] = useState([1]);
     const [trackWidth, setTrackWidth] = useState(0);
-
+    const [filteredPlayers, setFilteredPlayers] = useState([]);
     const [mobile, setMobile] = useState(false);
+
+    useEffect(() => {
+        interact(".draggable").draggable({
+            listeners: {
+                move (event) {
+                    const target = event.target;
+
+                    const dataX = target.getAttribute('data-x');
+                    const dataY = target.getAttribute('data-y');
+                    const initialX = parseFloat(dataX) || 0;
+                    const initialY = parseFloat(dataY) || 0;
+
+                    const deltaX = event.dx;
+                    const deltaY = event.dy;
+
+                    const newX = initialX + deltaX;
+                    const newY = initialY + deltaY;
+
+                    // target.remove();
+                    // document.querySelector(".container").appendChild(target);
+
+                    target.style.opacity = "1";
+
+                    target
+                        .style
+                        .transform = `translate(${newX}px, ${newY}px)`;
+
+                    target.setAttribute('data-x', newX);
+                    target.setAttribute('data-y', newY);
+                }
+            }
+        });
+    }, []);
 
     useEffect(() => {
         getFavoritesByClub()
             .then((res) => {
                 setPlayers(res?.data?.result);
-                setTrackWidth(res?.data?.result?.length * 400);
+                setFilteredPlayers(res?.data?.result);
+                setTrackWidth(res?.data?.result?.length * 300);
             });
     }, []);
+
+    const filterPlayers = () => {
+        setFilteredPlayers(players.filter((item) => {
+            return isPlayerInFilteredGroup(item.position);
+        }));
+    }
+
+    useEffect(() => {
+        filterPlayers();
+    }, [positionFilters]);
+
+    const isPlayerInFilteredGroup = (position) => {
+        if(isElementInArray(positionFilters, 0)) return true;
+        else {
+            return positionFilters.findIndex((item) => {
+                return item === position;
+            }) !== -1;
+        }
+    }
 
     const filterPosition = (n) => {
         if(isPositionActive(n)) {
@@ -47,6 +105,24 @@ const CreateSquadPage = ({club}) => {
         return positionFilters.findIndex((item) => {
             return item === n;
         }) !== -1;
+    }
+
+    const draggableOptions = {
+        onmove: event => {
+            const target = event.target
+            // keep the dragged position in the data-x/data-y attributes
+            const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+            const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+            // translate the element
+            target.style.webkitTransform =
+                target.style.transform =
+                    'translate(' + x + 'px, ' + y + 'px)'
+
+            // update the posiion attributes
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+        }
     }
 
     return <div className="container container--dark">
@@ -112,8 +188,8 @@ const CreateSquadPage = ({club}) => {
                 </h4>
             </section>
         </main>
-        <section className="createSquad__players siteWidthSuperNarrow siteWidthSuperNarrow--1400">
-            <section className="searchFilters__position searchFilters__position--mobile">
+        <section className="createSquad__players">
+            <section className="searchFilters__position searchFilters__position--mobile siteWidthSuperNarrow siteWidthSuperNarrow--1400">
                 <span className="searchFilters__position__header">
                     Pozycja:
                 </span>
@@ -140,18 +216,64 @@ const CreateSquadPage = ({club}) => {
                 </span>
             </section>
 
-            <section className="createSquad__squad">
-                <div className="createSquad__squad__track" style={{
-                    transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`
-                }} onScroll={() => { console.log("scroll"); }}>
-                    {players.map((item, index) => {
-                        return <div className={`createSquad__squad__item draggable draggable--player--${index+1}`}>
+            <section className="createSquad__squadWrapper">
+                <span className="createSquad__squadWrapper__overlay"></span>
 
-                        </div>
-                    })}
-                </div>
+                <section className="createSquad__squad siteWidthSuperNarrow siteWidthSuperNarrow--1400">
+                    <div className="createSquad__squad__track" style={{
+                        transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`
+                    }} onScroll={() => { console.log("scroll"); }}>
+
+                        {filteredPlayers?.map((item, index) => {
+                            return <div className={`createSquad__squad__itemWrapper`}>
+                                <div className="createSquad__squad__item__dragging draggable">
+                                    <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
+                                </div>
+                                <div className="createSquad__squad__item">
+                                    <figure className="createSquad__squad__item__imgWrapper">
+                                        <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
+                                    </figure>
+                                    <section className="createSquad__squad__item__data">
+                                        <h3 className="createSquad__squad__item__name">
+                                            {item.first_name} {item.last_name}
+                                        </h3>
+                                        <h4 className="createSquad__squad__item__position">
+                                            {getPositionById(item.position)}
+                                        </h4>
+                                        <section className="createSquad__squad__item__data__section">
+                                            <h4 className="createSquad__squad__item__data__key">
+                                                Wzrost
+                                            </h4>
+                                            <h4 className="createSquad__squad__item__data__value">
+                                                {item.height ? item.height + " cm" : "-"}
+                                            </h4>
+                                            <h4 className="createSquad__squad__item__data__key">
+                                                Waga
+                                            </h4>
+                                            <h4 className="createSquad__squad__item__data__value">
+                                                {item.weight ? item.weight + " kg" : "-"}
+                                            </h4>
+                                        </section>
+                                        <section className="createSquad__squad__item__data__section">
+                                            <h4 className="createSquad__squad__item__data__key">
+                                                Honorarium
+                                            </h4>
+                                            <h4 className="createSquad__squad__item__data__value">
+                                                {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
+                                            </h4>
+                                        </section>
+                                    </section>
+                                </div>
+                            </div>
+                        })}
+                    </div>
+                </section>
+
+                <span className="createSquad__squadWrapper__overlay"></span>
             </section>
-            <section className="createSquad__scrollbar">
+
+
+            <section className="createSquad__scrollbar siteWidthSuperNarrow siteWidthSuperNarrow--1400">
                 <Range
                     step={1}
                     min={1}
