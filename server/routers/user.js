@@ -199,7 +199,7 @@ const getUserData = (request, response, userId) => {
                     });
                 }
                 else {
-                    got.get(`http://localhost:5000/club/get-club-data?id=${userId}`)
+                    got.get(`https://drafcik.skylo-test1.pl/club/get-club-data?id=${userId}`)
                         .then((res) => {
                             const result = res.body.result;
                             response.send({

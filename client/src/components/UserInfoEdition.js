@@ -130,7 +130,7 @@ const UserInfoEdition = ({player, theme, favorite}) => {
                     </label>
                 </span>
             </label>
-            {!theme === 'dark' ? <>
+            {!(theme === 'dark') ? <>
                 <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     Mail

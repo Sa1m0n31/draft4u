@@ -1321,11 +1321,12 @@
     }
 
     .playersWall__mobileFilters {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
+        height: 100%;
         background: #282828;
         z-index: 12;
     }
@@ -1430,6 +1431,29 @@
         font-size: 21px;
         max-width: 90%;
         margin: auto;
+    }
+
+    .playerVideoView__carousel .splide, .playerVideoView__carousel .splide-track,
+    .playerVideoView__carousel .video-react {
+        height: 100px !important;
+    }
+
+    .playerVideoView__btn--club {
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .playBtn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .userInfoEdition__form--dark .label--marginRightMinus .input--editProfile {
+        margin-right: -17px;
+    }
+
+    .playerVideoView__carousel {
+        height: auto;
     }
 }
 

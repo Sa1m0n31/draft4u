@@ -17,7 +17,7 @@ const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
 const init = (passport) => {
     const userAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
-        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE u.email = $1 OR c.login = $1 AND i.hash = $2';
+        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE u.email = $1 OR (c.login = $1 AND i.hash = $2)';
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {

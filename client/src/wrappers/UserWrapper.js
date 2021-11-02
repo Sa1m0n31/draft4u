@@ -19,6 +19,7 @@ const UserWrapper = ({page}) => {
     const [renderSwitch, setRenderSwitch] = useState(null);
 
     useEffect(() => {
+        console.log("is logged in?");
         isLoggedIn()
             .then((res) => {
                 if(!res?.data?.result) {
@@ -30,7 +31,6 @@ const UserWrapper = ({page}) => {
                             setLoaded(true);
 
                             const user = res?.data?.result;
-                            console.log(user);
 
                             if(user) {
                                 switch(page) {

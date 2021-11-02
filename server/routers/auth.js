@@ -95,7 +95,6 @@ router.get('/verification', (request, response) => {
 });
 
 router.get("/auth", isLoggedIn, (request, response) => {
-   console.log("/auth123");
    console.log(request.user);
     if(request.user) response.send({result: 1});
     else response.send({result: 0});

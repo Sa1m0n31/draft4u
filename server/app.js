@@ -95,6 +95,22 @@ app.get("/subskrypcja-przedluzona", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+app.get("/konto-klubu", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/szukaj", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/profil-zawodnika", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/ulubieni", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/porownywarka", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
 /* Routers */
 const authRouter = require("./routers/auth");
 const imageRouter = require("./routers/image");

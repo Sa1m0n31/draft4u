@@ -2061,6 +2061,10 @@ ul {
     background: #474747;
 }
 
+.userInfoEdition__form--dark .userInfoEdition__value label {
+    padding-right: 0;
+}
+
 .userInfoEdition__form--dark .label--marginRightMinus .input--editProfile {
     margin-right: -20px;
 }
@@ -2193,6 +2197,21 @@ select::-ms-expand {
 
 .playerVideoView {
     /*height: 400px;*/
+}
+
+.splide__slide .video-react {
+    display: flex;
+}
+
+.splide__slide > div > .video-react {
+    margin: 0 !important;
+    overflow: hidden;
+}
+
+.video-react .video-react-big-play-button {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 .playerVideoView__carousel {
@@ -2555,6 +2574,7 @@ select::-ms-expand {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .modalVideoPlayer__video .video-react-video {
@@ -2588,6 +2608,19 @@ select::-ms-expand {
     max-width: 100%;
     height: 100%;
     padding-top: 0 !important;
+}
+
+.playerVideoView .video-react-video {
+    height: auto;
+}
+
+.video-react .video-react-video {
+    position: relative !important;
+    height: auto !important;
+}
+
+.video-react-control-bar {
+    position: relative !important;
 }
 
 .playerVideoView .video-react {
@@ -3340,6 +3373,7 @@ select::-ms-expand {
     border-radius: 15px;
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     margin-bottom: 40px;
     position: relative;
 }
@@ -3382,10 +3416,6 @@ select::-ms-expand {
 
 .comparedPlayer__videoSection .video-react .video-react-big-play-button {
     display: none;
-}
-
-.modalVideoPlayer__video > .video-react {
-    min-height: 70vh;
 }
 
 .comparedPlayer__icons {
@@ -3700,4 +3730,17 @@ select::-ms-expand {
     width: calc((100% - var(--siteWidthSuperNarrow)) / 2);
     z-index: 10;
     position: relative;
+}
+
+.mobileMenu__list--club,
+.mobileMenu__bottom--club {
+    transform: scale(.7);
+}
+
+.mobileMenu__list--club {
+    transform-origin: top;
+}
+
+.mobileMenu__bottom--club {
+    transform-origin: bottom;
 }

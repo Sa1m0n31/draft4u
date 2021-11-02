@@ -174,7 +174,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                 </ul> : ""}
 
             {/* Club menu */}
-            {club ? <ul className="mobileMenu__list" ref={mobileMenuList}>
+            {club ? <ul className="mobileMenu__list mobileMenu__list--club" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/">Home</a>
                 </li>
@@ -192,7 +192,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                 </li>
             </ul> : ""}
 
-            {club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
+            {club ? <ul className="mobileMenu__bottom mobileMenu__bottom--club" ref={mobileMenuBottom}>
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/odzyskiwanie-hasla">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
