@@ -14,15 +14,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/AdminTop.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/PanelMenu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/helpers/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminLogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminPanel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/ChatPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/admin-articles.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/admin-notifications.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/admin-players.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/admin-settings.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/admin-teams.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/picture.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/send.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/style/admin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/wrappers/AdminWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/UserInfoEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UserInfoEdition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/passport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
     </list>
@@ -52,7 +66,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/static/img" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -120,6 +134,9 @@
       <workItem from="1635799240911" duration="1065000" />
       <workItem from="1635800855780" duration="79000" />
       <workItem from="1635800960497" duration="9474000" />
+      <workItem from="1635848310573" duration="607000" />
+      <workItem from="1635942216328" duration="12651000" />
+      <workItem from="1636018285094" duration="6957000" />
     </task>
     <servers />
   </component>
@@ -147,10 +164,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633287008314" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1635769836469">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1636015013393">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1635769836469" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1636015013393" />
     <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1635724993790">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -171,25 +188,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="384" y="0" width="624" height="1027" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1631571429351" />
-    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1635801989480">
+    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1636020616202">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635801989480" />
+    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636020616202" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1635802780124">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635802780124" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1635809096111">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636026782069">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635809096111" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636026782069" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/server/routers/user.js</url>
-          <line>395</line>
+          <line>392</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

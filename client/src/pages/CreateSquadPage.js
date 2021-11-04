@@ -18,6 +18,7 @@ import profilePicture from '../static/img/profile-picture.png'
 import {getPositionById, isElementInArray} from "../helpers/others";
 import { useDrag, useDrop } from "react-dnd";
 import interact from 'interactjs'
+import useEmblaCarousel from "embla-carousel-react";
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -125,6 +126,11 @@ const CreateSquadPage = ({club}) => {
         }
     }
 
+    const [viewportRef, embla] = useEmblaCarousel({
+        dragFree: true,
+        containScroll: "trimSnaps"
+    });
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
@@ -216,9 +222,7 @@ const CreateSquadPage = ({club}) => {
                 </span>
             </section>
 
-            <section className="createSquad__squadWrapper">
-                <span className="createSquad__squadWrapper__overlay"></span>
-
+            <section className="createSquad__squadWrapper" ref={viewportRef}>
                 <section className="createSquad__squad siteWidthSuperNarrow siteWidthSuperNarrow--1400">
                     <div className="createSquad__squad__track" style={{
                         transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`

@@ -13,11 +13,16 @@ const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.google
 const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
 
 const isLoggedIn = (req, res, next) => {
-    console.log("Am i Logged ing?");
+    console.log("isLoggedIn middleware");
     console.log(req.user);
-    console.log(req.isAuthenticated());
     if(req.user) next();
     else res.redirect("/");
+}
+
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }
 
 const sendVerificationEmail = (email, token, response) => {
@@ -95,9 +100,19 @@ router.get('/verification', (request, response) => {
 });
 
 router.get("/auth", isLoggedIn, (request, response) => {
-   console.log(request.user);
-    if(request.user) response.send({result: 1});
-    else response.send({result: 0});
+    console.log("/auth/auth");
+    console.log(request.user);
+    if(request.user) {
+        if(isNumeric(request.user.toString())) {
+           /* Admin */
+            response.send({result: 2});
+        }
+        else {
+            /* User */
+            response.send({result: 1});
+        }
+    }
+    else response.send({ result: 0 });
 });
 
 router.get("/logout", (request, response) => {
@@ -110,13 +125,21 @@ router.get("/logout", (request, response) => {
 });
 
 router.post("/login",
-    passport.authenticate('local', { session: true }),
+    passport.authenticate('user-local', { session: true }),
     (request, response) => {
         response.send({
             result: 1
         });
     }
 );
+
+router.post("/admin",
+    passport.authenticate('admin-local', { session: true }),
+    (request, response) => {
+    response.send({
+        result: 1
+    });
+});
 
 router.post("/facebook", cors(), passport.authenticate('facebook', {
     failureRedirect: '/#!/info',

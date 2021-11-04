@@ -4,6 +4,7 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const isLoggedIn = () => {
+    console.log("isLoggedIn");
     return axios.get(`${API_URL}/auth/auth`, {
         withCredentials: true
     });
@@ -12,6 +13,18 @@ const isLoggedIn = () => {
 const loginUser = (email, password) => {
     return axios.post(`${API_URL}/auth/login`, {
         username: email,
+        password: password
+    }, {
+        headers: {
+            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
+        },
+        withCredentials: true
+    });
+}
+
+const loginAdmin = (login, password) => {
+    return axios.post(`${API_URL}/auth/admin`, {
+        username: login,
         password: password
     }, {
         headers: {
@@ -72,4 +85,4 @@ const logoutUser = () => {
     });
 }
 
-export { isLoggedIn, loginUser, loginFacebook, loginGoogle, loginApple, registerUser, verifyUser, logoutUser }
+export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple, registerUser, verifyUser, logoutUser }

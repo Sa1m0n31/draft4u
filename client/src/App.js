@@ -3,6 +3,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 import './static/style/style.css'
 import './static/style/mobile.css'
+import './static/style/admin.css'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Homepage from "./pages/Homepage";
@@ -28,6 +29,9 @@ import ClubWrapper from "./wrappers/ClubWrapper";
 import ComparatorPage from "./pages/ComparatorPage";
 import PlayerPage from "./pages/PlayerPage";
 import Favorites from "./pages/Favorites";
+import ChatPage from "./pages/ChatPage";
+import AdminLogin from "./pages/AdminLogin";
+import AdminWrapper from "./wrappers/AdminWrapper";
 
 function App() {
   return <Router>
@@ -106,6 +110,17 @@ function App() {
       </Route>
       <Route path="/zapisane-druzyny">
           <ClubWrapper page={7} />
+      </Route>
+      <Route path="/wiadomosci">
+          <ChatPage />
+      </Route>
+
+      {/* Admin panel */}
+      <Route path="/admin">
+          <AdminLogin />
+      </Route>
+      <Route path="/panel">
+          <AdminWrapper page={1} />
       </Route>
 
   </Router>
