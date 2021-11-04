@@ -18,7 +18,7 @@ import profilePicture from '../static/img/profile-picture.png'
 import {getPositionById, isElementInArray} from "../helpers/others";
 import { useDrag, useDrop } from "react-dnd";
 import interact from 'interactjs'
-import useEmblaCarousel from "embla-carousel-react";
+import trash from '../static/img/trash-black.svg'
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -29,6 +29,22 @@ const CreateSquadPage = ({club}) => {
     const [trackWidth, setTrackWidth] = useState(0);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
     const [mobile, setMobile] = useState(false);
+
+    const [selectedPlayers, setSelectedPlayers] = useState([]);
+    const [playersOnCourt, setPlayersOnCourt] = useState([]);
+    const [newPlayerOnCourt, setNewPlayerOnCourt] = useState(-1);
+    const [minCost, setMinCost] = useState(0);
+    const [maxCost, setMaxCost] = useState(0);
+    const [currentDrag, setCurrentDrag] = useState(-1);
+
+    useEffect(() => {
+        getFavoritesByClub()
+            .then((res) => {
+                setPlayers(res?.data?.result);
+                setFilteredPlayers(res?.data?.result);
+                setTrackWidth(res?.data?.result?.length * 300);
+            });
+    }, []);
 
     useEffect(() => {
         interact(".draggable").draggable({
@@ -61,16 +77,67 @@ const CreateSquadPage = ({club}) => {
                 }
             }
         });
-    }, []);
+
+        interact(".dropzone--active").dropzone({
+            accept: ".draggable",
+            overlap: 0.1,
+            ondragenter: function(event) {
+                event.target.style.opacity = ".5";
+            },
+            ondrop: function(event) {
+                const draggingElement = event.relatedTarget;
+                const dropzoneElement = event.target;
+
+                dropzoneElement.style.opacity = "1";
+                dropzoneElement.classList.remove("dropzone--active");
+
+                console.log(draggingElement);
+                console.log(dropzoneElement);
+
+                dropzoneElement.appendChild(draggingElement);
+                draggingElement.classList.add("element--dropped");
+                draggingElement.classList.remove("draggable");
+
+                const droppedPlayerIndex = parseInt(draggingElement.id.split("-")[1]);
+                setNewPlayerOnCourt(droppedPlayerIndex);
+            },
+            ondragleave: function(event) {
+                event.target.style.opacity = "1";
+            }
+        });
+    }, [players]);
 
     useEffect(() => {
-        getFavoritesByClub()
-            .then((res) => {
-                setPlayers(res?.data?.result);
-                setFilteredPlayers(res?.data?.result);
-                setTrackWidth(res?.data?.result?.length * 300);
-            });
-    }, []);
+        if(newPlayerOnCourt >= 0) {
+            setPlayersOnCourt([...playersOnCourt, newPlayerOnCourt]);
+        }
+        else {
+            if(newPlayerOnCourt !== -999999) {
+                setPlayersOnCourt(playersOnCourt.filter((item) => {
+                    return item !== newPlayerOnCourt * -1;
+                }));
+            }
+            else {
+                setPlayersOnCourt(playersOnCourt.filter((item) => {
+                    return item;
+                }));
+            }
+        }
+    }, [newPlayerOnCourt]);
+
+    useEffect(() => {
+        console.log(playersOnCourt);
+        if(1) {
+            setMinCost(playersOnCourt.reduce((prev, current, index) => {
+                const player = players[current];
+                return prev + player.salary_from;
+            }, 0));
+            setMaxCost(playersOnCourt.reduce((prev, current, index) => {
+                const player = players[current];
+                return prev + player.salary_to;
+            }, 0));
+        }
+    }, [playersOnCourt]);
 
     const filterPlayers = () => {
         setFilteredPlayers(players.filter((item) => {
@@ -108,31 +175,70 @@ const CreateSquadPage = ({club}) => {
         }) !== -1;
     }
 
-    const draggableOptions = {
-        onmove: event => {
-            const target = event.target
-            // keep the dragged position in the data-x/data-y attributes
-            const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-            const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+    const startDragging = (e, playerIndex) => {
+        if(!isElementInArray(selectedPlayers, playerIndex)) {
+            setCurrentDrag(playerIndex);
 
-            // translate the element
-            target.style.webkitTransform =
-                target.style.transform =
-                    'translate(' + x + 'px, ' + y + 'px)'
+            const elementToDrag = document.getElementById(`draggable-${playerIndex}`);
 
-            // update the posiion attributes
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
+            const x = e.pageX - 50;
+            const y = e.pageY - 50;
+
+            elementToDrag.style.opacity = "1";
+
+            const dropzone = document.getElementById(`createSquad__squad__itemWrapper--${playerIndex}`);
+            dropzone.removeChild(elementToDrag);
+            document.querySelector(".container").appendChild(elementToDrag);
+
+            elementToDrag.style.top = `${y}px`;
+            elementToDrag.style.left = `${x}px`;
+            elementToDrag.style.width = "auto";
+
+            setSelectedPlayers([...selectedPlayers, playerIndex]);
         }
     }
 
-    const [viewportRef, embla] = useEmblaCarousel({
-        dragFree: true,
-        containScroll: "trimSnaps"
-    });
+    function triggerMouseEvent (node, eventType) {
+        var clickEvent = document.createEvent ('MouseEvents');
+        clickEvent.initEvent (eventType, true, true);
+        node.dispatchEvent (clickEvent);
+    }
+
+    const removePlayerFromCourt = (id) => {
+        if(id) setNewPlayerOnCourt(id * -1);
+        else setNewPlayerOnCourt(-999999);
+
+        setSelectedPlayers(selectedPlayers.filter((item) => {
+            return item !== id;
+        }));
+
+        const elementToRemove = document.getElementById(`draggable-${id}`);
+        const parentOfElementToRemove = document.getElementById(`createSquad__squad__itemWrapper--${id}`);
+
+        elementToRemove.parentElement.classList.add("dropzone--active");
+        elementToRemove.parentElement.removeChild(elementToRemove);
+
+        parentOfElementToRemove.appendChild(elementToRemove);
+        elementToRemove.style.top = "0";
+        elementToRemove.style.left = "0";
+        elementToRemove.style.transform = "none";
+        elementToRemove.style.opacity = "0";
+        elementToRemove.style.width = "100%";
+
+        elementToRemove.setAttribute('data-x', 0);
+        elementToRemove.setAttribute('data-y', 0);
+
+        // elementToRemove.classList.remove("element--dropped");
+        elementToRemove.classList.add("draggable");
+    }
 
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
+
+        {/* Draggable elements */}
+        {/*{players?.map((item, index) => {*/}
+        {/*    return */}
+        {/*})}*/}
 
         <main className="createSquad siteWidth">
             <section className="createSquad__name">
@@ -154,25 +260,25 @@ const CreateSquadPage = ({club}) => {
             <main className="createSquad__main">
                 <img className="btn__img createSquad__floor" src={floor} alt="boisko" />
 
-                <div className="dropzone dropzone--player--1">
+                <div className="dropzone dropzone--active dropzone--player--1">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
-                <div className="dropzone dropzone--player--2">
+                <div className="dropzone dropzone--active dropzone--player--2">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
-                <div className="dropzone dropzone--player--3">
+                <div className="dropzone dropzone--active dropzone--player--3">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
-                <div className="dropzone dropzone--player--4">
+                <div className="dropzone dropzone--active dropzone--player--4">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
-                <div className="dropzone dropzone--player--5">
+                <div className="dropzone dropzone--active dropzone--player--5">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
-                <div className="dropzone dropzone--player--6">
+                <div className="dropzone dropzone--active dropzone--player--6">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
-                <div className="dropzone dropzone--player--7">
+                <div className="dropzone dropzone--active dropzone--player--7">
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
             </main>
@@ -190,7 +296,7 @@ const CreateSquadPage = ({club}) => {
                     Koszt drużyny:
                 </h3>
                 <h4 className="createSquad__teamCostHeader__value">
-                    0 PLN
+                    {!minCost && !maxCost ? 0 : minCost + " - " + maxCost} PLN
                 </h4>
             </section>
         </main>
@@ -222,53 +328,73 @@ const CreateSquadPage = ({club}) => {
                 </span>
             </section>
 
-            <section className="createSquad__squadWrapper" ref={viewportRef}>
+            <section className="createSquad__squadWrapper">
                 <section className="createSquad__squad siteWidthSuperNarrow siteWidthSuperNarrow--1400">
                     <div className="createSquad__squad__track" style={{
                         transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`
                     }} onScroll={() => { console.log("scroll"); }}>
 
-                        {filteredPlayers?.map((item, index) => {
-                            return <div className={`createSquad__squad__itemWrapper`}>
-                                <div className="createSquad__squad__item__dragging draggable">
-                                    <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
-                                </div>
-                                <div className="createSquad__squad__item">
-                                    <figure className="createSquad__squad__item__imgWrapper">
-                                        <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
-                                    </figure>
-                                    <section className="createSquad__squad__item__data">
-                                        <h3 className="createSquad__squad__item__name">
-                                            {item.first_name} {item.last_name}
-                                        </h3>
-                                        <h4 className="createSquad__squad__item__position">
-                                            {getPositionById(item.position)}
-                                        </h4>
-                                        <section className="createSquad__squad__item__data__section">
-                                            <h4 className="createSquad__squad__item__data__key">
-                                                Wzrost
-                                            </h4>
-                                            <h4 className="createSquad__squad__item__data__value">
-                                                {item.height ? item.height + " cm" : "-"}
-                                            </h4>
-                                            <h4 className="createSquad__squad__item__data__key">
-                                                Waga
-                                            </h4>
-                                            <h4 className="createSquad__squad__item__data__value">
-                                                {item.weight ? item.weight + " kg" : "-"}
+                        {players?.map((item, index) => {
+                            if(isPlayerInFilteredGroup(item.position)) {
+                                return <div className={`createSquad__squad__itemWrapper`} id={`createSquad__squad__itemWrapper--${index}`} onMouseDown={(e) => { startDragging(e, index); }} key={index}>
+                                    <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging draggable opacity-0"} id={`draggable-${index}`} key={index}>
+                                        <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
+
+                                        <button className="createSquad__squad__item__dragging__trashBtn" onClick={() => { removePlayerFromCourt(index); }}>
+                                            <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />
+                                        </button>
+
+                                        <figure className="createSquad__squad__item__dragging__imgWrapper">
+                                            <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
+                                        </figure>
+
+                                        <section className="createSquad__squad__item__dragging__header">
+                                            <h3 className="createSquad__squad__item__dragging__header__name">
+                                                {item.first_name} {item.last_name}
+                                            </h3>
+                                            <h4 className="createSquad__squad__item__dragging__header__position">
+                                                {getPositionById(item.position)}
                                             </h4>
                                         </section>
-                                        <section className="createSquad__squad__item__data__section">
-                                            <h4 className="createSquad__squad__item__data__key">
-                                                Honorarium
+                                    </div>
+
+                                    {!isElementInArray(selectedPlayers, index) ? <div className="createSquad__squad__item">
+                                        <figure className="createSquad__squad__item__imgWrapper">
+                                            <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
+                                        </figure>
+                                        <section className="createSquad__squad__item__data">
+                                            <h3 className="createSquad__squad__item__name">
+                                                {item.first_name} {item.last_name}
+                                            </h3>
+                                            <h4 className="createSquad__squad__item__position">
+                                                {getPositionById(item.position)}
                                             </h4>
-                                            <h4 className="createSquad__squad__item__data__value">
-                                                {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
-                                            </h4>
+                                            <section className="createSquad__squad__item__data__section">
+                                                <h4 className="createSquad__squad__item__data__key">
+                                                    Wzrost
+                                                </h4>
+                                                <h4 className="createSquad__squad__item__data__value">
+                                                    {item.height ? item.height + " cm" : "-"}
+                                                </h4>
+                                                <h4 className="createSquad__squad__item__data__key">
+                                                    Waga
+                                                </h4>
+                                                <h4 className="createSquad__squad__item__data__value">
+                                                    {item.weight ? item.weight + " kg" : "-"}
+                                                </h4>
+                                            </section>
+                                            <section className="createSquad__squad__item__data__section">
+                                                <h4 className="createSquad__squad__item__data__key">
+                                                    Honorarium
+                                                </h4>
+                                                <h4 className="createSquad__squad__item__data__value">
+                                                    {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
+                                                </h4>
+                                            </section>
                                         </section>
-                                    </section>
+                                    </div> : ""}
                                 </div>
-                            </div>
+                            }
                         })}
                     </div>
                 </section>
