@@ -77,6 +77,7 @@ const SearchPlayersPage = ({club, favorites}) => {
     useEffect(() => {
         getAllPlayers()
             .then((res) => {
+                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
             });

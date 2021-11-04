@@ -10,7 +10,7 @@ const isPlayerFavorite = (list, playerId) => {
     //     return item.user_id === playerId;
     // }) !== -1);
     return list.findIndex((item) => {
-        return item.user_id === playerId;
+        return item.id === playerId;
     }) !== -1;
 }
 

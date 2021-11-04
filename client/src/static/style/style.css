@@ -3595,7 +3595,6 @@ select::-ms-expand {
 }
 
 .createSquad__squad__itemWrapper {
-    flex-basis: 40%;
     flex-grow: 0;
     flex-shrink: 0;
     margin-right: 30px;
@@ -3791,6 +3790,31 @@ select::-ms-expand {
 /*    z-index: 10;*/
 /*    position: relative;*/
 /*}*/
+
+.createSquad__name .input--editProfile::placeholder {
+    color: #fff;
+}
+
+.teamSaved {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.teamSaved__header {
+    color: #fff;
+    text-align: center;
+    font-size: 32px;
+}
+
+.hide {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+}
 
 .mobileMenu__list--club,
 .mobileMenu__bottom--club {
@@ -4013,4 +4037,94 @@ select::-ms-expand {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+/* Club teams */
+.clubTeams__header {
+    color: rgba(255, 255, 255, .8);
+    font-size: 40px;
+    text-transform: uppercase;
+    font-family: 'Oxanium', cursive;
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+
+.clubTeams__item {
+    background: #474747;
+    border: 1px solid var(--grey);
+    width: 100%;
+    height: 55px;
+    outline: none;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.clubTeams__item__col {
+    color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'Oxanium', cursive;
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.clubTeams__item__col:first-of-type {
+    flex-basis: 15%;
+}
+
+.clubTeams__item__col:nth-of-type(2),
+.clubTeams__item__col:nth-of-type(3),
+.clubTeams__item__col:nth-of-type(4),
+.clubTeams__item__col:nth-of-type(5) {
+    flex-basis: 15%;
+}
+
+.clubTeams__item__col:nth-of-type(5) {
+    justify-content: flex-end;
+}
+
+.clubTeams__button {
+    width: 20px;
+    height: auto;
+    background: transparent;
+    margin: 0 10px;
+}
+
+.clubTeams__button--trash .btn__img {
+    filter: brightness(0) invert(1);
+}
+
+.clubTeams__floor {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin: 40px 0 60px;
+    position: relative;
+}
+
+.clubTeams__floor__img {
+    margin-top: -5%;
+}
+
+.clubTeams .createSquad__squad__item__dragging {
+    opacity: 1;
+}
+
+.clubTeams .createSquad__squad__item__dragging__img {
+    width: 100%;
+    height: auto;
+}
+
+.clubTeams .createSquad__squad__item__dragging__imgWrapper {
+    width: 100px;
+    height: 100px;
+    top: 18%;
+}
+
+.clubTeams {
+    margin-bottom: 100px;
 }

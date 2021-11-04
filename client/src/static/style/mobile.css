@@ -39,6 +39,11 @@
 }
 
 @media(max-width: 1600px) {
+    .clubTeams .createSquad__squad__item__dragging__imgWrapper {
+        width: 80px;
+        height: 80px;
+    }
+
     .siteHeader__menu__link {
         font-size: 15px;
     }
@@ -174,6 +179,11 @@
 
     .siteWidthSuperNarrow--1400 {
         width: var(--siteWidth);
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__imgWrapper {
+        width: 100px;
+        height: 100px;
     }
 }
 
@@ -425,6 +435,28 @@
     .comparedPlayer__section__key, .comparedPlayer__section__value {
         font-size: 16px;
     }
+
+    .clubTeams__item__col {
+        font-size: 14px;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__imgWrapper {
+        width: 7vw;
+        height: 7vw;
+        top: 18%;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__header {
+        height: 30px;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__header__name {
+        font-size: 10px;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__header__position {
+        font-size: 8px;
+    }
 }
 
 @media(max-width: 996px) {
@@ -434,6 +466,19 @@
 
     .d-mobile-900-flex {
         display: flex !important;
+    }
+
+    .clubTeams__header {
+        font-size: 24px;
+    }
+
+    .clubTeams__item__col {
+        flex-basis: 45% !important;
+    }
+
+    .clubTeams__item__col:nth-of-type(2) {
+        text-align: right;
+        justify-content: flex-end;
     }
 
     .faqPage {
@@ -1454,6 +1499,23 @@
 
     .playerVideoView__carousel {
         height: auto;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__header {
+        height: auto;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__header__name {
+        font-size: 7px;
+    }
+
+    .clubTeams .createSquad__squad__item__dragging__header__position {
+        font-size: 5px;
+    }
+
+    .createSquad__squad__item__dragging__header {
+        bottom: 15%;
+        padding: 1px;
     }
 }
 

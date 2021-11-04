@@ -19,30 +19,34 @@ import {getPositionById, isElementInArray} from "../helpers/others";
 import { useDrag, useDrop } from "react-dnd";
 import interact from 'interactjs'
 import trash from '../static/img/trash-black.svg'
+import {addSquad} from "../helpers/squad";
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
-    const [name, setName] = useState("nazwa");
+    const [name, setName] = useState("");
     const [positionFilters, setPositionFilters] = useState([0]);
     const [players, setPlayers] = useState([]);
     const [scrollbar, setScrollbar] = useState([1]);
     const [trackWidth, setTrackWidth] = useState(0);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
     const [mobile, setMobile] = useState(false);
-
+    const [flexBasis, setFlexBasis] = useState(0);
     const [selectedPlayers, setSelectedPlayers] = useState([]);
     const [playersOnCourt, setPlayersOnCourt] = useState([]);
     const [newPlayerOnCourt, setNewPlayerOnCourt] = useState(-1);
     const [minCost, setMinCost] = useState(0);
     const [maxCost, setMaxCost] = useState(0);
     const [currentDrag, setCurrentDrag] = useState(-1);
+    const [teamSaved, setTeamSaved] = useState("");
+    const [team, setTeam] = useState([]);
 
     useEffect(() => {
         getFavoritesByClub()
             .then((res) => {
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
-                setTrackWidth(res?.data?.result?.length * 300);
+                setTrackWidth(res?.data?.result?.length * 480);
+                setFlexBasis(100 / res?.data?.result?.length);
             });
     }, []);
 
@@ -108,6 +112,12 @@ const CreateSquadPage = ({club}) => {
     }, [players]);
 
     useEffect(() => {
+        setTeam(players.filter((item, index) => {
+            return isElementInArray(playersOnCourt, index);
+        }));
+    }, [playersOnCourt]);
+
+    useEffect(() => {
         if(newPlayerOnCourt >= 0) {
             setPlayersOnCourt([...playersOnCourt, newPlayerOnCourt]);
         }
@@ -138,6 +148,14 @@ const CreateSquadPage = ({club}) => {
             }, 0));
         }
     }, [playersOnCourt]);
+
+    useEffect(() => {
+        if(teamSaved !== "") {
+            setTimeout(() => {
+                setTeamSaved("");
+            }, 2000);
+        }
+    }, [teamSaved]);
 
     const filterPlayers = () => {
         setFilteredPlayers(players.filter((item) => {
@@ -198,12 +216,6 @@ const CreateSquadPage = ({club}) => {
         }
     }
 
-    function triggerMouseEvent (node, eventType) {
-        var clickEvent = document.createEvent ('MouseEvents');
-        clickEvent.initEvent (eventType, true, true);
-        node.dispatchEvent (clickEvent);
-    }
-
     const removePlayerFromCourt = (id) => {
         if(id) setNewPlayerOnCourt(id * -1);
         else setNewPlayerOnCourt(-999999);
@@ -232,19 +244,36 @@ const CreateSquadPage = ({club}) => {
         elementToRemove.classList.add("draggable");
     }
 
+    const saveTeam = () => {
+        if(!name.length) {
+            setTeamSaved("Wpisz nazwę swojego składu");
+        }
+        else if(!team.length) {
+            setTeamSaved("Wybierz co najmniej jednego zawodnika do swojego składu");
+        }
+        else {
+            addSquad(name, team)
+                .then((res) => {
+                    if(res?.data?.result === 2) setTeamSaved("Drużyna została zaktualizowana");
+                    if(res?.data?.result === 1) setTeamSaved("Drużyna została dodana");
+                    else setTeamSaved("Coś poszło nie tak... Prosimy spróbować później");
+                });
+        }
+    }
+
+    const exportTeam = () => {
+
+    }
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
-
-        {/* Draggable elements */}
-        {/*{players?.map((item, index) => {*/}
-        {/*    return */}
-        {/*})}*/}
 
         <main className="createSquad siteWidth">
             <section className="createSquad__name">
                     <span className="userInfoEdition__value">
                     <label className={editName ? "label--edit" : ""}>
                         <input value={name}
+                               placeholder="Nazwa"
                                onChange={(e) => { setName(e.target.value); }}
                                disabled={!editName}
                                className="input--editProfile"
@@ -257,7 +286,7 @@ const CreateSquadPage = ({club}) => {
                     </label>
                     </span>
             </section>
-            <main className="createSquad__main">
+            <main className={teamSaved === "" ? "createSquad__main" : "createSquad__main hide"}>
                 <img className="btn__img createSquad__floor" src={floor} alt="boisko" />
 
                 <div className="dropzone dropzone--active dropzone--player--1">
@@ -282,14 +311,20 @@ const CreateSquadPage = ({club}) => {
                     <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
                 </div>
             </main>
+
+            <main className={teamSaved !== "" ? "teamSaved" : "teamSaved hide"}>
+                <h2 className="teamSaved__header">
+                    {teamSaved}
+                </h2>
+            </main>
             <section className="createSquad__settings">
                 <section className="createSquad__line">
-                    <button className="createSquad__btn" onClick={() => { }}>
+                    <button className="createSquad__btn" onClick={() => { saveTeam(); }}>
                         <img className="btn__img" src={saveIcon} alt="zapisz-druzyne" />
                     </button>
-                    <button className="createSquad__btn" onClick={() => { }}>
-                        <img className="btn__img" src={downloadIcon} alt="eksportuj-do-pdf" />
-                    </button>
+                    {/*<button className="createSquad__btn" onClick={() => { exportTeam(); }}>*/}
+                    {/*    <img className="btn__img" src={downloadIcon} alt="eksportuj-do-pdf" />*/}
+                    {/*</button>*/}
                 </section>
 
                 <h3 className="createSquad__teamCostHeader">
@@ -331,12 +366,18 @@ const CreateSquadPage = ({club}) => {
             <section className="createSquad__squadWrapper">
                 <section className="createSquad__squad siteWidthSuperNarrow siteWidthSuperNarrow--1400">
                     <div className="createSquad__squad__track" style={{
+                        width: `${trackWidth}px`,
                         transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`
-                    }} onScroll={() => { console.log("scroll"); }}>
+                    }}>
 
                         {players?.map((item, index) => {
                             if(isPlayerInFilteredGroup(item.position)) {
-                                return <div className={`createSquad__squad__itemWrapper`} id={`createSquad__squad__itemWrapper--${index}`} onMouseDown={(e) => { startDragging(e, index); }} key={index}>
+                                return <div className={`createSquad__squad__itemWrapper`}
+                                            style={{
+                                                flexBasis: `${flexBasis}%`
+                                            }}
+                                            id={`createSquad__squad__itemWrapper--${index}`}
+                                            onMouseDown={(e) => { startDragging(e, index); }} key={index}>
                                     <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging draggable opacity-0"} id={`draggable-${index}`} key={index}>
                                         <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
