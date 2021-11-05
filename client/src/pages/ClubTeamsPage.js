@@ -74,7 +74,7 @@ const ClubTeamsPage = ({club}) => {
 
             {teams.map((item, index) => {
                 return <section className="clubTeams__team" key={index}>
-                    <button className="clubTeams__item" onClick={() => { if(currentTeam !== index) setCurrentTeam(index); else setCurrentTeam(-1); }}>
+                    <button className={currentTeam === index ? "clubTeams__item clubTeams__item--gold" : "clubTeams__item"} onClick={() => { if(currentTeam !== index) setCurrentTeam(index); else setCurrentTeam(-1); }}>
                         <span className="clubTeams__item__col">
                             {item.name}
                         </span>
@@ -91,11 +91,29 @@ const ClubTeamsPage = ({club}) => {
                             <button className="clubTeams__button clubTeams__button--trash" onClick={() => {}}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />
                             </button>
-                            <button className="clubTeams__button" onClick={() => {}}>
+                            <a className="clubTeams__button" href={`/sklady?id=${item.squad_id}`}>
                                 <img className="btn__img" src={editIcon} alt="edytuj" />
-                            </button>
+                            </a>
                         </span>
                     </button>
+                    {currentTeam === index ? <>
+                        <section className="clubTeams__teamSection d-mobile">
+                            <span className="clubTeams__item__col">
+                                {formatBigNumber(calculateTeamMinSalary(item.squad_id))} PLN
+                            </span>
+                            <span className="clubTeams__item__col">
+                                {formatBigNumber(calculateTeamMaxSalary(item.squad_id))} PLN
+                            </span>
+                        </section>
+                        <section className="clubTeams__teamSection d-mobile">
+                            <a className="clubTeams__button" onClick={() => {}} href={`/sklady?id=${item.squad_id}`}>
+                                <img className="btn__img" src={editIcon} alt="edytuj" />
+                            </a>
+                            <button className="clubTeams__button clubTeams__button--trash" onClick={() => {}}>
+                                <img className="btn__img" src={trashIcon} alt="usun" />
+                            </button>
+                        </section>
+                    </> : ""}
 
                     {currentTeam === index ?  <section className="clubTeams__floor">
                         <img className="btn__img clubTeams__floor__img" src={floor} alt="boisko" />

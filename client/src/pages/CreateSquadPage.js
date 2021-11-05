@@ -19,7 +19,8 @@ import {getPositionById, isElementInArray} from "../helpers/others";
 import { useDrag, useDrop } from "react-dnd";
 import interact from 'interactjs'
 import trash from '../static/img/trash-black.svg'
-import {addSquad} from "../helpers/squad";
+import {addSquad, getSquadById} from "../helpers/squad";
+import {isObject} from "chart.js/helpers";
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -39,10 +40,38 @@ const CreateSquadPage = ({club}) => {
     const [currentDrag, setCurrentDrag] = useState(-1);
     const [teamSaved, setTeamSaved] = useState("");
     const [team, setTeam] = useState([]);
+    const [updateTeam, setUpdateTeam] = useState([]);
+    const [update, setUpdate] = useState(false);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        if(id) {
+            getSquadById(id)
+                .then((res) => {
+                    setUpdate(true);
+                    setName(res?.data?.result[0]?.name);
+                    console.log(res?.data?.result)
+
+                    setUpdateTeam(res?.data?.result);
+                    setTeam(res?.data?.result);
+
+                    setMinCost(res?.data?.result?.reduce((prev, current) => {
+                        return prev + current.salary_from;
+                    }, 0));
+
+                    setMaxCost(res?.data?.result?.reduce((prev, current) => {
+                        return prev + current.salary_to;
+                    }, 0));
+                });
+        }
+    }, []);
 
     useEffect(() => {
         getFavoritesByClub()
             .then((res) => {
+                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
                 setTrackWidth(res?.data?.result?.length * 480);
@@ -95,9 +124,6 @@ const CreateSquadPage = ({club}) => {
                 dropzoneElement.style.opacity = "1";
                 dropzoneElement.classList.remove("dropzone--active");
 
-                console.log(draggingElement);
-                console.log(dropzoneElement);
-
                 dropzoneElement.appendChild(draggingElement);
                 draggingElement.classList.add("element--dropped");
                 draggingElement.classList.remove("draggable");
@@ -114,7 +140,7 @@ const CreateSquadPage = ({club}) => {
     useEffect(() => {
         setTeam(players.filter((item, index) => {
             return isElementInArray(playersOnCourt, index);
-        }));
+        }).concat(updateTeam));
     }, [playersOnCourt]);
 
     useEffect(() => {
@@ -136,18 +162,25 @@ const CreateSquadPage = ({club}) => {
     }, [newPlayerOnCourt]);
 
     useEffect(() => {
-        console.log(playersOnCourt);
-        if(1) {
-            setMinCost(playersOnCourt.reduce((prev, current, index) => {
+        setMinCost(playersOnCourt.concat(updateTeam).reduce((prev, current, index) => {
+            if(isObject(current)) {
+                return prev + current?.salary_from;
+            }
+            else {
                 const player = players[current];
-                return prev + player.salary_from;
-            }, 0));
-            setMaxCost(playersOnCourt.reduce((prev, current, index) => {
+                return prev + player?.salary_from ? player.salary_from : 0;
+            }
+        }, 0));
+        setMaxCost(playersOnCourt.concat(updateTeam).reduce((prev, current, index) => {
+            if(isObject(current)) {
+                return prev + current?.salary_to;
+            }
+            else {
                 const player = players[current];
-                return prev + player.salary_to;
-            }, 0));
-        }
-    }, [playersOnCourt]);
+                return prev + player?.salary_to ? player.salary_to : 0;
+            }
+        }, 0));
+    }, [playersOnCourt, updateTeam]);
 
     useEffect(() => {
         if(teamSaved !== "") {
@@ -254,8 +287,9 @@ const CreateSquadPage = ({club}) => {
         else {
             addSquad(name, team)
                 .then((res) => {
+                    console.log(res?.data?.result);
                     if(res?.data?.result === 2) setTeamSaved("Drużyna została zaktualizowana");
-                    if(res?.data?.result === 1) setTeamSaved("Drużyna została dodana");
+                    else if(res?.data?.result === 1) setTeamSaved("Drużyna została dodana");
                     else setTeamSaved("Coś poszło nie tak... Prosimy spróbować później");
                 });
         }
@@ -263,6 +297,19 @@ const CreateSquadPage = ({club}) => {
 
     const exportTeam = () => {
 
+    }
+
+    const isPlayerInUpdateTeam = (player) => {
+        return updateTeam.findIndex((item) => {
+            return item?.id === player?.id;
+        }) !== -1;
+    }
+
+    const removePlayerFromUpdateTeam = (id) => {
+        setUpdateTeam(updateTeam.map((item) => {
+            if(item?.id === id) return null;
+            else return item;
+        }));
     }
 
     return <div className="container container--dark">
@@ -289,27 +336,34 @@ const CreateSquadPage = ({club}) => {
             <main className={teamSaved === "" ? "createSquad__main" : "createSquad__main hide"}>
                 <img className="btn__img createSquad__floor" src={floor} alt="boisko" />
 
-                <div className="dropzone dropzone--active dropzone--player--1">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
-                <div className="dropzone dropzone--active dropzone--player--2">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
-                <div className="dropzone dropzone--active dropzone--player--3">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
-                <div className="dropzone dropzone--active dropzone--player--4">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
-                <div className="dropzone dropzone--active dropzone--player--5">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
-                <div className="dropzone dropzone--active dropzone--player--6">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
-                <div className="dropzone dropzone--active dropzone--player--7">
-                    <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-                </div>
+                {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
+                   return <div className={!updateTeam.length >= item ? `dropzone dropzone--player--${item}` : `dropzone dropzone--active dropzone--player--${item}`}>
+                       <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
+
+                       {updateTeam[item-1] ? <>
+                           <div className="createSquad__squad__item__dragging createSquad__squad__item__dragging--update draggable">
+                               <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
+
+                               <button className="createSquad__squad__item__dragging__trashBtn" onClick={() => { removePlayerFromUpdateTeam(updateTeam[item-1].id); }}>
+                                   <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />
+                               </button>
+
+                               <figure className="createSquad__squad__item__dragging__imgWrapper">
+                                   <img className="createSquad__squad__item__dragging__img" src={profilePicture} alt={`test`} />
+                               </figure>
+
+                               <section className="createSquad__squad__item__dragging__header">
+                                   <h3 className="createSquad__squad__item__dragging__header__name">
+                                       {updateTeam[item-1].first_name} {updateTeam[item-1].last_name}
+                                   </h3>
+                                   <h4 className="createSquad__squad__item__dragging__header__position">
+                                       {getPositionById(updateTeam[item-1].position)}
+                                   </h4>
+                               </section>
+                           </div>
+                       </> : ""}
+                   </div>
+                })}
             </main>
 
             <main className={teamSaved !== "" ? "teamSaved" : "teamSaved hide"}>
@@ -371,7 +425,7 @@ const CreateSquadPage = ({club}) => {
                     }}>
 
                         {players?.map((item, index) => {
-                            if(isPlayerInFilteredGroup(item.position)) {
+                            if(isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item)) {
                                 return <div className={`createSquad__squad__itemWrapper`}
                                             style={{
                                                 flexBasis: `${flexBasis}%`

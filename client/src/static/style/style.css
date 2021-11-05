@@ -4128,3 +4128,12 @@ select::-ms-expand {
 .clubTeams {
     margin-bottom: 100px;
 }
+
+.clubTeams__item--gold {
+    background: var(--gold);
+}
+
+.createSquad__squad__item__dragging--update {
+    opacity: 1;
+    width: auto;
+}

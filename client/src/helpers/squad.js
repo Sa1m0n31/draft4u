@@ -4,6 +4,8 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const addSquad = (name, players) => {
+    console.log(players);
+    console.log(name);
     return axios.post(`${API_URL}/squad/add`, {
         name, players
     }, {
@@ -17,4 +19,12 @@ const getClubSquads = () => {
     });
 }
 
-export { addSquad, getClubSquads }
+const getSquadById = (id) => {
+    return axios.get(`${API_URL}/squad/get`, {
+        params: {
+            id
+        }
+    });
+}
+
+export { addSquad, getClubSquads, getSquadById }

@@ -36,6 +36,7 @@ const addSquad = (players, name, clubId, response) => {
 
 const updateSquad = (id, name, players, response) => {
     console.log("updateSquad");
+    console.log(id);
     const query = 'UPDATE squads SET name = $1 WHERE id = $2';
     const values = [name, id];
 
@@ -47,14 +48,17 @@ const updateSquad = (id, name, players, response) => {
             const values = [id];
 
             db.query(query, values, (err, res) => {
+                console.log(err);
                 if(res) {
                     /* 2 - Add new players to squad */
                     if(players) {
                         let query, values;
                         players.forEach((item, index, array) => {
-                            query = 'INSERT INTO selected_players VALUES ($1, $2)';
-                            values = [id, item.id];
-                            db.query(query, values);
+                            if(item) {
+                                query = 'INSERT INTO selected_players VALUES ($1, $2)';
+                                values = [id, item.id];
+                                db.query(query, values);
+                            }
                             if(index === array.length-1) {
                                 sendResponse(response, 2);
                             }
@@ -78,7 +82,6 @@ const updateSquad = (id, name, players, response) => {
 router.post("/add", (request, response) => {
    const { name, players } = request.body;
    const clubId = request.user;
-   console.log(request.user);
 
    /* If squad exists => update */
    const checkQuery = 'SELECT id FROM squads WHERE name = $1 AND club = $2';
@@ -118,6 +121,26 @@ router.delete("/delete", (request, response) => {
    else {
        sendResponse(response, 0);
    }
+});
+
+router.get("/get", (request, response) => {
+    const id = request.query.id;
+
+    const query = 'SELECT u.attack_range, u.birthday, u.block_range, u.club, u.email, i.file_path, u.height, u.id, u.last_name, u.first_name, u.licence_number, u.phone_number, u.position, u.salary_from, u.salary_to, u.sex, u.weight, u.vertical_range, s.name FROM squads s JOIN selected_players sp ON s.id = sp.squad_id JOIN users u ON u.id = sp.user_id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE s.id = $1';
+    const values = [id];
+
+    db.query(query, values, (err, res) => {
+       if(res) {
+           response.send({
+               result: res.rows
+           });
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
+    });
 });
 
 router.get("/get-club-squads", (request, response) => {

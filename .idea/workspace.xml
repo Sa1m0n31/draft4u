@@ -14,15 +14,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/helpers/squad.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/squad.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/squad.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/squad.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/squad.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +118,7 @@
       <workItem from="1635800960497" duration="9474000" />
       <workItem from="1635848310573" duration="607000" />
       <workItem from="1635942216328" duration="12651000" />
-      <workItem from="1636018285094" duration="36845000" />
+      <workItem from="1636018285094" duration="41994000" />
     </task>
     <servers />
   </component>
@@ -181,10 +178,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635802780124" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636067575719">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636072226263">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636067575719" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636072226263" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
