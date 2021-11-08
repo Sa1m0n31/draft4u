@@ -4,14 +4,15 @@ import Footer from "../components/Footer";
 import example from '../static/img/profile-picture.png'
 import {getTrackBackground, Range} from "react-range";
 import { Direction } from 'react-range';
-import pictureIcon from '../static/img/picture.svg'
-import sendIcon from '../static/img/send.svg'
-import {addMessage, getChatContent, getClubMessages} from "../helpers/chat";
+import pictureIcon from '../static/img/picture-dark.svg'
+import sendIcon from '../static/img/send-gold.svg'
+import {addMessage, getChatContent, getClubMessages, getUserMessages} from "../helpers/chat";
 import settings from "../settings";
 import {getClubData} from "../helpers/club";
 import { io } from "socket.io-client";
+import {getUserData} from "../helpers/user";
 
-const ChatPage = ({club}) => {
+const ChatPageForUser = ({user}) => {
     const [scrollbarList, setScrollbarList] = useState([1]);
     const [scrollbarChat, setScrollbarChat] = useState([1]);
     const [mobile, setMobile] = useState(false);
@@ -22,7 +23,6 @@ const ChatPage = ({club}) => {
     const [currentChat, setCurrentChat] = useState([]);
     const [currentReceiver, setCurrentReceiver] = useState("");
     const [currentReceiverImg, setCurrentReceiverImg] = useState("");
-    const [clubName, setClubName] = useState("");
 
     useEffect(() => {
         const socket = io("http://localhost:3001");
@@ -38,17 +38,13 @@ const ChatPage = ({club}) => {
         setMax(parseInt(listHeight.substring(0, listHeight.length-2)));
         setMaxChat(parseInt(chatHeight.substring(0, chatHeight?.length-2)));
 
-        getClubData()
-            .then((res) => {
-               setClubName(res?.data?.result?.name);
-            });
-
-        getClubMessages()
+        getUserMessages()
             .then((res) => {
                 const result = res?.data?.result;
+                console.log(result);
                 if(result) {
                     setMessages(result);
-                    setCurrentReceiver(result[0].first_name + " " + result[0].last_name);
+                    setCurrentReceiver(result[0].name);
                     setCurrentReceiverImg(result[0].file_path);
                 }
             });
@@ -90,14 +86,14 @@ const ChatPage = ({club}) => {
     }
 
     const sendMessage = (chatId) => {
-        addMessage(chatId, message, 'true')
+        addMessage(chatId, message, 'false')
             .then((res) => {
                 setMessage("");
             });
     }
 
-    return <div className="container container--dark">
-        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club?.file_path} />
+    return <div className="container container--light">
+        <Header loggedIn={true} player={true} menu="dark" theme="light" profileImage={user?.file_path} />
 
         <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">
@@ -107,7 +103,7 @@ const ChatPage = ({club}) => {
             <header className="chat__header__user">
                 <section className="chat__main__header__section">
                     <figure className="chat__list__item__imgWrapper">
-                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
+                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure>
                     <h3 className="chat__main__header__fullName">
                         {currentReceiver}
@@ -119,13 +115,13 @@ const ChatPage = ({club}) => {
             <section className="chat__list">
                 <main className="chat__list__main" onScroll={(e) => { chatListScroll(e); }}>
                     {messages.map((item, index) => {
-                        return <button className="chat__list__item" onClick={() => { getChat(item.chat_id, item.first_name + " " + item.last_name, item.file_path); }}>
+                        return <button className="chat__list__item" onClick={() => { getChat(item.chat_id, item.name, item.file_path); }}>
                             <figure className="chat__list__item__imgWrapper" key={index}>
-                                <img className="chat__list__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : example} alt={item.last_name} />
+                                <img className="chat__list__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/clubs/${item.file_path}` : example} alt={item.last_name} />
                             </figure>
                             <section className="chat__list__item__content">
                                 <h4 className="chat__list__item__name">
-                                    {item.first_name} {item.last_name}
+                                    {item.name}
                                 </h4>
                                 <p className="chat__list__item__text">
                                     {getMessagePreview(item.content)}
@@ -165,7 +161,7 @@ const ChatPage = ({club}) => {
                                     border: '1px solid #707070',
                                     background: getTrackBackground({
                                         values: scrollbarList[0] ? scrollbarList : [1000, 3000],
-                                        colors: ['#474747', '#474747', '#474747'],
+                                        colors: ['#ECECEC'],
                                         min: 1,
                                         max: max,
                                         rtl: false
@@ -198,10 +194,10 @@ const ChatPage = ({club}) => {
                     <main className="chat__main__content">
                         {currentChat.map((item, index) => {
                             return <section className="chat__main__content__section" key={index}>
-                                <div className={item.type ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
+                                <div className={!item.type ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
                                     <header className="chat__message__header">
                                         <h4 className="chat__message__header__name">
-                                            {item.type ? clubName : currentReceiver}
+                                            {!item.type ? user.first_name + " " + user.last_name : currentReceiver}
                                         </h4>
                                         <h5 className="chat__message__header__date">
                                             <span>{item.created_at.substring(11, 16)}</span>
@@ -264,7 +260,7 @@ const ChatPage = ({club}) => {
                                         border: '1px solid #707070',
                                         background: getTrackBackground({
                                             values: scrollbarChat[0] ? scrollbarChat : [1000, 3000],
-                                            colors: ['#474747', '#474747', '#474747'],
+                                            colors: ['#ECECEC'],
                                             min: 1,
                                             max: maxChat,
                                             rtl: false
@@ -300,4 +296,4 @@ const ChatPage = ({club}) => {
     </div>
 }
 
-export default ChatPage;
+export default ChatPageForUser;

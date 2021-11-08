@@ -32,7 +32,6 @@ const ClubWrapper = ({page}) => {
                             getFavoritesByClub()
                                 .then((res) => {
                                     const favorites = res?.data?.result;
-                                    console.log(favorites);
 
                                     if(club) {
                                         switch(page) {
@@ -76,7 +75,7 @@ const ClubWrapper = ({page}) => {
     }, []);
 
     return <>
-        {loaded ? renderSwitch : <LoadingPage />}
+        {loaded ? renderSwitch : <LoadingPage dark={true} />}
     </>
 }
 

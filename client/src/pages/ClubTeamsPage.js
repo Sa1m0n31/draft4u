@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {getClubSquads} from "../helpers/squad";
+import {deleteSquad, getClubSquads} from "../helpers/squad";
 import trashIcon from '../static/img/trash-black.svg'
 import editIcon from '../static/img/pen-white.png'
 import floor from '../static/img/boisko.svg'
@@ -11,20 +11,26 @@ import playerDraggable from "../static/img/player-draggable.svg";
 import trash from "../static/img/trash-black.svg";
 import settings from "../settings";
 import profilePicture from "../static/img/profile-picture.png";
+import closeIcon from '../static/img/close-grey.svg'
 
 const ClubTeamsPage = ({club}) => {
     const [teams, setTeams] = useState([]);
     const [players, setPlayers] = useState([]);
+    const [teamToDelete, setTeamToDelete] = useState(-1);
     const [currentTeam, setCurrentTeam] = useState(-1);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [deleteResult, setDeleteResult] = useState(-1);
+
+    const deleteModalRef = useRef(null);
 
     useEffect(() => {
         getClubSquads()
             .then((res) => {
-                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
                 setTeams(res?.data?.result?.filter((v,i,a)=>a.findIndex(t=>(t.squad_id === v.squad_id))===i));
             });
-    }, []);
+        setCurrentTeam(-1);
+    }, [deleteResult]);
 
     useEffect(() => {
 
@@ -64,8 +70,71 @@ const ClubTeamsPage = ({club}) => {
         }
     }
 
+    useEffect(() => {
+        if(deleteModal) {
+            deleteModalRef.current.style.opacity = "1";
+            deleteModalRef.current.style.zIndex = "50";
+        }
+        else {
+            setTeamToDelete(-1);
+            deleteModalRef.current.style.opacity = "0";
+            setTimeout(() => {
+                deleteModalRef.current.style.zIndex = "-1";
+            }, 200);
+        }
+    }, [deleteModal]);
+
+    useEffect(() => {
+        if(deleteResult !== -1) {
+            setTimeout(() => {
+                setDeleteResult(-1);
+                setDeleteModal(false);
+            }, 3000);
+        }
+    }, [deleteResult]);
+
+    const deleteTeam = (id) => {
+        deleteSquad(id)
+            .then((res) => {
+                if(res?.data?.result) setDeleteResult(1);
+                else setDeleteResult(0);
+            });
+    }
+
+    const openDeleteModal = (e, id) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setTeamToDelete(id);
+        setDeleteModal(true);
+    }
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
+
+        <div className="modal modal--deleteSquad" ref={deleteModalRef}>
+            <div className="modal__inner">
+                <button className="modal__close" onClick={() => { setDeleteModal(false); }}>
+                    <img className="btn__img" src={closeIcon} alt="zamknij" />
+                </button>
+
+                {deleteResult === -1 ? <>
+                    <h3 className="modal__header">
+                        Czy na pewno chcesz usunąć ten skład?
+                    </h3>
+
+                    <div className="modal__buttons">
+                        <button className="modal__btn" onClick={() => { deleteTeam(teamToDelete); }}>
+                            Usuń skład
+                        </button>
+                        <button className="modal__btn" onClick={() => { setDeleteModal(false); }}>
+                            Wróć do składów
+                        </button>
+                    </div>
+                </> : <h3 className="modal__header">
+                    {deleteResult === 1 ? "Skład został usunięty" : "Coś poszło nie tak... Prosimy spróbować później"}
+                </h3>}
+            </div>
+        </div>
 
         <main className="clubTeams siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="clubTeams__header">
@@ -88,7 +157,7 @@ const ClubTeamsPage = ({club}) => {
                                 {formatBigNumber(calculateTeamMaxSalary(item.squad_id))} PLN
                             </span>
                             <span className="clubTeams__item__col d-desktop">
-                            <button className="clubTeams__button clubTeams__button--trash" onClick={() => {}}>
+                            <button className="clubTeams__button clubTeams__button--trash" onClick={(e) => { openDeleteModal(e, item.squad_id); }}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />
                             </button>
                             <a className="clubTeams__button" href={`/sklady?id=${item.squad_id}`}>
@@ -109,7 +178,7 @@ const ClubTeamsPage = ({club}) => {
                             <a className="clubTeams__button" onClick={() => {}} href={`/sklady?id=${item.squad_id}`}>
                                 <img className="btn__img" src={editIcon} alt="edytuj" />
                             </a>
-                            <button className="clubTeams__button clubTeams__button--trash" onClick={() => {}}>
+                            <button className="clubTeams__button clubTeams__button--trash" onClick={(e) => { openDeleteModal(e, item.squad_id); }}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />
                             </button>
                         </section>

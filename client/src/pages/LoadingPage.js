@@ -1,8 +1,8 @@
 import React from 'react'
 import DraftLoader from "../components/Loader";
 
-const LoadingPage = () => {
-    return <main className="loadingPage">
+const LoadingPage = ({dark}) => {
+    return <main className={dark ? "loadingPage loadingPage--dark" : "loadingPage"}>
         <DraftLoader />
     </main>
 }

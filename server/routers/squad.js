@@ -52,6 +52,7 @@ const updateSquad = (id, name, players, response) => {
                 if(res) {
                     /* 2 - Add new players to squad */
                     if(players) {
+                        console.log(players);
                         let query, values;
                         players.forEach((item, index, array) => {
                             if(item) {
@@ -110,11 +111,22 @@ router.post("/add", (request, response) => {
 router.delete("/delete", (request, response) => {
    const id = request.query.id;
 
+   console.log(id);
+
    if(id) {
-       const query = 'DELETE FROM squads WHERE id = $1';
+       const query = 'DELETE FROM selected_players WHERE squad_id = $1';
        const values = [id];
        db.query(query, values, (err, res) => {
-           if(res) sendResponse(response, 1);
+           console.log(err);
+           if(res) {
+               const query = 'DELETE FROM squads WHERE id = $1';
+               const values = [id];
+               db.query(query, values, (err, res) => {
+                   console.log(err);
+                   if(res) sendResponse(response, 1);
+                   else sendResponse(response, 0);
+               })
+           }
            else sendResponse(response, 0);
        });
    }
@@ -146,14 +158,10 @@ router.get("/get", (request, response) => {
 router.get("/get-club-squads", (request, response) => {
    const clubId = request.user;
 
-   console.log(clubId);
-
    if(clubId) {
        const query = 'SELECT sp.squad_id, sp.user_id, s.name, s.created_at, p.name as position, u.first_name, u.last_name, u.salary_from, u.salary_to, i.file_path FROM squads s JOIN selected_players sp ON s.id = sp.squad_id JOIN users u ON sp.user_id = u.id JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE s.club = $1';
        const values = [clubId];
        db.query(query, values, (err, res) => {
-           console.log(err);
-           console.log(res.rows);
           if(res) sendResponse(response, res.rows);
           else sendResponse(response, 0);
        });

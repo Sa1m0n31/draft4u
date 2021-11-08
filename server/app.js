@@ -7,6 +7,17 @@ const FileStore = require('session-file-store')(session);
 
 const app = express();
 
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
+
 /* Redirect http to https */
 // app.enable('trust proxy');
 // app.use (function (req, res, next) {
@@ -45,6 +56,13 @@ const isLoggedIn = (req, res, next) => {
     if(req.user) next();
     else res.redirect("/");
 }
+
+/* Socket.IO */
+io.on("connection", (socket) => {
+    console.log("socket.io connection");
+});
+
+httpServer.listen(3001);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
@@ -128,6 +146,7 @@ const priceRouter = require("./routers/price");
 const leagueRouter = require("./routers/league");
 const adminRouter = require("./routers/admin");
 const paymentRouter = require("./routers/payment");
+const chatRouter = require("./routers/chat");
 
 app.use("/auth", authRouter);
 app.use("/image", imageRouter);
@@ -145,5 +164,6 @@ app.use("/price", priceRouter);
 app.use("/league", leagueRouter);
 app.use("/admin", adminRouter);
 app.use("/payment", paymentRouter);
+app.use("/chat", chatRouter);
 
 app.listen(5000);

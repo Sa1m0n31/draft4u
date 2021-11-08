@@ -4,11 +4,6 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const isPlayerFavorite = (list, playerId) => {
-    // console.log(list);
-    // console.log(playerId);
-    // console.log(list.findIndex((item) => {
-    //     return item.user_id === playerId;
-    // }) !== -1);
     return list.findIndex((item) => {
         return item.id === playerId;
     }) !== -1;

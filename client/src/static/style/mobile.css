@@ -36,6 +36,35 @@
         width: 80px;
         height: 80px;
     }
+
+    .dropzone {
+        width: 8vw;
+    }
+
+    .createSquad__squad__item__dragging {
+        height: auto;
+    }
+
+    .createSquad__squad__item__dragging__img {
+        width: 100%;
+    }
+
+    .createSquad__squad__item__dragging__imgWrapper {
+        /*width: 80px;*/
+        /*height: 80px;*/
+    }
+
+    .createSquad__squad__item__dragging__header {
+        bottom: 15%;
+    }
+
+    .createSquad__squad__item__dragging__header__name {
+        font-size: 14px;
+    }
+
+    .createSquad__squad__item__dragging__header__position {
+        font-size: 12px;
+    }
 }
 
 @media(max-width: 1600px) {
@@ -184,6 +213,40 @@
     .clubTeams .createSquad__squad__item__dragging__imgWrapper {
         width: 100px;
         height: 100px;
+    }
+
+    .createSquad > .createSquad__name {
+        order: 1;
+        width: 45%;
+    }
+
+    .createSquad > .createSquad__settings {
+        order: 2;
+        width: auto;
+    }
+
+    .createSquad__main {
+        width: 100%;
+        order: 3;
+        margin-top: 50px;
+    }
+
+    .dropzone {
+        width: 12vw;
+    }
+
+    .dropzone .createSquad__squad__item__dragging {
+        width: 100% !important;
+    }
+
+    .createSquad__squad__item__dragging__imgWrapper {
+        width: 7vw;
+        height: 7vw;
+        top: 15%;
+    }
+
+    .createSquad__scrollbar {
+        width: calc(var(--siteWidth) - 200px) !important;
     }
 }
 
@@ -456,6 +519,18 @@
 
     .clubTeams .createSquad__squad__item__dragging__header__position {
         font-size: 8px;
+    }
+
+    .createSquad__teamCostHeader {
+        font-size: 21px;
+    }
+
+    .createSquad__teamCostHeader__value {
+        font-size: 17px;
+    }
+
+    .createSquad__btn {
+        width: 20px;
     }
 }
 
@@ -1505,11 +1580,11 @@
         height: auto;
     }
 
-    .clubTeams .createSquad__squad__item__dragging__header__name {
+    .createSquad__squad__item__dragging__header__name {
         font-size: 7px;
     }
 
-    .clubTeams .createSquad__squad__item__dragging__header__position {
+    .createSquad__squad__item__dragging__header__position {
         font-size: 5px;
     }
 
@@ -1532,6 +1607,136 @@
 
     .clubTeams {
         margin-bottom: 50px;
+    }
+
+    .modal--deleteSquad .modal__inner {
+        width: 100%;
+        height: auto;
+    }
+
+    .modal__header {
+        font-size: 17px;
+    }
+
+    .modal__buttons {
+        flex-direction: column;
+    }
+
+    .modal__btn {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .modal__close {
+        top: 10px;
+        right: 10px;
+        width: 15px;
+    }
+
+    .createSquad {
+        flex-direction: column;
+    }
+
+    .createSquad__settings {
+        margin-top: 15px;
+    }
+
+    .createSquad__teamCostHeader, .createSquad__teamCostHeader__value {
+        font-size: 15px;
+    }
+
+    .createSquad__name .userInfoEdition__value .input--editProfile {
+        font-size: 21px;
+    }
+
+    .createSquad__name .userInfoEdition__value label {
+        padding-left: 0;
+    }
+
+    .createSquad__squad__item__dragging__trashBtn {
+        top: -10px;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .createSquad > .createSquad__name {
+        width: 100%;
+    }
+
+    .dropzone {
+        width: 14vw;
+    }
+
+    .createSquad__main {
+        margin-left: -4vw;
+    }
+
+    .createSquad__squad {
+        height: auto;
+        padding-left: 0;
+        background: transparent;
+        overflow-y: scroll;
+    }
+
+    .createSquad__squad__track {
+        height: auto;
+        align-items: flex-start;
+        width: 82vw !important;
+        flex-direction: column;
+    }
+
+    .createSquad__squad__itemWrapper {
+        margin: 0 0 20px 0 !important;
+        flex-basis: 100% !important;
+        width: 96%;
+    }
+
+    .createSquad__squadWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        width: 90vw;
+        margin: auto;
+        height: 400px;
+    }
+
+    .createSquad__scrollbar--mobile {
+        margin-top: 25px;
+    }
+
+    .createSquad__squad__item {
+        padding: 15px;
+        height: auto;
+    }
+
+    .createSquad__squad__item__name {
+        font-size: 21px;
+    }
+
+    .createSquad__squad__item__position {
+        font-size: 14px;
+    }
+
+    .createSquad__squad::-webkit-scrollbar {
+        width: 10px;
+        background: #474747;
+        border: 1px solid #707070;
+        border-radius: 9px;
+    }
+
+    .createSquad__squad::-webkit-scrollbar-thumb {
+        background: var(--gold);
+        border-radius: 9px;
+    }
+
+    .createSquad__squad__item__data__key,
+    .createSquad__squad__item__data__value {
+        font-size: 12px;
+    }
+
+    .createSquad__squad__item__data__key {
+        margin-right: 6px;
     }
 }
 
@@ -1603,6 +1808,11 @@
 @media(max-width: 350px) {
     .aboutUs__header {
         font-size: 21px;
+    }
+
+    .createSquad__squad__item__imgWrapper {
+        height: 60px;
+        width: 60px;
     }
 }
 

@@ -27,4 +27,12 @@ const getSquadById = (id) => {
     });
 }
 
-export { addSquad, getClubSquads, getSquadById }
+const deleteSquad = (id) => {
+    return axios.delete(`${API_URL}/squad/delete`, {
+        params: {
+            id
+        }
+    });
+}
+
+export { addSquad, getClubSquads, getSquadById, deleteSquad }

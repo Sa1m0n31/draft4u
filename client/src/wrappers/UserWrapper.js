@@ -11,6 +11,7 @@ import PaymentPage from "../pages/PaymentPage";
 import {render} from "@testing-library/react";
 import PaymentReturnPage from "../pages/PaymentReturnPage";
 import {getClubData} from "../helpers/club";
+import ChatPageForUser from "../pages/ChatPageForUser";
 
 const UserContext = React.createContext(5);
 
@@ -51,6 +52,9 @@ const UserWrapper = ({page}) => {
                                         break;
                                     case 6:
                                         setRenderSwitch(<PaymentReturnPage user={user} />);
+                                        break;
+                                    case 7:
+                                        setRenderSwitch(<ChatPageForUser user={user} />);
                                         break;
                                     default:
                                         setRenderSwitch(<PlayerProfileEdition user={user} />);

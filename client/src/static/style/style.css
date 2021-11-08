@@ -2299,6 +2299,10 @@ select::-ms-expand {
     background: var(--light);
 }
 
+.loadingPage--dark {
+    background: var(--dark);
+}
+
 /* Video upload */
 .videoUpload__backBtn {
     font-size: 13px;
@@ -3458,6 +3462,7 @@ select::-ms-expand {
 /* Create squad page */
 .createSquad {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
 }
@@ -3738,7 +3743,8 @@ select::-ms-expand {
     bottom: 20%;
     left: 0;
     width: 100%;
-    height: 50px;
+    height: auto;
+    padding: 4px 0;
     background: #474747;
     display: flex;
     flex-direction: column;
@@ -3881,9 +3887,14 @@ select::-ms-expand {
 .chat__list__item {
     background: transparent;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 30px;
+    padding: 15px 30px 15px 5px;
+    width: 100%;
+}
+
+.chat__list__item:hover {
+    background: rgba(255, 255, 255, .1);
 }
 
 .chat__list__item__imgWrapper {
@@ -3892,11 +3903,10 @@ select::-ms-expand {
     border-radius: 50%;
     border: 2px solid #fff;
     overflow: hidden;
-    flex-basis: 23%;
+    margin-right: 20px;
 }
 
 .chat__list__item__content {
-    flex-basis: 72%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -3920,11 +3930,16 @@ select::-ms-expand {
     text-align: left;
 }
 
+.container--light .chat__list__item__text {
+    color: #707070;
+}
+
+.chat__main__content::-webkit-scrollbar,
 .chat__list__main::-webkit-scrollbar {
     display: none;
 }
 
-.chat__list__main {
+.chat__list__main, .chat__main__content {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
@@ -3943,7 +3958,11 @@ select::-ms-expand {
 
 .chat__main__main {
     width: 100%;
-    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    padding-bottom: 100px;
 }
 
 .chat__header__user {
@@ -4005,6 +4024,10 @@ select::-ms-expand {
     align-items: center;
 }
 
+.container--light .chat__main__inputWrapper {
+    background: #fff;
+}
+
 .chat__main__input {
     width: 80%;
     height: 40px;
@@ -4018,6 +4041,10 @@ select::-ms-expand {
     border-radius: 8px;
     font-size: 16px;
     line-height: 100%;
+}
+
+.container--light .chat__main__input {
+    color: #707070;
 }
 
 .chat__main__input::placeholder {
@@ -4037,6 +4064,85 @@ select::-ms-expand {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.chat__message {
+    padding: 20px;
+}
+
+.chat__main__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    max-height: calc(100%);
+    overflow-y: scroll;
+}
+
+.chat__main__content__section {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.chat__message {
+    border: 1px solid var(--grey);
+    border-radius: 18px;
+    min-width: 45%;
+}
+
+.chat__message, .chat__message * {
+    color: #fff;
+    font-family: 'Oxanium', cursive;
+}
+
+.chat__message__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chat__message__header > * {
+    font-weight: 400;
+}
+
+.chat__message__header__name {
+    font-size: 17px;
+    margin-right: 30px;
+}
+
+.chat__message__header__date {
+    font-size: 14px;
+}
+
+.chat__message__header__date span:last-of-type {
+    padding-left: 10px;
+}
+
+.chat__message .chat__message__content {
+    font-size: 14px;
+}
+
+.chat__message--right {
+    border-top-right-radius: 5px;
+    background: #474747;
+    margin-left: 100%;
+    transform: translateX(-100%);
+}
+
+.container--light .chat__message--right {
+    background: #fff;
+}
+
+.container--light .chat__message * {
+    color: #707070;
+}
+
+.chat__message--left {
+    border-top-left-radius: 5px;
+    background: var(--gold);
+    justify-self: flex-end;
 }
 
 /* Club teams */
@@ -4092,6 +4198,12 @@ select::-ms-expand {
     height: auto;
     background: transparent;
     margin: 0 10px;
+    opacity: .8;
+    transition: .2s all;
+}
+
+.clubTeams__button:hover {
+    opacity: 1;
 }
 
 .clubTeams__button--trash .btn__img {
@@ -4126,6 +4238,7 @@ select::-ms-expand {
 }
 
 .clubTeams {
+    min-height: 60vh;
     margin-bottom: 100px;
 }
 
@@ -4136,4 +4249,65 @@ select::-ms-expand {
 .createSquad__squad__item__dragging--update {
     opacity: 1;
     width: auto;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .4s all;
+    opacity: 0;
+    z-index: -1;
+}
+
+.modal__inner {
+    width: 500px;
+    height: 500px;
+    background: var(--dark);
+    border: 1px solid var(--grey);
+    padding: 40px;
+}
+
+.modal__header {
+    text-align: center;
+    color: #fff;
+    font-size: 24px;
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.modal__btn {
+    margin: 0 20px;
+    width: 180px;
+    height: 45px;
+    background: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: .8;
+    border-radius: 5px;
+    transition: .2s all;
+}
+
+.modal__btn:hover {
+    opacity: 1;
+}
+
+.modal__close {
+    background: transparent;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 20px;
+    height: auto;
 }

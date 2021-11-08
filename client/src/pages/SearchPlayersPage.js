@@ -7,7 +7,7 @@ import { Range, getTrackBackground } from 'react-range';
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import PlayerCard from "../components/PlayerCard";
-import {getAllPlayers, isPlayerFavorite} from "../helpers/club";
+import {getAllPlayers, getFavoritesByClub} from "../helpers/club";
 import {calculateAge, isElementInArray} from "../helpers/others";
 import compareBtn from '../static/img/compare-btn.png'
 import settings from "../settings";
@@ -51,7 +51,7 @@ const SearchPlayersPage = ({club, favorites}) => {
         const isSalaryOn = salary[0] !== 1000 || salary[1] !== 30000;
 
         /* Filter players */
-        setFilteredPlayers(players.filter((item) => {
+        setFilteredPlayers(players?.filter((item) => {
             const playersAge = calculateAge(item.birthday);
             return (item.sex === gender)
                     &&(isPlayerInFilteredGroup(item.position))
@@ -75,6 +75,7 @@ const SearchPlayersPage = ({club, favorites}) => {
     }, [filteredPlayers]);
 
     useEffect(() => {
+        console.log(favorites);
         getAllPlayers()
             .then((res) => {
                 console.log(res?.data?.result);
@@ -82,6 +83,14 @@ const SearchPlayersPage = ({club, favorites}) => {
                 setFilteredPlayers(res?.data?.result);
             });
     }, []);
+
+    const isPlayerFavorite = (userId) => {
+        console.log(userId);
+        console.log(favorites);
+        return favorites.findIndex((item) => {
+           return item.id === userId;
+        }) !== -1;
+    }
 
     const isPlayerInFilteredGroup = (position) => {
         if(isElementInArray(positionFilters, 0)) return true;
@@ -317,7 +326,7 @@ const SearchPlayersPage = ({club, favorites}) => {
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {filteredPlayers?.length ? filteredPlayers.map((item, index) => {
                 if(isIndexOnCurrentPage(index)) {
-                    return <PlayerCard key={index} player={item} favoriteView={false} favorite={isPlayerFavorite(favorites, item.user_id)} balance={true} addPlayerToComparator={addPlayerToComparator} />
+                    return <PlayerCard key={index} player={item} favoriteView={false} favorite={isPlayerFavorite(item.user_id)} balance={true} addPlayerToComparator={addPlayerToComparator} />
                 }
             }) : <h3 className="playersWall__playersNotFoundHeader">
                 Nie znaleziono zawodników o podanych parametrach

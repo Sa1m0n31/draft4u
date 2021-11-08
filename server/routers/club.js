@@ -41,10 +41,10 @@ router.get("/get-club-data", (request, response) => {
 router.get("/get-all-players", (request, response) => {
    const club = request.user;
 
-   const query = 'SELECT u.id as user_id, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range, f.club_id FROM users u LEFT OUTER JOIN images i ON u.profile_picture = i.id LEFT OUTER JOIN favorites f ON f.user_id = u.id WHERE f.club_id = $1 OR f.club_id IS NULL';
-   const values = [club];
+   const query = 'SELECT u.id as user_id, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range FROM users u LEFT OUTER JOIN images i ON u.profile_picture = i.id';
 
-   db.query(query, values, (err, res) => {
+   db.query(query, [], (err, res) => {
+       console.log(err);
        if(res) {
            response.send({
                result: res.rows

@@ -86,6 +86,9 @@ function App() {
       <Route path="/subskrypcja-przedluzona">
           <UserWrapper page={6} />
       </Route>
+      <Route path="/czat">
+          <UserWrapper page={7} />
+      </Route>
 
       {/* Club routes */}
       <Route path="/konto-klubu">

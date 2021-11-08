@@ -21,6 +21,7 @@ import interact from 'interactjs'
 import trash from '../static/img/trash-black.svg'
 import {addSquad, getSquadById} from "../helpers/squad";
 import {isObject} from "chart.js/helpers";
+import { Direction } from 'react-range';
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -52,7 +53,6 @@ const CreateSquadPage = ({club}) => {
                 .then((res) => {
                     setUpdate(true);
                     setName(res?.data?.result[0]?.name);
-                    console.log(res?.data?.result)
 
                     setUpdateTeam(res?.data?.result);
                     setTeam(res?.data?.result);
@@ -66,12 +66,22 @@ const CreateSquadPage = ({club}) => {
                     }, 0));
                 });
         }
+
+        checkIfMobile();
+
+        window.addEventListener("resize", (event) => {
+            checkIfMobile();
+        });
     }, []);
+
+    const checkIfMobile = () => {
+        if(window.innerWidth < 768) setMobile(true);
+        else setMobile(false);
+    }
 
     useEffect(() => {
         getFavoritesByClub()
             .then((res) => {
-                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
                 setTrackWidth(res?.data?.result?.length * 480);
@@ -144,6 +154,7 @@ const CreateSquadPage = ({club}) => {
     }, [playersOnCourt]);
 
     useEffect(() => {
+        console.log(newPlayerOnCourt);
         if(newPlayerOnCourt >= 0) {
             setPlayersOnCourt([...playersOnCourt, newPlayerOnCourt]);
         }
@@ -168,7 +179,7 @@ const CreateSquadPage = ({club}) => {
             }
             else {
                 const player = players[current];
-                return prev + player?.salary_from ? player.salary_from : 0;
+                return prev + (player?.salary_from ? player.salary_from : 0);
             }
         }, 0));
         setMaxCost(playersOnCourt.concat(updateTeam).reduce((prev, current, index) => {
@@ -177,7 +188,7 @@ const CreateSquadPage = ({club}) => {
             }
             else {
                 const player = players[current];
-                return prev + player?.salary_to ? player.salary_to : 0;
+                return prev + (player?.salary_to ? player.salary_to : 0);
             }
         }, 0));
     }, [playersOnCourt, updateTeam]);
@@ -226,8 +237,12 @@ const CreateSquadPage = ({club}) => {
         }) !== -1;
     }
 
+    const mobileAddToSquad = (playerIndex) => {
+
+    }
+
     const startDragging = (e, playerIndex) => {
-        if(!isElementInArray(selectedPlayers, playerIndex)) {
+        if(!isElementInArray(selectedPlayers, playerIndex) && !mobile) {
             setCurrentDrag(playerIndex);
 
             const elementToDrag = document.getElementById(`draggable-${playerIndex}`);
@@ -247,9 +262,13 @@ const CreateSquadPage = ({club}) => {
 
             setSelectedPlayers([...selectedPlayers, playerIndex]);
         }
+        else if(mobile) {
+            console.log("MOBIULE");
+        }
     }
 
     const removePlayerFromCourt = (id) => {
+        console.log(id);
         if(id) setNewPlayerOnCourt(id * -1);
         else setNewPlayerOnCourt(-999999);
 
@@ -285,6 +304,7 @@ const CreateSquadPage = ({club}) => {
             setTeamSaved("Wybierz co najmniej jednego zawodnika do swojego składu");
         }
         else {
+            console.log(team);
             addSquad(name, team)
                 .then((res) => {
                     console.log(res?.data?.result);
@@ -305,12 +325,21 @@ const CreateSquadPage = ({club}) => {
         }) !== -1;
     }
 
+    useEffect(() => {
+        setTeam(players.filter((item, index) => {
+            return isElementInArray(playersOnCourt, index);
+        }).concat(updateTeam));
+    }, [updateTeam]);
+
     const removePlayerFromUpdateTeam = (id) => {
+        console.log(id);
+        console.log(updateTeam);
         setUpdateTeam(updateTeam.map((item) => {
             if(item?.id === id) return null;
             else return item;
         }));
     }
+
 
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
@@ -371,7 +400,7 @@ const CreateSquadPage = ({club}) => {
                     {teamSaved}
                 </h2>
             </main>
-            <section className="createSquad__settings">
+            <section className="createSquad__settings d-desktop">
                 <section className="createSquad__line">
                     <button className="createSquad__btn" onClick={() => { saveTeam(); }}>
                         <img className="btn__img" src={saveIcon} alt="zapisz-druzyne" />
@@ -419,7 +448,8 @@ const CreateSquadPage = ({club}) => {
 
             <section className="createSquad__squadWrapper">
                 <section className="createSquad__squad siteWidthSuperNarrow siteWidthSuperNarrow--1400">
-                    <div className="createSquad__squad__track" style={{
+                    <div className="createSquad__squad__track"
+                         style={{
                         width: `${trackWidth}px`,
                         transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`
                     }}>
@@ -431,8 +461,10 @@ const CreateSquadPage = ({club}) => {
                                                 flexBasis: `${flexBasis}%`
                                             }}
                                             id={`createSquad__squad__itemWrapper--${index}`}
-                                            onMouseDown={(e) => { startDragging(e, index); }} key={index}>
-                                    <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging draggable opacity-0"} id={`draggable-${index}`} key={index}>
+                                            onMouseDown={(e) => { startDragging(e, index); }} key={index}
+                                            onClick={() => { mobileAddToSquad(index); }}
+                                            >
+                                    <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable d-desktop" : "createSquad__squad__item__dragging draggable opacity-0 d-desktop"} id={`draggable-${index}`} key={index}>
                                         <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
                                         <button className="createSquad__squad__item__dragging__trashBtn" onClick={() => { removePlayerFromCourt(index); }}>
@@ -497,8 +529,8 @@ const CreateSquadPage = ({club}) => {
                 <span className="createSquad__squadWrapper__overlay"></span>
             </section>
 
-
-            <section className="createSquad__scrollbar siteWidthSuperNarrow siteWidthSuperNarrow--1400">
+            {/* DESKTOP SCROLLBAR */}
+            <section className="createSquad__scrollbar siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
                 <Range
                     step={1}
                     min={1}
