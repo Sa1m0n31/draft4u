@@ -150,6 +150,10 @@
     .playerCard__header__h {
         font-size: 21px;
     }
+
+    .chat, .chat__header {
+        width: var(--siteWidth);
+    }
 }
 
 @media(max-width: 1400px) {
@@ -247,6 +251,39 @@
 
     .createSquad__scrollbar {
         width: calc(var(--siteWidth) - 200px) !important;
+    }
+
+    .chat__header__h {
+        font-size: 36px;
+    }
+
+    .chat__main__header__fullName {
+        font-size: 28px;
+    }
+
+    .chat__list__item__imgWrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chat__list__item__name {
+        font-size: 15px;
+    }
+
+    .chat__list {
+        flex-basis: 35%;
+    }
+
+    .chat__main {
+        flex-basis: 65%;
+    }
+
+    .chat__list__main {
+        width: 80%;
+    }
+
+    .chat__message {
+        min-width: 65%;
     }
 }
 
@@ -532,6 +569,27 @@
     .createSquad__btn {
         width: 20px;
     }
+
+    .chat__main__header__fullName,
+    .chat__header__h {
+        font-size: 24px;
+    }
+
+    .chat__header {
+        margin-bottom: 0;
+    }
+
+    .chat {
+        margin-top: 35px;
+    }
+
+    .chat__list__main {
+        width: 90%;
+    }
+
+    .chat__header__h {
+        flex-basis: 35%;
+    }
 }
 
 @media(max-width: 996px) {
@@ -787,6 +845,14 @@
 
     .searchFilters__position__header, .searchFilters__position__button {
         font-size: 14px;
+    }
+
+    .chat__message {
+        min-width: 85%;
+    }
+
+    .chat__message__header__name {
+        font-size: 15px;
     }
 }
 
@@ -1738,9 +1804,69 @@
     .createSquad__squad__item__data__key {
         margin-right: 6px;
     }
+
+    .chat__main,
+    .chat__list {
+        flex-basis: 100%;
+    }
+
+    .chat__main {
+        flex-wrap: wrap;
+    }
+
+    .chat__list__main {
+        width: 100%;
+    }
+
+    .chat__header__h {
+        font-size: 32px;
+    }
+
+    .chat__list__item__content {
+        max-width: 80%;
+    }
+
+    .chat__list__item__name {
+        font-size: 17px;
+        font-weight: 400;
+    }
+
+    .chat {
+        margin-bottom: 5vh;
+        flex-wrap: wrap;
+    }
+
+    .chat__mobileHeader {
+        width: 90%;
+        margin: 20px auto;
+        display: flex !important;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .chat__main__main {
+        width: 90%;
+    }
+
+    .chat__main__header__fullName {
+        white-space: normal;
+        font-size: 17px;
+        margin-left: 0;
+    }
+
+    .chat__mobileHeader__btn {
+        width: 30px;
+        height: auto;
+        background: transparent;
+        margin-right: 25px;
+    }
 }
 
 @media(max-width: 576px) {
+    .chat__message {
+        min-width: 90%;
+    }
+
     .clubTeams__floor {
         margin-left: -3%;
     }

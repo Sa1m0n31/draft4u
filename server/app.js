@@ -59,7 +59,19 @@ const isLoggedIn = (req, res, next) => {
 
 /* Socket.IO */
 io.on("connection", (socket) => {
-    console.log("socket.io connection");
+    const { room, sender, receiver } = socket.handshake.query;
+    if(receiver) {
+        if(room) {
+            socket.join(room + "-receiver");
+        }
+    }
+
+    socket.on("message", (data) => {
+        io.to(room+"-receiver").emit("message", {
+            data,
+            sender
+        });
+    });
 });
 
 httpServer.listen(3001);

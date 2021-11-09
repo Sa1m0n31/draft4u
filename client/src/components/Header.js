@@ -306,6 +306,25 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                     <img className="siteHeader__player__btn__img img--envelope" src={club ? envelopeGold : envelope} alt="wiadomosci" />
                 </button>
 
+                {messagesVisible ? <menu className={club ? "profileMenu profileMenu--club" : "profileMenu"}>
+                    <ul className="profileMenu__list">
+                        <li className="profileMenu__list__item">
+                            <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
+                                <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
+                                Zmiana hasła
+                            </a>
+                            <a className="profileMenu__list__link" href="/faq">
+                                <img className="profileMenu__list__img" src={question} alt="faq" />
+                                Pomoc online
+                            </a>
+                            <button className="profileMenu__list__link" onClick={() => { logout(); }}>
+                                <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />
+                                Wyloguj się
+                            </button>
+                        </li>
+                    </ul>
+                </menu> : ""}
+
                 <button className="siteHeader__player__btn siteHeader__player__btn--profile d-desktop"
                         onClick={() => { setProfileMenuVisible(!profileMenuVisible); }}
                 >

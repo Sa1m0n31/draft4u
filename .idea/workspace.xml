@@ -14,32 +14,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/helpers/chat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/picture-dark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/send-gold.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/routers/chat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/left-arrow-white.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/squad.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/squad.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/chat.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/ChatPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ChatPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/LoadingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/LoadingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/chat.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/squad.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/squad.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/favorite.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/favorite.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +132,8 @@
       <workItem from="1636197010518" duration="12000" />
       <workItem from="1636317521247" duration="8000" />
       <workItem from="1636317569093" duration="613000" />
-      <workItem from="1636369419815" duration="27555000" />
+      <workItem from="1636369419815" duration="27693000" />
+      <workItem from="1636456622937" duration="24193000" />
     </task>
     <servers />
   </component>
@@ -173,10 +161,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633287008314" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1636197020958">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1636407768216">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1636197020958" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1636407768216" />
     <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1635724993790">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -201,14 +189,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636396597489" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1635802780124">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1636457217522">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1635802780124" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636405973476">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636457217522" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636496777103">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636405973476" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636496777103" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

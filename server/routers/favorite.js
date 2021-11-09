@@ -52,7 +52,6 @@ router.get("/get-favorites-by-club", (request, response) => {
 
     db.query(query, values, (err, res) => {
        if(res) {
-           console.log(res.rows);
            response.send({
                result: res.rows
            });
@@ -106,10 +105,8 @@ router.get('/get-favorites-by-player', (request, response) => {
     const query = 'SELECT c.name, i.file_path FROM favorites f JOIN clubs c ON c.id = f.club_id JOIN users u ON u.id = f.user_id JOIN identities id ON id.user_id = u.id LEFT OUTER JOIN images i ON i.id = c.logo WHERE id.id = $1';
     const values = [userId];
 
-    console.log(userId);
 
     db.query(query, values, (err, res) => {
-        console.log(err);
         if(res) {
             response.send({
                 result: res.rows

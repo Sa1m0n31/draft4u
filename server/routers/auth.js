@@ -13,8 +13,6 @@ const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.google
 const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
 
 const isLoggedIn = (req, res, next) => {
-    console.log("isLoggedIn middleware");
-    console.log(req.user);
     if(req.user) next();
     else res.redirect("/");
 }
@@ -100,8 +98,6 @@ router.get('/verification', (request, response) => {
 });
 
 router.get("/auth", isLoggedIn, (request, response) => {
-    console.log("/auth/auth");
-    console.log(request.user);
     if(request.user) {
         if(isNumeric(request.user.toString())) {
            /* Admin */

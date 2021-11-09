@@ -23,13 +23,93 @@ const ChatPageForUser = ({user}) => {
     const [currentChat, setCurrentChat] = useState([]);
     const [currentReceiver, setCurrentReceiver] = useState("");
     const [currentReceiverImg, setCurrentReceiverImg] = useState("");
+    const [socket, setSocket] = useState(null);
+    const [listenSocket, setListenSocket] = useState(null);
+
+    const updateChat = () => {
+        getUserMessages()
+            .then((res) => {
+                const result = res?.data?.result;
+                if(result?.length) {
+                    setMessages(result);
+                }
+            });
+    }
 
     useEffect(() => {
-        const socket = io("http://localhost:3001");
-        socket.on('connect', () => {
-            console.log("connect");
-        });
-    }, []);
+        if(messages.length) {
+            if(!listenSocket) {
+                setListenSocket(io(`http://localhost:3001?room=${messages[0].chat_id.split(";")[1]}&receiver=true`));
+            }
+        }
+
+        if(currentChat.length) {
+            getChatContent(currentChat[0].chat_id)
+                .then((res) => {
+                    if(res?.data?.result) setCurrentChat(res.data.result);
+                });
+        }
+    }, [messages]);
+
+    useEffect(() => {
+        if(listenSocket) {
+            listenSocket.on("message", (data) => {
+                updateChat();
+            });
+        }
+    }, [listenSocket]);
+
+    useEffect(() => {
+        if(socket) {
+            socket.on('connect', () => {
+                console.log("connect");
+            });
+
+            socket.on("message", (data) => {
+                alert(data);
+            });
+        }
+    }, [socket]);
+
+    useEffect(() => {
+        if(currentChat.length) {
+            if(socket) {
+                if(socket.io.opts.query.split("&") !== `room=${currentChat[0].chat_id.split(";")[0]}`) {
+                    socket.disconnect();
+                    setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
+                }
+            }
+            else {
+                setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
+            }
+        }
+    }, [currentChat]);
+
+    const sendMessage = (chatId) => {
+        if(message) {
+            addMessage(chatId, message, 'false')
+                .then((res) => {
+                    setMessage("");
+                    updateChat();
+
+                    socket.emit("message", message, (data) => {
+
+                    });
+                });
+        }
+    }
+
+
+
+
+
+    // -----------------------------------------------
+
+
+
+
+
+
 
     useEffect(() => {
         const listHeight = window.getComputedStyle(document.querySelector(".chat__list__main")).getPropertyValue('height');
@@ -83,13 +163,6 @@ const ChatPageForUser = ({user}) => {
             e.preventDefault();
             sendMessage(currentChat[0].chat_id);
         }
-    }
-
-    const sendMessage = (chatId) => {
-        addMessage(chatId, message, 'false')
-            .then((res) => {
-                setMessage("");
-            });
     }
 
     return <div className="container container--light">

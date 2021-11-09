@@ -29,4 +29,10 @@ const addMessage = (chatId, content, isClub) => {
     });
 }
 
-export { getChatContent, getUserMessages, getClubMessages, addMessage }
+const markAsRead = (chatId, isClub) => {
+    return axios.post(`${API_URL}/chat/mark-as-read`, {
+        chatId, isClub
+    });
+}
+
+export { getChatContent, getUserMessages, getClubMessages, addMessage, markAsRead }
