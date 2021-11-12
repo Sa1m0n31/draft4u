@@ -3,6 +3,7 @@ import LoadingPage from "../pages/LoadingPage";
 import {isLoggedIn} from "../helpers/auth";
 import AdminPanel from "../pages/AdminPanel";
 import AdminAddNotification from "../pages/AdminAddNotification";
+import AdminNotificationList from "../pages/AdminNotificationList";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -21,6 +22,9 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 5:
                             setRenderSwitch(<AdminAddNotification admin={result} />);
+                            break;
+                        case 6:
+                            setRenderSwitch(<AdminNotificationList admin={result} />);
                             break;
                         default:
                             break;

@@ -11,6 +11,7 @@ import ComparatorPage from "../pages/ComparatorPage";
 import Favorites from "../pages/Favorites";
 import CreateSquadPage from "../pages/CreateSquadPage";
 import ClubTeamsPage from "../pages/ClubTeamsPage";
+import ChatPage from "../pages/ChatPage";
 
 const ClubContext = React.createContext(5);
 
@@ -55,6 +56,9 @@ const ClubWrapper = ({page}) => {
                                                 break;
                                             case 7:
                                                 setRenderSwitch(<ClubTeamsPage club={club} />);
+                                                break;
+                                            case 8:
+                                                setRenderSwitch(<ChatPage />);
                                                 break;
                                             default:
                                                 setRenderSwitch(<ClubAccountStart user={{}} />);

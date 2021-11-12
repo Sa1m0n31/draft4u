@@ -23,7 +23,7 @@ import {getMessagePreview} from "../helpers/others";
 import example from "../static/img/profile-picture.png";
 import { io } from "socket.io-client";
 import {getClubData} from "../helpers/club";
-import {getClubNotifications, getUserNotifications} from "../helpers/notification";
+import {getClubNotifications, getUserNotifications, readNotification} from "../helpers/notification";
 
 const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, messageRead}) => {
     const [loginVisible, setLoginVisible] = useState(false);
@@ -35,7 +35,9 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     const [newNotifications, setNewNotifications] = useState(0);
 
     const [listenSocket, setListenSocket] = useState(null);
+    const [updateNotifications, setUpdateNotifications] = useState(false);
 
+    const [notifications, setNotifications] = useState([]);
     const [messages, setMessages] = useState([]);
 
     let loginBoxWrapper = useRef(null);
@@ -54,12 +56,28 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
             if(player) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
             else setProfilePicture(`${settings.API_URL}/image?url=/media/clubs/${profileImage}`);
         }
-
-        getClubNotifications()
-            .then((res) => {
-                console.log(res?.data?.result);
-            })
     }, []);
+
+    useEffect(() => {
+        setNewNotifications(notifications.filter((item) => {
+            return !item.read;
+        }).length);
+    }, [notifications]);
+
+    useEffect(() => {
+        if(club) {
+            getClubNotifications()
+                .then((res) => {
+                    setNotifications(res?.data?.result);
+                });
+        }
+        else if(player) {
+            getUserNotifications()
+                .then((res) => {
+                    setNotifications(res?.data?.result);
+                });
+        }
+    }, [updateNotifications]);
 
     useEffect(() => {
         updateChatList();
@@ -111,7 +129,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }
 
     const isMessageNew = (msg) => {
-        return new Date(msg.created_at) > new Date(msg.read_at);
+        return (new Date(msg.created_at) > new Date(msg.read_at)) && !msg.type;
     }
 
     const updateChatList = () => {
@@ -185,6 +203,13 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     const changeCurrentMenu = (n) => {
         if(n === currentMenuVisible) setCurrentMenuVisible(-1);
         else setCurrentMenuVisible(n);
+    }
+
+    const addNotificationToRead = (id) => {
+        readNotification(id)
+            .then((res) => {
+                setUpdateNotifications(!updateNotifications);
+            });
     }
 
     return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
@@ -395,6 +420,33 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                         {newNotifications}
                     </span> : ""}
                 </button>
+
+                {currentMenuVisible === 0 ? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages profileMenu--notifications" : "profileMenu profileMenu--messages profileMenu--notifications"}>
+                    <ul className="profileMenu__list">
+                        {notifications?.map((item, index) => {
+                            if(index < 5) {
+                                return <li className="profileMenu__list__item" key={index} onClick={() => { addNotificationToRead(item.id); }}>
+                                    <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
+                                       href={item.link} target="_blank">
+                                        <figure className="messageMenu__imgWrapper">
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                        </figure>
+                                        <section className="messageMenu__list__item__content">
+                                            <h3 className="messageMenu__list__item__header">
+                                                {item.title}
+                                            </h3>
+                                            <p className="messageMenu__list__item__text">
+                                                {item.content}
+                                            </p>
+                                        </section>
+                                    </a>
+                                </li>
+                            }
+                            else return "";
+                        })}
+                    </ul>
+                </menu> : ""}
+
                 <button className="siteHeader__player__btn" onClick={() => { changeCurrentMenu(1); }}>
                     <img className="siteHeader__player__btn__img img--envelope" src={club ? envelopeGold : envelope} alt="wiadomosci" />
                     {newMessages > 0 ? <span className="button__circle">

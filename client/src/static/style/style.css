@@ -391,6 +391,10 @@ ul {
     padding-bottom: 0;
 }
 
+.profileMenu--notifications {
+    right: 105px;
+}
+
 .messageMenu__list__item__header {
     color: #fff;
     font-family: 'Oxanium', cursive;
@@ -415,6 +419,11 @@ ul {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 15px;
+    flex-basis: 18%;
+}
+
+.messageMenu__list__item__content {
+    flex-basis: 77%;
 }
 
 .profileMenu--messages .profileMenu__list__img {
@@ -4040,6 +4049,31 @@ select::-ms-expand {
 
 .container--light .chat__list__item__text {
     color: #707070;
+}
+
+.chat__main__noMessages {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+
+.chat__main__noMessages__header {
+    text-align: center;
+    color: #fff;
+    font-family: 'Oxanium', cursive;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.chat__main__noMessages__text {
+    color: #fff;
+    font-family: 'Oxanium', cursive;
+    font-size: 17px;
+    text-align: center;
+    width: 75%;
+    margin: auto;
 }
 
 .chat__main__content::-webkit-scrollbar,

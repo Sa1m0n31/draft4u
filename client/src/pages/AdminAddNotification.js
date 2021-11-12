@@ -6,7 +6,7 @@ import {isElementInArray} from "../helpers/others";
 import Dropzone from "react-dropzone-uploader";
 import ProfileImagePreview from "../components/ProfileImagePreview";
 import trashIcon from '../static/img/trash-black.svg'
-import {addNotification} from "../helpers/notification";
+import {addNotification, getNotification, updateNotification} from "../helpers/notification";
 
 const AdminAddNotification = () => {
     const [title, setTitle] = useState("");
@@ -19,6 +19,9 @@ const AdminAddNotification = () => {
     const [allUsersSelected, setAllUsersSelected] = useState(false);
     const [img, setImg] = useState(null);
     const [status, setStatus] = useState(-1);
+    const [updateMode, setUpdateMode] = useState(false);
+    const [updateImage, setUpdateImage] = useState(false);
+    const [notificationId, setNotificationId] = useState(0);
 
     useEffect(() => {
         getClubs()
@@ -31,6 +34,32 @@ const AdminAddNotification = () => {
                 setUsers(res?.data?.result);
             });
     }, []);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const notificationToUpdate = params.get('id');
+
+        if(clubs.length && users.length) {
+            if(notificationToUpdate) {
+                setNotificationId(parseInt(notificationToUpdate));
+                getNotification(notificationToUpdate)
+                    .then((res) => {
+                       setUpdateMode(true);
+                       setInitialValues(res?.data?.result);
+                    });
+            }
+        }
+    }, [clubs, users]);
+
+    const setInitialValues = (notification) => {
+        setTitle(notification[0].title);
+        setLink(notification[0].link);
+        setText(notification[0].content);
+
+        setSendList(notification.map((item) => {
+            return item.receiver_id;
+        }));
+    }
 
     const isElementClub = (clubId) => {
         return clubs.findIndex((item) => {
@@ -99,10 +128,18 @@ const AdminAddNotification = () => {
 
     const handleSubmit = () => {
         if(title) {
-            addNotification(title, link, text, img.file, sendList)
-                .then((res) => {
-                    setStatus(res?.data?.result);
-                });
+            if(!updateMode) {
+                addNotification(title, link, text, img.file, sendList)
+                    .then((res) => {
+                        setStatus(res?.data?.result);
+                    });
+            }
+            else {
+                updateNotification(notificationId, title, link, text, updateImage ? img.file : null, sendList)
+                    .then((res) => {
+                        setStatus(res?.data?.result);
+                    })
+            }
         }
     }
 
@@ -114,7 +151,7 @@ const AdminAddNotification = () => {
                 setTitle("");
                 setLink("");
                 setText("");
-                img.remove();
+                if(img) img.remove();
                 setImg(null);
                 setSendList([]);
                 setAllUsersSelected(false);
@@ -185,7 +222,7 @@ const AdminAddNotification = () => {
                         <button className="admin__btn admin__btn--addNotification"
                                 disabled={status !== -1}
                                 onClick={() => { handleSubmit(); }}>
-                            Dodaj powiadomienie
+                            {updateMode ? "Zaktualizuj" : "Dodaj powiadomienie"}
                         </button>
                     </section>
 

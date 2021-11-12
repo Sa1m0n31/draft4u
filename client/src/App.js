@@ -115,7 +115,7 @@ function App() {
           <ClubWrapper page={7} />
       </Route>
       <Route path="/wiadomosci">
-          <ChatPage />
+          <ClubWrapper page={8} />
       </Route>
 
       {/* Admin panel */}

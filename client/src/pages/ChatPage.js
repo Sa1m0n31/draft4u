@@ -34,6 +34,7 @@ const ChatPage = ({club}) => {
     const [mobileCurrentChat, setMobileCurrentChat] = useState(-1);
     const [clubId, setClubId] = useState("");
     const [chatInLink, setChatInLink] = useState(false);
+    const [userIdParam, setUserIdParam] = useState("");
 
     /* --- 1 --- */
     useEffect(() => {
@@ -52,12 +53,10 @@ const ChatPage = ({club}) => {
                     setCurrentReceiverImg(result[0].file_path);
 
                     if(!chatInLink) {
-                        console.log(result[0]);
                         getChatContent(result[0].chat_id)
                             .then((res) => {
                                 console.log(res.data);
                                 if(res?.data?.result) {
-                                    console.log("one");
                                     setCurrentChat(res.data.result);
                                 }
                             })
@@ -96,9 +95,9 @@ const ChatPage = ({club}) => {
         if(clubId) {
             const params = new URLSearchParams(window.location.search);
             const newPlayerToChat = params.get('new');
+            setUserIdParam(newPlayerToChat);
 
             if(newPlayerToChat && !chatInLink) {
-                console.log("!chatInLink");
                 getChatContent(`${clubId};${newPlayerToChat}`)
                     .then((res) => {
                         setChatInLink(true);
@@ -106,6 +105,7 @@ const ChatPage = ({club}) => {
                         console.log(clubId + ";" + newPlayerToChat);
                         if(res?.data?.result) {
                             console.log("two");
+                            const result = res.data.result;
                             setCurrentChat(res.data.result);
                         }
 
@@ -143,11 +143,10 @@ const ChatPage = ({club}) => {
             }
         }
 
-        if(currentChat.length) {
-            getChatContent(currentChat[0].chat_id)
+        if(currentChat.length || userIdParam) {
+            getChatContent(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`)
                 .then((res) => {
                     if(res?.data?.result) {
-                        console.log("three");
                         setCurrentChat(res.data.result);
                     }
                 });
@@ -247,7 +246,7 @@ const ChatPage = ({club}) => {
     const changeMessage = (e) => {
         if(e.keyCode === 13) {
             e.preventDefault();
-            sendMessage(currentChat[0].chat_id);
+            sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`);
         }
     }
 
@@ -366,7 +365,7 @@ const ChatPage = ({club}) => {
             <main className={mobileCurrentChat === -1 ? "chat__main d-desktop" : "chat__main"}>
                 <main className="chat__main__main">
                     <main className="chat__main__content" onScroll={(e) => { chatMainScroll(e); }}>
-                        {currentChat.map((item, index) => {
+                        {currentChat.length ? currentChat.map((item, index) => {
                             return <section className="chat__main__content__section" key={index}>
                                 <div className={item.type ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
                                     <header className="chat__message__header">
@@ -383,7 +382,14 @@ const ChatPage = ({club}) => {
                                     </span>
                                 </div>
                             </section>
-                        })}
+                        }) : <section className="chat__main__noMessages">
+                            <h3 className="chat__main__noMessages__header">
+                                Rozpocznij konwersacje
+                            </h3>
+                            <p className="chat__main__noMessages__text">
+                                Nie masz jeszcze wiadomości z tym zawodnikiem. Odezwij się jako pierwszy!
+                            </p>
+                        </section> }
                     </main>
 
                     <section className="chat__main__inputWrapper">
@@ -396,7 +402,7 @@ const ChatPage = ({club}) => {
                             <button className="chat__btn">
                                 <img className="btn__img" src={pictureIcon} alt="wyslij-zdjecie" />
                             </button>
-                            <button className="chat__btn" onClick={() => { sendMessage(currentChat[0].chat_id); }}>
+                            <button className="chat__btn" onClick={() => { sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`); }}>
                                 <img className="btn__img" src={sendIcon} alt="wyslij-wiadomosc" />
                             </button>
                         </section>
