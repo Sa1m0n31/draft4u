@@ -44,7 +44,6 @@ router.get("/get-club-messages", (request, response) => {
     const values = [user];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
         if(res) {
             response.send({
                 result: res.rows
@@ -65,7 +64,7 @@ router.get("/get-chat-content", (request, response) => {
    const values = [chatId];
 
    db.query(query, values, (err, res) => {
-      if(res) {
+       if(res) {
           response.send({
               result: res.rows
           });

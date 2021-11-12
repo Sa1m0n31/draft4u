@@ -17,4 +17,12 @@ const getAdminData = () => {
     });
 }
 
-export { getAdminById, getAdminData }
+const getClubs = () => {
+    return axios.get(`${API_URL}/admin/get-clubs`);
+}
+
+const getUsers = () => {
+    return axios.get(`${API_URL}/admin/get-users`);
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers }

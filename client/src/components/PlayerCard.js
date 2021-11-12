@@ -12,8 +12,13 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
     const [comparator, setComparator] = useState(false);
 
     useEffect(() => {
-        if(favorite) setFavoritePlayer(true);
-    }, []);
+        if(favorite) {
+            setFavoritePlayer(true);
+        }
+        else {
+            setFavoritePlayer(false);
+        }
+    }, [favorite]);
 
     const addPlayerToFavorites = () => {
         if(!favoritePlayer) {

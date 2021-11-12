@@ -212,11 +212,20 @@ const getUserVisited = () => {
     });
 }
 
+const getIdentityById = (id) => {
+    return axios.get(`${API_URL}/user/get-identity-by-id`, {
+        params: {
+            id
+        }
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
-    getUserById, getUserFavorites, getUserVisited
+    getUserById, getUserFavorites, getUserVisited,
+    getIdentityById
 }

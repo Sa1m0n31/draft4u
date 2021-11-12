@@ -398,7 +398,7 @@ router.post("/edit-profile-image", upload.single("image"), (request, response) =
                        result: 1
                    });
                }
-               else {c
+               else {
                    response.send({
                        result: 0
                    });
@@ -444,6 +444,35 @@ router.get("/get-user-highlight-video", (request, response) => {
           response.send({
               result: res.rows[0]
           });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
+router.get("/get-identity-by-id", (request, response) => {
+   const { id } = request.query;
+
+   console.log(id);
+
+   const query = 'SELECT id FROM identities WHERE user_id = $1';
+   const values = [id];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          if(res.rows) {
+              response.send({
+                  result: res.rows[0]
+              });
+          }
+          else {
+              response.send({
+                  result: 0
+              });
+          }
       }
       else {
           response.send({

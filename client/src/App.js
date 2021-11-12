@@ -125,6 +125,27 @@ function App() {
       <Route path="/panel">
           <AdminWrapper page={1} />
       </Route>
+      <Route path="/dodaj-klub">
+          <AdminWrapper page={2} />
+      </Route>
+      <Route path="/lista-klubow">
+          <AdminWrapper page={3} />
+      </Route>
+      <Route path="/lista-zawodnikow">
+          <AdminWrapper page={4} />
+      </Route>
+      <Route path="/dodaj-powiadomienie">
+          <AdminWrapper page={5} />
+      </Route>
+      <Route path="/lista-powiadomien">
+          <AdminWrapper page={6} />
+      </Route>
+      <Route path="/dodaj-artykul">
+          <AdminWrapper page={7} />
+      </Route>
+      <Route path="/lista-artykulow">
+          <AdminWrapper page={8} />
+      </Route>
 
   </Router>
 }

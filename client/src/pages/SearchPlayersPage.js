@@ -75,18 +75,16 @@ const SearchPlayersPage = ({club, favorites}) => {
     }, [filteredPlayers]);
 
     useEffect(() => {
-        console.log(favorites);
         getAllPlayers()
             .then((res) => {
-                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
             });
     }, []);
 
     const isPlayerFavorite = (userId) => {
-        console.log(userId);
-        console.log(favorites);
+        if(!userId || !favorites.length) return false;
+
         return favorites.findIndex((item) => {
            return item.id === userId;
         }) !== -1;

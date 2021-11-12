@@ -5,7 +5,7 @@ import notifications from '../static/img/admin-notifications.svg'
 import articles from '../static/img/admin-articles.svg'
 import settings from '../static/img/admin-settings.svg'
 
-const PanelMenu = () => {
+const PanelMenu = ({menuOpen, menuSelected}) => {
     const [submenu, setSubmenu] = useState(-1);
 
     const menu = [
@@ -38,12 +38,12 @@ const PanelMenu = () => {
         <ul className="panelMenu__list">
             {menu.map((item, index) => {
                 return <li className="panelMenu__list__item" key={index}>
-                    <button className={submenu === index ? "panelMenu__list__item__link panelMenu__list__item__link--selected" : "panelMenu__list__item__link"}
+                    <button className={submenu === index || menuOpen === index ? "panelMenu__list__item__link panelMenu__list__item__link--selected" : "panelMenu__list__item__link"}
                             onClick={() => { if(submenu !== index) setSubmenu(index); else setSubmenu(-1); }}>
                         <img className="panelMenu__list__item__icon" src={item.icon} alt={item.name} />
                         {item.name}
                     </button>
-                    {submenu === index ? <ul className="panelMenu__submenu">
+                    {submenu === index || menuOpen === index ? <ul className="panelMenu__submenu">
                         {submenus[index].map((item, index) => {
                             return <li className="panelMenu__submenu__item" key={index}>
                                 <a className="panelMenu__submenu__link" href={item.link}>

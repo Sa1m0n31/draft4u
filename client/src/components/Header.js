@@ -17,14 +17,26 @@ import logoutIcon from '../static/img/logout.svg'
 import profilePictureExample from '../static/img/profile.png'
 import {logoutUser} from "../helpers/auth";
 import settings from "../settings";
-import {getUserProfileImage} from "../helpers/user";
+import arrowRightGold from '../static/img/arrow-right-gold.svg'
+import {getClubMessages, getUserMessages} from "../helpers/chat";
+import {getMessagePreview} from "../helpers/others";
+import example from "../static/img/profile-picture.png";
+import { io } from "socket.io-client";
+import {getClubData} from "../helpers/club";
+import {getClubNotifications, getUserNotifications} from "../helpers/notification";
 
-const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) => {
+const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, messageRead}) => {
     const [loginVisible, setLoginVisible] = useState(false);
-    const [profileMenuVisible, setProfileMenuVisible] = useState(false);
-    const [notificationsVisible, setNotificationsVisible] = useState(false);
-    const [messagesVisible, setMessagesVisible] = useState(false);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
+
+    const [currentMenuVisible, setCurrentMenuVisible] = useState(-1);
+
+    const [newMessages, setNewMessages] = useState(0);
+    const [newNotifications, setNewNotifications] = useState(0);
+
+    const [listenSocket, setListenSocket] = useState(null);
+
+    const [messages, setMessages] = useState([]);
 
     let loginBoxWrapper = useRef(null);
     let registerModal = useRef(null);
@@ -42,7 +54,80 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
             if(player) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
             else setProfilePicture(`${settings.API_URL}/image?url=/media/clubs/${profileImage}`);
         }
+
+        getClubNotifications()
+            .then((res) => {
+                console.log(res?.data?.result);
+            })
     }, []);
+
+    useEffect(() => {
+        updateChatList();
+    }, [messageRead]);
+
+    useEffect(() => {
+        if(club) {
+            getClubData()
+                .then((res) => {
+                    const clubId = res?.data?.result?.id;
+                    if(clubId) {
+                        setListenSocket(io(`http://localhost:3001?room=${clubId}&receiver=true`));
+                        getClubMessages()
+                            .then((res) => {
+                                setMessages(res?.data?.result);
+                            });
+                    }
+                });
+        }
+    }, [club]);
+
+    useEffect(() => {
+        if(player) {
+            getUserMessages()
+                .then((res) => {
+                   setMessages(res?.data?.result);
+                });
+        }
+    }, [player]);
+
+    /* Socket effects */
+    useEffect(() => {
+        if(listenSocket) {
+            listenSocket.on("message", (data) => {
+                /* GET NEW MESSAGE */
+                updateChatList(data);
+            });
+        }
+    }, [listenSocket]);
+
+    useEffect(() => {
+        setNewMessages(getNumberOfNewMessages());
+    }, [messages]);
+
+    const getNumberOfNewMessages = () => {
+        return messages.filter((item) => {
+            return isMessageNew(item);
+        }).length;
+    }
+
+    const isMessageNew = (msg) => {
+        return new Date(msg.created_at) > new Date(msg.read_at);
+    }
+
+    const updateChatList = () => {
+        if(club) {
+            getClubMessages()
+                .then((res) => {
+                    setMessages(res?.data?.result);
+                });
+        }
+        else if(player) {
+            getUserMessages()
+                .then((res) => {
+                    setMessages(res?.data?.result);
+                });
+        }
+    }
 
     const toggleLogin = () => {
         if(loginVisible) {
@@ -76,9 +161,9 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
     }
 
     const closeMobileMenu = () => {
-        if (mobileMenuChildren) {
+        if(mobileMenuChildren) {
             mobileMenuChildren.forEach((item) => {
-                if (item?.current?.style) {
+                if(item?.current?.style) {
                     item.current.style.opacity = "0";
                 }
             });
@@ -95,6 +180,11 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
                    window.location = "/";
                }
             });
+    }
+
+    const changeCurrentMenu = (n) => {
+        if(n === currentMenuVisible) setCurrentMenuVisible(-1);
+        else setCurrentMenuVisible(n);
     }
 
     return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
@@ -299,39 +389,55 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage}) =
             </menu>
 
             {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
-                <button className="siteHeader__player__btn">
+                <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={() => { changeCurrentMenu(0) }}>
                     <img className="siteHeader__player__btn__img" src={club ? bellGold : bell} alt="powiadomienia" />
+                    {newNotifications > 0 ? <span className="button__circle">
+                        {newNotifications}
+                    </span> : ""}
                 </button>
-                <button className="siteHeader__player__btn">
+                <button className="siteHeader__player__btn" onClick={() => { changeCurrentMenu(1); }}>
                     <img className="siteHeader__player__btn__img img--envelope" src={club ? envelopeGold : envelope} alt="wiadomosci" />
+                    {newMessages > 0 ? <span className="button__circle">
+                        {newMessages}
+                    </span> : ""}
                 </button>
 
-                {messagesVisible ? <menu className={club ? "profileMenu profileMenu--club" : "profileMenu"}>
+                {currentMenuVisible === 1 ? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages" : "profileMenu profileMenu--messages"}>
                     <ul className="profileMenu__list">
-                        <li className="profileMenu__list__item">
-                            <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
-                                <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
-                                Zmiana hasła
-                            </a>
-                            <a className="profileMenu__list__link" href="/faq">
-                                <img className="profileMenu__list__img" src={question} alt="faq" />
-                                Pomoc online
-                            </a>
-                            <button className="profileMenu__list__link" onClick={() => { logout(); }}>
-                                <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />
-                                Wyloguj się
-                            </button>
-                        </li>
+                        {messages?.map((item, index) => {
+                            if(index < 5) {
+                                return <li className="profileMenu__list__item" key={index}>
+                                    <a className={index < newMessages ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"} href={`/wiadomosci/?new=`}>
+                                        <figure className="messageMenu__imgWrapper">
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : example} alt="zmien-haslo" />
+                                        </figure>
+                                        <section className="messageMenu__list__item__content">
+                                            <h3 className="messageMenu__list__item__header">
+                                                {item.first_name} {item.last_name}
+                                            </h3>
+                                            <p className="messageMenu__list__item__text">
+                                                {getMessagePreview(item.content)}
+                                            </p>
+                                        </section>
+                                    </a>
+                                </li>
+                            }
+                            else return "";
+                        })}
                     </ul>
+                    <a className="messageMenu__bottom" href="/wiadomosci">
+                        Zobacz wszystkie wiadomości
+                        <img className="messageMenu__bottom__img" src={arrowRightGold} alt="dalej" />
+                    </a>
                 </menu> : ""}
 
                 <button className="siteHeader__player__btn siteHeader__player__btn--profile d-desktop"
-                        onClick={() => { setProfileMenuVisible(!profileMenuVisible); }}
+                        onClick={() => { changeCurrentMenu(2); }}
                 >
                     <img className="siteHeader__player__btn--profile__img" src={profilePicture} alt="profile" />
                 </button>
 
-                {profileMenuVisible ? <menu className={club ? "profileMenu profileMenu--club" : "profileMenu"}>
+                {currentMenuVisible === 2 ? <menu className={club ? "profileMenu profileMenu--club" : "profileMenu"}>
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
                             <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">

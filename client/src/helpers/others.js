@@ -42,4 +42,8 @@ const getPositionById = (id) => {
     }
 }
 
-export { removePolishChars, calculateAge, isElementInArray, getPositionById }
+const getMessagePreview = (content) => {
+    return content.length < 30 ? content : content.substring(0, 30) + "...";
+}
+
+export { removePolishChars, calculateAge, isElementInArray, getPositionById, getMessagePreview }

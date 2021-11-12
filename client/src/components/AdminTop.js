@@ -47,7 +47,7 @@ const AdminTop = () => {
                 <img className="siteHeader__player__btn--profile__img" src={profileImg} alt="profile" />
             </button>
 
-            {profileMenuVisible ? <menu className="profileMenu profileMenu--club">
+            {profileMenuVisible ? <menu className="profileMenu profileMenu--club profileMenu--admin">
                 <ul className="profileMenu__list">
                     <li className="profileMenu__list__item">
                         <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">

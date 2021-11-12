@@ -23,6 +23,8 @@ const ComparatorPage = ({club}) => {
     const [videosArray, setVideosArray] = useState([0, 0, 0]);
     const [playersArray, setPlayersArray] = useState([0, 0, 0]);
 
+    const [nameMinHeight, setNameMinHeight] = useState(0);
+
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
 
@@ -83,12 +85,29 @@ const ComparatorPage = ({club}) => {
         setVideosArray([firstPlayerVideo, secondPlayerVideo, thirdPlayerVideo]);
     }, [firstPlayerVideo, secondPlayerVideo, thirdPlayerVideo]);
 
+    useEffect(() => {
+        /* Make columns equal */
+        if(playersArray[0] && playersArray[1] && playersArray[2]) {
+            const nameHeaders = document.querySelectorAll(".comparedPlayer__fullName");
+            let maxHeight = 0;
+
+            Array.from(nameHeaders).forEach((item, index, array) => {
+                const newHeight = parseInt(window.getComputedStyle(item).getPropertyValue('height').split("p")[0]);
+                if(newHeight > maxHeight) maxHeight = newHeight;
+
+                if(index === array.length-1) {
+                    setNameMinHeight(maxHeight);
+                }
+            });
+        }
+    }, [playersArray]);
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
         <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
             {playersArray.map((item, index) => {
-                return <ComparedPlayer player={item} video={videosArray[index]} color={colors[index]} />
+                return <ComparedPlayer player={item} video={videosArray[index]} color={colors[index]} nameMinHeight={nameMinHeight} />
             })}
         </main>
 

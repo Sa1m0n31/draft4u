@@ -11,6 +11,8 @@ import settings from "../settings";
 import {getClubData} from "../helpers/club";
 import { io } from "socket.io-client";
 import leftArrowWhite from '../static/img/left-arrow-white.svg'
+import {getUserById, getUserData} from "../helpers/user";
+import { getMessagePreview } from "../helpers/others";
 
 const ChatPage = ({club}) => {
     const [scrollbarList, setScrollbarList] = useState([1]);
@@ -30,93 +32,15 @@ const ChatPage = ({club}) => {
     const [scrollbarChatThumb, setScrollbarChatThumb] = useState(100);
     const [newMsg, setNewMsg] = useState(null);
     const [mobileCurrentChat, setMobileCurrentChat] = useState(-1);
+    const [clubId, setClubId] = useState("");
+    const [chatInLink, setChatInLink] = useState(false);
 
-    const updateChat = (newMessage) => {
-        getClubMessages()
-            .then((res) => {
-                const result = res?.data?.result;
-                if(result?.length) {
-                    setMessages(result);
-                    if(newMessage) setNewMsg(newMessage);
-                }
-            });
-    }
-
-    useEffect(() => {
-        console.log(messages);
-    }, [messages]);
-
-    useEffect(() => {
-        if(messages.length) {
-            if(!listenSocket) {
-                setListenSocket(io(`http://localhost:3001?room=${messages[0].chat_id.split(";")[0]}&receiver=true`))
-            }
-        }
-
-        if(currentChat.length) {
-            getChatContent(currentChat[0].chat_id)
-                .then((res) => {
-                    if(res?.data?.result) setCurrentChat(res.data.result);
-                });
-        }
-    }, [messages]);
-
-    useEffect(() => {
-        if(listenSocket) {
-            listenSocket.on("message", (data) => {
-                /* GET NEW MESSAGE */
-                updateChat(data);
-            });
-        }
-    }, [listenSocket]);
-
-    useEffect(() => {
-        if(socket) {
-            socket.on('connect', () => {
-                //console.log("connect");
-            });
-
-            socket.on("message", (data) => {
-                alert(data);
-            });
-        }
-    }, [socket]);
-
-    useEffect(() => {
-       if(currentChat.length) {
-           if(socket) {
-               if(socket.io.opts.query.split("&") !== `room=${currentChat[0].chat_id.split(";")[1]}`) {
-                   socket.disconnect();
-                   setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[1]}&sender=${currentChat[0].chat_id.split(";")[0]}`));
-               }
-           }
-           else {
-               setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[1]}&sender=${currentChat[0].chat_id.split(";")[0]}`));
-           }
-       }
-    }, [currentChat]);
-
-    const sendMessage = (chatId) => {
-        if(message) {
-            addMessage(chatId, message, 'true')
-                .then((res) => {
-                    setMessage("");
-                    updateChat(false);
-                    socket.emit("message", message, (data) => {
-
-                    });
-                });
-        }
-    }
-
-    useEffect(() => {
-        setScrollbarChat([maxChat]);
-    }, [maxChat]);
-
+    /* --- 1 --- */
     useEffect(() => {
         getClubData()
             .then((res) => {
-               setClubName(res?.data?.result?.name);
+                setClubId(res?.data?.result?.id);
+                setClubName(res?.data?.result?.name);
             });
 
         getClubMessages()
@@ -127,16 +51,182 @@ const ChatPage = ({club}) => {
                     setCurrentReceiver(result[0].first_name + " " + result[0].last_name);
                     setCurrentReceiverImg(result[0].file_path);
 
-                    getChatContent(result[0].chat_id)
-                        .then((res) => {
-                           if(res?.data?.result) setCurrentChat(res.data.result);
-                        });
+                    if(!chatInLink) {
+                        console.log(result[0]);
+                        getChatContent(result[0].chat_id)
+                            .then((res) => {
+                                console.log(res.data);
+                                if(res?.data?.result) {
+                                    console.log("one");
+                                    setCurrentChat(res.data.result);
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    }
                 }
                 else {
                     setNoMessages(true);
                 }
             });
     }, []);
+
+    useEffect(() => {
+        console.log(currentChat);
+    }, [currentChat]);
+
+    /* --- 2 --- */
+    useEffect(() => {
+        /* STYLE PART */
+        const objDiv = document.querySelector(".chat__main__content");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
+        const listHeight = window.getComputedStyle(document.querySelector(".chat__list__main")).getPropertyValue('height');
+
+        const allMessages = document.querySelectorAll(".chat__main__content__section");
+        const allMessagesHeight = Array.from(allMessages).reduce((prev, item) => {
+            return prev + parseInt(window.getComputedStyle(item).getPropertyValue('height').split("p")[0]) + 20;
+        }, 0);
+
+        setMax(parseInt(listHeight.substring(0, listHeight.length-2)));
+        setMaxChat(allMessagesHeight - window.innerHeight * 0.74);
+
+        /* LOGIC PART */
+        if(clubId) {
+            const params = new URLSearchParams(window.location.search);
+            const newPlayerToChat = params.get('new');
+
+            if(newPlayerToChat && !chatInLink) {
+                console.log("!chatInLink");
+                getChatContent(`${clubId};${newPlayerToChat}`)
+                    .then((res) => {
+                        setChatInLink(true);
+
+                        console.log(clubId + ";" + newPlayerToChat);
+                        if(res?.data?.result) {
+                            console.log("two");
+                            setCurrentChat(res.data.result);
+                        }
+
+                        getUserById(newPlayerToChat)
+                            .then((res) => {
+                                const result = res?.data?.result;
+                                if(result) {
+                                    setCurrentReceiver(result.first_name + " " + result.last_name);
+                                    setCurrentReceiverImg(result.file_path);
+                                }
+                            })
+                    });
+            }
+        }
+
+        /* Socket part */
+        if(currentChat.length) {
+            if(socket) {
+                if(socket.io.opts.query.split("&") !== `room=${currentChat[0].chat_id.split(";")[1]}`) {
+                    socket.disconnect();
+                    setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[1]}&sender=${currentChat[0].chat_id.split(";")[0]}`));
+                }
+            }
+            else {
+                setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[1]}&sender=${currentChat[0].chat_id.split(";")[0]}`));
+            }
+        }
+    }, [currentChat]);
+
+    /* --- 3 --- */
+    useEffect(() => {
+        if(messages.length) {
+            if(!listenSocket) {
+                setListenSocket(io(`http://localhost:3001?room=${messages[0].chat_id.split(";")[0]}&receiver=true`));
+            }
+        }
+
+        if(currentChat.length) {
+            getChatContent(currentChat[0].chat_id)
+                .then((res) => {
+                    if(res?.data?.result) {
+                        console.log("three");
+                        setCurrentChat(res.data.result);
+                    }
+                });
+        }
+    }, [messages]);
+
+    /* Socket effects */
+    useEffect(() => {
+        if(listenSocket) {
+            listenSocket.on("message", (data) => {
+                /* GET NEW MESSAGE */
+                updateChatList(data);
+            });
+        }
+    }, [listenSocket]);
+
+    useEffect(() => {
+        if(socket) {
+            socket.on('connect', () => {
+
+            });
+
+            socket.on("message", (data) => {
+                alert(data);
+            });
+        }
+    }, [socket]);
+
+    const getChat = (chatId, fullName, img) => {
+        setCurrentReceiver(fullName);
+        setCurrentReceiverImg(img);
+
+        console.log("get chat");
+
+        setChatInLink(true);
+
+        markAsRead(chatId, 'true')
+            .then((res) => {
+                getClubMessages()
+                    .then((res) => {
+                        setMessages(res?.data?.result);
+                    });
+            });
+
+        getChatContent(chatId)
+            .then((res) => {
+                setMobileCurrentChat(res?.data?.result);
+                console.log("four");
+                setCurrentChat(res?.data?.result);
+            });
+    }
+
+    const updateChatList = (newMessage) => {
+        getClubMessages()
+            .then((res) => {
+                const result = res?.data?.result;
+                if(result?.length) {
+                    setMessages(result);
+                    if(newMessage) setNewMsg(newMessage);
+                }
+            });
+    }
+
+    const sendMessage = (chatId) => {
+        if(message) {
+            addMessage(chatId, message, 'true')
+                .then((res) => {
+                    setMessage("");
+                    updateChatList(false);
+                    socket.emit("message", message, (data) => {
+
+                    });
+                });
+        }
+    }
+
+    useEffect(() => {
+        setScrollbarChat([maxChat]);
+    }, [maxChat]);
 
     const chatListScroll = (e) => {
         setScrollbarList([e.target.scrollTop]);
@@ -154,45 +244,6 @@ const ChatPage = ({club}) => {
         document.querySelector(".chat__main__content").scrollTop = scrollbarChat[0];
     }, [scrollbarChat]);
 
-    useEffect(() => {
-        const objDiv = document.querySelector(".chat__main__content");
-        objDiv.scrollTop = objDiv.scrollHeight;
-
-        const listHeight = window.getComputedStyle(document.querySelector(".chat__list__main")).getPropertyValue('height');
-
-        const allMessages = document.querySelectorAll(".chat__main__content__section");
-        const allMessagesHeight = Array.from(allMessages).reduce((prev, item) => {
-           return prev + parseInt(window.getComputedStyle(item).getPropertyValue('height').split("p")[0]) + 20;
-        }, 0);
-
-
-        setMax(parseInt(listHeight.substring(0, listHeight.length-2)));
-        setMaxChat(allMessagesHeight - window.innerHeight * 0.74);
-    }, [currentChat]);
-
-    const getMessagePreview = (content) => {
-        return content.length < 30 ? content : content.substring(0, 30) + "...";
-    }
-
-    const getChat = (chatId, fullName, img) => {
-        setCurrentReceiver(fullName);
-        setCurrentReceiverImg(img);
-
-        markAsRead(chatId, 'true')
-            .then((res) => {
-                getClubMessages()
-                    .then((res) => {
-                        setMessages(res?.data?.result);
-                    });
-            });
-
-        getChatContent(chatId)
-            .then((res) => {
-                setMobileCurrentChat(res?.data?.result);
-                setCurrentChat(res?.data?.result);
-            });
-    }
-
     const changeMessage = (e) => {
         if(e.keyCode === 13) {
             e.preventDefault();
@@ -200,12 +251,8 @@ const ChatPage = ({club}) => {
         }
     }
 
-    useEffect(() => {
-        // console.log(currentChat);
-    }, [currentChat]);
-
     return <div className="container container--dark">
-        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club?.file_path} />
+        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club?.file_path} messageRead={messages} />
 
         <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">

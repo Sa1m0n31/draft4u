@@ -278,7 +278,7 @@ ul {
 
 .profileMenu {
     position: absolute;
-    bottom: -20px;
+    bottom: 5px;
     right: 0;
     transform: translate(0, 100%);
     background: #fff;
@@ -300,6 +300,10 @@ ul {
     border-bottom: 20px solid #fff;
     background: transparent;
     z-index: 3;
+}
+
+.profileMenu--admin {
+    bottom: -25px;
 }
 
 .profileMenu--club::before {
@@ -355,6 +359,88 @@ ul {
 .siteWidthSuperNarrow {
     width: var(--siteWidthSuperNarrow);
     margin: 40px auto;
+}
+
+.button__circle {
+    position: absolute;
+    bottom: -3px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--gold);
+    color: #fff;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 700;
+    font-family: 'Oxanium', cursive;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+.siteHeader__player__btn--notification .button__circle {
+    right: -5px;
+}
+
+.profileMenu--messages {
+    right: 50px;
+    width: 380px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.messageMenu__list__item__header {
+    color: #fff;
+    font-family: 'Oxanium', cursive;
+    font-size: 17px;
+}
+
+.profileMenu__list__link--new .messageMenu__list__item__header {
+    color: var(--gold);
+}
+
+.profileMenu__list__link--new .messageMenu__list__item__text {
+    font-weight: 700;
+}
+
+.messageMenu__list__item__text {
+    font-size: 14px;
+}
+
+.messageMenu__imgWrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.profileMenu--messages .profileMenu__list__img {
+    width: 100%;
+    margin: 0;
+}
+
+.messageMenu__bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family: 'Oxanium', cursive;
+    color: #fff;
+    border: 1px solid var(--grey);
+    padding: 10px 0;
+    transition: .2s all;
+}
+
+.messageMenu__bottom:hover {
+    background: #707070;
+}
+
+.messageMenu__bottom__img {
+    margin-left: 15px;
 }
 
 /* Homepage */
@@ -3316,6 +3402,9 @@ select::-ms-expand {
     font-size: 38px;
     margin: 20px auto;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .comparedPlayer__section {
@@ -3324,6 +3413,7 @@ select::-ms-expand {
     background: #474747;
     padding: 0 20px;
     margin: 20px 0;
+    min-height: 210px;
 }
 
 .comparedPlayer__section__item {

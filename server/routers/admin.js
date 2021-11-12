@@ -49,4 +49,38 @@ router.get("/get-admin-data", (request, response) => {
     }
 });
 
+router.get("/get-clubs", (request, response) => {
+   const query = 'SELECT * FROM clubs';
+
+   db.query(query, [], (err, res) => {
+       if(res) {
+           response.send({
+               result: res.rows
+           });
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
+   });
+});
+
+router.get("/get-users", (request, response) => {
+    const query = 'SELECT i.id, i.user_id, u.first_name, u.last_name, u.email FROM users u JOIN identities i ON u.id = i.user_id';
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
 module.exports = router;

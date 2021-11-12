@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import LoadingPage from "../pages/LoadingPage";
 import {isLoggedIn} from "../helpers/auth";
 import AdminPanel from "../pages/AdminPanel";
+import AdminAddNotification from "../pages/AdminAddNotification";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -13,9 +14,13 @@ const AdminWrapper = ({page}) => {
                 if(!res?.data?.result) window.location = "/";
                 else {
                     setLoaded(true);
+                    const result = res?.data?.result;
                     switch(page) {
                         case 1:
-                            setRenderSwitch(<AdminPanel admin={res?.data?.result} />);
+                            setRenderSwitch(<AdminPanel admin={result} />);
+                            break;
+                        case 5:
+                            setRenderSwitch(<AdminAddNotification admin={result} />);
                             break;
                         default:
                             break;

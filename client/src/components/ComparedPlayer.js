@@ -13,7 +13,7 @@ import ModalVideoPlayer from "./ModalVideoPlayer";
 import playBtn from "../static/img/play-button.svg";
 import {addToFavorites, deleteFromFavorites, getFavoritesByClub, isPlayerFavorite} from "../helpers/club";
 
-const ComparedPlayer = ({player, video, color}) => {
+const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
     const [playVideo, setPlayVideo] = useState(false);
     const [favoritePlayer, setFavoritePlayer] = useState(false);
 
@@ -21,7 +21,7 @@ const ComparedPlayer = ({player, video, color}) => {
         getFavoritesByClub()
             .then((res) => {
                 if(res?.data?.result?.findIndex((item) => {
-                    return item.user_id === player.id;
+                    return item.id === player.id;
                 }) !== -1) {
                     setFavoritePlayer(true);
                 }
@@ -48,7 +48,9 @@ const ComparedPlayer = ({player, video, color}) => {
         }}>
             <img className="comparedPlayer__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : profile} alt="profilowe" />
         </figure>
-        <h2 className="comparedPlayer__fullName">
+        <h2 className="comparedPlayer__fullName" style={{
+            minHeight: nameMinHeight + 'px'
+        }}>
             {player.first_name} {player.last_name}
         </h2>
         <section className="comparedPlayer__icons">
@@ -68,7 +70,7 @@ const ComparedPlayer = ({player, video, color}) => {
                     {calculateAge(player.birthday)}
                 </span>
             </section>
-            <section className="comparedPlayer__section__item">
+            <section className="comparedPlayer__section__item comparedPlayer__section__item--salary">
                 <span className="comparedPlayer__section__key">
                     Honorarium
                 </span>
@@ -76,7 +78,7 @@ const ComparedPlayer = ({player, video, color}) => {
                     {player.salary_from ? player.salary_from + " - " + player.salary_to : "-"}
                 </span>
             </section>
-            <section className="comparedPlayer__section__item">
+            <section className="comparedPlayer__section__item comparedPlayer__section__item--club">
                 <span className="comparedPlayer__section__key">
                     Aktualny klub
                 </span>

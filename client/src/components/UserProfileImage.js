@@ -21,7 +21,6 @@ const UserProfileImage = ({user, club}) => {
         editProfileImage(user.id, file)
             .then((res) => {
                 setLoader(false);
-                console.log("loader");
             });
     }
 

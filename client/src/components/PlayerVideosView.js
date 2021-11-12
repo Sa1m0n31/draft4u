@@ -8,10 +8,12 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import writeMsgBtn from '../static/img/napisz-wiadomosc.png'
 import ModalVideoPlayer from "./ModalVideoPlayer";
+import {getIdentityById} from "../helpers/user";
 
 const PlayerVideoView = ({id, club}) => {
     const [videos, setVideos] = useState([]);
     const [playVideo, setPlayVideo] = useState(-1);
+    const [identity, setIdentity] = useState("");
 
     var player = useRef(null);
 
@@ -21,6 +23,15 @@ const PlayerVideoView = ({id, club}) => {
                 setVideos(res.data.result);
             });
     }, []);
+
+    useEffect(() => {
+        if(club) {
+            getIdentityById(id)
+                .then((res) => {
+                    setIdentity(res?.data?.result?.id);
+                });
+        }
+    }, [id]);
 
     const closeModalVideoPlayer = () => {
         setPlayVideo(-1);
@@ -50,7 +61,7 @@ const PlayerVideoView = ({id, club}) => {
             </Splide> : <h3 className="noVideosHeader">
                 Ten zawodnik nie dodał jeszcze żadnych filmików
             </h3>}
-            {club ? <a className={videos.length ? "button button--hover playerVideoView__btn playerVideoView__btn--club" : "button button--hover playerVideoView__btn playerVideoView__btn--club--center"} href="/">
+            {club ? <a href={`/wiadomosci?new=${identity}`} className={videos.length ? "button button--hover playerVideoView__btn playerVideoView__btn--club" : "button button--hover playerVideoView__btn playerVideoView__btn--club--center"}>
                 <img className="btn__img" src={writeMsgBtn} alt="napisz-wiadomosc" />
             </a> : ""}
         </main>
