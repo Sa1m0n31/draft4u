@@ -10,6 +10,7 @@ const MyAccountStart = ({user}) => {
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
+        console.log(user);
         setFullName(user.first_name + " " + user.last_name);
     }, []);
 

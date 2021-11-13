@@ -14,23 +14,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/arrow-down-grey.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/AdminTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AdminTop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ComparedPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ComparedPlayer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/notification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AdminAddNotification.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AdminAddNotification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AdminNotificationList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AdminNotificationList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/ChatPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ChatPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ClubTeamsPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/admin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/MyAccountStart.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MyAccountStart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +134,7 @@
       <workItem from="1636630193180" duration="3279000" />
       <workItem from="1636635727582" duration="24651000" />
       <workItem from="1636715404378" duration="27378000" />
+      <workItem from="1636800650237" duration="9356000" />
     </task>
     <servers />
   </component>
@@ -160,10 +154,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1636680569674">
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1636801798171">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1636680569674" />
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1636801798171" />
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1633287008314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -192,17 +186,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="384" y="0" width="624" height="1027" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1631571429351" />
-    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1636723365083">
+    <state x="667" y="253" width="585" height="534" key="find.popup" timestamp="1636802512420">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636723365083" />
+    <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636802512420" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1636664342783">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636664342783" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636761567161">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636809297519">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636761567161" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636809297519" />
   </component>
 </project>

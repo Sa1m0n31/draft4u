@@ -4,19 +4,25 @@ const cors = require("cors");
 const path = require("path");
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-
 const app = express();
-
-const { createServer } = require("http");
+const morgan = require('morgan');
+const fs = require('fs');
+const http = require('http');
+const server = http.createServer(app);
 const { Server } = require("socket.io");
+const io = new Server(server);
 
-const httpServer = createServer(app);
-const io = new Server(httpServer, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"]
-    }
-});
+
+// const { createServer } = require("http");
+// const { Server } = require("socket.io");
+//
+// const httpServer = createServer(app);
+// const io = new Server(httpServer, {
+//     cors: {
+//         origin: "https://drafcik.skylo-test1.pl:3000",
+//         methods: ["GET", "POST"]
+//     }
+// });
 
 /* Redirect http to https */
 // app.enable('trust proxy');
@@ -30,6 +36,12 @@ const io = new Server(httpServer, {
 //     }
 // });
 
+
+// create a write stream (in append mode)
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+//
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }));
 
 /* Middleware */
 app.use(cors({
@@ -74,7 +86,7 @@ io.on("connection", (socket) => {
     });
 });
 
-httpServer.listen(3001);
+// httpServer.listen(3001);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
@@ -138,6 +150,28 @@ app.get("/ulubieni", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 app.get("/porownywarka", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/sklady", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zapisane-druzyny", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/wiadomosci", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+app.get("/admin", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/panel", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/dodaj-powiadomienie", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/lista-powiadomien", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 

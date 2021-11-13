@@ -97,7 +97,7 @@ router.get('/verification', (request, response) => {
    }
 });
 
-router.get("/auth", isLoggedIn, (request, response) => {
+router.get("/auth", (request, response) => {
     if(request.user) {
         if(isNumeric(request.user.toString())) {
            /* Admin */

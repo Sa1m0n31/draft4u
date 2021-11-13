@@ -63,9 +63,11 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }, [profileImage]);
 
     useEffect(() => {
-        setNewNotifications(notifications.filter((item) => {
-            return !item.read;
-        }).length);
+        if(notifications?.length) {
+            setNewNotifications(notifications.filter((item) => {
+                return !item.read;
+            }).length);
+        }
     }, [notifications]);
 
     useEffect(() => {
@@ -93,7 +95,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                 .then((res) => {
                     const clubId = res?.data?.result?.id;
                     if(clubId) {
-                        setListenSocket(io(`http://localhost:3001?room=${clubId}&receiver=true`));
+                        setListenSocket(io(`https://drafcik.skylo-test1.pl?room=${clubId}&receiver=true`));
                         getClubMessages()
                             .then((res) => {
                                 setMessages(res?.data?.result);
@@ -127,9 +129,14 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }, [messages]);
 
     const getNumberOfNewMessages = () => {
-        return messages.filter((item) => {
-            return isMessageNew(item);
-        }).length;
+        if(messages?.length) {
+            return messages.filter((item) => {
+                return isMessageNew(item);
+            }).length;
+        }
+        else {
+            return 0;
+        }
     }
 
     const isMessageNew = (msg) => {

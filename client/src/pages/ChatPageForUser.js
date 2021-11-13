@@ -39,7 +39,7 @@ const ChatPageForUser = ({user}) => {
     useEffect(() => {
         if(messages.length) {
             if(!listenSocket) {
-                setListenSocket(io(`http://localhost:3001?room=${messages[0].chat_id.split(";")[1]}&receiver=true`));
+                setListenSocket(io(`https://drafcik.skylo-test1.pl?room=${messages[0].chat_id.split(";")[1]}&receiver=true`));
             }
         }
 
@@ -76,11 +76,11 @@ const ChatPageForUser = ({user}) => {
             if(socket) {
                 if(socket.io.opts.query.split("&") !== `room=${currentChat[0].chat_id.split(";")[0]}`) {
                     socket.disconnect();
-                    setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
+                    setSocket(io(`https://drafcik.skylo-test1.pl?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
                 }
             }
             else {
-                setSocket(io(`http://localhost:3001?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
+                setSocket(io(`https://drafcik.skylo-test1.pl?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
             }
         }
     }, [currentChat]);

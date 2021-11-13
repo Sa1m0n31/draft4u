@@ -132,11 +132,11 @@ const ChatPage = ({club}) => {
             if(socket) {
                 if(socket.io.opts.query.split("&") !== `room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}`) {
                     socket.disconnect();
-                    setSocket(io(`http://localhost:3001?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}&sender=${clubId ? clubId : currentChat[0].chat_id.split(";")[0]}`));
+                    setSocket(io(`https://drafcik.skylo-test1.pl?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}&sender=${clubId ? clubId : currentChat[0].chat_id.split(";")[0]}`));
                 }
             }
             else {
-                setSocket(io(`http://localhost:3001?room=${clubId ? clubId : currentChat[0].chat_id.split(";")[1]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newPlayerToChat}`));
+                setSocket(io(`https://drafcik.skylo-test1.pl?room=${clubId ? clubId : currentChat[0].chat_id.split(";")[1]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newPlayerToChat}`));
             }
         }
     }, [currentChat, clubId]);
@@ -145,7 +145,7 @@ const ChatPage = ({club}) => {
     useEffect(() => {
         if(messages.length) {
             if(!listenSocket) {
-                setListenSocket(io(`http://localhost:3001?room=${messages[0].chat_id.split(";")[0]}&receiver=true`));
+                setListenSocket(io(`https://drafcik.skylo-test1.pl?room=${messages[0].chat_id.split(";")[0]}&receiver=true`));
             }
         }
 
