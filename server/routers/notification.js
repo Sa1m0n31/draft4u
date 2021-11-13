@@ -90,9 +90,25 @@ router.post("/update", upload.single("image"), (request, response) => {
                                        }
                                     });
                                 }
+                                else if(imgUpdate === 'delete') {
+                                    const query = 'UPDATE notifications SET image = NULL WHERE id = $1';
+                                    const values = [id];
+                                    db.query(query, values, (err, res) => {
+                                       if(res) {
+                                           response.send({
+                                               result: 2
+                                           });
+                                       }
+                                       else {
+                                           response.send({
+                                               result: 0
+                                           });
+                                       }
+                                    });
+                                }
                                 else {
                                     response.send({
-                                        result: 1
+                                        result: 2
                                     });
                                 }
                             }
@@ -115,7 +131,7 @@ router.post("/update", upload.single("image"), (request, response) => {
 });
 
 router.get("/get-all", (request, response) => {
-    const query = 'SELECT n.id, n.title, i.file_path FROM notifications n JOIN images i ON n.image = i.id';
+    const query = 'SELECT n.id, n.title, i.file_path FROM notifications n LEFT OUTER JOIN images i ON n.image = i.id';
 
     db.query(query, [], (err, res) => {
         if(res) {

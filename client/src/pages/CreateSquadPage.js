@@ -1,27 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import Header from "../components/Header";
-import ComparedPlayer from "../components/ComparedPlayer";
-import ComparatorChart from "../components/ComparatorChart";
 import Footer from "../components/Footer";
 import floor from '../static/img/boisko.svg'
 import playerPlaceholder from '../static/img/player-placeholder.svg'
 import playerDraggable from '../static/img/player-draggable.svg'
-import pencil from '../static/img/pen.svg'
 import pen from '../static/img/pen-white.png';
 import checkIcon from "../static/img/check-white.svg"
-import downloadIcon from '../static/img/direct-download.svg'
 import saveIcon from '../static/img/save.svg'
 import {getFavoritesByClub} from "../helpers/club";
 import {getTrackBackground, Range} from "react-range";
 import settings from "../settings";
 import profilePicture from '../static/img/profile-picture.png'
 import {getPositionById, isElementInArray} from "../helpers/others";
-import { useDrag, useDrop } from "react-dnd";
 import interact from 'interactjs'
 import trash from '../static/img/trash-black.svg'
 import {addSquad, getSquadById} from "../helpers/squad";
 import {isObject} from "chart.js/helpers";
-import { Direction } from 'react-range';
+import arrowDownGrey from '../static/img/arrow-down-grey.svg'
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -42,7 +37,9 @@ const CreateSquadPage = ({club}) => {
     const [teamSaved, setTeamSaved] = useState("");
     const [team, setTeam] = useState([]);
     const [updateTeam, setUpdateTeam] = useState([]);
-    const [update, setUpdate] = useState(false);
+    const [updateMode, setUpdateMode] = useState(false);
+    const [filtersVisible, setFiltersVisible] = useState(false);
+    const [availablePlaces, setAvailablePlaces] = useState([0, 0, 0, 0, 0, 0, 0]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -51,11 +48,18 @@ const CreateSquadPage = ({club}) => {
         if(id) {
             getSquadById(id)
                 .then((res) => {
-                    setUpdate(true);
-                    setName(res?.data?.result[0]?.name);
+                    setUpdateMode(true);
+                    const result = res?.data?.result;
+                    setName(result[0]?.name);
+                    setUpdateTeam(result);
+                    setTeam(result);
 
-                    setUpdateTeam(res?.data?.result);
-                    setTeam(res?.data?.result);
+                    const updateTeamLength = result.length;
+                    console.log(result);
+                    setAvailablePlaces(availablePlaces.map((item, index) => {
+                        if(index < updateTeamLength) return result[index].id;
+                        else return item;
+                    }));
 
                     setMinCost(res?.data?.result?.reduce((prev, current) => {
                         return prev + current.salary_from;
@@ -154,7 +158,6 @@ const CreateSquadPage = ({club}) => {
     }, [playersOnCourt]);
 
     useEffect(() => {
-        console.log(newPlayerOnCourt);
         if(newPlayerOnCourt >= 0) {
             setPlayersOnCourt([...playersOnCourt, newPlayerOnCourt]);
         }
@@ -237,12 +240,42 @@ const CreateSquadPage = ({club}) => {
         }) !== -1;
     }
 
-    const mobileAddToSquad = (playerIndex) => {
+    const mobileAddToSquad = (e, playerIndex, playerId) => {
+        if(window.innerWidth < 776) {
+            const draggingElement = document.querySelector(`#draggable-${playerIndex}`);
+            const firstAvailableIndex = availablePlaces.findIndex((item) => {
+                return !item;
+            });
+            const dropzoneElement = document.querySelector(`.dropzone--player--${firstAvailableIndex+1}`);
 
+            dropzoneElement.style.opacity = "1";
+            dropzoneElement.classList.remove("dropzone--active");
+
+            dropzoneElement.appendChild(draggingElement);
+            draggingElement.classList.add("element--dropped");
+            draggingElement.classList.remove("draggable");
+
+            const droppedPlayerIndex = parseInt(draggingElement.id.split("-")[1]);
+            setNewPlayerOnCourt(droppedPlayerIndex);
+
+            setSelectedPlayers([...selectedPlayers, playerIndex]);
+
+            draggingElement.style.opacity = "1";
+
+            console.log(playerId);
+            setAvailablePlaces(availablePlaces.map((item, index) => {
+                if(index === firstAvailableIndex) return playerId;
+                else return item;
+            }));
+        }
     }
 
+    useEffect(() => {
+        console.log(availablePlaces);
+    }, [availablePlaces]);
+
     const startDragging = (e, playerIndex) => {
-        if(!isElementInArray(selectedPlayers, playerIndex) && !mobile) {
+        if(!isElementInArray(selectedPlayers, playerIndex) && !(window.innerWidth < 768)) {
             setCurrentDrag(playerIndex);
 
             const elementToDrag = document.getElementById(`draggable-${playerIndex}`);
@@ -262,18 +295,22 @@ const CreateSquadPage = ({club}) => {
 
             setSelectedPlayers([...selectedPlayers, playerIndex]);
         }
-        else if(mobile) {
-            console.log("MOBIULE");
-        }
     }
 
-    const removePlayerFromCourt = (id) => {
-        console.log(id);
+    const removePlayerFromCourt = (id, playerId) => {
         if(id) setNewPlayerOnCourt(id * -1);
         else setNewPlayerOnCourt(-999999);
 
+        console.log("remove player from court");
+        console.log(id);
+        console.log(playerId);
+
         setSelectedPlayers(selectedPlayers.filter((item) => {
             return item !== id;
+        }));
+        setAvailablePlaces(availablePlaces.map((item) => {
+            if(item === playerId) return 0;
+            else return item;
         }));
 
         const elementToRemove = document.getElementById(`draggable-${id}`);
@@ -332,14 +369,19 @@ const CreateSquadPage = ({club}) => {
     }, [updateTeam]);
 
     const removePlayerFromUpdateTeam = (id) => {
-        console.log(id);
-        console.log(updateTeam);
         setUpdateTeam(updateTeam.map((item) => {
             if(item?.id === id) return null;
             else return item;
         }));
+        setAvailablePlaces(availablePlaces.map((item) => {
+            if(item === id) return 0;
+            else return item;
+        }));
     }
 
+    const toggleFiltersVisibility = () => {
+        setFiltersVisible(!filtersVisible);
+    }
 
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
@@ -370,7 +412,7 @@ const CreateSquadPage = ({club}) => {
                        <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
 
                        {updateTeam[item-1] ? <>
-                           <div className="createSquad__squad__item__dragging createSquad__squad__item__dragging--update draggable">
+                           <div className="createSquad__squad__item__dragging createSquad__squad__item__dragging--update">
                                <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
                                <button className="createSquad__squad__item__dragging__trashBtn" onClick={() => { removePlayerFromUpdateTeam(updateTeam[item-1].id); }}>
@@ -400,7 +442,7 @@ const CreateSquadPage = ({club}) => {
                     {teamSaved}
                 </h2>
             </main>
-            <section className="createSquad__settings d-desktop">
+            <section className="createSquad__settings">
                 <section className="createSquad__line">
                     <button className="createSquad__btn" onClick={() => { saveTeam(); }}>
                         <img className="btn__img" src={saveIcon} alt="zapisz-druzyne" />
@@ -410,10 +452,10 @@ const CreateSquadPage = ({club}) => {
                     {/*</button>*/}
                 </section>
 
-                <h3 className="createSquad__teamCostHeader">
+                <h3 className="createSquad__teamCostHeader d-desktop">
                     Koszt drużyny:
                 </h3>
-                <h4 className="createSquad__teamCostHeader__value">
+                <h4 className="createSquad__teamCostHeader__value d-desktop">
                     {!minCost && !maxCost ? 0 : minCost + " - " + maxCost} PLN
                 </h4>
             </section>
@@ -424,25 +466,67 @@ const CreateSquadPage = ({club}) => {
                     Pozycja:
                 </span>
 
-                <span className="searchFilters__position__positions">
+                <section className="searchFilters__positionList d-mobile">
+                    {[0, 1, 2, 3, 4, 5].map((item) => {
+                        if(isPositionActive(item)) {
+                            if(item) {
+                                return <span>
+                                    {getPositionById(item)}
+                                </span>
+                            }
+                            else {
+                                return <span>
+                                    Wszyscy
+                                </span>
+                            }
+                        }
+                    })}
+                </section>
+
+                <button className={filtersVisible ? "searchFilters__arrowDownBtn searchFilters__arrowDownBtn--rotate d-mobile" : "searchFilters__arrowDownBtn d-mobile"} onClick={() => { toggleFiltersVisibility(); }}>
+                    <img className="btn__img" src={arrowDownGrey} alt="zwin/rozwin" />
+                </button>
+
+                {filtersVisible ? <span className="searchFilters__position__positions searchFilters__position__positions--mobile d-mobile">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
                     Wszyscy
-                </button>
-                <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
-                    Przyjmujący
-                </button>
-                <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
-                    Atakujący
-                </button>
-                <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
-                    Środkowy
-                </button>
-                <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
-                    Rozgrywający
-                </button>
-                <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
-                    Libero
-                </button>
+                    </button>
+                    <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                        Przyjmujący
+                    </button>
+                    <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                        Atakujący
+                    </button>
+                    <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                        Środkowy
+                    </button>
+                    <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                        Rozgrywający
+                    </button>
+                    <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
+                        Libero
+                    </button>
+                </span> : ""}
+
+                <span className="searchFilters__position__positions d-desktop">
+                    <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
+                    Wszyscy
+                    </button>
+                    <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                        Przyjmujący
+                    </button>
+                    <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                        Atakujący
+                    </button>
+                    <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                        Środkowy
+                    </button>
+                    <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                        Rozgrywający
+                    </button>
+                    <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
+                        Libero
+                    </button>
                 </span>
             </section>
 
@@ -462,12 +546,12 @@ const CreateSquadPage = ({club}) => {
                                             }}
                                             id={`createSquad__squad__itemWrapper--${index}`}
                                             onMouseDown={(e) => { startDragging(e, index); }} key={index}
-                                            onClick={() => { mobileAddToSquad(index); }}
+                                            onClick={(e) => { mobileAddToSquad(e, index, item.id); }}
                                             >
-                                    <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable d-desktop" : "createSquad__squad__item__dragging draggable opacity-0 d-desktop"} id={`draggable-${index}`} key={index}>
+                                    <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging draggable opacity-0"} id={`draggable-${index}`} key={index}>
                                         <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
-                                        <button className="createSquad__squad__item__dragging__trashBtn" onClick={() => { removePlayerFromCourt(index); }}>
+                                        <button className="createSquad__squad__item__dragging__trashBtn" onClick={(e) => { e.stopPropagation(); removePlayerFromCourt(index, item.id); }}>
                                             <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />
                                         </button>
 

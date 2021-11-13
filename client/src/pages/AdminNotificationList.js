@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import AdminTop from "../components/AdminTop";
 import PanelMenu from "../components/PanelMenu";
 import trashIcon from "../static/img/trash-black.svg";
 import penIcon from '../static/img/pen-white.png'
 import {deleteNotification, getAllNotifications} from "../helpers/notification";
 import settings from "../settings";
+import closeIcon from "../static/img/close-grey.svg";
 
 const AdminNotificationList = () => {
     const [notifications, setNotifications] = useState([]);
@@ -12,17 +13,39 @@ const AdminNotificationList = () => {
     const [deleteStatus, setDeleteStatus] = useState(-1);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
+    const deleteModal = useRef(null);
+
     useEffect(() => {
         getAllNotifications()
             .then((res) => {
-               setNotifications(res?.data?.result);
+                setNotifications(res?.data?.result);
             });
-    }, []);
+
+        if(deleteStatus !== -1) {
+            setTimeout(() => {
+                setDeleteStatus(-1);
+            }, 3000);
+        }
+
+        if(deleteStatus === -1) setDeleteModalOpen(false);
+    }, [deleteStatus]);
 
     const openDeleteModal = (id) => {
         setCandidateToDelete(id);
         setDeleteModalOpen(true);
     }
+
+    useEffect(() => {
+        if(deleteModalOpen) {
+            deleteModal.current.style.zIndex = "10";
+            deleteModal.current.style.opacity = "1";
+        }
+        else {
+
+            deleteModal.current.style.zIndex = "-1";
+            deleteModal.current.style.opacity = "0";
+        }
+    }, [deleteModalOpen]);
 
     const deleteNotificationWrapper = () => {
         deleteNotification(candidateToDelete)
@@ -34,6 +57,32 @@ const AdminNotificationList = () => {
 
     return <div className="container container--dark container--admin">
         <AdminTop />
+
+        <div className="modal modal--deleteSquad" ref={deleteModal}>
+            <div className="modal__inner">
+                <button className="modal__close" onClick={() => { setDeleteModalOpen(false); }}>
+                    <img className="btn__img" src={closeIcon} alt="zamknij" />
+                </button>
+
+                {deleteStatus === -1 ? <>
+                    <h3 className="modal__header">
+                        Czy na pewno chcesz usunąć to powiadomienie?
+                    </h3>
+
+                    <div className="modal__buttons">
+                        <button className="modal__btn" onClick={() => { deleteNotificationWrapper(); }}>
+                            Usuń
+                        </button>
+                        <button className="modal__btn" onClick={() => { setDeleteModalOpen(false); }}>
+                            Powrót
+                        </button>
+                    </div>
+                </> : <h3 className="modal__header">
+                    {deleteStatus === 1 ? "Powiadomienie zostało usunięte" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
+                </h3>}
+            </div>
+        </div>
+
         <main className="admin">
             <PanelMenu menuOpen={2} />
             <main className="admin__main">

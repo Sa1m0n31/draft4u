@@ -5,7 +5,6 @@ import SearchPlayersPage from "../pages/SearchPlayersPage";
 import {isLoggedIn} from "../helpers/auth";
 import {getClubData, getFavoritesByClub} from "../helpers/club";
 import {getUserData} from "../helpers/user";
-import Player from "../pages/Player";
 import PlayerPage from "../pages/PlayerPage";
 import ComparatorPage from "../pages/ComparatorPage";
 import Favorites from "../pages/Favorites";
@@ -58,7 +57,7 @@ const ClubWrapper = ({page}) => {
                                                 setRenderSwitch(<ClubTeamsPage club={club} />);
                                                 break;
                                             case 8:
-                                                setRenderSwitch(<ChatPage />);
+                                                setRenderSwitch(<ChatPage club={club} />);
                                                 break;
                                             default:
                                                 setRenderSwitch(<ClubAccountStart user={{}} />);

@@ -48,8 +48,13 @@ const updateNotification = (id, title, link, content, img, receivers) => {
     formData.append('content', content);
     formData.append('receivers', receivers);
     if(img) {
-        formData.append('image', img);
-        formData.append('imgUpdate', 'true');
+        if(img === 'delete') {
+            formData.append('imgUpdate', 'delete');
+        }
+        else {
+            formData.append('image', img);
+            formData.append('imgUpdate', 'true');
+        }
     }
 
     return axios.post(`${API_URL}/notification/update`, formData, config);

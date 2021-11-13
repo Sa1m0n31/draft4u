@@ -52,7 +52,7 @@ const AdminTop = () => {
                     <li className="profileMenu__list__item">
                         <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
                             <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
-                            Zmiana hasła
+                            Zmiana hasło
                         </a>
                         <button className="profileMenu__list__link" onClick={() => { logout(); }}>
                             <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />

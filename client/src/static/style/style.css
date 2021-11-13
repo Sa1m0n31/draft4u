@@ -361,6 +361,19 @@ ul {
     margin: 40px auto;
 }
 
+.profileMenu__noMessages {
+    padding: 30px;
+}
+
+.noMessages,
+.profileMenu__noMessages__header {
+    color: rgba(255, 255, 255, .6);
+    font-size: 17px;
+    text-align: center;
+    font-family: 'Oxanium', cursive;
+    font-weight: 400;
+}
+
 .button__circle {
     position: absolute;
     bottom: -3px;
@@ -420,6 +433,10 @@ ul {
     overflow: hidden;
     margin-right: 15px;
     flex-basis: 18%;
+}
+
+.messageMenu__imgWrapper--notification {
+    border-radius: 0;
 }
 
 .messageMenu__list__item__content {
@@ -3896,8 +3913,17 @@ select::-ms-expand {
 /*    position: relative;*/
 /*}*/
 
+.createSquad__players .searchFilters__position * {
+    font-family: 'Oxanium', cursive;
+}
+
 .createSquad__name .input--editProfile::placeholder {
     color: #fff;
+}
+
+.searchFilters__arrowDownBtn {
+    width: 20px;
+    background: transparent;
 }
 
 .teamSaved {
@@ -4264,6 +4290,7 @@ select::-ms-expand {
 
 .chat__message .chat__message__content {
     font-size: 14px;
+    white-space: pre-line;
 }
 
 .chat__message--right {
@@ -4295,6 +4322,14 @@ select::-ms-expand {
     font-family: 'Oxanium', cursive;
     font-weight: 500;
     margin-bottom: 50px;
+}
+
+.noTeams__header {
+    color: rgba(255, 255, 255, .6);
+    font-family: 'Oxanium', cursive;
+    font-weight: 500;
+    margin-top: 50px;
+    font-size: 21px;
 }
 
 .clubTeams__item {

@@ -1,3 +1,8 @@
+/* Global */
+html, body {
+    scroll-behavior: smooth;
+}
+
 /* Admin login page */
 .container--adminLogin {
     display: flex;
@@ -497,4 +502,19 @@
 
 .admin__main__notification__item__btn:hover {
     opacity: 1;
+}
+
+.admin__label__imgUpload__updateImgWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 5;
+}
+
+.admin__label__imgUpload__updateImg {
+    height: 190px;
+    width: auto;
+    max-width: 100%;
 }

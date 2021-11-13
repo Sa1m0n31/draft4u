@@ -244,8 +244,8 @@
     }
 
     .createSquad__squad__item__dragging__imgWrapper {
-        width: 7vw;
-        height: 7vw;
+        width: 8vw;
+        height: 8vw;
         top: 15%;
     }
 
@@ -1598,6 +1598,10 @@
         margin-bottom: 20px;
     }
 
+    .createSquad__players .searchFilters__position--mobile .searchFilters__position__header {
+        margin-bottom: 0;
+    }
+
     .searchFilters__position--mobile .searchFilters__position__positions {
         display: flex;
         justify-content: space-between;
@@ -1699,12 +1703,8 @@
         width: 15px;
     }
 
-    .createSquad {
-        flex-direction: column;
-    }
-
     .createSquad__settings {
-        margin-top: 15px;
+        margin-top: 5px;
     }
 
     .createSquad__teamCostHeader, .createSquad__teamCostHeader__value {
@@ -1727,7 +1727,15 @@
     }
 
     .createSquad > .createSquad__name {
+        width: 80%;
+    }
+
+    .teamSaved {
         width: 100%;
+    }
+
+    .teamSaved__header {
+        font-size: 21px;
     }
 
     .dropzone {
@@ -1827,7 +1835,7 @@
     }
 
     .chat__list__item__name {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 400;
     }
 
@@ -1860,11 +1868,71 @@
         background: transparent;
         margin-right: 25px;
     }
+
+    .searchFilters__position--mobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        background: #474747;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .createSquad__players .searchFilters__position__positions--mobile {
+        width: 100%;
+        display: flex !important;
+    }
+
+    .searchFilters__arrowDownBtn--rotate {
+        transform: rotate(180deg);
+    }
+
+    .searchFilters__positionList span {
+        color: rgba(255, 255, 255, .6);
+        display: block;
+        margin-bottom: 3px;
+        font-size: 15px;
+    }
+
+    .searchFilters__position__positions--mobile {
+        padding-top: 20px;
+    }
+
+    .createSquad__players .searchFilters__position__button:nth-last-child(2),
+    .createSquad__players .searchFilters__position__button:last-child {
+        margin-bottom: 0;
+    }
+
+    .createSquad__main .createSquad__squad__item__dragging__trashBtn {
+        opacity: 1;
+    }
+
+    .teamSaved {
+        height: 30vh;
+    }
+
+    .noTeams__header {
+        font-size: 16px;
+    }
 }
 
 @media(max-width: 576px) {
     .chat__message {
-        min-width: 90%;
+        min-width: 100%;
+    }
+
+    .chat {
+        height: 60vh;
+        width: 90vw;
+    }
+
+    .chat__main__main {
+        width: 93%;
+    }
+
+    .chat__main {
+        justify-content: space-between;
     }
 
     .clubTeams__floor {

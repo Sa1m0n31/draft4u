@@ -5,7 +5,7 @@ import heart from '../static/img/heart.svg'
 import heartFilled from '../static/img/heart-filled.svg'
 import balance from '../static/img/balance.svg'
 import writeMsgBtn from '../static/img/napisz-wiadomosc.png'
-import {getUserById, getUserData} from "../helpers/user";
+import {getIdentityById, getUserById, getUserData} from "../helpers/user";
 import {calculateAge, getPositionById} from "../helpers/others";
 import settings from "../settings";
 import {Player as VideoPlayer} from "video-react";
@@ -16,6 +16,7 @@ import {addToFavorites, deleteFromFavorites, getFavoritesByClub, isPlayerFavorit
 const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
     const [playVideo, setPlayVideo] = useState(false);
     const [favoritePlayer, setFavoritePlayer] = useState(false);
+    const [playerIdentity, setPlayerIdentity] = useState("");
 
     useEffect(() => {
         getFavoritesByClub()
@@ -26,6 +27,14 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                     setFavoritePlayer(true);
                 }
             });
+
+        if(player) {
+            getIdentityById(player.id)
+                .then((res) => {
+                    console.log(res?.data?.result);
+                    setPlayerIdentity(res?.data?.result?.id);
+                });
+        }
     }, [player]);
 
     let playerRef = useRef(null);
@@ -154,7 +163,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                 </div> }
         </section>
 
-        <a className="button button--hover button--comparedPlayer">
+        <a className="button button--hover button--comparedPlayer" href={`/wiadomosci?new=${playerIdentity}`}>
             <img className="btn__img" src={writeMsgBtn} alt="napisz-wiadomosc" />
         </a>
     </section>

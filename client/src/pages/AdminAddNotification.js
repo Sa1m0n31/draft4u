@@ -7,6 +7,7 @@ import Dropzone from "react-dropzone-uploader";
 import ProfileImagePreview from "../components/ProfileImagePreview";
 import trashIcon from '../static/img/trash-black.svg'
 import {addNotification, getNotification, updateNotification} from "../helpers/notification";
+import settings from "../settings";
 
 const AdminAddNotification = () => {
     const [title, setTitle] = useState("");
@@ -21,6 +22,7 @@ const AdminAddNotification = () => {
     const [status, setStatus] = useState(-1);
     const [updateMode, setUpdateMode] = useState(false);
     const [updateImage, setUpdateImage] = useState(false);
+    const [imageUpdated, setImageUpdated] = useState(false);
     const [notificationId, setNotificationId] = useState(0);
 
     useEffect(() => {
@@ -55,7 +57,7 @@ const AdminAddNotification = () => {
         setTitle(notification[0].title);
         setLink(notification[0].link);
         setText(notification[0].content);
-
+        setUpdateImage(notification[0].file_path);
         setSendList(notification.map((item) => {
             return item.receiver_id;
         }));
@@ -116,6 +118,10 @@ const AdminAddNotification = () => {
     }
 
     const handleChangeStatus = (status) => {
+        if(updateMode) {
+            setImageUpdated(true);
+            setUpdateImage(null);
+        }
         setImg(status);
     }
 
@@ -124,6 +130,10 @@ const AdminAddNotification = () => {
             img.remove();
             setImg(null);
         }
+        if(updateImage) {
+            setUpdateImage(null);
+        }
+        setImageUpdated(true);
     }
 
     const handleSubmit = () => {
@@ -135,28 +145,31 @@ const AdminAddNotification = () => {
                     });
             }
             else {
-                updateNotification(notificationId, title, link, text, updateImage ? img.file : null, sendList)
+                updateNotification(notificationId, title, link, text, imageUpdated ? (img ? img.file : 'delete') : null, sendList)
                     .then((res) => {
                         setStatus(res?.data?.result);
-                    })
+                    });
             }
         }
     }
 
     useEffect(() => {
         if(status !== -1) {
-            setTimeout(() => {
-                setStatus(-1);
+            window.scrollTo(0, 0);
+            if(!updateMode) {
+                setTimeout(() => {
+                    setStatus(-1);
 
-                setTitle("");
-                setLink("");
-                setText("");
-                if(img) img.remove();
-                setImg(null);
-                setSendList([]);
-                setAllUsersSelected(false);
-                setAllClubsSelected(false);
-            }, 5000);
+                    setTitle("");
+                    setLink("");
+                    setText("");
+                    if(img) img.remove();
+                    setImg(null);
+                    setSendList([]);
+                    setAllUsersSelected(false);
+                    setAllClubsSelected(false);
+                }, 5000);
+            }
         }
     }, [status]);
 
@@ -208,7 +221,10 @@ const AdminAddNotification = () => {
                         <label className="admin__label">
                             Obrazek
                             <span className="admin__label__imgUpload">
-                                {img ? <button className="admin__label__imgUpload__trashBtn" onClick={() => { deleteImg(); }}>
+                                {updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
+                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/notifications/${updateImage}`} alt="foto" />
+                                </figure> : ""}
+                                {img || updateImage ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImg(); }}>
                                     <img className="btn__img" src={trashIcon} alt="usun" />
                                 </button> : ""}
                                 <Dropzone

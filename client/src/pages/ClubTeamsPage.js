@@ -20,6 +20,7 @@ const ClubTeamsPage = ({club}) => {
     const [currentTeam, setCurrentTeam] = useState(-1);
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteResult, setDeleteResult] = useState(-1);
+    const [loaded, setLoaded] = useState(false);
 
     const deleteModalRef = useRef(null);
 
@@ -28,6 +29,7 @@ const ClubTeamsPage = ({club}) => {
             .then((res) => {
                 setPlayers(res?.data?.result);
                 setTeams(res?.data?.result?.filter((v,i,a)=>a.findIndex(t=>(t.squad_id === v.squad_id))===i));
+                setLoaded(true);
             });
         setCurrentTeam(-1);
     }, [deleteResult]);
@@ -141,7 +143,7 @@ const ClubTeamsPage = ({club}) => {
                 Zapisane składy
             </h1>
 
-            {teams.map((item, index) => {
+            {teams.length ? teams.map((item, index) => {
                 return <section className="clubTeams__team" key={index}>
                     <button className={currentTeam === index ? "clubTeams__item clubTeams__item--gold" : "clubTeams__item"} onClick={() => { if(currentTeam !== index) setCurrentTeam(index); else setCurrentTeam(-1); }}>
                         <span className="clubTeams__item__col">
@@ -160,7 +162,7 @@ const ClubTeamsPage = ({club}) => {
                             <button className="clubTeams__button clubTeams__button--trash" onClick={(e) => { openDeleteModal(e, item.squad_id); }}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />
                             </button>
-                            <a className="clubTeams__button" href={`/sklady?id=${item.squad_id}`}>
+                            <a className="clubTeams__button" onClick={(e) => { e.stopPropagation(); }} href={`/sklady?id=${item.squad_id}`}>
                                 <img className="btn__img" src={editIcon} alt="edytuj" />
                             </a>
                         </span>
@@ -219,7 +221,11 @@ const ClubTeamsPage = ({club}) => {
                         })}
                     </section> : ""}
                 </section>
-            })}
+            }) : <section className="noTeams">
+                {loaded ? <h3 className="noTeams__header">
+                    Póki co nie masz jeszcze żadnej zapisanej drużyny
+                </h3> : ""}
+            </section> }
         </main>
 
         <Footer theme="dark" border={true} />

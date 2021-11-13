@@ -59,6 +59,10 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }, []);
 
     useEffect(() => {
+        console.log(profileImage);
+    }, [profileImage]);
+
+    useEffect(() => {
         setNewNotifications(notifications.filter((item) => {
             return !item.read;
         }).length);
@@ -421,14 +425,14 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                     </span> : ""}
                 </button>
 
-                {currentMenuVisible === 0 ? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages profileMenu--notifications" : "profileMenu profileMenu--messages profileMenu--notifications"}>
+                {currentMenuVisible === 0 && notifications.length ? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages profileMenu--notifications" : "profileMenu profileMenu--messages profileMenu--notifications"}>
                     <ul className="profileMenu__list">
                         {notifications?.map((item, index) => {
                             if(index < 5) {
                                 return <li className="profileMenu__list__item" key={index} onClick={() => { addNotificationToRead(item.id); }}>
                                     <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                        href={item.link} target="_blank">
-                                        <figure className="messageMenu__imgWrapper">
+                                        <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
                                             <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure>
                                         <section className="messageMenu__list__item__content">
@@ -456,10 +460,11 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
 
                 {currentMenuVisible === 1 ? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages" : "profileMenu profileMenu--messages"}>
                     <ul className="profileMenu__list">
-                        {messages?.map((item, index) => {
+                        {messages?.length ? messages?.map((item, index) => {
                             if(index < 5) {
                                 return <li className="profileMenu__list__item" key={index}>
-                                    <a className={index < newMessages ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"} href={`/wiadomosci/?new=`}>
+                                    <a className={index < newMessages ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
+                                       href={`/wiadomosci/?new=${item.chat_id.split(';')[player ? 0 : 1]}`}>
                                         <figure className="messageMenu__imgWrapper">
                                             <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : example} alt="zmien-haslo" />
                                         </figure>
@@ -475,7 +480,11 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                                 </li>
                             }
                             else return "";
-                        })}
+                        }) : <aside className="profileMenu__noMessages">
+                            <h3 className="profileMenu__noMessages__header">
+                                Nie posiadasz jeszcze żadnych wiadomości
+                            </h3>
+                        </aside>}
                     </ul>
                     <a className="messageMenu__bottom" href="/wiadomosci">
                         Zobacz wszystkie wiadomości
