@@ -12,6 +12,7 @@ import {render} from "@testing-library/react";
 import PaymentReturnPage from "../pages/PaymentReturnPage";
 import {getClubData} from "../helpers/club";
 import ChatPageForUser from "../pages/ChatPageForUser";
+import Notifications from "../pages/Notifications";
 
 const UserContext = React.createContext(5);
 
@@ -55,6 +56,9 @@ const UserWrapper = ({page}) => {
                                         break;
                                     case 7:
                                         setRenderSwitch(<ChatPageForUser user={user} />);
+                                        break;
+                                    case 8:
+                                        setRenderSwitch(<Notifications user={user} />);
                                         break;
                                     default:
                                         setRenderSwitch(<PlayerProfileEdition user={user} />);

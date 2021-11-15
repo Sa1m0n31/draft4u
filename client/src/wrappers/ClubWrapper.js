@@ -11,6 +11,7 @@ import Favorites from "../pages/Favorites";
 import CreateSquadPage from "../pages/CreateSquadPage";
 import ClubTeamsPage from "../pages/ClubTeamsPage";
 import ChatPage from "../pages/ChatPage";
+import Notifications from "../pages/Notifications";
 
 const ClubContext = React.createContext(5);
 
@@ -59,8 +60,11 @@ const ClubWrapper = ({page}) => {
                                             case 8:
                                                 setRenderSwitch(<ChatPage club={club} />);
                                                 break;
+                                            case 9:
+                                                setRenderSwitch(<Notifications club={club} />);
+                                                break;
                                             default:
-                                                setRenderSwitch(<ClubAccountStart user={{}} />);
+                                                setRenderSwitch(<ClubAccountStart club={club} favorites={favorites} />);
                                                 break;
                                         }
                                     }

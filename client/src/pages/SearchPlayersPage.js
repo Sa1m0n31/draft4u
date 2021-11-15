@@ -117,7 +117,7 @@ const SearchPlayersPage = ({club, favorites}) => {
     }
 
     const options = {
-        perPage: 1.2,
+        perPage: 1.5,
         focus: "center"
     }
 

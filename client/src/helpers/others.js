@@ -46,4 +46,13 @@ const getMessagePreview = (content) => {
     return content.length < 30 ? content : content.substring(0, 30) + "...";
 }
 
-export { removePolishChars, calculateAge, isElementInArray, getPositionById, getMessagePreview }
+const getUniqueListBy = (arr, key) => {
+    return [...new Map(arr.map(item => [item[key], item])).values()]
+}
+
+const getNotificationsNumber = (n) => {
+    if(n < 10) return n.toString();
+    else return "9+";
+}
+
+export { removePolishChars, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber }

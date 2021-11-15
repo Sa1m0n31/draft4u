@@ -190,10 +190,11 @@ router.get("/get-club-notifications", (request, response) => {
 router.get("/get-user-notifications", (request, response) => {
    const id = request.user;
 
-   const query = 'SELECT n.id, n.title, n.link, n.content, i.file_path, r.read FROM notifications n JOIN notifications_receivers r ON n.id = r.notification_id LEFT OUTER JOIN images i ON n.image = i.id JOIN identities id ON id.id = r.receiver_id WHERE id.user_id = $1';
+   const query = 'SELECT n.id, n.title, n.link, n.content, i.file_path, r.read FROM notifications n JOIN notifications_receivers r ON n.id = r.notification_id LEFT OUTER JOIN images i ON n.image = i.id JOIN identities id ON id.id = r.receiver_id WHERE id.id = $1';
    const values = [id];
 
    db.query(query, values, (err, res) => {
+       console.log(err);
       if(res) {
           response.send({
               result: res.rows

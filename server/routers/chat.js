@@ -11,7 +11,7 @@ router.get("/get-user-messages", (request, response) => {
                     JOIN clubs c ON SPLIT_PART(m.chat_id, ';', 1) = c.id
                     LEFT OUTER JOIN read_messages rm ON m.chat_id = rm.chat_id
                     LEFT OUTER JOIN images img ON c.logo = img.id
-                    WHERE SPLIT_PART(m.chat_id, ';', 2) = $1 AND m.row = 1 ORDER BY m.created_at DESC`;
+                    WHERE SPLIT_PART(m.chat_id, ';', 2) = $1 AND m.row = 1 ORDER BY m.created_at DESC, rm.type DESC`;
     const values = [request.user];
 
     db.query(query, values, (err, res) => {
@@ -40,7 +40,7 @@ router.get("/get-club-messages", (request, response) => {
                     JOIN users u ON i.user_id = u.id
                     LEFT OUTER JOIN read_messages rm ON m.chat_id = rm.chat_id
                     LEFT OUTER JOIN images img ON u.profile_picture = img.id
-                    WHERE SPLIT_PART(m.chat_id, ';', 1) = $1 AND m.row = 1 ORDER BY m.created_at DESC`;
+                    WHERE SPLIT_PART(m.chat_id, ';', 1) = $1 AND m.row = 1 ORDER BY m.created_at DESC, rm.type ASC`;
     const values = [user];
 
     db.query(query, values, (err, res) => {
@@ -83,7 +83,7 @@ router.post("/add-message", (request, response) => {
 
    if(isClub === 'true') club = true;
 
-   const query = `INSERT INTO messages VALUES (nextval('message_id_sequence'), $1, $2, NOW(), $3)`;
+   const query = `INSERT INTO messages VALUES (nextval('message_id_sequence'), $1, $2, NOW() + INTERVAL '2 HOUR', $3)`;
    const values = [chatId, content, club];
 
    db.query(query, values, (err, res) => {
@@ -106,7 +106,7 @@ router.post("/mark-as-read", (request, response) => {
     let club = false;
     if(isClub === 'true') club = true;
 
-    const query = 'INSERT INTO read_messages VALUES ($1, NOW(), $2) ON CONFLICT (chat_id, type) DO UPDATE SET read_at = NOW()';
+    const query = `INSERT INTO read_messages VALUES ($1, NOW() + INTERVAL '2 HOUR', $2) ON CONFLICT (chat_id, type) DO UPDATE SET read_at = NOW() + INTERVAL '2 HOUR'`;
     const values = [chatId, club];
 
     db.query(query, values, (err, res) => {

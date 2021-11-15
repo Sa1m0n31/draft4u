@@ -73,6 +73,10 @@ const CreateSquadPage = ({club}) => {
 
         checkIfMobile();
 
+        window.addEventListener("resize", () => {
+            checkIfMobile();
+        });
+
         window.addEventListener("resize", (event) => {
             checkIfMobile();
         });
@@ -82,6 +86,16 @@ const CreateSquadPage = ({club}) => {
         if(window.innerWidth < 768) setMobile(true);
         else setMobile(false);
     }
+
+    useEffect(() => {
+        console.log(window.innerWidth);
+       if(window.innerWidth < 768) {
+           console.log(document.querySelectorAll(".createSquad__squad__item__dragging"));
+           Array.from(document.querySelectorAll(".createSquad__squad__item__dragging")).forEach((item) => {
+               item.classList.remove("draggable");
+           });
+       }
+    }, []);
 
     useEffect(() => {
         getFavoritesByClub()
@@ -241,7 +255,7 @@ const CreateSquadPage = ({club}) => {
     }
 
     const mobileAddToSquad = (e, playerIndex, playerId) => {
-        if(window.innerWidth < 776) {
+        if(window.innerWidth < 776 && !isElementInArray(availablePlaces, playerId)) {
             const draggingElement = document.querySelector(`#draggable-${playerIndex}`);
             const firstAvailableIndex = availablePlaces.findIndex((item) => {
                 return !item;
@@ -253,7 +267,6 @@ const CreateSquadPage = ({club}) => {
 
             dropzoneElement.appendChild(draggingElement);
             draggingElement.classList.add("element--dropped");
-            draggingElement.classList.remove("draggable");
 
             const droppedPlayerIndex = parseInt(draggingElement.id.split("-")[1]);
             setNewPlayerOnCourt(droppedPlayerIndex);
@@ -262,17 +275,17 @@ const CreateSquadPage = ({club}) => {
 
             draggingElement.style.opacity = "1";
 
-            console.log(playerId);
             setAvailablePlaces(availablePlaces.map((item, index) => {
                 if(index === firstAvailableIndex) return playerId;
                 else return item;
             }));
+
+            Array.from(document.querySelectorAll(".createSquad__squad__item__dragging")).forEach((item) => {
+                console.log(item);
+                item.classList.remove("draggable");
+            });
         }
     }
-
-    useEffect(() => {
-        console.log(availablePlaces);
-    }, [availablePlaces]);
 
     const startDragging = (e, playerIndex) => {
         if(!isElementInArray(selectedPlayers, playerIndex) && !(window.innerWidth < 768)) {
@@ -548,7 +561,7 @@ const CreateSquadPage = ({club}) => {
                                             onMouseDown={(e) => { startDragging(e, index); }} key={index}
                                             onClick={(e) => { mobileAddToSquad(e, index, item.id); }}
                                             >
-                                    <div className={isElementInArray(selectedPlayers, index) ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging draggable opacity-0"} id={`draggable-${index}`} key={index}>
+                                    <div className={isElementInArray(selectedPlayers, index) ? (!mobile ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging") : (!mobile ? "createSquad__squad__item__dragging draggable opacity-0" : "createSquad__squad__item__dragging opacity-0")} id={`draggable-${index}`} key={index}>
                                         <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
                                         <button className="createSquad__squad__item__dragging__trashBtn" onClick={(e) => { e.stopPropagation(); removePlayerFromCourt(index, item.id); }}>

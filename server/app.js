@@ -8,21 +8,16 @@ const app = express();
 const morgan = require('morgan');
 const fs = require('fs');
 const http = require('http');
+
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
 
-
-// const { createServer } = require("http");
-// const { Server } = require("socket.io");
-//
-// const httpServer = createServer(app);
-// const io = new Server(httpServer, {
-//     cors: {
-//         origin: "https://drafcik.skylo-test1.pl:3000",
-//         methods: ["GET", "POST"]
-//     }
-// });
+const io = new Server(server, {
+    cors: {
+        origin: ["http://localhost:3000", "https://drafcik.skylo-test1.pl:3000"],
+        methods: ["GET", "POST"]
+    }
+});
 
 /* Redirect http to https */
 // app.enable('trust proxy');
@@ -85,8 +80,6 @@ io.on("connection", (socket) => {
         });
     });
 });
-
-// httpServer.listen(3001);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
@@ -161,6 +154,16 @@ app.get("/zapisane-druzyny", (req, res) => {
 app.get("/wiadomosci", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+app.get("/czat", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/powiadomienia", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/notyfikacje", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
 
 app.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
@@ -212,4 +215,4 @@ app.use("/admin", adminRouter);
 app.use("/payment", paymentRouter);
 app.use("/chat", chatRouter);
 
-app.listen(5000);
+server.listen(5000);

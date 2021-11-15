@@ -1,14 +1,8 @@
 import React, {useEffect, useState} from 'react'
-
-import zaksa from '../static/img/zzaksa.png'
 import {getUserFavorites, getUserVisited} from "../helpers/user";
 import settings from "../settings";
 
 const ClubActivities = () => {
-    const clubs = [
-
-    ]
-
     const [visitors, setVisitors] = useState([]);
     const [favorites, setFavorites] = useState([]);
 

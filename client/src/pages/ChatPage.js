@@ -12,7 +12,7 @@ import {getClubData} from "../helpers/club";
 import { io } from "socket.io-client";
 import leftArrowWhite from '../static/img/left-arrow-white.svg'
 import {getUserById, getUserData} from "../helpers/user";
-import { getMessagePreview } from "../helpers/others";
+import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 
 const ChatPage = ({club}) => {
     const [scrollbarList, setScrollbarList] = useState([1]);
@@ -35,10 +35,11 @@ const ChatPage = ({club}) => {
     const [clubId, setClubId] = useState("");
     const [chatInLink, setChatInLink] = useState(false);
     const [userIdParam, setUserIdParam] = useState("");
-    const [loaded, setLoaded] = useState(false);
+    const [loaded, setLoaded] = useState(true);
 
     /* --- 1 --- */
     useEffect(() => {
+        console.log("hello");
         getClubData()
             .then((res) => {
                 setClubId(res?.data?.result?.id);
@@ -49,21 +50,24 @@ const ChatPage = ({club}) => {
             .then((res) => {
                 const result = res?.data?.result;
                 if(result?.length) {
-                    setMessages(result);
+                    setMessages(getUniqueListBy(result, 'chat_id'));
                     setCurrentReceiver(result[0].first_name + " " + result[0].last_name);
                     setCurrentReceiverImg(result[0].file_path);
-                    setLoaded(true);
 
                     if(!chatInLink) {
                         getChatContent(result[0].chat_id)
                             .then((res) => {
                                 if(res?.data?.result) {
                                     setCurrentChat(res.data.result);
+                                    setLoaded(true);
                                 }
                             })
                             .catch((err) => {
                                 console.log(err);
                             })
+                    }
+                    else {
+                        setLoaded(true);
                     }
                 }
                 else {
@@ -109,10 +113,9 @@ const ChatPage = ({club}) => {
                     .then((res) => {
                         setChatInLink(true);
 
-                        console.log(clubId + ";" + newPlayerToChat);
                         if(res?.data?.result) {
-                            console.log("two");
                             setCurrentChat(res.data.result);
+                            setMobileCurrentChat(res.data.result);
                         }
 
                         getUserById(newPlayerToChat)
@@ -132,11 +135,11 @@ const ChatPage = ({club}) => {
             if(socket) {
                 if(socket.io.opts.query.split("&") !== `room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}`) {
                     socket.disconnect();
-                    setSocket(io(`https://drafcik.skylo-test1.pl?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}&sender=${clubId ? clubId : currentChat[0].chat_id.split(";")[0]}`));
+                    setSocket(io(`${settings.API_URL}?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}&sender=${clubId ? clubId : currentChat[0].chat_id.split(";")[0]}`));
                 }
             }
             else {
-                setSocket(io(`https://drafcik.skylo-test1.pl?room=${clubId ? clubId : currentChat[0].chat_id.split(";")[1]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newPlayerToChat}`));
+                setSocket(io(`${settings.API_URL}?room=${clubId ? clubId : currentChat[0].chat_id.split(";")[1]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newPlayerToChat}`));
             }
         }
     }, [currentChat, clubId]);
@@ -145,7 +148,7 @@ const ChatPage = ({club}) => {
     useEffect(() => {
         if(messages.length) {
             if(!listenSocket) {
-                setListenSocket(io(`https://drafcik.skylo-test1.pl?room=${messages[0].chat_id.split(";")[0]}&receiver=true`));
+                setListenSocket(io(`${settings.API_URL}?room=${messages[0].chat_id.split(";")[0]}&receiver=true`));
             }
         }
 
@@ -193,7 +196,7 @@ const ChatPage = ({club}) => {
             .then((res) => {
                 getClubMessages()
                     .then((res) => {
-                        setMessages(res?.data?.result);
+                        setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                     });
             });
 
@@ -210,7 +213,7 @@ const ChatPage = ({club}) => {
             .then((res) => {
                 const result = res?.data?.result;
                 if(result?.length) {
-                    setMessages(result);
+                    setMessages(getUniqueListBy(result, 'chat_id'));
                     if(newMessage) setNewMsg(newMessage);
                 }
             });
@@ -260,7 +263,7 @@ const ChatPage = ({club}) => {
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club?.file_path} messageRead={messages} />
 
-        <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
+        {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">
                 Wiadomości
             </h1>
@@ -275,8 +278,8 @@ const ChatPage = ({club}) => {
                     </h3>
                 </section>
             </header>
-        </header>
-        {mobileCurrentChat !== -1 ? <header className="chat__mobileHeader d-mobile">
+        </header> : ""}
+        {mobileCurrentChat !== -1 && loaded ? <header className="chat__mobileHeader d-mobile">
             <button className="chat__mobileHeader__btn" onClick={() => { setMobileCurrentChat(-1); }}>
                 <img className="btn__img" src={leftArrowWhite} alt="wroc" />
             </button>

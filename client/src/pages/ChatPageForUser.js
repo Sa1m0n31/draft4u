@@ -6,15 +6,17 @@ import {getTrackBackground, Range} from "react-range";
 import { Direction } from 'react-range';
 import pictureIcon from '../static/img/picture-dark.svg'
 import sendIcon from '../static/img/send-gold.svg'
-import {addMessage, getChatContent, getClubMessages, getUserMessages} from "../helpers/chat";
+import {addMessage, getChatContent, getClubMessages, getUserMessages, markAsRead} from "../helpers/chat";
 import settings from "../settings";
-import {getClubData} from "../helpers/club";
+import {getClubById, getClubData} from "../helpers/club";
 import { io } from "socket.io-client";
-import {getUserData} from "../helpers/user";
+import leftArrowWhite from '../static/img/left-arrow-white.svg'
+import {getUserById, getUserData} from "../helpers/user";
+import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 
 const ChatPageForUser = ({user}) => {
     const [scrollbarList, setScrollbarList] = useState([1]);
-    const [scrollbarChat, setScrollbarChat] = useState([1]);
+    const [scrollbarChat, setScrollbarChat] = useState([100]);
     const [mobile, setMobile] = useState(false);
     const [max, setMax] = useState(100);
     const [maxChat, setMaxChat] = useState(100);
@@ -23,38 +25,156 @@ const ChatPageForUser = ({user}) => {
     const [currentChat, setCurrentChat] = useState([]);
     const [currentReceiver, setCurrentReceiver] = useState("");
     const [currentReceiverImg, setCurrentReceiverImg] = useState("");
+    const [username, setUsername] = useState("");
+    const [noMessages, setNoMessages] = useState(false);
     const [socket, setSocket] = useState(null);
     const [listenSocket, setListenSocket] = useState(null);
+    const [scrollbarChatThumb, setScrollbarChatThumb] = useState(100);
+    const [newMsg, setNewMsg] = useState(null);
+    const [mobileCurrentChat, setMobileCurrentChat] = useState(-1);
+    const [userId, setUserId] = useState("");
+    const [chatInLink, setChatInLink] = useState(false);
+    const [clubIdParam, setClubIdParam] = useState("");
+    const [loaded, setLoaded] = useState(false);
 
-    const updateChat = () => {
+    /* --- 1 --- */
+    useEffect(() => {
+        getUserData()
+            .then((res) => {
+                const result = res?.data?.result;
+                if(result) {
+                    setUserId(result.id);
+                    setUsername(result.first_name + " " + result.last_name);
+                }
+            });
+
         getUserMessages()
             .then((res) => {
                 const result = res?.data?.result;
                 if(result?.length) {
-                    setMessages(result);
+                    setMessages(getUniqueListBy(result, 'chat_id'));
+                    setCurrentReceiver(result[0].name);
+                    setCurrentReceiverImg(result[0].file_path);
+
+                    if(!chatInLink) {
+                        getChatContent(result[0].chat_id)
+                            .then((res) => {
+                                if(res?.data?.result) {
+                                    setCurrentChat(res.data.result);
+                                    setLoaded(true);
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    }
+                    else {
+                        setLoaded(true);
+                    }
+                }
+                else {
+                    setNoMessages(true);
+                    setLoaded(true);
                 }
             });
-    }
+    }, []);
 
+    /* --- 2 --- */
     useEffect(() => {
-        if(messages.length) {
-            if(!listenSocket) {
-                setListenSocket(io(`https://drafcik.skylo-test1.pl?room=${messages[0].chat_id.split(";")[1]}&receiver=true`));
+        /* STYLE PART */
+        const objDiv = document.querySelector(".chat__main__content");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
+        const listHeight = parseInt(window.getComputedStyle(document.querySelector(".chat__list__main")).getPropertyValue('height').split('p')[0]);
+        const allMessagesShorts = document.querySelectorAll(".chat__list__item");
+
+        const allMessages = document.querySelectorAll(".chat__main__content__section");
+        const allMessagesHeight = Array.from(allMessages).reduce((prev, item) => {
+            return prev + parseInt(window.getComputedStyle(item).getPropertyValue('height').split("p")[0]) + 20;
+        }, 0);
+
+        const allMessagesShortsHeight = Array.from(allMessagesShorts).reduce((prev, item) => {
+            return prev + parseInt(window.getComputedStyle(item).getPropertyValue('height').split('p')[0]);
+        }, 0);
+
+        if(allMessagesShortsHeight) {
+            setMax(Math.max(1, allMessagesShortsHeight - listHeight));
+        }
+
+        setMaxChat(Math.max(1, allMessagesHeight - (window.innerWidth > 768 ? window.innerHeight * 0.74 : window.innerHeight * 0.60)));
+
+        /* LOGIC PART */
+        let newClubToChat;
+        if(userId) {
+            const params = new URLSearchParams(window.location.search);
+            newClubToChat = params.get('new');
+            setClubIdParam(newClubToChat);
+
+            if(newClubToChat && !chatInLink && !currentChat) {
+                getChatContent(`${newClubToChat};${userId}`)
+                    .then((res) => {
+                        setChatInLink(true);
+
+                        if(res?.data?.result) {
+                            console.log(res.data.result);
+                            setCurrentChat(res.data.result);
+                            setMobileCurrentChat(res.data.result);
+                        }
+
+                        getClubById(newClubToChat)
+                            .then((res) => {
+                                const result = res?.data?.result;
+                                if(result) {
+                                    setCurrentReceiver(result.name);
+                                    setCurrentReceiverImg(result.file_path);
+                                }
+                            })
+                    });
             }
         }
 
-        if(currentChat.length) {
-            getChatContent(currentChat[0].chat_id)
+        /* Socket part */
+        if(currentChat.length || (newClubToChat && userId)) {
+            if(socket) {
+                if(socket.io.opts.query.split("&") !== `room=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newClubToChat}`) {
+                    socket.disconnect();
+                    setSocket(io(`${settings.API_URL}?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newClubToChat}&sender=${userId ? userId : currentChat[0].chat_id.split(";")[1]}`));
+                }
+            }
+            else {
+                setSocket(io(`${settings.API_URL}?room=${userId ? userId : currentChat[0].chat_id.split(";")[0]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newClubToChat}`));
+            }
+        }
+    }, [currentChat, userId]);
+
+    /* --- 3 --- */
+    useEffect(() => {
+        if(messages.length) {
+            if(!listenSocket) {
+                console.log(messages);
+                setListenSocket(io(`${settings.API_URL}?room=${messages[0].chat_id.split(";")[1]}&receiver=true`));
+            }
+        }
+
+        if(currentChat.length || clubIdParam) {
+            getChatContent(currentChat[0] ? currentChat[0].chat_id : `${clubIdParam};${userId}`)
                 .then((res) => {
-                    if(res?.data?.result) setCurrentChat(res.data.result);
+                    if(res?.data?.result) {
+                        console.log(res.data.result);
+                        setCurrentChat(res.data.result);
+                    }
                 });
         }
+        console.log(messages);
     }, [messages]);
 
+    /* Socket effects */
     useEffect(() => {
         if(listenSocket) {
             listenSocket.on("message", (data) => {
-                updateChat();
+                /* GET NEW MESSAGE */
+                console.log(data);
+                updateChatList(data);
             });
         }
     }, [listenSocket]);
@@ -62,7 +182,7 @@ const ChatPageForUser = ({user}) => {
     useEffect(() => {
         if(socket) {
             socket.on('connect', () => {
-                console.log("connect");
+
             });
 
             socket.on("message", (data) => {
@@ -71,27 +191,46 @@ const ChatPageForUser = ({user}) => {
         }
     }, [socket]);
 
-    useEffect(() => {
-        if(currentChat.length) {
-            if(socket) {
-                if(socket.io.opts.query.split("&") !== `room=${currentChat[0].chat_id.split(";")[0]}`) {
-                    socket.disconnect();
-                    setSocket(io(`https://drafcik.skylo-test1.pl?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
+    const getChat = (chatId, fullName, img) => {
+        setCurrentReceiver(fullName);
+        setCurrentReceiverImg(img);
+
+        setChatInLink(true);
+
+        markAsRead(chatId, 'false')
+            .then((res) => {
+                getUserMessages()
+                    .then((res) => {
+                        setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                    });
+            });
+
+        getChatContent(chatId)
+            .then((res) => {
+                setMobileCurrentChat(res?.data?.result);
+                console.log(res?.data?.result);
+                setCurrentChat(res?.data?.result);
+            });
+    }
+
+    const updateChatList = (newMessage) => {
+        getUserMessages()
+            .then((res) => {
+                const result = res?.data?.result;
+                if(result?.length) {
+                    setMessages(getUniqueListBy(result, 'chat_id'));
+                    if(newMessage) setNewMsg(newMessage);
                 }
-            }
-            else {
-                setSocket(io(`https://drafcik.skylo-test1.pl?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat[0].chat_id.split(";")[1]}`));
-            }
-        }
-    }, [currentChat]);
+            });
+    }
 
     const sendMessage = (chatId) => {
-        if(message) {
+        const regex = /\S/g;
+        if(message && message.match(regex)) {
             addMessage(chatId, message, 'false')
                 .then((res) => {
                     setMessage("");
-                    updateChat();
-
+                    updateChatList(false);
                     socket.emit("message", message, (data) => {
 
                     });
@@ -99,39 +238,16 @@ const ChatPageForUser = ({user}) => {
         }
     }
 
-
-
-
-
-    // -----------------------------------------------
-
-
-
-
-
-
-
     useEffect(() => {
-        const listHeight = window.getComputedStyle(document.querySelector(".chat__list__main")).getPropertyValue('height');
-        const chatHeight = window.getComputedStyle(document.querySelector(".chat__main__main")).getPropertyValue('height');
-
-        setMax(parseInt(listHeight.substring(0, listHeight.length-2)));
-        setMaxChat(parseInt(chatHeight.substring(0, chatHeight?.length-2)));
-
-        getUserMessages()
-            .then((res) => {
-                const result = res?.data?.result;
-                console.log(result);
-                if(result) {
-                    setMessages(result);
-                    setCurrentReceiver(result[0].name);
-                    setCurrentReceiverImg(result[0].file_path);
-                }
-            });
-    }, []);
+        setScrollbarChat([maxChat]);
+    }, [maxChat]);
 
     const chatListScroll = (e) => {
         setScrollbarList([e.target.scrollTop]);
+    }
+
+    const chatMainScroll = (e) => {
+        setScrollbarChat([e.target.scrollTop]);
     }
 
     useEffect(() => {
@@ -139,56 +255,53 @@ const ChatPageForUser = ({user}) => {
     }, [scrollbarList]);
 
     useEffect(() => {
-        const objDiv = document.querySelector(".chat__main__content");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    }, [currentChat]);
-
-    const getMessagePreview = (content) => {
-        return content.length < 30 ? content : content.substring(0, 30) + "...";
-    }
-
-    const getChat = (chatId, fullName, img) => {
-        setCurrentReceiver(fullName);
-        setCurrentReceiverImg(img);
-
-        getChatContent(chatId)
-            .then((res) => {
-                console.log(res?.data?.result);
-                setCurrentChat(res?.data?.result);
-            });
-    }
+        document.querySelector(".chat__main__content").scrollTop = scrollbarChat[0];
+    }, [scrollbarChat]);
 
     const changeMessage = (e) => {
-        if(e.keyCode === 13) {
+        if(e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
-            sendMessage(currentChat[0].chat_id);
+            sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubIdParam};${userId}`);
         }
     }
 
     return <div className="container container--light">
-        <Header loggedIn={true} player={true} menu="dark" theme="light" profileImage={user?.file_path} />
+        <Header loggedIn={true} player={true} menu="dark" theme="light" profileImage={user?.file_path} messageRead={messages} />
 
-        <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
+        {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">
                 Wiadomości
             </h1>
 
-            <header className="chat__header__user">
+            <header className="chat__header__user d-desktop">
                 <section className="chat__main__header__section">
-                    <figure className="chat__list__item__imgWrapper">
+                    {currentReceiver ? <figure className="chat__list__item__imgWrapper">
                         <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
-                    </figure>
+                    </figure> : ""}
                     <h3 className="chat__main__header__fullName">
                         {currentReceiver}
                     </h3>
                 </section>
             </header>
-        </header>
+        </header> : ""}
+        {mobileCurrentChat !== -1 && loaded ? <header className="chat__mobileHeader d-mobile">
+            <button className="chat__mobileHeader__btn" onClick={() => { setMobileCurrentChat(-1); }}>
+                <img className="btn__img" src={leftArrowWhite} alt="wroc" />
+            </button>
+            <section className="chat__main__header__section">
+                <figure className="chat__list__item__imgWrapper">
+                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
+                </figure>
+                <h3 className="chat__main__header__fullName">
+                    {currentReceiver}
+                </h3>
+            </section>
+        </header> : ""}
         <main className="chat siteWidthSuperNarrow siteWidthSuperNarrow--1400">
-            <section className="chat__list">
+            <section className={mobileCurrentChat === -1 ? "chat__list" : "chat__list d-desktop"}>
                 <main className="chat__list__main" onScroll={(e) => { chatListScroll(e); }}>
-                    {messages.map((item, index) => {
-                        return <button className="chat__list__item" onClick={() => { getChat(item.chat_id, item.name, item.file_path); }}>
+                    {messages?.length ? messages.map((item, index) => {
+                        return <button className={new Date(item.created_at) > new Date(item.read_at) && item.type ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id, item.name, item.file_path); }}>
                             <figure className="chat__list__item__imgWrapper" key={index}>
                                 <img className="chat__list__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/clubs/${item.file_path}` : example} alt={item.last_name} />
                             </figure>
@@ -201,11 +314,13 @@ const ChatPageForUser = ({user}) => {
                                 </p>
                             </section>
                         </button>
-                    })}
+                    }) : <h3 className="noMessages">
+                        Brak wiadomości
+                    </h3>}
                 </main>
                 <Range
                     step={1}
-                    min={1}
+                    min={0}
                     max={max}
                     direction={Direction.Down}
                     values={scrollbarList}
@@ -219,7 +334,7 @@ const ChatPageForUser = ({user}) => {
                             onTouchStart={props.onTouchStart}
                             style={{
                                 ...props.style,
-                                height: !mobile ? '80vh' : '80vh',
+                                height: window.innerWidth > 768 ? `calc(80vh - 100px)` : `calc(60vh - 100px)`,
                                 width: "10px",
                                 borderRadius: '10px',
                                 display: 'flex',
@@ -228,14 +343,14 @@ const ChatPageForUser = ({user}) => {
                             <div
                                 ref={props.ref}
                                 style={{
-                                    height: !mobile ? '80vh' : '80vh',
+                                    height: window.innerWidth > 768 ? `calc(80vh - 100px)` : `calc(60vh - 100px)`,
                                     width: '10px',
                                     borderRadius: !mobile ? '10px' : '10px',
                                     border: '1px solid #707070',
                                     background: getTrackBackground({
                                         values: scrollbarList[0] ? scrollbarList : [1000, 3000],
                                         colors: ['#ECECEC'],
-                                        min: 1,
+                                        min: 0,
                                         max: max,
                                         rtl: false
                                     }),
@@ -262,15 +377,15 @@ const ChatPageForUser = ({user}) => {
                     )}
                 />
             </section>
-            <main className="chat__main">
-                <main className="chat__main__main">
-                    <main className="chat__main__content">
-                        {currentChat.map((item, index) => {
+            <main className={mobileCurrentChat === -1 ? "chat__main d-desktop" : "chat__main"}>
+                <main className={loaded ? "chat__main__main" : "chat__main__main opacity-0"}>
+                    <main className="chat__main__content" onScroll={(e) => { chatMainScroll(e); }}>
+                        {currentChat.length ? currentChat.map((item, index) => {
                             return <section className="chat__main__content__section" key={index}>
                                 <div className={!item.type ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
                                     <header className="chat__message__header">
                                         <h4 className="chat__message__header__name">
-                                            {!item.type ? user.first_name + " " + user.last_name : currentReceiver}
+                                            {item.type ? currentReceiver : username}
                                         </h4>
                                         <h5 className="chat__message__header__date">
                                             <span>{item.created_at.substring(11, 16)}</span>
@@ -282,10 +397,24 @@ const ChatPageForUser = ({user}) => {
                                     </span>
                                 </div>
                             </section>
-                        })}
+                        }) : (currentReceiver ? <section className="chat__main__noMessages">
+                            <h3 className="chat__main__noMessages__header">
+                                Nie możesz prowadzić konwersacji z tym klubem
+                            </h3>
+                            <p className="chat__main__noMessages__text">
+                                Ten klub nie odezwał się jeszcze do Ciebie.
+                            </p>
+                        </section> : <section className="chat__main__noMessages">
+                            <h3 className="chat__main__noMessages__header">
+                                Nie posiadasz póki co żadnych wiadomości
+                            </h3>
+                            <p className="chat__main__noMessages__text">
+                                Tutaj pojawią się Twoje wiadomości od klubów
+                            </p>
+                        </section>)}
                     </main>
 
-                    <section className="chat__main__inputWrapper">
+                    {currentReceiver ? <section className="chat__main__inputWrapper">
                         <textarea className="chat__main__input"
                                   value={message}
                                   onKeyUp={(e) => { changeMessage(e); }}
@@ -295,16 +424,16 @@ const ChatPageForUser = ({user}) => {
                             <button className="chat__btn">
                                 <img className="btn__img" src={pictureIcon} alt="wyslij-zdjecie" />
                             </button>
-                            <button className="chat__btn" onClick={() => { sendMessage(currentChat[0].chat_id); }}>
+                            <button className="chat__btn" onClick={() => { sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubIdParam};${userId}`); }}>
                                 <img className="btn__img" src={sendIcon} alt="wyslij-wiadomosc" />
                             </button>
                         </section>
-                    </section>
+                    </section> : ""}
                 </main>
-                <div className="chat__list__scrollbar">
+                {currentReceiver ? <div className="chat__list__scrollbar">
                     <Range
                         step={1}
-                        min={1}
+                        min={0}
                         max={maxChat}
                         values={scrollbarChat}
                         direction={Direction.Down}
@@ -318,7 +447,7 @@ const ChatPageForUser = ({user}) => {
                                 onTouchStart={props.onTouchStart}
                                 style={{
                                     ...props.style,
-                                    height: !mobile ? '80vh' : '80vh',
+                                    height: window.innerWidth > 768 ? `calc(80vh - 100px)` : `calc(60vh - 100px)`,
                                     width: "10px",
                                     borderRadius: '10px',
                                     display: 'flex',
@@ -327,14 +456,14 @@ const ChatPageForUser = ({user}) => {
                                 <div
                                     ref={props.ref}
                                     style={{
-                                        height: !mobile ? '80vh' : '80vh',
+                                        height: window.innerWidth > 768 ? `calc(80vh - 100px)` : `calc(60vh - 100px)`,
                                         width: '10px',
                                         borderRadius: !mobile ? '10px' : '10px',
                                         border: '1px solid #707070',
                                         background: getTrackBackground({
                                             values: scrollbarChat[0] ? scrollbarChat : [1000, 3000],
                                             colors: ['#ECECEC'],
-                                            min: 1,
+                                            min: 0,
                                             max: maxChat,
                                             rtl: false
                                         }),
@@ -350,7 +479,7 @@ const ChatPageForUser = ({user}) => {
                                 {...props}
                                 style={{
                                     ...props.style,
-                                    height: !mobile ? '100px' : '100px',
+                                    height: `${scrollbarChatThumb}px`,
                                     outline: 'none',
                                     width: !mobile ? '10px' : '10px',
                                     borderRadius: '10px',
@@ -360,12 +489,12 @@ const ChatPageForUser = ({user}) => {
                             />
                         )}
                     />
-                </div>
+                </div> : ""}
             </main>
         </main>
 
 
-        <Footer theme="dark" border={true} />
+        <Footer theme="light" border={true} />
     </div>
 }
 

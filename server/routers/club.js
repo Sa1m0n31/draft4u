@@ -38,6 +38,26 @@ router.get("/get-club-data", (request, response) => {
    });
 });
 
+router.get("/get-club-by-id", (request, response) => {
+   const id = request.query.id;
+
+    const query = 'SELECT c.id, c.name, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
+    const values = [id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows[0]
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
 router.get("/get-all-players", (request, response) => {
    const query = 'SELECT u.id as user_id, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range FROM users u LEFT OUTER JOIN images i ON u.profile_picture = i.id';
 

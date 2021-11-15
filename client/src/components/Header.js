@@ -19,11 +19,12 @@ import {logoutUser} from "../helpers/auth";
 import settings from "../settings";
 import arrowRightGold from '../static/img/arrow-right-gold.svg'
 import {getClubMessages, getUserMessages} from "../helpers/chat";
-import {getMessagePreview} from "../helpers/others";
+import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 import example from "../static/img/profile-picture.png";
 import { io } from "socket.io-client";
 import {getClubData} from "../helpers/club";
 import {getClubNotifications, getUserNotifications, readNotification} from "../helpers/notification";
+import {getIdentityById, getUserById, getUserData} from "../helpers/user";
 
 const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, messageRead}) => {
     const [loginVisible, setLoginVisible] = useState(false);
@@ -59,10 +60,6 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }, []);
 
     useEffect(() => {
-        console.log(profileImage);
-    }, [profileImage]);
-
-    useEffect(() => {
         if(notifications?.length) {
             setNewNotifications(notifications.filter((item) => {
                 return !item.read;
@@ -80,6 +77,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
         else if(player) {
             getUserNotifications()
                 .then((res) => {
+                    console.log(res?.data?.result);
                     setNotifications(res?.data?.result);
                 });
         }
@@ -95,10 +93,10 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                 .then((res) => {
                     const clubId = res?.data?.result?.id;
                     if(clubId) {
-                        setListenSocket(io(`https://drafcik.skylo-test1.pl?room=${clubId}&receiver=true`));
+                        setListenSocket(io(`${settings.API_URL}?room=${clubId}&receiver=true`));
                         getClubMessages()
                             .then((res) => {
-                                setMessages(res?.data?.result);
+                                setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                             });
                     }
                 });
@@ -107,9 +105,23 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
 
     useEffect(() => {
         if(player) {
+            getUserData()
+                .then((res) => {
+                   const userId = res?.data?.result?.id;
+                   if(userId) {
+                       getIdentityById(userId)
+                           .then((res) => {
+                               const id = res?.data?.result?.id;
+                               if(id) {
+                                   setListenSocket(io(`${settings.API_URL}?room=${id}&receiver=true`));
+                               }
+                           })
+                   }
+                });
+
             getUserMessages()
                 .then((res) => {
-                   setMessages(res?.data?.result);
+                   setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                 });
         }
     }, [player]);
@@ -130,6 +142,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
 
     const getNumberOfNewMessages = () => {
         if(messages?.length) {
+            console.log(messages);
             return messages.filter((item) => {
                 return isMessageNew(item);
             }).length;
@@ -140,20 +153,21 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }
 
     const isMessageNew = (msg) => {
-        return (new Date(msg.created_at) > new Date(msg.read_at)) && !msg.type;
+        return (new Date(msg.created_at) > new Date(msg.read_at)) && ((!msg.type && club) || (msg.type && player));
     }
 
     const updateChatList = () => {
         if(club) {
             getClubMessages()
                 .then((res) => {
-                    setMessages(res?.data?.result);
+                    setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                 });
         }
         else if(player) {
             getUserMessages()
                 .then((res) => {
-                    setMessages(res?.data?.result);
+                    console.log(res?.data?.result);
+                    setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                 });
         }
     }
@@ -212,8 +226,18 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }
 
     const changeCurrentMenu = (n) => {
-        if(n === currentMenuVisible) setCurrentMenuVisible(-1);
-        else setCurrentMenuVisible(n);
+        if(window.innerWidth > 768) {
+            if(n === currentMenuVisible) setCurrentMenuVisible(-1);
+            else setCurrentMenuVisible(n);
+        }
+        else {
+            if(n === 0) {
+                window.location = player ? "/notyfikacje" : "/powiadomienia";
+            }
+            else if(n === 1) {
+                window.location = player ? "/czat" : "/wiadomosci";
+            }
+        }
     }
 
     const addNotificationToRead = (id) => {
@@ -426,7 +450,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
 
             {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
                 <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={() => { changeCurrentMenu(0) }}>
-                    <img className="siteHeader__player__btn__img" src={club ? bellGold : bell} alt="powiadomienia" />
+                    <img className="siteHeader__player__btn__img" src={club || newNotifications || window.innerWidth < 768 ? bellGold : bell} alt="powiadomienia" />
                     {newNotifications > 0 ? <span className="button__circle">
                         {newNotifications}
                     </span> : ""}
@@ -443,7 +467,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                                             <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure>
                                         <section className="messageMenu__list__item__content">
-                                            <h3 className="messageMenu__list__item__header">
+                                            <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
                                                 {item.title}
                                             </h3>
                                             <p className="messageMenu__list__item__text">
@@ -459,7 +483,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                 </menu> : ""}
 
                 <button className="siteHeader__player__btn" onClick={() => { changeCurrentMenu(1); }}>
-                    <img className="siteHeader__player__btn__img img--envelope" src={club ? envelopeGold : envelope} alt="wiadomosci" />
+                    <img className={!newMessages && window.innerWidth > 768 ? "siteHeader__player__btn__img img--envelope" : "siteHeader__player__btn__img"} src={club || newMessages || window.innerWidth < 768 ? envelopeGold : envelope} alt="wiadomosci" />
                     {newMessages > 0 ? <span className="button__circle">
                         {newMessages}
                     </span> : ""}
@@ -471,13 +495,13 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                             if(index < 5) {
                                 return <li className="profileMenu__list__item" key={index}>
                                     <a className={index < newMessages ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
-                                       href={`/wiadomosci/?new=${item.chat_id.split(';')[player ? 0 : 1]}`}>
+                                       href={club ? `/wiadomosci/?new=${item.chat_id.split(';')[1]}` : `/czat/?new=${item.chat_id.split(';')[0]}`}>
                                         <figure className="messageMenu__imgWrapper">
-                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : example} alt="zmien-haslo" />
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example} alt="zdjecie-profilowe" />
                                         </figure>
                                         <section className="messageMenu__list__item__content">
-                                            <h3 className="messageMenu__list__item__header">
-                                                {item.first_name} {item.last_name}
+                                            <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
+                                                {club ? item.first_name + " " + item.last_name : item.name}
                                             </h3>
                                             <p className="messageMenu__list__item__text">
                                                 {getMessagePreview(item.content)}
@@ -493,7 +517,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                             </h3>
                         </aside>}
                     </ul>
-                    <a className="messageMenu__bottom" href="/wiadomosci">
+                    <a className={club ? "messageMenu__bottom" : "messageMenu__bottom messageMenu__bottom--player"} href={club ? '/wiadomosci' : '/czat'}>
                         Zobacz wszystkie wiadomości
                         <img className="messageMenu__bottom__img" src={arrowRightGold} alt="dalej" />
                     </a>

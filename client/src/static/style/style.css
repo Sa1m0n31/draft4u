@@ -408,6 +408,26 @@ ul {
     right: 105px;
 }
 
+.container--light .chat__list__item__imgWrapper {
+    border: none;
+    border-radius: 0;
+}
+
+.container--light .chat__mobileHeader__btn {
+    filter: brightness(0.5);
+}
+
+.container--light .chat__list__item__name {
+    color: #707070;
+    font-weight: 400;
+}
+
+.container--light .chat__message--left .chat__message__header__name,
+.container--light .chat__message--left .chat__message__header__date span,
+.container--light .chat__message--left .chat__message__content {
+    color: #fff;
+}
+
 .messageMenu__list__item__header {
     color: #fff;
     font-family: 'Oxanium', cursive;
@@ -465,8 +485,20 @@ ul {
     background: #707070;
 }
 
+.messageMenu__bottom--player {
+    color: #3d3d3d;
+}
+
+.messageMenu__bottom--player:hover {
+    background: #efefef;
+}
+
 .messageMenu__bottom__img {
     margin-left: 15px;
+}
+
+.messageMenu__list__item__header--player {
+    color: #3d3d3d;
 }
 
 /* Homepage */
@@ -2028,7 +2060,7 @@ ul {
 
 .clubActivities__img {
     margin-right: 35px;
-    width: 120px;
+    width: 100px;
     height: auto;
 }
 
@@ -2492,6 +2524,16 @@ select::-ms-expand {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.videoTable__item .videoTable__item__miniature {
+    position: relative;
+}
+
+.videoTable__item .videoTable__item__miniature .video-react {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .videoTable__item__miniature__img {
@@ -4102,11 +4144,13 @@ select::-ms-expand {
     margin: auto;
 }
 
+.chat__main__input::-webkit-scrollbar,
 .chat__main__content::-webkit-scrollbar,
 .chat__list__main::-webkit-scrollbar {
     display: none;
 }
 
+.chat__main__input,
 .chat__list__main, .chat__main__content {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */

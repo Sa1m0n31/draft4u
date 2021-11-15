@@ -89,6 +89,9 @@ function App() {
       <Route path="/czat">
           <UserWrapper page={7} />
       </Route>
+      <Route path="/notyfikacje">
+          <UserWrapper page={8} />
+      </Route>
 
       {/* Club routes */}
       <Route path="/konto-klubu">
@@ -116,6 +119,9 @@ function App() {
       </Route>
       <Route path="/wiadomosci">
           <ClubWrapper page={8} />
+      </Route>
+      <Route path="/powiadomienia">
+          <ClubWrapper page={9} />
       </Route>
 
       {/* Admin panel */}

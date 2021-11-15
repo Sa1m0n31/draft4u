@@ -84,4 +84,12 @@ const getPlayerHighlight = (userId) => {
     });
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight }
+const getClubById = (id) => {
+    return axios.get(`${API_URL}/club/get-club-by-id`, {
+        params: {
+            id
+        }
+    });
+}
+
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight, getClubById }

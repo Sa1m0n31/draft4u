@@ -1466,7 +1466,7 @@
     }
 
     .playerCard__imgWrapper {
-        height: 270px;
+        height: clamp(100px, 70vw, 300px);
     }
 
     .playersWall--mobile {
@@ -1651,11 +1651,11 @@
     }
 
     .createSquad__squad__item__dragging__header__name {
-        font-size: 7px;
+        font-size: 7px !important;
     }
 
     .createSquad__squad__item__dragging__header__position {
-        font-size: 5px;
+        font-size: 5px !important;
     }
 
     .createSquad__squad__item__dragging__header {
@@ -1823,7 +1823,7 @@
     }
 
     .chat__list__main {
-        width: 100%;
+        width: 95%;
     }
 
     .chat__header__h {
@@ -1914,6 +1914,108 @@
 
     .noTeams__header {
         font-size: 16px;
+    }
+
+    .notifications {
+        width: 90vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 50px auto;
+    }
+
+    .notifications .profileMenu {
+        position: relative;
+        top: unset;
+        left: unset;
+        bottom: unset;
+        right: unset;
+        transform: none;
+    }
+
+    .notifications .profileMenu::before {
+        display: none;
+    }
+
+    .notifications__header {
+        color: rgba(255, 255, 255, .7);
+        font-family: 'Oxanium', cursive;
+        font-weight: 500;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .container--light .notifications__header {
+        color: var(--grey);
+    }
+
+    .siteHeader {
+        padding-top: 15px;
+    }
+
+    .siteHeader__logo__img {
+        width: 100%;
+    }
+
+    .siteHeader__content {
+        align-items: flex-start;
+    }
+
+    .siteHeader__logo {
+        width: 40%;
+        transform: translateX(-3%);
+    }
+
+    .siteHeader__player {
+        padding-top: 0;
+    }
+
+    .mobileMenu__btn {
+        margin-top: 13px;
+    }
+
+    .playerCard__header {
+        height: 55px;
+    }
+
+    .playerCard__header__h {
+        font-size: 17px;
+    }
+
+    .playerCard__stats {
+        padding: 20px 10px;
+    }
+
+    .playerCard__stats__item {
+        padding: 0 2px 20px 2px;
+    }
+
+    .playerCard__stats__item__value {
+        font-size: 24px;
+    }
+
+    .playerCard__stats__item__key {
+        font-size: 10px;
+    }
+
+    .playerCard__moreBtn {
+        font-size: 15px;
+        height: 35px;
+        border-width: 2px;
+    }
+
+    .chat__list__scrollbar {
+        margin-left: 1vw;
+    }
+
+    .playerCard__addToFavorites {
+        width: 21px;
+        margin-top: -2px;
+    }
+
+    .container--light .notifications .messageMenu__list__item__header {
+        color: #3d3d3d;
     }
 }
 
