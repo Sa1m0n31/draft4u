@@ -518,3 +518,14 @@ html, body {
     width: auto;
     max-width: 100%;
 }
+
+/* Add club */
+.admin__mapWrapper {
+    margin-left: 100px;
+}
+
+.admin__label--disclaimer {
+    max-width: 700px;
+    text-align: justify;
+    text-transform: none;
+}

@@ -49,9 +49,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(
     session({
         secret: "secretcode",
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false, expires: 1000 * 60 * 30 } /* Session expire in 30 minutes */
+        resave: true,
+        rolling: true,
+        saveUninitialized: false,
+        cookie: { secure: false, expires: 1000 * 60 * 60 } /* Session expire in 60 minutes */
     })
 );
 const passport = require("passport");

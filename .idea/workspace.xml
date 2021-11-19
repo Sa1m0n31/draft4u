@@ -14,30 +14,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/Notifications.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminAddClub.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminClubsList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminPlayersList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountFavorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountFavorites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ClubAccountStartFindPlayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubAccountStartFindPlayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ClubActivities.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubActivities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/others.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/others.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ChatPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ChatPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ChatPageForUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Favorites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SearchPlayersPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/ClubWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/admin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/wrappers/AdminWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/AdminWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/notification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/league.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/league.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +54,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.20.36" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/static/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -149,7 +136,10 @@
       <workItem from="1636635727582" duration="24651000" />
       <workItem from="1636715404378" duration="27378000" />
       <workItem from="1636800650237" duration="9410000" />
-      <workItem from="1636884296083" duration="23898000" />
+      <workItem from="1636884296083" duration="24259000" />
+      <workItem from="1637230095106" duration="1231000" />
+      <workItem from="1637324323039" duration="24000" />
+      <workItem from="1637351419965" duration="6401000" />
     </task>
     <servers />
   </component>
@@ -177,10 +167,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633287008314" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1636634968000">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1637324345156">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1636634968000" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1637324345156" />
     <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1635724993790">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -209,9 +199,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636664342783" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636921237231">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1637358968256">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636921237231" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1637358968256" />
   </component>
 </project>
