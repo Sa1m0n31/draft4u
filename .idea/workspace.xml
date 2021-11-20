@@ -14,16 +14,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminAddClub.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminClubsList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/AdminPlayersList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AdminAddClub.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AdminAddClub.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AdminClubsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AdminClubsList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/admin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/AdminWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/AdminWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/league.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/league.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -139,7 +136,8 @@
       <workItem from="1636884296083" duration="24259000" />
       <workItem from="1637230095106" duration="1231000" />
       <workItem from="1637324323039" duration="24000" />
-      <workItem from="1637351419965" duration="6401000" />
+      <workItem from="1637351419965" duration="6766000" />
+      <workItem from="1637409292833" duration="14845000" />
     </task>
     <servers />
   </component>
@@ -195,13 +193,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="253" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636919271026" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1636664342783">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1637412670441">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1636664342783" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1637358968256">
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1637412670441" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1637427340514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1637358968256" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1637427340514" />
   </component>
 </project>

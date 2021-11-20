@@ -96,4 +96,57 @@ const getLeagues = () => {
     return axios.get(`${API_URL}/league/get`)
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues }
+const getClubLocations = () => {
+    return axios.get(`${API_URL}/club/get-locations`);
+}
+
+const addClub = (name, league, login, password, x, y, img) => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    let formData = new FormData();
+    formData.append('name', name);
+    formData.append('league', league);
+    formData.append('login', login);
+    formData.append('password', password);
+    formData.append('image', img);
+    formData.append('x', x);
+    formData.append('y', y);
+
+    return axios.post(`${API_URL}/club/add`, formData, config);
+}
+
+const updateClub = (clubId, name, league, login, x, y, img) => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    let formData = new FormData();
+    formData.append('clubId', clubId);
+    formData.append('name', name);
+    formData.append('league', league);
+    formData.append('login', login);
+    formData.append('x', x);
+    formData.append('y', y);
+    if(img) {
+        if(img === 'delete') {
+            formData.append('imgUpdate', 'delete');
+        }
+        else {
+            formData.append('image', img);
+            formData.append('imgUpdate', 'true');
+        }
+    }
+    return axios.post(`${API_URL}/club/update`, formData, config);
+}
+
+const deleteClub = (id) => {
+    return axios.delete(`${API_URL}/club/delete`, {
+        params: {
+            id
+        }
+    });
+}
+
+const changeClubPasswordFromAdminPanel = (clubId, oldPassword, newPassword) => {
+    return axios.post(`${API_URL}/club/change-club-password-from-admin-panel`, {
+        clubId, oldPassword, newPassword
+    });
+}
+
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, deleteClub, changeClubPasswordFromAdminPanel }

@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../database/db");
 
 router.get("/get", (request, response) => {
-   const query = 'SELECT * FROM leagues';
+   const query = 'SELECT * FROM leagues ORDER BY sex';
    const values = [];
 
    db.query(query, values, (err, res) => {
