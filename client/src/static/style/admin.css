@@ -646,3 +646,32 @@ html, body {
 .loginBox__error--300 {
     width: 300px !important;
 }
+
+.editor {
+    background: #fff;
+    min-height: 500px;
+    padding: 10px 20px;
+}
+
+.admin__btn--addArticle {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.admin__flex--imagesUploadWrapper {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin__label--imageForLink {
+    text-align: right;
+    align-items: flex-end;
+}
+
+.admin__label--100, .admin__label--100 .admin__input {
+    width: 100%;
+}
+
+.admin__articleTitle {
+    margin-top: -15px;
+}

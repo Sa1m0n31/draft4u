@@ -6,6 +6,8 @@ import AdminAddNotification from "../pages/AdminAddNotification";
 import AdminNotificationList from "../pages/AdminNotificationList";
 import AdminAddClub from "../pages/AdminAddClub";
 import AdminClubsList from "../pages/AdminClubsList";
+import AdminAddArticle from "../pages/AdminAddArticle";
+import AdminArticlesList from "../pages/AdminArticlesList";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -36,6 +38,12 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 6:
                             setRenderSwitch(<AdminNotificationList admin={result} />);
+                            break;
+                        case 7:
+                            setRenderSwitch(<AdminAddArticle admin={result} />);
+                            break;
+                        case 8:
+                            setRenderSwitch(<AdminArticlesList admin={result} />);
                             break;
                         default:
                             break;
