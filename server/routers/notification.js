@@ -8,39 +8,61 @@ const upload = multer({ dest: 'media/notifications' })
 router.post("/add", upload.single("image"), (request, response) => {
     const { title, content, link, receivers } = request.body;
 
-    const filename = request.file.filename;
+    if(request.file) {
+        const filename = request.file.filename;
 
-    const query = `INSERT INTO images VALUES (nextval('images_id_sequence'), $1) RETURNING id`;
-    const values = [filename];
+        const query = `INSERT INTO images VALUES (nextval('images_id_sequence'), $1) RETURNING id`;
+        const values = [filename];
 
-    db.query(query, values, (err, res) => {
-        if(res) {
-            const imageId = res.rows[0].id;
-            const query = `INSERT INTO notifications VALUES (nextval('notifications_id_sequence'), $1, $2, $3, $4, NOW()) RETURNING id`;
-            const values = [imageId, content, link, title];
+        db.query(query, values, (err, res) => {
+            if(res) {
+                const imageId = res.rows[0].id;
+                const query = `INSERT INTO notifications VALUES (nextval('notifications_id_sequence'), $1, $2, $3, $4, NOW()) RETURNING id`;
+                const values = [imageId, content, link, title];
 
-            db.query(query, values, (err, res) => {
-               if(res) {
-                   const notificationId = res.rows[0].id;
-                   receivers.split(",").forEach((item, index, array) => {
-                       const query = `INSERT INTO notifications_receivers VALUES ($1, $2, false)`;
-                       const values = [notificationId, item];
-                       db.query(query, values);
-                       if(index === array.length-1) {
-                           response.send({
-                               result: 1
-                           });
-                       }
-                   });
-               }
-            });
-        }
-        else {
-            response.send({
-                result: 0
-            });
-        }
-    })
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        const notificationId = res.rows[0].id;
+                        receivers.split(",").forEach((item, index, array) => {
+                            const query = `INSERT INTO notifications_receivers VALUES ($1, $2, false)`;
+                            const values = [notificationId, item];
+                            db.query(query, values);
+                            if(index === array.length-1) {
+                                response.send({
+                                    result: 1
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        });
+    }
+    else {
+        const query = `INSERT INTO notifications VALUES (nextval('notifications_id_sequence'), NULL, $1, $2, $3, NOW()) RETURNING id`;
+        const values = [content, link, title];
+
+        db.query(query, values, (err, res) => {
+            if(res) {
+                const notificationId = res.rows[0].id;
+                receivers.split(",").forEach((item, index, array) => {
+                    const query = `INSERT INTO notifications_receivers VALUES ($1, $2, false)`;
+                    const values = [notificationId, item];
+                    db.query(query, values);
+                    if(index === array.length-1) {
+                        response.send({
+                            result: 1
+                        });
+                    }
+                });
+            }
+        });
+    }
 });
 
 router.post("/update", upload.single("image"), (request, response) => {
@@ -190,7 +212,7 @@ router.get("/get-club-notifications", (request, response) => {
 router.get("/get-user-notifications", (request, response) => {
    const id = request.user;
 
-   const query = 'SELECT n.id, n.title, n.link, n.content, i.file_path, r.read FROM notifications n JOIN notifications_receivers r ON n.id = r.notification_id LEFT OUTER JOIN images i ON n.image = i.id JOIN identities id ON id.id = r.receiver_id WHERE id.id = $1';
+   const query = 'SELECT n.id, n.title, n.link, n.content, i.file_path, r.read FROM notifications n JOIN notifications_receivers r ON n.id = r.notification_id LEFT OUTER JOIN images i ON n.image = i.id JOIN identities id ON id.id = r.receiver_id WHERE id.id = $1 ORDER BY n.created_at DESC';
    const values = [id];
 
    db.query(query, values, (err, res) => {
@@ -206,6 +228,27 @@ router.get("/get-user-notifications", (request, response) => {
           });
       }
    });
+});
+
+router.post("/read-all", (request, response) => {
+    const user = request.user;
+
+    const query = 'UPDATE notifications_receivers SET read = true WHERE receiver_id = $1';
+    const values = [user];
+
+    db.query(query, values,(err, res) => {
+        if(res) {
+            console.log(res.rowCount);
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
 });
 
 router.post("/read-notification", (request, response) => {

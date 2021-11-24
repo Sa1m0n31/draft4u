@@ -11,29 +11,43 @@ const generateImageLink = (img) => {
     return axios.post(`${API_URL}/image/add`, formData, config);
 }
 
-const addArticle = (title, image, content) => {
+const addArticle = (title, image, content, excerpt) => {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     let formData = new FormData();
     formData.append('image', image);
     formData.append('title', title);
     formData.append('content', content);
+    formData.append('excerpt', excerpt);
 
     return axios.post(`${API_URL}/blog/add`, formData, config);
 }
 
-const updateArticle = (id, title, image, content) => {
+const updateArticle = (id, title, image, content, excerpt) => {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     let formData = new FormData();
     formData.append('id', id);
-    formData.append('image', image);
     formData.append('title', title);
     formData.append('content', content);
+    formData.append('excerpt', excerpt);
+    if(image) {
+        if(image === 'delete') {
+            formData.append('imgUpdate', 'delete');
+        }
+        else {
+            formData.append('image', image);
+            formData.append('imgUpdate', 'true');
+        }
+    }
 
     return axios.post(`${API_URL}/blog/update`, formData, config);
 }
 
 const getAllArticles = () => {
     return axios.get(`${API_URL}/blog/get-all`);
+}
+
+const getLastArticle = () => {
+    return axios.get(`${API_URL}/blog/get-last-article`);
 }
 
 const getArticle = (id) => {
@@ -52,4 +66,12 @@ const deleteArticle = (id) => {
     });
 }
 
-export { generateImageLink, addArticle, updateArticle, getAllArticles, getArticle, deleteArticle }
+const getArticleBySlug = (slug) => {
+    return axios.get(`${API_URL}/blog/get-article-by-slug`, {
+        params: {
+            slug
+        }
+    });
+}
+
+export { generateImageLink, addArticle, updateArticle, getAllArticles, getArticle, deleteArticle, getLastArticle, getArticleBySlug }

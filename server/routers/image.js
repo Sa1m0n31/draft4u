@@ -20,6 +20,7 @@ router.post("/add", upload.single("image"), (request, response) => {
         const values = [filename];
 
         db.query(query, values, (err, res) => {
+            console.log(err);
             if(res) {
                 response.send({
                     result: filename
@@ -33,6 +34,7 @@ router.post("/add", upload.single("image"), (request, response) => {
         })
     }
     else {
+        console.log("not filename");
         response.send({result: 0});
     }
 });

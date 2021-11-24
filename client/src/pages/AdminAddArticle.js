@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import AdminTop from "../components/AdminTop";
 import PanelMenu from "../components/PanelMenu";
 import { Editor } from "react-draft-wysiwyg";
@@ -6,8 +6,9 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import settings from "../settings";
 import trashIcon from "../static/img/trash-black.svg";
 import Dropzone from "react-dropzone-uploader";
-import {addArticle, generateImageLink, getArticle} from "../helpers/blog";
+import {addArticle, generateImageLink, getArticle, updateArticle} from "../helpers/blog";
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import closeIcon from "../static/img/close-grey.svg";
 
 const AdminAddArticle = () => {
     const [title, setTitle] = useState("");
@@ -19,6 +20,10 @@ const AdminAddArticle = () => {
     const [updateMode, setUpdateMode] = useState(false);
     const [status, setStatus] = useState(-1);
     const [articleId, setArticleId] = useState(0);
+    const [generatedLink, setGeneratedLink] = useState(null);
+    const [excerpt, setExcerpt] = useState("");
+
+    const linkModal = useRef(null);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -32,12 +37,17 @@ const AdminAddArticle = () => {
                     const result = res?.data?.result[0];
                     if(result) {
                         setTitle(result.title);
+                        setExcerpt(result.excerpt);
                         setContent(EditorState.createWithContent(convertFromRaw(JSON.parse(result.content))));
                         setUpdateImage(result.file_path);
                     }
                 });
         }
     }, []);
+
+    useEffect(() => {
+        if(status !== -1) window.scrollTo(0, 0);
+    }, [status]);
 
     const deleteImg = () => {
         if(img) {
@@ -48,6 +58,11 @@ const AdminAddArticle = () => {
             setUpdateImage(null);
         }
         setImageUpdated(true);
+    }
+
+    const deleteImgForLink = () => {
+        imgForLink.remove();
+        setImgForLink(null);
     }
 
     const getUploadImage = (img) => {
@@ -65,22 +80,73 @@ const AdminAddArticle = () => {
     const handleChangeStatusForImageForLink = (status) => {
         setImgForLink(status);
 
-        generateImageLink(status)
+        generateImageLink(imgForLink?.file)
             .then((res) => {
-                console.log(res?.data?.result);
+                if(res?.data?.result !== generatedLink && generatedLink !== 'test') setGeneratedLink(res?.data?.result);
+                else if(generatedLink === 'test') setGeneratedLink(null);
             });
     }
 
     const handleSubmit = () => {
-        if(!updateMode) {
-            addArticle(title, img?.file, JSON.stringify(convertToRaw(content?.getCurrentContent())))
-                .then((res) => {
-                    console.log(res?.data?.result);
-                });
+        if(content) {
+            if(!updateMode) {
+                addArticle(title, img?.file, JSON.stringify(convertToRaw(content?.getCurrentContent())), excerpt)
+                    .then((res) => {
+                        setStatus(res?.data?.result);
+                    });
+            }
+            else {
+                updateArticle(articleId, title, imageUpdated ? (img ? img.file : 'delete') : null, JSON.stringify(convertToRaw(content?.getCurrentContent())), excerpt)
+                    .then((res) => {
+                        setStatus(res?.data?.result);
+                    });
+            }
         }
     }
 
+    useEffect(() => {
+        if(generatedLink && generatedLink !== 'test') {
+            linkModal.current.style.zIndex = "10";
+            linkModal.current.style.opacity = "1";
+        }
+        else {
+            linkModal.current.style.zIndex = "-1";
+            linkModal.current.style.opacity = "0";
+        }
+    }, [generatedLink]);
+
+    const copyToClipboard = () => {
+        const input = document.createElement('textarea');
+        input.innerHTML = `${settings.API_URL}/image?url=/media/blog/${generatedLink}`;
+        document.body.appendChild(input);
+        input.select();
+        const result = document.execCommand('copy');
+        document.body.removeChild(input);
+        setGeneratedLink('test');
+        return result;
+    }
+
     return <div className="container container--dark container--admin">
+
+        <div className="modal modal--deleteSquad" ref={linkModal}>
+            <div className="modal__inner">
+                <button className="modal__close" onClick={() => { setGeneratedLink(null); }}>
+                    <img className="btn__img" src={closeIcon} alt="zamknij" />
+                </button>
+
+                <h3 className="modal__header">
+                    Link do zdjęcia:
+                </h3>
+                <h4 className="modal__link">
+                    {`${settings.API_URL}/image?url=/media/blog/${generatedLink}`}
+                </h4>
+
+                <button className="modal__btn modal__btn--copy" onClick={() => { copyToClipboard(); }}>
+                    Skopiuj link
+                </button>
+            </div>
+        </div>
+
         <AdminTop />
         <main className="admin">
             <PanelMenu menuOpen={3} />
@@ -108,14 +174,22 @@ const AdminAddArticle = () => {
                                onChange={(e) => { setTitle(e.target.value); }}
                                placeholder="Tu wpisz tytuł artykułu" />
                     </label>
+                    <label className="admin__label admin__label--100">
+                        Zajawka
+                        <textarea className="admin__input admin__input--excerpt"
+                               name="excerpt"
+                               value={excerpt}
+                               onChange={(e) => { setExcerpt(e.target.value); }}
+                               placeholder="Tu wpisz zajawkę artykułu" />
+                    </label>
                 </section>
                 <div className="admin__flex admin__flex--imagesUploadWrapper">
                     <label className="admin__label admin__flex">
                         Dodaj obrazek wyróżniający
                         <span className="admin__label__imgUpload">
-                                {updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
-                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/blog/${updateImage}`} alt="foto" />
-                                </figure> : ""}
+                            {updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
+                                <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/blog/${updateImage}`} alt="foto" />
+                            </figure> : ""}
                             {img || updateImage ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImg(); }}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />
                             </button> : ""}
@@ -131,10 +205,7 @@ const AdminAddArticle = () => {
                     <label className="admin__label admin__flex admin__label--imageForLink">
                         Dodaj obrazek do artykułu
                         <span className="admin__label__imgUpload">
-                                {updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
-                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/blog/${updateImage}`} alt="foto" />
-                                </figure> : ""}
-                            {img || updateImage ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImg(); }}>
+                            {imgForLink ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImgForLink(); }}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />
                             </button> : ""}
                             <Dropzone

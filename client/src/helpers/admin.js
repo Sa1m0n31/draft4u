@@ -25,4 +25,12 @@ const getUsers = () => {
     return axios.get(`${API_URL}/admin/get-users`);
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers }
+const changeAdminPassword = (oldPassword, newPassword) => {
+    return axios.post(`${API_URL}/admin/change-password`, {
+        oldPassword, newPassword
+    }, {
+        withCredentials: true
+    });
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword }

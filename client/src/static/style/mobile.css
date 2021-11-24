@@ -2017,6 +2017,14 @@
     .container--light .notifications .messageMenu__list__item__header {
         color: #3d3d3d;
     }
+
+    .single__title {
+        font-size: 24px;
+    }
+
+    .single__article * {
+        font-size: 14px;
+    }
 }
 
 @media(max-width: 576px) {

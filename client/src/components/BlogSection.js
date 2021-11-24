@@ -1,20 +1,31 @@
-import React from 'react'
-import example from '../static/img/blog-zdjecie.png'
+import React, {useEffect, useState} from 'react'
+import {getLastArticle} from "../helpers/blog";
+import settings from "../settings";
+import {convertStringToURL} from "../helpers/others";
 
 const BlogSection = () => {
+    const [article, setArticle] = useState({});
+
+    useEffect(() => {
+        getLastArticle()
+            .then((res) => {
+                setArticle(res?.data?.result);
+            });
+    }, []);
+
     return <section className="blogSection siteWidthSuperNarrow">
         <h2 className="blogSection__title">
-            Wywiad z Lorem Ipsum
+            {article.title}
         </h2>
-        <figure className="blogSection__imgWrapper">
-            <img className="blogSection__img" src={example} alt="wywiad" />
-        </figure>
+        {article.file_path ? <figure className="blogSection__imgWrapper">
+            <img className="blogSection__img" src={`${settings.API_URL}/image?url=/media/blog/${article.file_path}`} alt={article.title} />
+        </figure> : ""}
         <p className="blogSection__extract">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis pretium dolor. Nam eu odio et turpis volutpat congue in ac metus. Integer consectetur justo lorem, quis consectetur nisi ultricies ut. Maecenas auctor mauris tristique justo volutpat imperdiet. Proin commodo mi sapien, vitae volutpat dui rutrum pharetra. Curabitur non magna auctor, lobortis metus sed, condimentum odio. Sed iaculis in lacus et porttitor. Nulla facilisi. Nulla ipsum lacus, vulputate eu est nec, pretium sodales nisi. Pellentesque tempor, felis sit amet malesuada elementum, lectus massa gravida enim, a vestibulum libero ligula non diam.
+            {article.excerpt}
         </p>
-        <button className="button button--readMore">
+        <a className="button button--readMore" href={`/blog/${article?.title ? convertStringToURL(article.title) : ""}`}>
             Czytaj więcej <span className="gold bold"> > </span>
-        </button>
+        </a>
     </section>
 }
 

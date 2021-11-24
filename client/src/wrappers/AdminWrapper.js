@@ -8,6 +8,7 @@ import AdminAddClub from "../pages/AdminAddClub";
 import AdminClubsList from "../pages/AdminClubsList";
 import AdminAddArticle from "../pages/AdminAddArticle";
 import AdminArticlesList from "../pages/AdminArticlesList";
+import AdminChangePassword from "../pages/AdminChangePassword";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -44,6 +45,9 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 8:
                             setRenderSwitch(<AdminArticlesList admin={result} />);
+                            break;
+                        case 9:
+                            setRenderSwitch(<AdminChangePassword admin={result} />);
                             break;
                         default:
                             break;

@@ -139,7 +139,7 @@ const AdminAddNotification = () => {
     const handleSubmit = () => {
         if(title) {
             if(!updateMode) {
-                addNotification(title, link, text, img.file, sendList)
+                addNotification(title, link, text, img ? img.file : null, sendList)
                     .then((res) => {
                         setStatus(res?.data?.result);
                     });

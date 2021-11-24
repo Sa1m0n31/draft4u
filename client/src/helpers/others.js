@@ -1,15 +1,15 @@
 const removePolishChars = (str) => {
     return str
         .toLowerCase()
-        .replace("ą", "a")
-        .replace("ć", "c")
-        .replace("ę", "e")
-        .replace("ł", "l")
-        .replace("n", "ń")
-        .replace("ó", "o")
-        .replace("ś", "s")
-        .replace("ź", "z")
-        .replace("ż", "z")
+        .replace(/ą/g, "a")
+        .replace(/ć/g, "c")
+        .replace(/ę/g, "e")
+        .replace(/ł/g, "l")
+        .replace(/ń/g, "n")
+        .replace(/ó/g, "o")
+        .replace(/ś/g, "s")
+        .replace(/ź/g, "z")
+        .replace(/ż/g, "z");
 }
 
 const calculateAge = (dateOfBirth) => {
@@ -55,4 +55,8 @@ const getNotificationsNumber = (n) => {
     else return "9+";
 }
 
-export { removePolishChars, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber }
+const convertStringToURL = (str) => {
+    return removePolishChars(str.replace(/ /g, "-"));
+}
+
+export { removePolishChars, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber, convertStringToURL }

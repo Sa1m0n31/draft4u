@@ -25,9 +25,11 @@ const checkIfRemindPasswordTokenOk = (token) => {
     });
 }
 
-const changeUserPassword = (email, password) => {
+const changeUserPassword = (oldPassword, newPassword) => {
     return axios.post(`${API_URL}/user/change-password`, {
-        email, password
+        oldPassword, newPassword
+    }, {
+        withCredentials: true
     });
 }
 

@@ -6,7 +6,7 @@ import Dropzone from "react-dropzone-uploader";
 import {getUserVideos, uploadVideo} from "../helpers/video";
 import DraftLoader from "./Loader";
 import successIcon from '../static/img/success.svg'
-import failureIcon from '../static/img/failure.png'
+import failureIcon from '../static/img/failure.svg'
 import {removePolishChars} from "../helpers/others";
 
 const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play}) => {

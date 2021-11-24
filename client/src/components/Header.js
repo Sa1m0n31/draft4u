@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import logo from '../static/img/logo.svg'
 import logoDark from '../static/img/logo-dark.png'
+import pen from '../static/img/pen-dropdown-menu.svg'
 import closeIcon from '../static/img/close-grey.svg'
 import hamburger from '../static/img/hamburger.svg'
 import LoginBox from "./LoginBox";
@@ -23,7 +24,12 @@ import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 import example from "../static/img/profile-picture.png";
 import { io } from "socket.io-client";
 import {getClubData} from "../helpers/club";
-import {getClubNotifications, getUserNotifications, readNotification} from "../helpers/notification";
+import {
+    getClubNotifications,
+    getUserNotifications,
+    readAllNotifications,
+    readNotification
+} from "../helpers/notification";
 import {getIdentityById, getUserById, getUserData} from "../helpers/user";
 
 const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, messageRead}) => {
@@ -51,6 +57,13 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     let mobileMenuBottom = useRef(null);
 
     const mobileMenuChildren = [mobileMenuCloseBtn, mobileMenuHeader, mobileMenuList, mobileMenuBottom];
+
+    document.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if(currentMenuVisible !== -1) {
+            setCurrentMenuVisible(-1);
+        }
+    });
 
     useEffect(() => {
         if(profileImage) {
@@ -244,6 +257,13 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
         readNotification(id)
             .then((res) => {
                 setUpdateNotifications(!updateNotifications);
+            });
+    }
+
+    const readAllNotificationsWrapper = () => {
+        readAllNotifications()
+            .then((res) => {
+               setUpdateNotifications(!updateNotifications);
             });
     }
 
@@ -449,7 +469,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
             </menu>
 
             {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
-                <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={() => { changeCurrentMenu(0) }}>
+                <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(0); readAllNotificationsWrapper(); }}>
                     <img className="siteHeader__player__btn__img" src={club || newNotifications || window.innerWidth < 768 ? bellGold : bell} alt="powiadomienia" />
                     {newNotifications > 0 ? <span className="button__circle">
                         {newNotifications}
@@ -460,13 +480,13 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                     <ul className="profileMenu__list">
                         {notifications?.map((item, index) => {
                             if(index < 5) {
-                                return <li className="profileMenu__list__item" key={index} onClick={() => { addNotificationToRead(item.id); }}>
+                                return <li className="profileMenu__list__item" key={index}>
                                     <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                        href={item.link} target="_blank">
-                                        <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
+                                        {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
                                             <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
-                                        </figure>
-                                        <section className="messageMenu__list__item__content">
+                                        </figure> : ""}
+                                        <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
                                             <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
                                                 {item.title}
                                             </h3>
@@ -482,7 +502,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                     </ul>
                 </menu> : ""}
 
-                <button className="siteHeader__player__btn" onClick={() => { changeCurrentMenu(1); }}>
+                <button className="siteHeader__player__btn" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(1); }}>
                     <img className={!newMessages && window.innerWidth > 768 ? "siteHeader__player__btn__img img--envelope" : "siteHeader__player__btn__img"} src={club || newMessages || window.innerWidth < 768 ? envelopeGold : envelope} alt="wiadomosci" />
                     {newMessages > 0 ? <span className="button__circle">
                         {newMessages}
@@ -524,7 +544,7 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                 </menu> : ""}
 
                 <button className="siteHeader__player__btn siteHeader__player__btn--profile d-desktop"
-                        onClick={() => { changeCurrentMenu(2); }}
+                        onClick={(e) => { e.stopPropagation(); changeCurrentMenu(2); }}
                 >
                     <img className="siteHeader__player__btn--profile__img" src={profilePicture} alt="profile" />
                 </button>
@@ -532,13 +552,19 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                 {currentMenuVisible === 2 ? <menu className={club ? "profileMenu profileMenu--club" : "profileMenu"}>
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
-                            <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
+                            {!club ? <>
+                                <a className="profileMenu__list__link" href="/faq">
+                                    <img className="profileMenu__list__img" src={question} alt="faq" />
+                                    Pomoc online
+                                </a>
+                                <a className="profileMenu__list__link" href="/edycja-profilu">
+                                    <img className="profileMenu__list__img" src={pen} alt="faq" />
+                                    Edytuj profil
+                                </a>
+                            </> : ""}
+                            <a className="profileMenu__list__link" href={club ? "/zmien-haslo-klubu" : "/zmien-haslo-zawodnika"}>
                                 <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
                                 Zmiana hasła
-                            </a>
-                            <a className="profileMenu__list__link" href="/faq">
-                                <img className="profileMenu__list__img" src={question} alt="faq" />
-                                Pomoc online
                             </a>
                             <button className="profileMenu__list__link" onClick={() => { logout(); }}>
                                 <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />

@@ -40,7 +40,7 @@ const ClubActivities = () => {
             {favorites.length ? favorites.map((item, index) => {
                 return <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
             }) : <h3 className="clubActivities__empty">
-                Póki co nikt nie odwiedził Twojego profilu...
+                Póki co nikt nie polubił Twojego profilu...
             </h3> }
         </section>
 

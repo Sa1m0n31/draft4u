@@ -143,10 +143,18 @@ const deleteClub = (id) => {
     });
 }
 
+const changeClubPassword = (oldPassword, newPassword) => {
+    return axios.post(`${API_URL}/club/change-password`, {
+        oldPassword, newPassword
+    }, {
+        withCredentials: true
+    });
+}
+
 const changeClubPasswordFromAdminPanel = (clubId, oldPassword, newPassword) => {
     return axios.post(`${API_URL}/club/change-club-password-from-admin-panel`, {
         clubId, oldPassword, newPassword
     });
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, deleteClub, changeClubPasswordFromAdminPanel }
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, deleteClub, changeClubPasswordFromAdminPanel, changeClubPassword }

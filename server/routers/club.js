@@ -366,8 +366,43 @@ router.delete("/delete", (request, response) => {
     });
 });
 
+router.post("/change-password", (request, response) => {
+    const { oldPassword, newPassword } = request.body;
+    const clubId = request.user;
+
+    const oldPasswordHash = crypto.createHash('sha256').update(oldPassword).digest('hex');
+    const newPasswordHash = crypto.createHash('sha256').update(newPassword).digest('hex');
+
+    const query = 'UPDATE clubs SET password = $1 WHERE password = $2 AND id = $3';
+    const values = [newPasswordHash, oldPasswordHash, clubId];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            if(res.rowCount) {
+                const query = 'UPDATE identities SET hash = $1 WHERE hash = $2 AND id = $3';
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        response.send({result: 1});
+                    }
+                    else {
+                        response.send({result: 0});
+                    }
+                });
+            }
+            else {
+                response.send({result: -2});
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    })
+});
+
 router.post("/change-club-password-from-admin-panel", (request, response) => {
-   const { clubId, oldPassword, newPassword } = request.body;
+    const { clubId, oldPassword, newPassword } = request.body;
 
     const hash = crypto.createHash('sha256').update(oldPassword).digest('hex');
     const newHash = crypto.createHash('sha256').update(newPassword).digest('hex');

@@ -675,3 +675,26 @@ html, body {
 .admin__articleTitle {
     margin-top: -15px;
 }
+
+.generatedLink {
+    text-transform: lowercase;
+}
+
+.generatedLink b {
+    text-transform: capitalize;
+}
+
+.modal__link {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal__btn--copy {
+    margin-top: 20px;
+}
+
+.admin__input--excerpt {
+    height: 100px;
+    resize: none;
+}

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const crypto = require('crypto');
 const db = require("../database/db");
 
 router.get("/get-admin-by-id", (request, response) => {
@@ -79,6 +80,39 @@ router.get("/get-users", (request, response) => {
             response.send({
                 result: 0
             });
+        }
+    });
+});
+
+router.post("/change-password", (request, response) => {
+    const { oldPassword, newPassword } = request.body;
+    const id = request.user;
+    console.log(id);
+
+    const oldPasswordHash = crypto.createHash('sha256').update(oldPassword).digest('hex');
+    const newPasswordHash = crypto.createHash('sha256').update(newPassword).digest('hex');
+
+    const query = 'UPDATE admins SET password = $1 WHERE password = $2 AND id = $3';
+    const values = [newPasswordHash, oldPasswordHash, id];
+
+    db.query(query, values, (err, res) => {
+        console.log(res);
+        if(res) {
+            if(res.rowCount) {
+                response.send({
+                    result: 1
+                });
+            }
+            else {
+                response.send({
+                    result: -2
+                });
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            })
         }
     });
 });

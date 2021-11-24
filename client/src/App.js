@@ -92,6 +92,12 @@ function App() {
       <Route path="/notyfikacje">
           <UserWrapper page={8} />
       </Route>
+      <Route path="/blog">
+          <UserWrapper page={9} />
+      </Route>
+      <Route path="/zmien-haslo-zawodnika">
+          <UserWrapper page={10} />
+      </Route>
 
       {/* Club routes */}
       <Route path="/konto-klubu">
@@ -123,6 +129,9 @@ function App() {
       <Route path="/powiadomienia">
           <ClubWrapper page={9} />
       </Route>
+      <Route path="/zmien-haslo-klubu">
+          <ClubWrapper page={10} />
+      </Route>
 
       {/* Admin panel */}
       <Route path="/admin">
@@ -151,6 +160,9 @@ function App() {
       </Route>
       <Route path="/lista-artykulow">
           <AdminWrapper page={8} />
+      </Route>
+      <Route path="/zmien-haslo-administratora">
+          <AdminWrapper page={9} />
       </Route>
 
   </Router>

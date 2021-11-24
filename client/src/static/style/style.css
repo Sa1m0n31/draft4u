@@ -463,6 +463,10 @@ ul {
     flex-basis: 77%;
 }
 
+.messageMenu__list__item__content--fullWidth {
+    flex-basis: 100%;
+}
+
 .profileMenu--messages .profileMenu__list__img {
     width: 100%;
     margin: 0;
@@ -1365,7 +1369,7 @@ ul {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 .resetPassword__flex .successImg {
@@ -1958,6 +1962,7 @@ ul {
 }
 
 .button--readMore {
+    display: block;
     background: transparent;
     font-size: 18px;
     font-weight: 700;
@@ -4531,4 +4536,59 @@ select::-ms-expand {
     right: 20px;
     width: 20px;
     height: auto;
+}
+
+/* Single article */
+.single, .changePassword {
+    width: var(--siteWidth);
+    margin: 40px auto;
+}
+
+.single__imgWrapper {
+    margin: auto;
+    max-width: 1000px;
+}
+
+.single__imgWrapper img {
+    border-radius: 15px;
+}
+
+.single__title {
+    font-size: 36px;
+    text-align: center;
+    margin: 20px auto;
+    color: var(--gold);
+    font-family: 'Oxanium', cursive;
+}
+
+.single__article * {
+    font-family: 'Oxanium', cursive !important;
+}
+
+.single__article img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Change password */
+.button--resetPassword {
+    background: transparent;
+}
+
+.container--dark .resetPassword {
+    background: #313131;
+}
+
+.container--dark .resetPassword__header {
+    color: #fff;
+}
+
+.container--dark .input {
+    background: transparent;
+    color: #fff;
+}
+
+.container--admin .changePassword {
+    width: 100%;
 }

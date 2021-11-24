@@ -39,6 +39,14 @@ const readNotification = (notification) => {
     });
 }
 
+const readAllNotifications = () => {
+    return axios.post(`${API_URL}/notification/read-all`, {
+
+    }, {
+        withCredentials: true
+    });
+}
+
 const updateNotification = (id, title, link, content, img, receivers) => {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     let formData = new FormData();
@@ -76,4 +84,4 @@ const getNotification = (id) => {
     })
 }
 
-export { addNotification, updateNotification, getAllNotifications, getUserNotifications, getClubNotifications, readNotification, deleteNotification, getNotification }
+export { addNotification, updateNotification, getAllNotifications, getUserNotifications, getClubNotifications, readNotification, deleteNotification, getNotification, readAllNotifications }

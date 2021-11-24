@@ -50,9 +50,9 @@ const AdminTop = () => {
             {profileMenuVisible ? <menu className="profileMenu profileMenu--club profileMenu--admin">
                 <ul className="profileMenu__list">
                     <li className="profileMenu__list__item">
-                        <a className="profileMenu__list__link" href="/odzyskiwanie-hasla">
+                        <a className="profileMenu__list__link" href="/zmien-haslo-administratora">
                             <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
-                            Zmiana hasło
+                            Zmiana hasła
                         </a>
                         <button className="profileMenu__list__link" onClick={() => { logout(); }}>
                             <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />

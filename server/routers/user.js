@@ -150,17 +150,29 @@ router.get("/check-remind-password-token", (request, response) => {
 });
 
 router.post("/change-password", (request, response) => {
-    const { email, password } = request.body;
-    const hash = crypto.createHash('sha256').update(password).digest('hex');
+    const { oldPassword, newPassword } = request.body;
+    const id = request.user;
 
-    const query = 'UPDATE identities SET hash = $1 FROM users u WHERE u.id = identities.user_id AND u.email = $2';
-    const values = [hash, email];
+    console.log(id);
+    const oldPasswordHash = crypto.createHash('sha256').update(oldPassword).digest('hex');
+    const newPasswordHash = crypto.createHash('sha256').update(newPassword).digest('hex');
+
+    const query = 'UPDATE identities SET hash = $1 WHERE hash = $2 AND id = $3';
+    const values = [newPasswordHash, oldPasswordHash, id];
 
     db.query(query, values, (err, res) => {
+        console.log(res);
         if(res) {
-            response.send({
-                result: 1
-            });
+            if(res.rowCount) {
+                response.send({
+                    result: 1
+                });
+            }
+            else {
+                response.send({
+                    result: -2
+                });
+            }
         }
         else {
             response.send({

@@ -13,6 +13,9 @@ import PaymentReturnPage from "../pages/PaymentReturnPage";
 import {getClubData} from "../helpers/club";
 import ChatPageForUser from "../pages/ChatPageForUser";
 import Notifications from "../pages/Notifications";
+import {getAdminData} from "../helpers/admin";
+import SingleArticle from "../pages/SingleArticle";
+import ChangePassword from "../pages/ChangePassword";
 
 const UserContext = React.createContext(5);
 
@@ -21,7 +24,6 @@ const UserWrapper = ({page}) => {
     const [renderSwitch, setRenderSwitch] = useState(null);
 
     useEffect(() => {
-        console.log("is logged in?");
         isLoggedIn()
             .then((res) => {
                 if(!res?.data?.result) {
@@ -60,6 +62,12 @@ const UserWrapper = ({page}) => {
                                     case 8:
                                         setRenderSwitch(<Notifications user={user} />);
                                         break;
+                                    case 9:
+                                        setRenderSwitch(<SingleArticle user={user} />);
+                                        break;
+                                    case 10:
+                                        setRenderSwitch(<ChangePassword user={user} />);
+                                        break;
                                     default:
                                         setRenderSwitch(<PlayerProfileEdition user={user} />);
                                         break;
@@ -72,7 +80,11 @@ const UserWrapper = ({page}) => {
                                             window.location = "/konto-klubu";
                                         }
                                         else {
-                                            window.location = "/";
+                                            getAdminData()
+                                                .then((res) => {
+                                                   if(res?.data?.result) window.location = "/panel";
+                                                   else window.location = "/";
+                                                });
                                         }
                                     });
                             }
