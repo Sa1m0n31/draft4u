@@ -1,78 +1,89 @@
 import React, {useState, useEffect, useRef} from 'react'
 
 import poland from '../static/img/poland.svg'
-import { getAllClubs } from '../helpers/club'
+import {getAllClubs, getClubLocations} from '../helpers/club'
 import { Range, getTrackBackground } from 'react-range';
 import manIcon from '../static/img/woman.svg'
 import womanIcon from '../static/img/man.svg'
 import settings from "../settings";
 import useEmblaCarousel from 'embla-carousel-react'
+import ReactSiema from 'react-siema'
 
 const MapContent = () => {
     const [clubs, setClubs] = useState([]);
     const [filteredClubs, setFilteredClubs] = useState([]);
     const [dots, setDots] = useState([]);
+    const [filteredDots, setFilteredDots] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    const [currentDotClubs, setCurrentDotClubs] = useState([]);
 
     const [sex, setSex] = useState([0]);
     const [league, setLeague] = useState([0]);
 
     const clubsWrapper = useRef(null);
+    let slider = useRef(null);
 
-    const [clubCarousel, setClubCarousel] = useEmblaCarousel({
-        loop: true,
-        dragFree: true,
-        skipSnaps: false
+    document.addEventListener("click", () => {
+        hideClubsOnMap();
     });
 
+    const setMaleDots = () => {
+        setFilteredDots(dots.filter((item) => {
+            return item.leagues.split(';').findIndex((item) => {
+                return parseInt(item.toString()) < 4;
+            }) !== -1;
+        }));
+    }
+    const setFemaleDots = () => {
+        setFilteredDots(dots.filter((item) => {
+            return item.leagues.split(';').findIndex((item) => {
+                return parseInt(item.toString()) > 3;
+            }) !== -1;
+        }));
+    }
+
+    const setDotsByLeague = (gender, n) => {
+        if(gender) {
+            setFilteredDots(dots.filter((item) => {
+                return item.leagues.split(';').findIndex((item) => {
+                    return parseInt(item.toString()) === n;
+                }) !== -1;
+            }));
+        }
+        else {
+            setFilteredDots(dots.filter((item) => {
+                return item.leagues.split(';').findIndex((item) => {
+                    return parseInt(item.toString()) === n+3;
+                }) !== -1;
+            }));
+        }
+    }
+
     useEffect(() => {
+        getClubLocations()
+            .then((res) => {
+                const allDots = res?.data?.result;
+                setDots(allDots);
+                setFilteredDots(allDots.filter((item) => {
+                    return item.leagues.split(';').findIndex((item) => {
+                        return parseInt(item.toString()) < 4;
+                    }) !== -1;
+                }));
+            });
+
         getAllClubs()
             .then(res => {
                 if(res?.data?.result) {
                     const allClubs = res.data.result;
+                    console.log(allClubs);
                     setClubs(allClubs);
                     setFilteredClubs(allClubs.filter((item) => {
                         return item.sex;
                     }));
-                    setDots(allClubs);
                     setLoaded(true);
-
-                    /* Divide clubs by coordinates */
-                    allClubs
-                        .sort((a, b) => {
-                            if(a.x > b.x) return 1;
-                            else if(a.x < b.x) return -1;
-                            else if(a.y > b.y) return 1;
-                            else return -1;
-                        });
-
-                    let prevX = -1, prevY = -1;
-                    for(let i=0; i<allClubs.length; i++) {
-                        if(prevX > 0) {
-                            if((prevX === allClubs[i].x)&&(prevY === allClubs[i].y)) {
-                                if(i > 1) allClubs.splice(i+1, 0, {});
-                            }
-                        }
-
-                        prevX = allClubs[i].x;
-                        prevY = allClubs[i].y;
-                    }
-                    console.log(allClubs);
                 }
             });
     }, []);
-
-    const sortClubsByCoordinates = (a, b) => {
-        if(a.x > b.x) {
-            return 1;
-        }
-        else if(a.x < b.x) {
-            return 0;
-        }
-        else {
-            return 1;
-        }
-    }
 
     useEffect(() => {
         if(clubs.length) {
@@ -88,30 +99,47 @@ const MapContent = () => {
 
     useEffect(() => {
         if(loaded) {
-            clubsWrapper.current.style.opacity = "0";
-
+            if(window.innerWidth > 996) clubsWrapper.current.style.opacity = "0";
             if(sex[0] === 0) {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
                         if(!league[0]) return item.sex;
                         else return item.sex && parseInt(item.league) === league[0];
                     }));
-                    clubsWrapper.current.style.opacity = "1";
+                    if(league[0]) setDotsByLeague(1, league[0]);
+                    else setMaleDots();
+
+                    if(window.innerWidth > 996) clubsWrapper.current.style.opacity = "1";
                 }, 500);
             }
             else {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
                         if(!league[0]) return !item.sex;
-                        else return !item.sex && parseInt(item.league) === league[0];
+                        else return !item.sex && parseInt(item.league) === league[0]+3;
                     }));
-                    clubsWrapper.current.style.opacity = "1";
+                    if(league[0]) setDotsByLeague(0, league[0]);
+                    else setFemaleDots();
+
+                    if(window.innerWidth > 996) clubsWrapper.current.style.opacity = "1";
                 }, 500);
             }
         }
     }, [sex, league]);
 
-    const showClubsOnMap = (index) => {
+    const hideClubsOnMap = () => {
+        document.querySelectorAll(".mapDot__btn").forEach((item, i, array) => {
+            item.style.background = "#fff";
+        });
+
+        document.querySelectorAll(".mapDot__btn__details").forEach((item, i, array) => {
+            item.style.display = "none";
+        });
+    }
+
+    const showClubsOnMap = (e, index) => {
+        e.stopPropagation();
+
         document.querySelectorAll(".mapDot__btn").forEach((item, i, array) => {
             item.style.background = "#fff";
             if(i === array.length-1) {
@@ -125,6 +153,25 @@ const MapContent = () => {
                 document.getElementById(`mapDot__btn-${index}`).style.display = "flex";
             }
         });
+    }
+
+    const getClubsByDot = (x, y) => {
+        setCurrentDotClubs(clubs.filter((item) => {
+            if(item.x === x && item.y === y) {
+                if(league[0]) {
+                    if(sex[0] === 0) {
+                        return (item.sex && item.league === league[0])
+                    }
+                    else {
+                        return (!item.sex && item.league === league[0]+3)
+                    }
+                }
+                else {
+                    return (sex[0] === 0 && item.sex) || (sex[0] === 1 && !item.sex);
+                }
+            }
+            else return false;
+        }));
     }
 
     return <main className="mapContent">
@@ -239,34 +286,52 @@ const MapContent = () => {
             <section className="mapImg">
                 <img className="mapImg__img" src={poland} alt="mapa-polski" />
 
-                {dots.map((item, index) => {
+                {filteredDots.map((item, index) => {
                     return <section className="mapDot" key={index} style={{top: `${item.y}%`, left: `${item.x}%`}}>
-                        <button className="mapDot__btn" id={`mapDot-${index}`} onClick={() => { showClubsOnMap(index); }}>
-                            <span className="mapDot__btn__details" id={`mapDot__btn-${index}`}>
+                        <button className="mapDot__btn" id={`mapDot-${index}`} onClick={(e) => { getClubsByDot(item.x, item.y); showClubsOnMap(e, index); }}>
+                            <span className="mapDot__btn__details"
+                                  style={{
+                                      width: currentDotClubs.length * (window.innerWidth > 996 ? 100 : 60) + "px"
+                                  }}
+                                  id={`mapDot__btn-${index}`}>
                                 {/* Show club's logos */}
+                                {currentDotClubs?.map((item, index) => {
+                                    return <figure className="mapDot__btn__details__imgWrapper" key={index}>
+                                        <img className="mapDot__btn__details__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="logo" />
+                                    </figure>
+                                })}
                             </span>
                         </button>
                     </section>
                 })}
             </section>
 
+            {/* Desktop */}
             <section className="mapContent__clubs d-desktop-900" ref={clubsWrapper}>
-                {filteredClubs.map((item, index) => {
-                    return <figure key={index}>
+                {filteredClubs.length ? filteredClubs.map((item, index) => {
+                    return <figure key={index} className="mapContent__clubs__imgWrapper">
                         <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
                     </figure>
-                })}
+                }) : <h3 className="noClubsHeader">
+                    Brak klubów
+                </h3>}
             </section>
-            <div className="d-mobile-900-flex">
-                <div className="d-mobile-900-flex" ref={clubCarousel}>
-                    <div>
-                        {filteredClubs.map((item, index) => {
-                            return <div key={index}>
-                                <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
-                            </div>
-                        })}
-                    </div>
-                </div>
+
+            {/* Mobile */}
+            <div className="d-mobile-900 mapContent__clubs--mobile">
+                <ReactSiema
+                    perPage={3}
+                    ref={(siema) => { slider = siema }}
+                    loop={true}
+                >
+                    {filteredClubs.length ? filteredClubs?.map((item, index) => {
+                        return <div key={index}>
+                            <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
+                        </div>
+                    }) : <h2 className="noClubsHeader">
+                        Brak klubów
+                    </h2>}
+                </ReactSiema>
             </div>
         </section>
     </main>

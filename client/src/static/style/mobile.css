@@ -597,6 +597,10 @@
         display: none !important;
     }
 
+    .d-mobile-900 {
+        display: block !important;
+    }
+
     .d-mobile-900-flex {
         display: flex !important;
     }
@@ -853,6 +857,30 @@
 
     .chat__message__header__name {
         font-size: 15px;
+    }
+
+    .mapContent__clubs--mobile {
+        width: 100%;
+    }
+
+    .mapContent__clubs__img {
+        height: 80px;
+        width: auto;
+    }
+
+    .mapDot__btn__details {
+        height: 50px;
+        top: -15px;
+    }
+
+    .mapDot__btn__details::before {
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #fff;
+    }
+
+    .d-mobile-900 .noClubsHeader {
+        width: 85vw !important;
     }
 }
 

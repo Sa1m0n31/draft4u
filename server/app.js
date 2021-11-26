@@ -120,6 +120,9 @@ app.get("/zawodnik", (req, res) => {
 app.get("/klub", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+app.get("/mapa", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 app.get("/dodaj-video", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

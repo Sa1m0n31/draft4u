@@ -24,7 +24,7 @@ router.get("/get-all", (request, response) => {
 });
 
 router.get("/get-locations", (request, response) => {
-    const query = 'SELECT x, y FROM clubs GROUP BY(x, y)';
+    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c JOIN images i ON c.logo = i.id GROUP BY x, y`;
 
     db.query(query, [], (err, res) => {
         if(res) {
