@@ -67,6 +67,10 @@ function App() {
         <Map />
     </Route>
 
+      <Route path="/return">
+
+      </Route>
+
     {/* User routes */}
       <Route path="/rozpocznij">
           <UserWrapper page={1} />
@@ -92,7 +96,7 @@ function App() {
       <Route path="/notyfikacje">
           <UserWrapper page={8} />
       </Route>
-      <Route path="/blog">
+      <Route path="/wpis">
           <UserWrapper page={9} />
       </Route>
       <Route path="/zmien-haslo-zawodnika">

@@ -609,7 +609,7 @@ const CreateSquadPage = ({club}) => {
                                             </section>
                                             <section className="createSquad__squad__item__data__section">
                                                 <h4 className="createSquad__squad__item__data__key">
-                                                    Honorarium
+                                                    Wynagrodzenie
                                                 </h4>
                                                 <h4 className="createSquad__squad__item__data__value">
                                                     {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}

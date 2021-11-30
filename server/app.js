@@ -42,7 +42,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(cors({
     credentials: true,
     //origin: "*"
-    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'http://skylo-test4.pl']
+    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', 'http://skylo-test4.pl']
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -133,6 +133,19 @@ app.get("/zaplac", (req, res) => {
 app.get("/subskrypcja-przedluzona", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+app.get("/zmien-haslo-zawodnika", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zmien-haslo-administratora", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zmien-haslo-klubu", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/wpis/*", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
 
 app.get("/konto-klubu", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
@@ -179,6 +192,22 @@ app.get("/dodaj-powiadomienie", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 app.get("/lista-powiadomien", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/lista-klubow", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/dodaj-klub", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/lista-artykulow", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/dodaj-artykul", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+app.get("/return", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 

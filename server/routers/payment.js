@@ -27,6 +27,8 @@ router.post("/register-payment", (request, response) => {
     const { amount, method, email, userId, type } = request.body;
     let paymentType;
 
+    console.log(request.body);
+
     if(type === 'miesięczny') paymentType = 1;
     else if(type === '3 miesięczny') paymentType = 2;
     else paymentType = 3;
@@ -57,10 +59,10 @@ router.post("/register-payment", (request, response) => {
                     language: "pl",
                     encoding: "utf-8",
                     method: method,
-                    urlReturn: "https://platnosci.skylo-test1.pl/return.html",
-                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
-                    // urlReturn: "https://drafcik.skylo-test1.pl",
+                    // urlReturn: "https://platnosci.skylo-test1.pl/return.html",
                     // urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    urlReturn: "https://drafcik.skylo-test1.pl/return",
+                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
                     sign: gen_hash
                 };
             }
@@ -76,15 +78,13 @@ router.post("/register-payment", (request, response) => {
                     country: "PL",
                     language: "pl",
                     encoding: "utf-8",
-                    urlReturn: "https://platnosci.skylo-test1.pl/return.html",
-                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
-                    // urlReturn: "https://drafcik.skylo-test1.pl",
+                    // urlReturn: "https://platnosci.skylo-test1.pl/return.html",
                     // urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    urlReturn: "https://drafcik.skylo-test1.pl/return",
+                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
                     sign: gen_hash
                 };
             }
-
-            console.log(postData);
 
             got.post("https://sandbox.przelewy24.pl/api/v1/transaction/register", {
                 json: postData,
@@ -198,34 +198,6 @@ router.post("/verify", (request, response) => {
                 });
             }
         });
-});
-
-router.post("/charge-card", (request, response) => {
-   const { token, cardNumber, cardDate, cvv, clientName } = request.body;
-
-   const postData = {
-       transactionToken: token, cardNumber, cardDate: "042024", cvv, clientName
-   }
-
-   console.log(postData);
-
-   response.send({
-       result: postData
-   });
-
-   got.post("https://sandbox.przelewy24.pl/api/v1/card/pay", {
-       json: postData,
-       responseType: 'json',
-       headers: {
-           'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm'
-       }
-   })
-       .then((res) => {
-          console.log(res.body);
-          response.send({
-              result: 1
-          });
-       });
 });
 
 module.exports = router;

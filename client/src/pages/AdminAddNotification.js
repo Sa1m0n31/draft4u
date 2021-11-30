@@ -4,7 +4,6 @@ import PanelMenu from "../components/PanelMenu";
 import {getClubs, getUsers} from "../helpers/admin";
 import {isElementInArray} from "../helpers/others";
 import Dropzone from "react-dropzone-uploader";
-import ProfileImagePreview from "../components/ProfileImagePreview";
 import trashIcon from '../static/img/trash-black.svg'
 import {addNotification, getNotification, updateNotification} from "../helpers/notification";
 import settings from "../settings";

@@ -28,16 +28,6 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
         setAmount(cost);
     }, []);
 
-    useEffect(() => {
-        axios.get('https://sandbox.przelewy24.pl/inchtml/ajaxPayment/ajax.js?token=DAE5321760-1E4253-191246-7F58D19E7C')
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
-
     const changePaymentItem = (n) => {
         if(n === 1) {
             if(paymentItem === 1) {
@@ -89,11 +79,36 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
         registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
             .then((res) => {
                 const token = res.data.result;
-                chargeCard(token, cardNumber, cardDate, cvv, `${firstName} ${lastName}`)
-                    .then((res) => {
-                        console.log(res.data);
-                    });
             });
+    }
+
+    useEffect(() => {
+        /* Register payment for card method */
+        registerPayment(amount ? amount : cost, 218, email, userId, type)
+            .then((res) => {
+                const token = res.data.result;
+                const sign = res.data.sign;
+
+                document.getElementById("P24FormContainer").setAttribute('data-sign', sign);
+
+                const script = document.createElement('script');
+
+                script.src = `https://sandbox.przelewy24.pl/inchtml/ajaxPayment/ajax.js?token=${token}`;
+                // script.src = 'https://platnosci.skylo-test1.pl/main.js'
+                script.async = true;
+
+                setTimeout(() => {
+                    document.body.appendChild(script);
+                }, 5000);
+            });
+    }, []);
+
+    function finishCardPayment(res) {
+        console.log(res);
+    }
+
+    function paymentCardError(err) {
+        console.log(err);
     }
 
     return <main className="payment siteWidthSuperNarrow">
@@ -145,20 +160,19 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
                 <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
             </button>
 
-            {paymentItem === 2 ? <div
+            <div
                 id="P24FormContainer"
-                data-sign={p24Sign}
+                data-sign=""
                 data-successCallback="finishCardPayment"
                 data-failureCallback="paymentCardError"
-                data-dictionary={{
-        cardHolderLabel: "string",
-        cardNumberLabel: 0,
-        cvvLabel: 0,
-        expDateLabel: "string",
-        payButtonCaption: "string",
-        threeDSAuthMessage: "string"
-}} >
-            </div> : ""}
+                data-dictionary='{
+        "cardHolderLabel": "string",
+        "cardNumberLabel": "0",
+        "cvvLabel": "0",
+        "expDateLabel": "string",
+        "payButtonCaption": "string"
+}'>
+            </div>
 
             {/*{paymentItem === 2 ? <main className="payment__item__formWrapper">*/}
             {/*    <form className="payment__item__form">*/}

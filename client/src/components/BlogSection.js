@@ -23,7 +23,7 @@ const BlogSection = () => {
         <p className="blogSection__extract">
             {article.excerpt}
         </p>
-        <a className="button button--readMore" href={`/blog/${article?.title ? convertStringToURL(article.title) : ""}`}>
+        <a className="button button--readMore" href={`/wpis/${article?.title ? convertStringToURL(article.title) : ""}`}>
             Czytaj więcej <span className="gold bold"> > </span>
         </a>
     </section>

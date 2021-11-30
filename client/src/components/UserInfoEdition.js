@@ -199,7 +199,7 @@ const UserInfoEdition = ({player, theme, favorite}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Honorarium
+                    Wynagrodzenie
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--salary">
                     {values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}

@@ -81,7 +81,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item comparedPlayer__section__item--salary">
                 <span className="comparedPlayer__section__key">
-                    Honorarium
+                    Wynagrodzenie
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.salary_from ? player.salary_from + " - " + player.salary_to : "-"}
