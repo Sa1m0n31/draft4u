@@ -5,7 +5,7 @@ import PaymentForm from "../components/PaymentForm";
 import {getPaymentMethods} from "../helpers/payment";
 import {getAllCoupons} from "../helpers/coupon";
 
-const PaymentPage = ({user}) => {
+const PaymentPage = ({user, isLocal}) => {
     const [cost, setCost] = useState(0);
     const [type, setType] = useState("");
     const [paymentMethods, setPaymentMethods] = useState([]);
@@ -42,7 +42,7 @@ const PaymentPage = ({user}) => {
     }, []);
 
     return <div className="container container--light">
-        <Header player={true} loggedIn={true} menu="dark" profileImage={user.file_path} />
+        <Header player={true} loggedIn={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
         <PaymentForm cost={cost}
                      type={type}
                      methods={paymentMethods}

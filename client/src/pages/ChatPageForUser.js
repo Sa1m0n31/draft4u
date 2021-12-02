@@ -14,7 +14,7 @@ import leftArrowWhite from '../static/img/left-arrow-white.svg'
 import {getUserById, getUserData} from "../helpers/user";
 import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 
-const ChatPageForUser = ({user}) => {
+const ChatPageForUser = ({user, isLocal}) => {
     const [scrollbarList, setScrollbarList] = useState([1]);
     const [scrollbarChat, setScrollbarChat] = useState([100]);
     const [mobile, setMobile] = useState(false);
@@ -266,7 +266,7 @@ const ChatPageForUser = ({user}) => {
     }
 
     return <div className="container container--light">
-        <Header loggedIn={true} player={true} menu="dark" theme="light" profileImage={user?.file_path} messageRead={messages} />
+        <Header loggedIn={true} player={true} menu="dark" theme="light" profileImage={user?.file_path} messageRead={messages} isLocal={isLocal} />
 
         {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">

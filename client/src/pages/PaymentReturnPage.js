@@ -3,9 +3,9 @@ import Header from "../components/Header";
 import PaymentForm from "../components/PaymentForm";
 import Footer from "../components/Footer";
 
-const PaymentReturnPage = ({user}) => {
+const PaymentReturnPage = ({user, isLocal}) => {
     return <div className="container container--light">
-        <Header player={true} loggedIn={true} menu="dark" profileImage={user.file_path} />
+        <Header player={true} loggedIn={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
         <main className="pageContent pageContent--paymentReturn">
             <h2 className="pageContent__header">
                 Twoja subskrypcja została pomyślnie przedłużona

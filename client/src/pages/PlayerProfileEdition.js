@@ -6,9 +6,9 @@ import PlayerInfoEdition from "../components/PlayerInfoEdition";
 import ClubSlider from "../components/ClubSlider";
 import PlayerVideoView from "../components/PlayerVideosView";
 
-const PlayerProfileEdition = ({user}) => {
+const PlayerProfileEdition = ({user, isLocal}) => {
     return <div className="container container--light">
-        <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} />
+        <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
 
         <UserInfoEdition player={user} />
         <PlayerInfoEdition player={user} />

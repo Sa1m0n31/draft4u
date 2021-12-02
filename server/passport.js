@@ -2,9 +2,11 @@ const db = require("./database/db");
 const express = require("express");
 const crypto = require('crypto');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // const FACEBOOK_APP_ID = '398060821923746';
 const FACEBOOK_APP_ID = '915512152656525';
@@ -50,7 +52,6 @@ const init = (passport) => {
         db.query(query, values, (err, res) => {
            if(res) {
                const admin = res.rows[0];
-               console.log(admin);
                if(!admin) {
                    return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
                }
@@ -64,51 +65,108 @@ const init = (passport) => {
         });
     }
 
-    const googleAuth = () => {
-
-    }
-
-    const facebookAuth = (accessToken, refreshToken, profile, done) => {
+    const googleAuth = (accessToken, refreshToken, profile, done) => {
         return done(null, profile);
     }
 
     passport.use('admin-local', new LocalStrategy(adminAuth));
 
     passport.use('user-local', new LocalStrategy(userAuth));
-    passport.use(new FacebookStrategy({
+
+    passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_SECRET,
-        callbackURL: "https://drafcik.skylo-test1.pl"
-    }, facebookAuth));
+        callbackURL: "http://localhost:5000/auth/facebook/callback",
+        profileFields: ['id', 'emails', 'name']
+    }, function(accessToken, refreshToken, profile, done) {
+        return done(null, profile);
+    }));
+
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_APP_ID,
         clientSecret: GOOGLE_SECRET,
-        callbackURL: "https://drafcik.skylo-test1.pl"
+        callbackURL: "http://localhost:5000/auth/google/callback"
     }, googleAuth));
 
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        if(user.name) done(null, user); /* Facebook */
+        else done(null, user.id); /* Local */
     });
 
     passport.deserializeUser((id, done) => {
-        let query;
+        let query, values, hash;
 
-        if(isNumeric(id.toString())) {
+        if(id.name) {
+            /* Facebook */
+            const uuid = uuidv4();
+            hash = crypto.createHash('sha256').update(id.id).digest('hex');
+            query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+            values = [hash, id.name.givenName, id.name.familyName];
+            db.query(query, values, (err, res) => {
+                if(res) {
+                    /* Add new identity */
+                    if(res.rows) {
+                        const userId = res.rows[0].id;
+                        query = `INSERT INTO identities VALUES ($1, $2, 2, $3, true) RETURNING user_id`;
+                        values = [uuid, userId, hash];
+
+                        db.query(query, values, (err, res) => {
+                            if(res) {
+                                done(null, uuid);
+                            }
+                            else {
+                                done(null, null);
+                            }
+                        });
+                    }
+                    else {
+                        done(null, null);
+                    }
+                }
+                else {
+                    /* Error - user from Facebook already exists */
+                    if(parseInt(err.code) === 23505) {
+                        const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1`;
+                        const values = [hash];
+
+                        db.query(query, values, (err, res) => {
+                           console.log(res.rows[0]);
+                           if(res) {
+                               done(null, res.rows[0].id);
+                           }
+                           else {
+                               done(null, null);
+                           }
+                        });
+                    }
+                    else {
+                        done(null, null);
+                    }
+                }
+            });
+        }
+        else if(isNumeric(id.toString())) {
             /* Admin */
             query = 'SELECT id FROM admins WHERE id = $1';
+            values = [id];
+
+            db.query(query, values, (err, res) => {
+                if(res) {
+                    if(res.rows.length) done(null, res.rows[0].id);
+                }
+            });
         }
         else {
-            /* User */
+            /* User or club */
             query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON i.id = c.id WHERE i.id = $1';
+            values = [id];
+
+            db.query(query, values, (err, res) => {
+                if(res) {
+                    if(res.rows.length) done(null, res.rows[0].id);
+                }
+            });
         }
-
-        const values = [id];
-
-        db.query(query, values, (err, res) => {
-            if(res) {
-                if(res.rows.length) done(null, res.rows[0].id);
-            }
-        });
     });
 }
 

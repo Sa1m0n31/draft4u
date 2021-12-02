@@ -32,7 +32,7 @@ import {
 } from "../helpers/notification";
 import {getIdentityById, getUserById, getUserData} from "../helpers/user";
 
-const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, messageRead}) => {
+const Header = ({loggedIn, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
 
@@ -73,6 +73,10 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
     }, []);
 
     useEffect(() => {
+        console.log(player);
+    }, []);
+
+    useEffect(() => {
         if(notifications?.length) {
             setNewNotifications(notifications.filter((item) => {
                 return !item.read;
@@ -90,7 +94,6 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
         else if(player) {
             getUserNotifications()
                 .then((res) => {
-                    console.log(res?.data?.result);
                     setNotifications(res?.data?.result);
                 });
         }
@@ -134,7 +137,8 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
 
             getUserMessages()
                 .then((res) => {
-                   setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                   console.log(res?.data?.result);
+                    setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                 });
         }
     }, [player]);
@@ -179,7 +183,6 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
         else if(player) {
             getUserMessages()
                 .then((res) => {
-                    console.log(res?.data?.result);
                     setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                 });
         }
@@ -385,8 +388,8 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
         </menu>
 
         {/* REGISTER MODAL */}
-        <section className="registerModal d-desktop" ref={registerModal}>
-            <RegisterModal />
+        <section className={registerFromThirdParty ? "registerModal registerModal--thirdParty d-desktop" : "registerModal d-desktop"} ref={registerModal}>
+            <RegisterModal registerFromThirdParty={registerFromThirdParty} mobile={mobile} />
         </section>
 
         <a className="siteHeader__logo" href="/">
@@ -476,8 +479,8 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                     </span> : ""}
                 </button>
 
-                {currentMenuVisible === 0 && notifications.length ? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages profileMenu--notifications" : "profileMenu profileMenu--messages profileMenu--notifications"}>
-                    <ul className="profileMenu__list">
+                {currentMenuVisible === 0? <menu className={club ? "profileMenu profileMenu--club profileMenu--messages profileMenu--notifications" : "profileMenu profileMenu--messages profileMenu--notifications"}>
+                    {notifications.length ? <ul className="profileMenu__list">
                         {notifications?.map((item, index) => {
                             if(index < 5) {
                                 return <li className="profileMenu__list__item" key={index}>
@@ -499,7 +502,9 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                             }
                             else return "";
                         })}
-                    </ul>
+                    </ul> : <span className="emptyMenu center">
+                        Brak powiadomień
+                    </span> }
                 </menu> : ""}
 
                 <button className="siteHeader__player__btn" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(1); }}>
@@ -532,15 +537,15 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                             }
                             else return "";
                         }) : <aside className="profileMenu__noMessages">
-                            <h3 className="profileMenu__noMessages__header">
+                            <h3 className="emptyMenu">
                                 Nie posiadasz jeszcze żadnych wiadomości
                             </h3>
                         </aside>}
                     </ul>
-                    <a className={club ? "messageMenu__bottom" : "messageMenu__bottom messageMenu__bottom--player"} href={club ? '/wiadomosci' : '/czat'}>
+                    {messages.length ? <a className={club ? "messageMenu__bottom" : "messageMenu__bottom messageMenu__bottom--player"} href={club ? '/wiadomosci' : '/czat'}>
                         Zobacz wszystkie wiadomości
                         <img className="messageMenu__bottom__img" src={arrowRightGold} alt="dalej" />
-                    </a>
+                    </a> : ""}
                 </menu> : ""}
 
                 <button className="siteHeader__player__btn siteHeader__player__btn--profile d-desktop"
@@ -562,10 +567,10 @@ const Header = ({loggedIn, menu, theme, clubPage, player, club, profileImage, me
                                     Edytuj profil
                                 </a>
                             </> : ""}
-                            <a className="profileMenu__list__link" href={club ? "/zmien-haslo-klubu" : "/zmien-haslo-zawodnika"}>
+                            {club || isLocal ?  <a className="profileMenu__list__link" href={club ? "/zmien-haslo-klubu" : "/zmien-haslo-zawodnika"}>
                                 <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
                                 Zmiana hasła
-                            </a>
+                            </a> : ""}
                             <button className="profileMenu__list__link" onClick={() => { logout(); }}>
                                 <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />
                                 Wyloguj się

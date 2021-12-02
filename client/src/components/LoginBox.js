@@ -67,15 +67,15 @@ const LoginBox = () => {
             lub
         </span>
 
-        <button className="button button--facebook" onClick={() => { loginFacebook(); }}>
+        <a className="button button--facebook" href="http://localhost:5000/auth/facebook">
             <img className="button--facebook__img" src={facebookIcon} alt="facebook" />
             Continue with Facebook
-        </button>
+        </a>
 
-        <button className="button button--google" onClick={() => { loginGoogle(); }}>
+        <a className="button button--google" href="http://localhost:5000/auth/google">
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
-        </button>
+        </a>
         <button className="button button--apple" onClick={() => { loginApple(); }}>
             <img className="button--apple__img" src={appleBtn} alt="apple" />
             Continue with Apple

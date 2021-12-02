@@ -3,7 +3,11 @@ const router = express.Router();
 const db = require("../database/db");
 
 router.get("/get-user-messages", (request, response) => {
-    const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type FROM
+    console.log("/get-user-mes");
+    console.log(request.user);
+    if(request.user) {
+        console.log(request.user);
+        const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type FROM
                     (
                         SELECT *, ROW_NUMBER() OVER(PARTITION BY chat_id ORDER BY created_at DESC) AS row
                         FROM messages
@@ -12,20 +16,26 @@ router.get("/get-user-messages", (request, response) => {
                     LEFT OUTER JOIN read_messages rm ON m.chat_id = rm.chat_id
                     LEFT OUTER JOIN images img ON c.logo = img.id
                     WHERE SPLIT_PART(m.chat_id, ';', 2) = $1 AND m.row = 1 ORDER BY m.created_at DESC, rm.type DESC`;
-    const values = [request.user];
+        const values = [request.user];
 
-    db.query(query, values, (err, res) => {
-       if(res) {
-           response.send({
-               result: res.rows
-           });
-       }
-       else {
-           response.send({
-               result: 0
-           });
-       }
-    });
+        db.query(query, values, (err, res) => {
+            if(res) {
+                response.send({
+                    result: res.rows
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        });
+    }
+    else {
+        response.send({
+            result: 0
+        });
+    }
 });
 
 router.get("/get-club-messages", (request, response) => {

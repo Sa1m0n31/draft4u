@@ -9,7 +9,7 @@ import {changeUserPassword} from "../helpers/user";
 import {changeClubPassword} from "../helpers/club";
 import {isPasswordStrength} from "../helpers/validation";
 
-const ChangePassword = ({user, club}) => {
+const ChangePassword = ({user, club, isLocal}) => {
     const [oldPassword, setOldPassword] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -51,7 +51,7 @@ const ChangePassword = ({user, club}) => {
     }
 
     return <div className={club ? "container container--dark" : "container container--light"}>
-        <Header loggedIn={true} club={!!club} player={!!user} menu={club ? "light" : "dark"} theme={club ? "dark" : "light"} profileImage={club ? club.file_path : user.file_path} />
+        <Header loggedIn={true} club={!!club} player={!!user} menu={club ? "light" : "dark"} theme={club ? "dark" : "light"} profileImage={club ? club.file_path : user.file_path} isLocal={isLocal} />
 
         <main className="changePassword">
             <section className="resetPassword resetPassword--newPassword">

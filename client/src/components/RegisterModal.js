@@ -11,7 +11,7 @@ import {isEmailAvailable} from "../helpers/user";
 import {registerUser} from "../helpers/auth";
 import DraftLoader from "./Loader";
 
-const RegisterModal = ({mobile}) => {
+const RegisterModal = ({mobile, registerFromThirdParty}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -48,6 +48,14 @@ const RegisterModal = ({mobile}) => {
     useEffect(() => {
        setSexesVisible(false);
     }, [sex]);
+
+    useEffect(() => {
+        if(registerFromThirdParty) {
+            setCurrentStep(2);
+            formStep1.current.style.display = "none";
+            formStep2.current.style.display = "block";
+        }
+    }, [registerFromThirdParty]);
 
     const resetErrors = (e) => {
         if(e) e.preventDefault();
@@ -195,10 +203,10 @@ const RegisterModal = ({mobile}) => {
         <img className={mobile ? "d-none" : "registerModal__img"} src={playerImg} alt="siatkarz" />
 
         <h3 className="registerModal__header">
-            Rejestracja
+            {registerFromThirdParty ? "Dokończ rejestrację" : "Rejestracja"}
         </h3>
         {userRegistered === -1 ? <h4 className="registerModal__step">
-            Krok {currentStep} z 2
+            {registerFromThirdParty ? "Uzupełnij potrzebne dane" : `Krok ${currentStep} z 2`}
         </h4> : ""}
 
         {loading ? <div className="loaderWrapper--register">

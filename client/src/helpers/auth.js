@@ -42,8 +42,13 @@ const loginFacebook = () => {
     })
         .then(res => {
             console.log(res.data.result);
-        });
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
+
+const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
 
 const loginGoogle = () => {
     return axios.get(`${API_URL}/auth/google`)

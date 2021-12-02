@@ -32,6 +32,7 @@ import Favorites from "./pages/Favorites";
 import ChatPage from "./pages/ChatPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminWrapper from "./wrappers/AdminWrapper";
+import RegisterFromThirdParty from "./pages/RegisterFromThirdParty";
 
 function App() {
   return <Router>
@@ -65,6 +66,9 @@ function App() {
     </Route>
     <Route path="/mapa">
         <Map />
+    </Route>
+    <Route path="/zarejestruj-przez-facebooka">
+        <RegisterFromThirdParty thirdParty="fb" />
     </Route>
 
       <Route path="/return">

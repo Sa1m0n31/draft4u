@@ -6,16 +6,15 @@ import BlogSection from "../components/BlogSection";
 import ClubActivities from "../components/ClubActivities";
 import MyAccountStartBottom from "../components/MyAccountStartBottom";
 
-const MyAccountStart = ({user}) => {
+const MyAccountStart = ({user, isLocal}) => {
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
-        console.log(user);
         setFullName(user.first_name + " " + user.last_name);
     }, []);
 
     return <div className="container container--light">
-        <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} />
+        <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
 
         <MyAccountStartHeader fullName={fullName} image={user.file_path} />
         <BlogSection />

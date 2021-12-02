@@ -99,6 +99,7 @@ router.get('/verification', (request, response) => {
 
 router.get("/auth", (request, response) => {
     if(request.user) {
+        console.log(request.user);
         if(isNumeric(request.user.toString())) {
            /* Admin */
             response.send({result: 2});
@@ -137,17 +138,37 @@ router.post("/admin",
     });
 });
 
-router.post("/facebook", cors(), passport.authenticate('facebook', {
-    failureRedirect: '/#!/info',
-    scope:['email']
+router.get("/facebook", cors(), passport.authenticate('facebook', {
+    failureRedirect: '/#!/info/dsadasds',
+    successRedirect: 'http://localhost:3000',
+    session: true,
+    scope:['public_profile', 'email']
+}));
+
+router.get("/facebook/callback",  passport.authenticate("facebook", {
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "/fail"
 }), (request, response) => {
-    request.headers["access-control-allow-origin"] = "https://drafcik.skylo-test1.pl";
-    response.headers["access-control-allow-origin"] = "https://drafcik.skylo-test1.pl";
+    console.log("HELLO FROM CALLBACK");
 });
 
-router.get("/google", cors(), (request, response) => {
-    response.redirect(`https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https%3A%2F%2Fdrafcik.skylo-test1.pl&scope=openid%20profile%20email&client_id=${GOOGLE_APP_ID}&flowName=GeneralOAuthFlow`);
+router.get("/facebook/test", (request, response) => {
+    console.log("HELLO FROM TEST");
 });
+
+// router.get("/google", cors(), (request, response) => {
+//     response.redirect(`https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https%3A%2F%2Fdrafcik.skylo-test1.pl&scope=openid%20profile%20email&client_id=${GOOGLE_APP_ID}&flowName=GeneralOAuthFlow`);
+// });
+
+router.get('/google',
+    passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+router.get('/google/callback',
+    passport.authenticate('google', { failureRedirect: '/error' }),
+    function(req, res) {
+        // Successful authentication, redirect success.
+        res.redirect('/success');
+    });
 
 const add14DaysSubscription = (userId) => {
     const query = `INSERT INTO subscriptions VALUES ($1, NOW() + INTERVAL '14 DAY', 0)`;

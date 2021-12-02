@@ -44,6 +44,14 @@ const getUserData = () => {
 
 const putConfig = { headers: {'Content-Type': 'application/json'} };
 
+const updateUserEmail = (email) => {
+    return axios.put(`${API_URL}/user/update-user-email`, {
+        email
+    }, {
+        withCredentials: true
+    });
+}
+
 const updateUserLicenceNumber = (licenceNumber) => {
     return axios.put(`${API_URL}/user/update-user-license-number`, {
         licenceNumber
@@ -223,7 +231,7 @@ const getIdentityById = (id) => {
 }
 
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
-    updateUserLicenceNumber, updateUserPhoneNumber,
+    updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,

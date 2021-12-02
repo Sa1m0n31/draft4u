@@ -8,7 +8,7 @@ import {getArticleBySlug} from "../helpers/blog";
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';
 
-const SingleArticle = ({user}) => {
+const SingleArticle = ({user, isLocal}) => {
     const [loaded, setLoaded] = useState(false);
     const [article, setArticle] = useState({});
     const [content, setContent] = useState(null);
@@ -25,7 +25,7 @@ const SingleArticle = ({user}) => {
 
     return <div className="container container--light">
         {loaded ? <>
-            <Header loggedIn={true} player={true} theme="light" menu="dark" profileImage={user.file_path} />
+            <Header loggedIn={true} player={true} theme="light" menu="dark" profileImage={user.file_path} isLocal={isLocal} />
 
             <main className="single">
                 <figure className="single__imgWrapper">

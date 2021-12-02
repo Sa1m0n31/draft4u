@@ -6,7 +6,7 @@ import LoadingPage from "./LoadingPage";
 import settings from "../settings";
 import example from "../static/img/profile-picture.png";
 
-const Notifications = ({club, user}) => {
+const Notifications = ({club, user, isLocal}) => {
     const [loaded, setLoaded] = useState(false);
     const [updateNotifications, setUpdateNotifications] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -41,7 +41,7 @@ const Notifications = ({club, user}) => {
 
     return <div className={club ? "container container--dark" : "container container--light"}>
         {loaded ? <>
-            <Header loggedIn={true} club={!!club} player={!!user} menu={club ? "light" : "dark"} theme={club ? "dark" : "light"} profileImage={club ? club.file_path : user.file_path} />
+            <Header loggedIn={true} club={!!club} player={!!user} menu={club ? "light" : "dark"} theme={club ? "dark" : "light"} profileImage={club ? club.file_path : user.file_path} isLocal={isLocal} />
 
             <main className="notifications">
                 <h2 className="notifications__header">

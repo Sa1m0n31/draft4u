@@ -7,7 +7,7 @@ import check from '../static/img/check.svg'
 import { Range, getTrackBackground } from 'react-range';
 import {
     updateUserBirthday,
-    updateUserClub, updateUserLicenceNumber,
+    updateUserClub, updateUserEmail, updateUserLicenceNumber,
     updateUserPhoneNumber,
     updateUserSalary
 } from "../helpers/user";
@@ -17,6 +17,7 @@ import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
 import balance from "../static/img/balance.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
+import {isMail} from "../helpers/validation";
 
 const UserInfoEdition = ({player, theme, favorite}) => {
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
@@ -28,6 +29,7 @@ const UserInfoEdition = ({player, theme, favorite}) => {
     const [email, setEmail] = useState(player.email);
     const [licence, setLicence] = useState("");
 
+    const [editEmail, setEditEmail] = useState(false);
     const [editAge, setEditAge] = useState(false);
     const [editPhoneNumber, setEditPhoneNumber] = useState(false);
     const [editClub, setEditClub] = useState(false);
@@ -63,6 +65,13 @@ const UserInfoEdition = ({player, theme, favorite}) => {
     const changeUserPhoneNumber = () => {
         setEditPhoneNumber(false);
         updateUserPhoneNumber(phoneNumber);
+    }
+
+    const changeUserEmail = () => {
+        if(isMail(email)) {
+            setEditEmail(false);
+            updateUserEmail(email);
+        }
     }
 
     const changeUserSalary = () => {
@@ -132,31 +141,42 @@ const UserInfoEdition = ({player, theme, favorite}) => {
             </label>
             {!(theme === 'dark') ? <>
                 <label className="userInfoEdition__form__field">
-                <span className="userInfoEdition__key">
-                    Mail
-                </span>
+                    <span className="userInfoEdition__key">
+                        Mail
+                    </span>
                     <span className="userInfoEdition__value">
-                    {email}
-                </span>
+                        <label className={editEmail ? "label--edit" : ""}>
+                                <input value={email.split('@')[1] !== 'facebookauth.com' ? email : '-'}
+                                       onChange={(e) => { setEmail(e.target.value); }}
+                                       disabled={!editEmail}
+                                       className="input--editProfile"
+                                       name="email" />
+                            {!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>
+                                <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                            </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>
+                                <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                            </button>}
+                            </label>
+                    </span>
                 </label>
                 <label className="userInfoEdition__form__field">
-                <span className="userInfoEdition__key">
-                    Telefon
-                </span>
-                    <span className="userInfoEdition__value">
-                    <label className={editPhoneNumber ? "label--edit" : ""}>
-                        <input value={phoneNumber}
-                               onChange={(e) => { setPhoneNumber(e.target.value); }}
-                               disabled={!editPhoneNumber}
-                               className="input--editProfile"
-                               name="phoneNumber" />
-                        {!editPhoneNumber ? <button className="userInfoEdition__btn" onClick={() => { setEditPhoneNumber(true); }}>
-                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPhoneNumber(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
-                        </button>}
-                    </label>
-                </span>
+                    <span className="userInfoEdition__key">
+                        Telefon
+                    </span>
+                        <span className="userInfoEdition__value">
+                            <label className={editPhoneNumber ? "label--edit" : ""}>
+                                <input value={phoneNumber}
+                                       onChange={(e) => { setPhoneNumber(e.target.value); }}
+                                       disabled={!editPhoneNumber}
+                                       className="input--editProfile"
+                                       name="phoneNumber" />
+                                {!editPhoneNumber ? <button className="userInfoEdition__btn" onClick={() => { setEditPhoneNumber(true); }}>
+                                    <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                                </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPhoneNumber(); }}>
+                                    <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                                </button>}
+                            </label>
+                    </span>
                 </label>
             </> : ""}
             <label className="userInfoEdition__form__field">
