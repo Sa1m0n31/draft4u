@@ -70,10 +70,9 @@ function App() {
     <Route path="/zarejestruj-przez-facebooka">
         <RegisterFromThirdParty thirdParty="fb" />
     </Route>
-
-      <Route path="/return">
-
-      </Route>
+    <Route path="/zarejestruj-przez-google">
+        <RegisterFromThirdParty thirdParty="gl" />
+    </Route>
 
     {/* User routes */}
       <Route path="/rozpocznij">

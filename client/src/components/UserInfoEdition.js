@@ -140,25 +140,14 @@ const UserInfoEdition = ({player, theme, favorite}) => {
                 </span>
             </label>
             {!(theme === 'dark') ? <>
-                <label className="userInfoEdition__form__field">
+                {player.adapter === 1 ? <label className="userInfoEdition__form__field">
                     <span className="userInfoEdition__key">
                         Mail
                     </span>
                     <span className="userInfoEdition__value">
-                        <label className={editEmail ? "label--edit" : ""}>
-                                <input value={email.split('@')[1] !== 'facebookauth.com' ? email : '-'}
-                                       onChange={(e) => { setEmail(e.target.value); }}
-                                       disabled={!editEmail}
-                                       className="input--editProfile"
-                                       name="email" />
-                            {!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>
-                                <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                            </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>
-                                <img className="userInfoEdition__btn__img" src={check} alt="ok" />
-                            </button>}
-                            </label>
+                        {email}
                     </span>
-                </label>
+                </label> : ""}
                 <label className="userInfoEdition__form__field">
                     <span className="userInfoEdition__key">
                         Telefon

@@ -32,7 +32,7 @@ import {
 } from "../helpers/notification";
 import {getIdentityById, getUserById, getUserData} from "../helpers/user";
 
-const Header = ({loggedIn, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
+const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
 
@@ -389,7 +389,10 @@ const Header = ({loggedIn, mobile, menu, theme, clubPage, player, club, profileI
 
         {/* REGISTER MODAL */}
         <section className={registerFromThirdParty ? "registerModal registerModal--thirdParty d-desktop" : "registerModal d-desktop"} ref={registerModal}>
-            <RegisterModal registerFromThirdParty={registerFromThirdParty} mobile={mobile} />
+            <RegisterModal registerFromThirdParty={registerFromThirdParty}
+                           firstName={firstName}
+                           lastName={lastName}
+                           mobile={mobile} />
         </section>
 
         <a className="siteHeader__logo" href="/">

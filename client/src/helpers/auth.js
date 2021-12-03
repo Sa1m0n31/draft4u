@@ -72,6 +72,14 @@ const registerUser = (email, password, firstName, lastName, sex, birthday, phone
     });
 }
 
+const registerFromThirdParty = (firstName, lastName, sex, birthday, phoneNumber) => {
+    return axios.post(`${API_URL}/auth/register-from-third-party`, {
+        firstName, lastName, sex, birthday, phoneNumber
+    }, {
+        withCredentials: true
+    });
+}
+
 const verifyUser = (token) => {
     return axios.get(`${API_URL}/auth/verification`, {
         params: {
@@ -89,4 +97,4 @@ const logoutUser = () => {
     });
 }
 
-export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple, registerUser, verifyUser, logoutUser }
+export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple, registerFromThirdParty, registerUser, verifyUser, logoutUser }

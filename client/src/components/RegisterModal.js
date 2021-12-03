@@ -8,17 +8,17 @@ import successIcon from '../static/img/success.svg'
 import loginBtn from '../static/img/zaloguj-btn.png'
 import {isMail, isPasswordStrength} from "../helpers/validation";
 import {isEmailAvailable} from "../helpers/user";
-import {registerUser} from "../helpers/auth";
+import {registerFromThirdParty, registerUser} from "../helpers/auth";
 import DraftLoader from "./Loader";
 
-const RegisterModal = ({mobile, registerFromThirdParty}) => {
+const RegisterModal = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [checkboxObligatory, setCheckboxObligatory] = useState(false);
     const [checkboxCompulsory, setCheckboxCompulsory] = useState(false);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState(props.firstName ? props.firstName : "");
+    const [lastName, setLastName] = useState(props.lastName ? props.lastName : "");
     const [sex, setSex] = useState(-1);
     const [birthday, setBirthday] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -46,16 +46,24 @@ const RegisterModal = ({mobile, registerFromThirdParty}) => {
     let sexFieldPlaceholder = useRef(null);
 
     useEffect(() => {
+        setFirstName(props.firstName);
+    }, [props.firstName]);
+
+    useEffect(() => {
+        setLastName(props.lastName);
+    }, [props.lastName]);
+
+    useEffect(() => {
        setSexesVisible(false);
     }, [sex]);
 
     useEffect(() => {
-        if(registerFromThirdParty) {
+        if(props.registerFromThirdParty) {
             setCurrentStep(2);
             formStep1.current.style.display = "none";
             formStep2.current.style.display = "block";
         }
-    }, [registerFromThirdParty]);
+    }, [props.registerFromThirdParty]);
 
     const resetErrors = (e) => {
         if(e) e.preventDefault();
@@ -94,8 +102,13 @@ const RegisterModal = ({mobile, registerFromThirdParty}) => {
     }
 
     const goToLogin = () => {
-        closeModal();
-        document.querySelector(".loginBoxWrapper").style.display = "block";
+        if(!props.registerFromThirdParty) {
+            closeModal();
+            document.querySelector(".loginBoxWrapper").style.display = "block";
+        }
+        else {
+            window.location = "/rozpocznij";
+        }
     }
 
     const validateStep1 = (e) => {
@@ -177,6 +190,7 @@ const RegisterModal = ({mobile, registerFromThirdParty}) => {
             setLoading(true);
 
             /* REGISTER USER */
+            if(!props.registerFromThirdParty) {
                 registerUser(
                     email, password,
                     firstName, lastName, sex,
@@ -191,22 +205,36 @@ const RegisterModal = ({mobile, registerFromThirdParty}) => {
                             setUserRegistered(-1);
                         }
                     });
-
+            }
+            else {
+                registerFromThirdParty(
+                    firstName, lastName, sex, birthday, phoneNumber
+                )
+                    .then((res) => {
+                       setLoading(false);
+                       if(res?.data?.result) {
+                           setUserRegistered(1);
+                       }
+                       else {
+                           setUserRegistered(-1);
+                       }
+                    });
+            }
         }
     }
 
     return <main className="registerModal__inner" ref={registerModal}>
-        <button className={mobile ? "d-none" : "registerModal__closeBtn"} onClick={() => { closeModal(); }}>
+        <button className={props.mobile ? "d-none" : "registerModal__closeBtn"} onClick={() => { closeModal(); }}>
             <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" />
         </button>
 
-        <img className={mobile ? "d-none" : "registerModal__img"} src={playerImg} alt="siatkarz" />
+        <img className={props.mobile ? "d-none" : "registerModal__img"} src={playerImg} alt="siatkarz" />
 
         <h3 className="registerModal__header">
-            {registerFromThirdParty ? "Dokończ rejestrację" : "Rejestracja"}
+            {props.registerFromThirdParty ? "Dokończ rejestrację" : "Rejestracja"}
         </h3>
         {userRegistered === -1 ? <h4 className="registerModal__step">
-            {registerFromThirdParty ? "Uzupełnij potrzebne dane" : `Krok ${currentStep} z 2`}
+            {props.registerFromThirdParty ? "Uzupełnij brakujące dane" : `Krok ${currentStep} z 2`}
         </h4> : ""}
 
         {loading ? <div className="loaderWrapper--register">
@@ -257,7 +285,7 @@ const RegisterModal = ({mobile, registerFromThirdParty}) => {
 
             {/* STEP 2 */}
             <section className="registerForm__section registerForm__section--2" ref={formStep2}>
-                <span className={mobile ? "registerForm__flexFields registerForm__flexFields--mobile" : "registerForm__flexFields"}>
+                <span className={props.mobile ? "registerForm__flexFields registerForm__flexFields--mobile" : "registerForm__flexFields"}>
                     <label>
                     {firstNameError !== "" ? <span className="loginBox__error">
                         {firstNameError}
@@ -341,7 +369,7 @@ const RegisterModal = ({mobile, registerFromThirdParty}) => {
         </form> : <section className="registerResult">
             <img className="registerResult__img" src={userRegistered === 1 ? successIcon : successIcon} alt="sukces" />
             <h4 className="registerResult__header">
-                {userRegistered === 1 ? <span>Udało się<br/>Na podany adres email wysłaliśmy link weryfikacyjny</span> : <span>Coś poszło nie tak<br/>Prosimy spróbować później</span>}
+                {userRegistered === 1 ? <span>Udało się<br/>{props.registerFromThirdParty ? "Twoje konto zostało pomyślnie zarejestrowane" : "Na podany adres email wysłaliśmy link weryfikacyjny"}</span> : <span>Coś poszło nie tak<br/>Prosimy spróbować później</span>}
             </h4>
 
             {userRegistered === 1 ? <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { goToLogin(); }}>

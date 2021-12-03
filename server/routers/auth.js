@@ -146,7 +146,7 @@ router.get("/facebook", cors(), passport.authenticate('facebook', {
 }));
 
 router.get("/facebook/callback",  passport.authenticate("facebook", {
-    successRedirect: "http://localhost:3000",
+    successRedirect: "http://localhost:3000/zarejestruj-przez-facebooka",
     failureRedirect: "/fail"
 }), (request, response) => {
     console.log("HELLO FROM CALLBACK");
@@ -156,18 +156,14 @@ router.get("/facebook/test", (request, response) => {
     console.log("HELLO FROM TEST");
 });
 
-// router.get("/google", cors(), (request, response) => {
-//     response.redirect(`https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=https%3A%2F%2Fdrafcik.skylo-test1.pl&scope=openid%20profile%20email&client_id=${GOOGLE_APP_ID}&flowName=GeneralOAuthFlow`);
-// });
-
 router.get('/google',
-    passport.authenticate('google', { scope : ['profile', 'email'] }));
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/error' }),
     function(req, res) {
         // Successful authentication, redirect success.
-        res.redirect('/success');
+        res.redirect('http://localhost:3000/zarejestruj-przez-google');
     });
 
 const add14DaysSubscription = (userId) => {
@@ -242,6 +238,42 @@ router.get("/get-user-subscription", (request, response) => {
               result: 0
           });
       }
+   });
+});
+
+router.post("/register-from-third-party", (request, response) => {
+   const { firstName, lastName, sex, birthday, phoneNumber } = request.body;
+   const id = request.user;
+   const gender = sex === 1;
+
+   const query = 'UPDATE users AS u SET first_name = $1, last_name = $2, sex = $3, birthday = $4, phone_number = $5 FROM identities AS i WHERE i.user_id = u.id AND i.id = $6 RETURNING u.id';
+   const values = [firstName, lastName, gender, birthday, phoneNumber, id];
+
+   db.query(query, values, (err, res) => {
+       if(res) {
+           const userId =  res.rows[0].id;
+           add14DaysSubscription(userId);
+
+           const query = 'UPDATE identities SET active = true WHERE id = $1';
+           const values = [id];
+           db.query(query, values, (err, res) => {
+               if(res) {
+                   response.send({
+                       result: 1
+                   });
+               }
+               else {
+                   response.send({
+                       result: 0
+                   });
+               }
+           })
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
    });
 });
 

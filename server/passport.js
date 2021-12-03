@@ -25,7 +25,7 @@ function isNumeric(str) {
 const init = (passport) => {
     const userAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
-        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE (u.email = $1 AND i.hash = $2) OR (c.login = $1 AND i.hash = $2)';
+        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE ((u.email = $1 AND i.hash = $2) OR (c.login = $1 AND i.hash = $2)) AND i.active = true';
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {
@@ -89,7 +89,7 @@ const init = (passport) => {
     }, googleAuth));
 
     passport.serializeUser((user, done) => {
-        if(user.name) done(null, user); /* Facebook */
+        if(user.name) done(null, user); /* Facebook or Google */
         else done(null, user.id); /* Local */
     });
 
@@ -97,7 +97,7 @@ const init = (passport) => {
         let query, values, hash;
 
         if(id.name) {
-            /* Facebook */
+            /* Facebook or Google */
             const uuid = uuidv4();
             hash = crypto.createHash('sha256').update(id.id).digest('hex');
             query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
@@ -107,8 +107,8 @@ const init = (passport) => {
                     /* Add new identity */
                     if(res.rows) {
                         const userId = res.rows[0].id;
-                        query = `INSERT INTO identities VALUES ($1, $2, 2, $3, true) RETURNING user_id`;
-                        values = [uuid, userId, hash];
+                        query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false) RETURNING user_id`;
+                        values = [uuid, userId, id.provider === 'facebook' ? 2 : 3, hash];
 
                         db.query(query, values, (err, res) => {
                             if(res) {

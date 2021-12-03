@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import LoadingPage from "../pages/LoadingPage";
-import {isLoggedIn} from "../helpers/auth";
+import {isLoggedIn, logoutUser} from "../helpers/auth";
 import {getUserData} from "../helpers/user";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import MyAccountStart from "../pages/MyAccountStart";
@@ -35,43 +35,51 @@ const UserWrapper = ({page}) => {
                             setLoaded(true);
 
                             const user = res?.data?.result;
-                            const isLocal = !user.adapter || user.adapter === 1;
+                            const isLocal = !user?.adapter || user?.adapter === 1;
 
                             if(user) {
-                                switch(page) {
-                                    case 1:
-                                        setRenderSwitch(<MyAccountStart user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 2:
-                                        setRenderSwitch(<PlayerProfileEdition user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 3:
-                                        setRenderSwitch(<FAQPage user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 4:
-                                        setRenderSwitch(<VideoUploadPage user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 5:
-                                        setRenderSwitch(<PaymentPage user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 6:
-                                        setRenderSwitch(<PaymentReturnPage user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 7:
-                                        setRenderSwitch(<ChatPageForUser user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 8:
-                                        setRenderSwitch(<Notifications user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 9:
-                                        setRenderSwitch(<SingleArticle user={user} isLocal={isLocal} />);
-                                        break;
-                                    case 10:
-                                        setRenderSwitch(<ChangePassword user={user} isLocal={isLocal} />);
-                                        break;
-                                    default:
-                                        setRenderSwitch(<PlayerProfileEdition user={user} isLocal={isLocal} />);
-                                        break;
+                                if(user.active) {
+                                    switch(page) {
+                                        case 1:
+                                            setRenderSwitch(<MyAccountStart user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 2:
+                                            setRenderSwitch(<PlayerProfileEdition user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 3:
+                                            setRenderSwitch(<FAQPage user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 4:
+                                            setRenderSwitch(<VideoUploadPage user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 5:
+                                            setRenderSwitch(<PaymentPage user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 6:
+                                            setRenderSwitch(<PaymentReturnPage user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 7:
+                                            setRenderSwitch(<ChatPageForUser user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 8:
+                                            setRenderSwitch(<Notifications user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 9:
+                                            setRenderSwitch(<SingleArticle user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 10:
+                                            setRenderSwitch(<ChangePassword user={user} isLocal={isLocal} />);
+                                            break;
+                                        default:
+                                            setRenderSwitch(<PlayerProfileEdition user={user} isLocal={isLocal} />);
+                                            break;
+                                    }
+                                }
+                                else {
+                                    logoutUser()
+                                        .then((res) => {
+                                            if(res?.data?.result) window.location = "/";
+                                        })
                                 }
                             }
                             else {

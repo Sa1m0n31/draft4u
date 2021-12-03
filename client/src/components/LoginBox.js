@@ -20,6 +20,7 @@ const LoginBox = () => {
                 window.location = "/rozpocznij";
             })
             .catch(err => {
+                console.log(err);
                 /* Login failure */
                 setEmail("");
                 setPassword("");
