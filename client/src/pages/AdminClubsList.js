@@ -4,7 +4,7 @@ import {deleteClub, getAllClubs} from "../helpers/club";
 import closeIcon from "../static/img/close-grey.svg";
 import PanelMenu from "../components/PanelMenu";
 import settings from "../settings";
-import trashIcon from "../static/img/trash-black.svg";
+import trashIcon from "../static/img/block.svg";
 import penIcon from "../static/img/pen-white.png";
 
 const AdminClubsList = ({admin}) => {
@@ -66,19 +66,19 @@ const AdminClubsList = ({admin}) => {
 
                 {deleteStatus === -1 ? <>
                     <h3 className="modal__header">
-                        Czy na pewno chcesz usunąć ten klub?
+                        Czy na pewno chcesz zablokować ten klub?
                     </h3>
 
                     <div className="modal__buttons">
                         <button className="modal__btn" onClick={() => { deleteNotificationWrapper(); }}>
-                            Usuń
+                            Zalobkuj
                         </button>
                         <button className="modal__btn" onClick={() => { setDeleteModalOpen(false); }}>
                             Powrót
                         </button>
                     </div>
                 </> : <h3 className="modal__header">
-                    {deleteStatus === 1 ? "Klub został usunięty" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
+                    {deleteStatus === 1 ? "Klub został zablokowany" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
                 </h3>}
             </div>
         </div>
@@ -117,7 +117,7 @@ const AdminClubsList = ({admin}) => {
                                 Akcje
                             </h3>
                             <section className="admin__main__notification__item__buttons">
-                                <button className="admin__main__notification__item__btn" onClick={() => { openDeleteModal(item.id); }}>
+                                <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id); }}>
                                     <img className="btn__img" src={trashIcon} alt="usun" />
                                 </button>
                                 <a className="admin__main__notification__item__btn" href={`/dodaj-klub?id=${item.id}`}>

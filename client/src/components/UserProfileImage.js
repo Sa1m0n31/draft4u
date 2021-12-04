@@ -25,6 +25,9 @@ const UserProfileImage = ({user, club}) => {
     }
 
     return <figure className="userInfoEdition__imgWrapper">
+        <span className={!loader ? "hidden hidden--profileImage" : "loader--profileImage"}>
+            <DraftLoader />
+        </span>
         <span className={loader ? "hidden" : ""}>
             <img className="userInfoEdition__img" src={profilePicture} alt="alt" />
             {!club ? <Dropzone
@@ -33,10 +36,6 @@ const UserProfileImage = ({user, club}) => {
                 maxFiles={1}
                 PreviewComponent={props => <ProfileImagePreview {...props} />}
             /> : ""}
-        </span>
-
-        <span className={!loader ? "hidden" : ""}>
-            <DraftLoader />
         </span>
     </figure>
 }

@@ -13,7 +13,7 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         { name: 'Zawodnicy', icon: players },
         { name: 'Powiadomienia', icon: notifications },
         { name: 'Artykuły', icon: articles },
-        { name: 'Ustawienia', icon: settings },
+        { name: 'Kody rabatowe', icon: settings },
     ]
 
     const submenus = [
@@ -31,6 +31,10 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         [
             {name: 'Dodaj artykuł', link: '/dodaj-artykul'},
             {name: 'Lista artykułów', link: '/lista-artykulow'}
+        ],
+        [
+            {name: 'Dodaj kod rabatowy', link: '/dodaj-kod'},
+            {name: 'Lista kodów', link: '/lista-kodow'}
         ]
     ]
 

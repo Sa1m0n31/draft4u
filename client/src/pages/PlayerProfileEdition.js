@@ -10,7 +10,7 @@ const PlayerProfileEdition = ({user, isLocal}) => {
     return <div className="container container--light">
         <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
 
-        <UserInfoEdition player={user} />
+        <UserInfoEdition player={user} clubProp={false} />
         <PlayerInfoEdition player={user} />
         <PlayerVideoView id={user.id} />
         <ClubSlider />

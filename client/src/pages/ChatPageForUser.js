@@ -116,7 +116,6 @@ const ChatPageForUser = ({user, isLocal}) => {
                         setChatInLink(true);
 
                         if(res?.data?.result) {
-                            console.log(res.data.result);
                             setCurrentChat(res.data.result);
                             setMobileCurrentChat(res.data.result);
                         }
@@ -173,7 +172,6 @@ const ChatPageForUser = ({user, isLocal}) => {
         if(listenSocket) {
             listenSocket.on("message", (data) => {
                 /* GET NEW MESSAGE */
-                console.log(data);
                 updateChatList(data);
             });
         }

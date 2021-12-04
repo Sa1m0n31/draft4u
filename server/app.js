@@ -181,6 +181,13 @@ app.get("/notyfikacje", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+app.get("/zarejestruj-przez-facebooka", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/zarejestruj-przez-google", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
 
 app.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

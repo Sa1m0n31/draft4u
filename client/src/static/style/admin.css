@@ -500,6 +500,10 @@ html, body {
     transition: .2s all;
 }
 
+.admin__main__notification__item__btn--block {
+    background: transparent;
+}
+
 .admin__main__notification__item__btn:hover {
     opacity: 1;
 }
@@ -697,4 +701,12 @@ html, body {
 .admin__input--excerpt {
     height: 100px;
     resize: none;
+}
+
+.red {
+    color: #d83b27;
+}
+
+.green {
+    color: greenyellow;
 }

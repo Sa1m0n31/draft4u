@@ -410,7 +410,7 @@ router.get("/get-all-positions", (request, response) => {
 });
 
 router.post("/edit-profile-image", upload.single("image"), (request, response) => {
-   const { userId } = request.body;
+   const id = request.user;
 
    const query = `INSERT INTO images VALUES (nextval('images_id_sequence'), $1) RETURNING id`;
    const values = [request.file.filename];
@@ -418,7 +418,7 @@ router.post("/edit-profile-image", upload.single("image"), (request, response) =
    db.query(query, values, (err, res) => {
        if(res) {
            const query = 'UPDATE users u SET profile_picture = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
-           const values = [res.rows[0].id, userId];
+           const values = [res.rows[0].id, id];
 
            db.query(query, values, (err, res) => {
                if(res) {

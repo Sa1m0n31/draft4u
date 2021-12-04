@@ -9,6 +9,9 @@ import AdminClubsList from "../pages/AdminClubsList";
 import AdminAddArticle from "../pages/AdminAddArticle";
 import AdminArticlesList from "../pages/AdminArticlesList";
 import AdminChangePassword from "../pages/AdminChangePassword";
+import AdminAddCode from "../pages/AdminAddCode";
+import AdminCodesList from "../pages/AdminCodesList";
+import AdminPlayersList from "../pages/AdminPlayersList";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -32,7 +35,7 @@ const AdminWrapper = ({page}) => {
                             setRenderSwitch(<AdminClubsList admin={result} />);
                             break;
                         case 4:
-                            setRenderSwitch(<AdminClubsList admin={result} />);
+                            setRenderSwitch(<AdminPlayersList admin={result} />);
                             break;
                         case 5:
                             setRenderSwitch(<AdminAddNotification admin={result} />);
@@ -48,6 +51,12 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 9:
                             setRenderSwitch(<AdminChangePassword admin={result} />);
+                            break;
+                        case 10:
+                            setRenderSwitch(<AdminAddCode admin={result} />);
+                            break;
+                        case 11:
+                            setRenderSwitch(<AdminCodesList admin={result} />);
                             break;
                         default:
                             break;

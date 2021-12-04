@@ -35,7 +35,7 @@ const PlayerPage = ({club}) => {
         {user ? <>
             <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
-            <UserInfoEdition player={user} theme="dark" favorite={favorite} />
+            <UserInfoEdition player={user} clubProp={true} theme="dark" favorite={favorite} />
             <PlayerInfoEdition player={user} theme="dark" />
             <PlayerVideoView id={user.id} club={true} />
         </> : <LoadingPage />}

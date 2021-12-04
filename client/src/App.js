@@ -171,6 +171,12 @@ function App() {
       <Route path="/zmien-haslo-administratora">
           <AdminWrapper page={9} />
       </Route>
+      <Route path="/dodaj-kod">
+          <AdminWrapper page={10} />
+      </Route>
+      <Route path="/lista-kodow">
+          <AdminWrapper page={11} />
+      </Route>
 
   </Router>
 }

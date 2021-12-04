@@ -43,7 +43,8 @@ const getPositionById = (id) => {
 }
 
 const getMessagePreview = (content) => {
-    return content.length < 30 ? content : content.substring(0, 30) + "...";
+    if(content.split(' ')[0] === '[image') return "Zdjęcie zostało wysłane";
+    else return content.length < 30 ? content : content.substring(0, 30) + "...";
 }
 
 const getUniqueListBy = (arr, key) => {

@@ -178,9 +178,8 @@ const getPlayElementsByPosition = (position) => {
 }
 
 const editProfileImage = (userId, image) => {
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const config = { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true };
     let formData = new FormData();
-    formData.append('userId', userId);
     formData.append('image', image);
 
     return axios.post(`${API_URL}/user/edit-profile-image`, formData, config);

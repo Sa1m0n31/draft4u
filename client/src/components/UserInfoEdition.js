@@ -19,7 +19,7 @@ import balance from "../static/img/balance.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {isMail} from "../helpers/validation";
 
-const UserInfoEdition = ({player, theme, favorite}) => {
+const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
     const [fullName, setFullName] = useState("");
@@ -106,7 +106,7 @@ const UserInfoEdition = ({player, theme, favorite}) => {
 
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
-            <UserProfileImage user={player} club={true} />
+            <UserProfileImage user={player} club={clubProp} />
         </section>
 
         <section className={theme === 'dark' ? "userInfoEdition__form userInfoEdition__form--dark" : "userInfoEdition__form"}>

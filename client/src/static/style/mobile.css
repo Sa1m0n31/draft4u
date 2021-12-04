@@ -609,6 +609,14 @@
         font-size: 24px;
     }
 
+    .chat__main__imgPreview {
+        height: 100px;
+    }
+
+    .chat__main__imgPreview .btn__img {
+        max-width: 200%;
+    }
+
     .clubTeams__item__col {
         flex-basis: 45% !important;
     }
