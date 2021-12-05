@@ -108,7 +108,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Zasięg dosiężny
+                    Wyskok dosiężny
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.vertical_range ? player.vertical_range : "-"}

@@ -8,6 +8,7 @@ const app = express();
 const morgan = require('morgan');
 const fs = require('fs');
 const http = require('http');
+var flash = require('connect-flash');
 
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -55,6 +56,7 @@ app.use(
         cookie: { secure: false, expires: 1000 * 60 * 60 } /* Session expire in 60 minutes */
     })
 );
+app.use(flash());
 const passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());

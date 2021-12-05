@@ -33,4 +33,16 @@ const changeAdminPassword = (oldPassword, newPassword) => {
     });
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword }
+const banUser = (id) => {
+    return axios.post(`${API_URL}/admin/ban-user`, {
+        id
+    });
+}
+
+const unlockUser = (id) => {
+    return axios.post(`${API_URL}/admin/unlock-user`, {
+        id
+    });
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser }

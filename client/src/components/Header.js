@@ -505,7 +505,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                             }
                             else return "";
                         })}
-                    </ul> : <span className="emptyMenu center">
+                    </ul> : <span className={club ? "emptyMenu emptyMenu--white" : "emptyMenu"}>
                         Brak powiadomień
                     </span> }
                 </menu> : ""}
@@ -540,7 +540,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                             }
                             else return "";
                         }) : <aside className="profileMenu__noMessages">
-                            <h3 className="emptyMenu">
+                            <h3 className={club ? "emptyMenu emptyMenu--white" : "emptyMenu"}>
                                 Nie posiadasz jeszcze żadnych wiadomości
                             </h3>
                         </aside>}

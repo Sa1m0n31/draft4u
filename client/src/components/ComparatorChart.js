@@ -47,7 +47,7 @@ const ComparatorChart = ({datasets}) => {
             }
         ],
         xaxis: {
-            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Zasięg dosiężny", "Zasięg w bloku"],
+            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Wyskok dosiężny", "Zasięg w bloku"],
             labels: {
                 show: true,
                 style: {

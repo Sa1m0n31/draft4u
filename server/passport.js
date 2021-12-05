@@ -25,7 +25,7 @@ function isNumeric(str) {
 const init = (passport) => {
     const userAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
-        const query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE ((u.email = $1 AND i.hash = $2) OR (c.login = $1 AND i.hash = $2)) AND i.active = true';
+        const query = 'SELECT i.id, i.user_id, i.active FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE ((u.email = $1 AND i.hash = $2) OR (c.login = $1 AND i.hash = $2))';
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {
@@ -33,6 +33,15 @@ const init = (passport) => {
                 const user = res.rows[0];
                 if(!user) {
                     return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
+                }
+                else if(user.active === null && user.user_id === null) {
+                    return done(null, false, { message: 'Twoje konto straciło ważność. Skontaktuj się z nami w sprawie odnowienia.' });
+                }
+                else if(user.active === null) {
+                    return done(null, false, { message: 'Konto zawodnika zostało zablokowane' });
+                }
+                else if(user.active === 0) {
+                    return done(null, false, { message: 'Zweryfikuj swój adres email aby się zalogować' });
                 }
                 else {
                     return done(null, user);
@@ -71,7 +80,9 @@ const init = (passport) => {
 
     passport.use('admin-local', new LocalStrategy(adminAuth));
 
-    passport.use('user-local', new LocalStrategy(userAuth));
+    passport.use('user-local', new LocalStrategy(userAuth, (ver) => {
+        console.log(ver);
+    }));
 
     passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
@@ -130,7 +141,6 @@ const init = (passport) => {
                         const values = [hash];
 
                         db.query(query, values, (err, res) => {
-                           console.log(res.rows[0]);
                            if(res) {
                                done(null, res.rows[0].id);
                            }

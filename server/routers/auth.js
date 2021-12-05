@@ -122,13 +122,21 @@ router.get("/logout", (request, response) => {
 });
 
 router.post("/login",
-    passport.authenticate('user-local', { session: true }),
+    passport.authenticate('user-local', { session: true, failureFlash: true, failureRedirect: '/auth/failure' }),
     (request, response) => {
         response.send({
             result: 1
         });
     }
 );
+
+router.get('/failure', (request, response) => {
+    const errorMsg = request.flash().error[0];
+    response.send({
+        result: 0,
+        msg: errorMsg
+    });
+})
 
 router.post("/admin",
     passport.authenticate('admin-local', { session: true }),
@@ -139,7 +147,7 @@ router.post("/admin",
 });
 
 router.get("/facebook", cors(), passport.authenticate('facebook', {
-    failureRedirect: '/#!/info/dsadasds',
+    failureRedirect: '/auth/failure',
     successRedirect: 'http://localhost:3000',
     session: true,
     scope:['public_profile', 'email']
@@ -147,20 +155,19 @@ router.get("/facebook", cors(), passport.authenticate('facebook', {
 
 router.get("/facebook/callback",  passport.authenticate("facebook", {
     successRedirect: "http://localhost:3000/zarejestruj-przez-facebooka",
-    failureRedirect: "/fail"
+    failureRedirect: "/auth/failure"
 }), (request, response) => {
     console.log("HELLO FROM CALLBACK");
 });
 
-router.get("/facebook/test", (request, response) => {
-    console.log("HELLO FROM TEST");
-});
-
 router.get('/google',
-    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+    passport.authenticate('google', {
+        scope: ['https://www.googleapis.com/auth/plus.login'],
+        failureRedirect: '/auth/failure'
+    }));
 
 router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/error' }),
+    passport.authenticate('google', { failureRedirect: '/auth/failure' }),
     function(req, res) {
         // Successful authentication, redirect success.
         res.redirect('http://localhost:3000/zarejestruj-przez-google');

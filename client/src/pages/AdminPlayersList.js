@@ -2,19 +2,16 @@ import React, {useEffect, useRef, useState} from 'react'
 import AdminTop from "../components/AdminTop";
 import PanelMenu from "../components/PanelMenu";
 import closeIcon from "../static/img/close-grey.svg";
-import {deleteArticle, getAllArticles} from "../helpers/blog";
-import settings from "../settings";
 import trashIcon from "../static/img/block.svg";
-import penIcon from "../static/img/pen-white.png";
-import {deleteCoupon, getAllCoupons} from "../helpers/coupon";
-import {getAllPlayers} from "../helpers/club";
-import {getUsers} from "../helpers/admin";
+import unlockIcon from "../static/img/unlock.svg";
+import {banUser, getUsers, unlockUser} from "../helpers/admin";
 
 const AdminPlayersList = () => {
     const [players, setPlayers] = useState([]);
     const [candidateToDelete, setCandidateToDelete] = useState(0);
     const [deleteStatus, setDeleteStatus] = useState(-1);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [blockMode, setBlockMode] = useState(true);
 
     const deleteModal = useRef(null);
 
@@ -33,15 +30,27 @@ const AdminPlayersList = () => {
         if(deleteStatus === -1) setDeleteModalOpen(false);
     }, [deleteStatus]);
 
-    const deleteCodeWrapper = () => {
-        deleteCoupon(candidateToDelete)
-            .then((res) => {
-                if(res?.data?.result) setDeleteStatus(1);
-                else setDeleteStatus(0);
-            })
+    const banUserWrapper = () => {
+        if(blockMode) {
+            banUser(candidateToDelete)
+                .then((res) => {
+                    if(res?.data?.result) setDeleteStatus(1);
+                    else setDeleteStatus(0);
+                });
+        }
+        else {
+            unlockUser(candidateToDelete)
+                .then((res) => {
+                    if(res?.data?.result) setDeleteStatus(1);
+                    else setDeleteStatus(0);
+                });
+        }
     }
 
-    const openDeleteModal = (id) => {
+    const openDeleteModal = (id, active) => {
+        if(active) setBlockMode(true);
+        else setBlockMode(false);
+
         setCandidateToDelete(id);
         setDeleteModalOpen(true);
     }
@@ -69,27 +78,29 @@ const AdminPlayersList = () => {
 
                 {deleteStatus === -1 ? <>
                     <h3 className="modal__header">
-                        Czy na pewno chcesz zablokować konto tego zawodnika?
+                        Czy na pewno chcesz {blockMode ? "zablokować" : "odblokować"} konto tego zawodnika?
                     </h3>
 
                     <div className="modal__buttons">
-                        <button className="modal__btn" onClick={() => { deleteCodeWrapper(); }}>
-                            Zablokuj
+                        <button className="modal__btn" onClick={() => { banUserWrapper(); }}>
+                            {blockMode ? "Zablokuj" : "Odblokuj"}
                         </button>
                         <button className="modal__btn" onClick={() => { setDeleteModalOpen(false); }}>
                             Powrót
                         </button>
                     </div>
-                </> : <h3 className="modal__header">
+                </> : (blockMode ? <h3 className="modal__header">
                     {deleteStatus === 1 ? "Zawodnik został zablokowany" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
-                </h3>}
+                </h3> : <h3 className="modal__header">
+                    {deleteStatus === 1 ? "Zawodnik został odblokowany" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
+                </h3>)}
             </div>
         </div>
 
         <main className="admin">
             <PanelMenu menuOpen={1} />
             <main className="admin__main">
-                {players?.reverse()?.map((item, index) => {
+                {players?.map((item, index) => {
                     return <section className="admin__main__notification__item" key={index}>
                         <section className="admin__main__notification__item__col col-2">
                             <h3 className="admin__main__notification__item__key">
@@ -120,6 +131,16 @@ const AdminPlayersList = () => {
                                 </p>}
                             </h4>
                         </section>
+                        <section className="admin__main__notification__item__col col-3">
+                            <h3 className="admin__main__notification__item__key">
+                                Aktywny
+                            </h3>
+                            <h4 className="admin__main__notification__item__value">
+                                {item.active ? <span className="green">Tak</span> : <span className="red">
+                                    {item.active === null ? "Zablokowany" : "Niezweryfikowany"}
+                                </span>}
+                            </h4>
+                        </section>
                         <section className="admin__main__notification__item__col col-4">
                             <h3 className="admin__main__notification__item__key">
                                 Zalogowany przez
@@ -133,8 +154,8 @@ const AdminPlayersList = () => {
                                 Akcje
                             </h3>
                             <section className="admin__main__notification__item__buttons">
-                                <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id); }}>
-                                    <img className="btn__img" src={trashIcon} alt="usun" />
+                                <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active); }}>
+                                    {item.active !== null ? <img className="btn__img" src={trashIcon} alt="zablokuj" /> : <img className="btn__img" src={unlockIcon} alt="odblokuj" />}
                                 </button>
                             </section>
                         </section>

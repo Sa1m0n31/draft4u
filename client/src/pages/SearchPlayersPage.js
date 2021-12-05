@@ -33,7 +33,7 @@ const SearchPlayersPage = ({club, favorites}) => {
     const [height, setHeight] = useState([140, 250]);
     const [blockRange, setBlockRange] = useState([150, 350]);
     const [attackRange, setAttackRange] = useState([150, 350]);
-    const [verticalRange, setVerticalRange] = useState([150, 350]);
+    const [verticalRange, setVerticalRange] = useState([20, 130]);
     const [salary, setSalary] = useState([1000, 30000]);
 
     const [comparator, setComparator] = useState([0, 0, 0]);
@@ -47,7 +47,7 @@ const SearchPlayersPage = ({club, favorites}) => {
         const isHeightOn = height[0] !== 140 || height[1] !== 250;
         const isBlockRangeOn = blockRange[0] !== 150 || blockRange[1] !== 350;
         const isAttackRangeOn = attackRange[0] !== 150 || attackRange[1] !== 350;
-        const isVerticalRangeOn = verticalRange[0] !== 150 || verticalRange[1] !== 350;
+        const isVerticalRangeOn = verticalRange[0] !== 20 || verticalRange[1] !== 130;
         const isSalaryOn = salary[0] !== 1000 || salary[1] !== 30000;
 
         /* Filter players */
@@ -100,13 +100,33 @@ const SearchPlayersPage = ({club, favorites}) => {
     }
 
     const filterPosition = (n) => {
-        if(isPositionActive(n)) {
-            setPositionFilters(positionFilters.filter((item) => {
-                return item !== n;
-            }));
+        if(!isPositionActive(0)) {
+            if(n) {
+                if(isPositionActive(n)) {
+                    setPositionFilters(positionFilters.filter((item) => {
+                        return item !== n;
+                    }));
+                }
+                else {
+                    setPositionFilters([...positionFilters, n]);
+                }
+            }
+            else {
+                setPositionFilters([0]);
+            }
         }
         else {
-            setPositionFilters([...positionFilters, n]);
+            if(isPositionActive(n)) {
+                setPositionFilters(positionFilters.filter((item) => {
+                    return (item !== n) && (item);
+                }));
+            }
+            else {
+                const currentPositionFilters = positionFilters.filter((item) => {
+                    return item;
+                });
+                setPositionFilters([...currentPositionFilters, n]);
+            }
         }
     }
 
@@ -230,7 +250,7 @@ const SearchPlayersPage = ({club, favorites}) => {
                 <SingleFilter mobile={true} value={height} changeValue={setHeight} min={140} max={250} step={1} width="100%" header="Wzrost" />
 
                 <SingleFilter mobile={true} value={attackRange} changeValue={setAttackRange} min={150} max={350} step={1} width="100%" header="Zasięg w ataku" />
-                <SingleFilter mobile={true} value={verticalRange} changeValue={setVerticalRange} min={150} max={350} step={1} width="100%" header="Zasięg dosiężny" />
+                <SingleFilter mobile={true} value={verticalRange} changeValue={setVerticalRange} min={20} max={130} step={1} width="100%" header="Wyskok dosiężny" />
                 <SingleFilter mobile={true} value={blockRange} changeValue={setBlockRange} min={150} max={350} step={1} width="100%" header="Zasięg w bloku" />
 
                 <SingleFilter mobile={true} value={salary} changeValue={setSalary} min={1000} max={30000} step={1} width="100%" header="Wynagrodzenie" />
@@ -274,7 +294,7 @@ const SearchPlayersPage = ({club, favorites}) => {
                 <SingleFilter value={height} changeValue={setHeight} min={140} max={250} step={1} width="30%" header="Wzrost" />
 
                 <SingleFilter value={attackRange} changeValue={setAttackRange} min={150} max={350} step={1} width="30%" header="Zasięg w ataku" />
-                <SingleFilter value={verticalRange} changeValue={setVerticalRange} min={150} max={350} step={1} width="30%" header="Zasięg dosiężny" />
+                <SingleFilter value={verticalRange} changeValue={setVerticalRange} min={20} max={130} step={1} width="30%" header="Wyskok dosiężny" />
                 <SingleFilter value={blockRange} changeValue={setBlockRange} min={150} max={350} step={1} width="30%" header="Zasięg w bloku" />
 
                 <SingleFilter value={salary} changeValue={setSalary} min={1000} max={30000} step={1} width="100%" header="Wynagrodzenie" />

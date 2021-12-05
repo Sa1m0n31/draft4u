@@ -51,7 +51,7 @@ router.get("/get-admin-data", (request, response) => {
 });
 
 router.get("/get-clubs", (request, response) => {
-   const query = 'SELECT * FROM clubs';
+   const query = 'SELECT c.name, c.login, id.active, id.id, i.file_path FROM clubs c JOIN identities id USING(id) JOIN images i ON i.id = c.logo';
 
    db.query(query, [], (err, res) => {
        if(res) {
@@ -68,7 +68,7 @@ router.get("/get-clubs", (request, response) => {
 });
 
 router.get("/get-users", (request, response) => {
-    const query = 'SELECT i.id, i.user_id, i.adapter, u.first_name, u.last_name, u.email, s.expire FROM users u JOIN identities i ON u.id = i.user_id LEFT OUTER JOIN subscriptions s ON u.id = s.user_id';
+    const query = 'SELECT i.id, i.user_id, i.adapter, i.active, u.first_name, u.last_name, u.email, s.expire FROM users u JOIN identities i ON u.id = i.user_id LEFT OUTER JOIN subscriptions s ON u.id = s.user_id ORDER BY i.user_id DESC';
 
     db.query(query, [], (err, res) => {
         if(res) {
@@ -113,6 +113,49 @@ router.post("/change-password", (request, response) => {
             response.send({
                 result: 0
             })
+        }
+    });
+});
+
+router.post("/ban-user", (request, response) => {
+   const { id } = request.body;
+
+   const query = 'UPDATE identities SET active = NULL WHERE id = $1';
+   const values = [id];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: 1
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
+router.post("/unlock-user", (request, response) => {
+    const { id } = request.body;
+
+    const query = 'UPDATE identities SET active = true WHERE id = $1';
+    const values = [id];
+    console.log(id);
+
+    db.query(query, values, (err, res) => {
+        console.log(err);
+        console.log(res);
+        if(res) {
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
         }
     });
 });

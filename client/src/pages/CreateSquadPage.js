@@ -238,13 +238,33 @@ const CreateSquadPage = ({club}) => {
     }
 
     const filterPosition = (n) => {
-        if(isPositionActive(n)) {
-            setPositionFilters(positionFilters.filter((item) => {
-                return item !== n;
-            }));
+        if(!isPositionActive(0)) {
+            if(n) {
+                if(isPositionActive(n)) {
+                    setPositionFilters(positionFilters.filter((item) => {
+                        return item !== n;
+                    }));
+                }
+                else {
+                    setPositionFilters([...positionFilters, n]);
+                }
+            }
+            else {
+                setPositionFilters([0]);
+            }
         }
         else {
-            setPositionFilters([...positionFilters, n]);
+            if(isPositionActive(n)) {
+                setPositionFilters(positionFilters.filter((item) => {
+                    return (item !== n) && (item);
+                }));
+            }
+            else {
+                const currentPositionFilters = positionFilters.filter((item) => {
+                    return item;
+                });
+                setPositionFilters([...currentPositionFilters, n]);
+            }
         }
     }
 

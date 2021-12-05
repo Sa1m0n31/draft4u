@@ -4,32 +4,41 @@ import googleIcon from '../static/img/google.png'
 import facebookIcon from '../static/img/facebook.svg'
 import loginBtn from '../static/img/zaloguj-btn.png'
 import appleBtn from '../static/img/button-apple.png'
-import {loginApple, loginFacebook, loginGoogle, loginUser} from "../helpers/auth";
+import {loginApple, loginUser} from "../helpers/auth";
 
 const LoginBox = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        loginUser(email, password)
-            .then(res => {
-               /* Login success */
-                window.location = "/rozpocznij";
-            })
-            .catch(err => {
-                console.log(err);
-                /* Login failure */
-                setEmail("");
-                setPassword("");
-                setError(true);
-            });
+        if(!email || !password) {
+            setError("Wpisz swoje dane logowania");
+        }
+        else {
+            loginUser(email, password)
+                .then(res => {
+                    /* Login success */
+                    if(res?.data?.result) window.location = "/rozpocznij";
+                    else {
+                        setEmail("");
+                        setPassword("");
+                        setError(res?.data?.msg);
+                    }
+                })
+                .catch(err => {
+                    /* Login failure */
+                    setEmail("");
+                    setPassword("");
+                    setError("Niepoprawne dane logowania");
+                });
+        }
     }
 
     useEffect(() => {
-        if(error) setError(false);
+        if(error) setError("");
     }, [email, password]);
 
     return <section className="loginBox d-desktop">
@@ -43,9 +52,9 @@ const LoginBox = () => {
                        name="username" />
             </label>
             <label>
-                {error ?
+                {error !== "" ?
                     <span className="loginBox__error">
-                    Niepoprawne dane logowania
+                        {error}
                 </span> : ""}
                 <input className={!error ? "input" : "input input--error"}
                        placeholder={!error ? "Hasło" : ""}
@@ -77,10 +86,10 @@ const LoginBox = () => {
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
         </a>
-        <button className="button button--apple" onClick={() => { loginApple(); }}>
-            <img className="button--apple__img" src={appleBtn} alt="apple" />
-            Continue with Apple
-        </button>
+        {/*<button className="button button--apple" onClick={() => { loginApple(); }}>*/}
+        {/*    <img className="button--apple__img" src={appleBtn} alt="apple" />*/}
+        {/*    Continue with Apple*/}
+        {/*</button>*/}
     </section>
 }
 

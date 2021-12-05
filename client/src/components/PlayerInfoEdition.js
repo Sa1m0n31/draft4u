@@ -98,7 +98,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             }
         ],
         xaxis: {
-            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Zasięg dosiężny", "Zasięg w bloku"],
+            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Wyskok dosiężny", "Zasięg w bloku"],
             labels: {
                 show: true,
                 style: {
@@ -198,7 +198,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Zasięg dosiężny
+                    Wyskok dosiężny
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editVerticalRange ? "label--edit" : ""}>

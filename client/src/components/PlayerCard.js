@@ -84,7 +84,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                                 {player.vertical_range ? player.vertical_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Zasięg dosiężny
+                                Wyskok dosiężny
                             </span>
             </section>
             <section className="playerCard__stats__item">
