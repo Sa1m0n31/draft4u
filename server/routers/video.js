@@ -15,13 +15,24 @@ router.get("/get", (request, response) => {
 router.post("/upload", upload.single('file'), (request, response) => {
     const { userId, play } = request.body;
 
+    console.log(request.headers);
+
+    let progress = 0;
+    let fileSize = request.headers['content-length'] ? parseInt(request.headers['content-length']) : 0;
+    request.on('data', (chunk) => {
+        progress += chunk.length;
+        console.log(progress);
+        response.write((`${Math.floor((progress * 100) / fileSize)} `));
+        if (progress === fileSize) {
+            console.log('Finished', progress, fileSize)
+        }
+    });
+
     /* Get video category id */
     const query = `SELECT id FROM video_categories WHERE name = $1`;
     const values = [play];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
-        console.log(res);
         if(res.rows[0].id) {
             /* Check if video already exists */
             const playId = res.rows[0].id;

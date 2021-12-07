@@ -2274,10 +2274,6 @@ ul {
     padding-right: 0;
 }
 
-.userInfoEdition__form--dark .label--marginRightMinus .input--editProfile {
-    margin-right: -20px;
-}
-
 .userInfoEdition__form--dark .userInfoEdition__fullName,
 .userInfoEdition__form--dark .userInfoEdition__value,
 .userInfoEdition__form--dark .userInfoEdition__value .input--editProfile {
@@ -2300,6 +2296,8 @@ ul {
 
 .playerInfoEdition .userInfoEdition__form {
     width: 45%;
+    position: relative;
+    z-index: 2;
 }
 
 .userInfoEdition__fullName {
@@ -2346,6 +2344,10 @@ ul {
     max-width: 200px;
 }
 
+.input--editProfile {
+    opacity: 1 !important;
+}
+
 .userInfoEdition__graphSection {
     position: relative;
     z-index: 1;
@@ -2380,6 +2382,12 @@ ul {
     background: transparent;
 }
 
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
 .select--editProfile option {
     font-size: 17px;
 }
@@ -2400,12 +2408,20 @@ select::-ms-expand {
     width: fit-content;
 }
 
-.label--marginRightMinus .input--editProfile {
-    margin-right: -62px;
+input[type=number] {
+    -moz-appearance:textfield;
 }
 
-.playerVideoView {
-    /*height: 400px;*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@-moz-document url-prefix() {
+    .label--marginRightMinus>.input--editProfile {
+        margin-right: -20px;
+    }
 }
 
 .splide__slide .video-react {
@@ -2657,6 +2673,47 @@ select::-ms-expand {
     align-items: center;
 }
 
+.videoLoadingWrapper {
+    margin-top: 7%;
+}
+
+.videoLoadingWrapper > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progressBar {
+    width: 400px;
+    height: 10px;
+    border-radius: 10px;
+    display: block;
+    margin: 60px auto 0;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+}
+
+.progressBar__inner {
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: .2s all;
+    background: var(--gold);
+}
+
+.progressBar__percent {
+    font-size: 20px;
+    color: #313131;
+    font-weight: 700;
+    font-family: 'Oxanium', cursive;
+    text-align: center;
+    display: block;
+    margin-top: 60px;
+}
+
 .player__header--videoUploader {
     position: absolute;
     top: 50px;
@@ -2885,9 +2942,15 @@ select::-ms-expand {
     position: relative;
 }
 
+.modal--deleteVideo {
+    border-radius: 10px;
+}
+
 .modal__inner--deleteVideo {
     padding: 40px;
-    width: clamp(200px, 85vw, 800px);
+    background: #fff !important;
+    border-radius: 10px;
+    width: clamp(200px, 85vw, 800px) !important;
     height: 500px;
 }
 
@@ -3149,9 +3212,9 @@ select::-ms-expand {
 }
 
 .findNewPlayer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 3%;
 }
 
 .findNewPlayerWrapper {
@@ -3161,13 +3224,13 @@ select::-ms-expand {
 
 .playerCard {
     background: #474747;
-    width: 31%;
+    width: 100%;
     border: 1px solid var(--grey);
 }
 
 .playerCard__imgWrapper {
     width: 100%;
-    height: 350px;
+    height: 340px;
     overflow: hidden;
     position: relative;
 }
@@ -3212,7 +3275,7 @@ select::-ms-expand {
     text-align: center;
     color: #fff;
     text-transform: uppercase;
-    font-size: 26px;
+    font-size: 22px;
     font-family: 'Oxanium', cursive;
     font-weight: 500;
 }
@@ -3233,7 +3296,7 @@ select::-ms-expand {
     justify-content: center;
     align-items: center;
     background: transparent;
-    padding: 30px 10px;
+    padding: 20px 10px;
 }
 
 .playerCard--favorite {
@@ -3258,13 +3321,13 @@ select::-ms-expand {
 .playerCard__stats__item__value {
     font-family: 'Oxanium', cursive;
     font-weight: 700;
-    font-size: 48px;
+    font-size: 36px;
 }
 
 .playerCard__stats__item__label {
     font-family: 'Oxanium', cursive;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 9px;
     text-transform: uppercase;
 }
 
@@ -3277,7 +3340,7 @@ select::-ms-expand {
     background: transparent;
     font-family: 'Oxanium', cursive;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 16px;
     text-transform: uppercase;
     display: flex;
     justify-content: center;
@@ -3403,9 +3466,9 @@ select::-ms-expand {
 }
 
 .playersWall {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 3%;
     flex-wrap: wrap;
 }
 
@@ -3494,6 +3557,8 @@ select::-ms-expand {
     text-align: center;
     margin: 20px auto;
     font-size: 32px;
+    grid-row: 1;
+    grid-column: 1 / span 3;
 }
 
 /* Comparator page */
@@ -4510,10 +4575,15 @@ select::-ms-expand {
     font-size: 18px;
 }
 
+.clubTeams__tableHeader__header:first-of-type,
 .clubTeams__item__col:first-of-type {
     flex-basis: 15%;
 }
 
+.clubTeams__tableHeader__header:nth-of-type(2),
+.clubTeams__tableHeader__header:nth-of-type(3),
+.clubTeams__tableHeader__header:nth-of-type(4),
+.clubTeams__tableHeader__header:nth-of-type(5),
 .clubTeams__item__col:nth-of-type(2),
 .clubTeams__item__col:nth-of-type(3),
 .clubTeams__item__col:nth-of-type(4),
@@ -4713,4 +4783,24 @@ select::-ms-expand {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.clubTeams__tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 30px;
+}
+
+.clubTeams__tableHeader__header {
+    color: #fff;
+    font-family: 'Oxanium', cursive;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.clubTeams__tableHeader__header:last-of-type {
+    text-align: right;
 }

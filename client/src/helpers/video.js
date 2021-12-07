@@ -4,7 +4,12 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const uploadVideo = (file, userId, play) => {
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const config = {
+        onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        },
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }
     let formData = new FormData();
     formData.append('file', file);
     formData.append('userId', userId);

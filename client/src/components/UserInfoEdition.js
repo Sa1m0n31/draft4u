@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import example from '../static/img/profile.png'
-import camera from '../static/img/camera.svg'
 import pen from '../static/img/pen.svg'
 import check from '../static/img/check.svg'
 
@@ -15,12 +13,12 @@ import UserProfileImage from "./UserProfileImage";
 import {calculateAge} from "../helpers/others";
 import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
-import balance from "../static/img/balance.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {isMail} from "../helpers/validation";
 
 const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
+    const [prevValues, setPrevValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
     const [fullName, setFullName] = useState("");
     const [age, setAge] = useState("");
@@ -129,6 +127,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                                type={theme === "dark" ? "number" : "date"}
                                onChange={(e) => { setAge(e.target.value); }}
                                disabled={!editAge}
+                               required={true}
                                className="input--editProfile"
                                name="age" />
                         {!editAge ? <button className="userInfoEdition__btn" onClick={() => { setEditAge(true); }}>
@@ -233,11 +232,58 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     min={MIN}
                     max={MAX}
                     rtl={false}
-                    onChange={(values) => {
-                        setValues(values);
+                    onChange={(newValues) => {
+                        const prevValues = values;
+                        setValues(newValues);
 
-                        if(values[1] > values[0] + 3000) {
-                            setValues([values[1]-3000, values[1]]);
+                        if(prevValues[0] !== newValues[0]) {
+                            /* User move lower bound */
+                            if(newValues[0] > prevValues[0]) {
+                                /* User increase lower bound */
+                                if(newValues[0]+3000 < newValues[1]) {
+                                    setValues([newValues[0], prevValues[1]]);
+                                }
+                                else {
+                                    setValues(newValues);
+                                }
+                            }
+                            else {
+                                /* User decrease lower bound */
+                                if(newValues[0]+3000 < newValues[1]) {
+                                    setValues([newValues[0], newValues[0]+3000]);
+                                }
+                                else {
+                                    setValues(newValues);
+                                }
+                            }
+                        }
+                        else {
+                            /* User move higher bound */
+                            if(newValues[1] > prevValues[1]) {
+                                /* User increase higher bound */
+                                if(newValues[0]+3000 < newValues[1]) {
+                                    setValues([newValues[1]-3000, newValues[1]]);
+                                }
+                                else {
+                                    setValues(newValues);
+                                }
+                            }
+                            else {
+                                /* User decrease higher bound */
+                                if(newValues[0]+3000 < newValues[1]) {
+                                    setValues([newValues[0], newValues[0]+3000]);
+                                }
+                                else {
+                                    setValues(newValues);
+                                }
+                            }
+                        }
+
+                        if(newValues[0] < 0) {
+                            setValues([0, values[1]]);
+                        }
+                        if(newValues[1] > 30000) {
+                            setValues([values[0], 30000]);
                         }
                     }}
                     renderTrack={({ props, children }) => (

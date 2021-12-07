@@ -45,7 +45,7 @@ const PlayerVideoView = ({id, club}) => {
     return <section className="playerVideoView siteWidthSuperNarrow">
         {playVideo !== -1 ? <ModalVideoPlayer closeModal={closeModalVideoPlayer} source={`${settings.API_URL}/video/get?url=/videos/${videos[playVideo].file_path}`} /> : ""}
 
-        <main className={club ? "playerVideoView__carousel playerVideoView__carousel--empty" : "playerVideoView__carousel"}>
+        {club || videos?.length ? <main className={club ? "playerVideoView__carousel playerVideoView__carousel--empty" : "playerVideoView__carousel"}>
             {videos?.length || !club ? <Splide options={options}>
                 {videos?.map((item, index) => {
                     return <SplideSlide key={index}>
@@ -64,7 +64,7 @@ const PlayerVideoView = ({id, club}) => {
             {club ? <a href={`/wiadomosci?new=${identity}`} className={videos.length ? "button button--hover playerVideoView__btn playerVideoView__btn--club" : "button button--hover playerVideoView__btn playerVideoView__btn--club--center"}>
                 <img className="btn__img" src={writeMsgBtn} alt="napisz-wiadomosc" />
             </a> : ""}
-        </main>
+        </main> : ""}
         <section className={videos.length ? "playerVideoView__btnWrapper" : "playerVideoView__btnWrapper--center"}>
             {!club ? <a className="button button--hover playerVideoView__btn" href="/dodaj-video">
                 <img className="btn__img" src={addVideosBtn} alt="wgraj-filmiki" />

@@ -19,28 +19,32 @@ const ClubAccountFavorites = () => {
         focus: 'center'
     }
 
-    return <section className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 findNewPlayerWrapper">
+    return <section className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 findNewPlayerWrapper findNewPlayerWrapper--clubAccountStart">
         <h2 className="player__header player__header--findNewPlayer">
             Ulubieni zawodnicy
         </h2>
 
-        {/* MOBILE */}
-        <main className="findNewPlayer--mobile d-mobile">
-            <Splide options={options}>
-                {players.map((item, index) => {
-                    return <SplideSlide key={index}>
-                        <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
-                    </SplideSlide>
-                })}
-            </Splide>
-        </main>
+        {players?.length ? <>
+            {/* MOBILE */}
+            <main className="findNewPlayer--mobile d-mobile">
+                <Splide options={options}>
+                    {players.map((item, index) => {
+                        return <SplideSlide key={index}>
+                            <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                        </SplideSlide>
+                    })}
+                </Splide>
+            </main>
 
-        {/* DESKTOP */}
-        <main className="findNewPlayer d-desktop">
-            {players.map((item, index) => {
-                return <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
-            })}
-        </main>
+            {/* DESKTOP */}
+            <main className="findNewPlayer d-desktop">
+                {players.map((item, index) => {
+                    return <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                })}
+            </main>
+        </> : <h3 className="playersWall__playersNotFoundHeader">
+            Brak ulubionych zawodników
+        </h3>}
 
         <a className="button button--hover button--showPlayersPage" href="/ulubieni">
             <img className="btn__img" src={przegladajBtn} alt="przegladaj" />

@@ -22,7 +22,7 @@ const ClubAccountStartFindPlayer = () => {
         focus: 'center'
     }
 
-    return <section className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 findNewPlayerWrapper">
+    return <section className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 findNewPlayerWrapper findNewPlayerWrapper--clubAccountStart">
         <h2 className="player__header player__header--findNewPlayer">
             Znajdź nowego zawodnika
         </h2>

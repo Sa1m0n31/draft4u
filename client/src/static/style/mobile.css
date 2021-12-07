@@ -501,14 +501,6 @@
         font-size: 17px;
     }
 
-    .findNewPlayerWrapper .playerCard {
-        width: 48%;
-    }
-
-    .findNewPlayerWrapper .playerCard:last-of-type {
-        display: none;
-    }
-
     .playersWall__compareSection__item__imgWrapper {
         width: 100px;
         height: 100px;
@@ -615,15 +607,6 @@
 
     .chat__main__imgPreview .btn__img {
         max-width: 200%;
-    }
-
-    .clubTeams__item__col {
-        flex-basis: 45% !important;
-    }
-
-    .clubTeams__item__col:nth-of-type(2) {
-        text-align: right;
-        justify-content: flex-end;
     }
 
     .faqPage {
@@ -851,10 +834,6 @@
         width: 15px !important;
     }
 
-    .playerCard {
-        width: 48%;
-    }
-
     .searchFilters__position__header, .searchFilters__position__button {
         font-size: 14px;
     }
@@ -890,6 +869,18 @@
     .d-mobile-900 .noClubsHeader {
         width: 85vw !important;
     }
+
+    .playersWall {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .findNewPlayerWrapper--clubAccountStart .playerCard:nth-of-type(3) {
+        display: none;
+    }
+
+    .findNewPlayerWrapper--clubAccountStart .findNewPlayer {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media(max-width: 768px) {
@@ -908,6 +899,25 @@
 
     .footer__inner {
         flex-direction: column;
+    }
+
+    .clubTeams__tableHeader {
+        margin-bottom: 10px;
+    }
+
+    .clubTeams__tableHeader__header {
+        font-size: 10px;
+    }
+
+    .clubTeams__item__col:nth-of-type(2),
+    .clubTeams__tableHeader__header:nth-of-type(2) {
+        text-align: right;
+        justify-content: flex-end;
+    }
+
+    .clubTeams__tableHeader__header,
+    .clubTeams__item__col {
+        flex-basis: 50% !important;
     }
 
     .footer__inner .footer__col {
@@ -2060,6 +2070,15 @@
 
     .single__article * {
         font-size: 14px;
+    }
+
+    .progressBar {
+        width: 60vw;
+        margin-top: 20px;
+    }
+
+    .videoLoadingWrapper > div {
+        transform: scale(.8);
     }
 }
 

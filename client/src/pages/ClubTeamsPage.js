@@ -6,9 +6,7 @@ import trashIcon from '../static/img/trash-black.svg'
 import editIcon from '../static/img/pen-white.png'
 import floor from '../static/img/boisko.svg'
 import playerPlaceholder from "../static/img/player-placeholder.svg";
-import {getPositionById, isElementInArray} from "../helpers/others";
 import playerDraggable from "../static/img/player-draggable.svg";
-import trash from "../static/img/trash-black.svg";
 import settings from "../settings";
 import profilePicture from "../static/img/profile-picture.png";
 import closeIcon from '../static/img/close-grey.svg'
@@ -143,6 +141,23 @@ const ClubTeamsPage = ({club}) => {
                 Zapisane składy
             </h1>
 
+            <header className="clubTeams__tableHeader">
+                <h4 className="clubTeams__tableHeader__header">
+                    Nazwa
+                </h4>
+                <h4 className="clubTeams__tableHeader__header">
+                    Data utworzenia
+                </h4>
+                <h4 className="clubTeams__tableHeader__header d-desktop">
+                    Koszt minimalny
+                </h4>
+                <h4 className="clubTeams__tableHeader__header d-desktop">
+                    Koszt maksymalny
+                </h4>
+                <h4 className="clubTeams__tableHeader__header d-desktop">
+                    Działania
+                </h4>
+            </header>
             {teams.length ? teams.map((item, index) => {
                 return <section className="clubTeams__team" key={index}>
                     <button className={currentTeam === index ? "clubTeams__item clubTeams__item--gold" : "clubTeams__item"} onClick={() => { if(currentTeam !== index) setCurrentTeam(index); else setCurrentTeam(-1); }}>

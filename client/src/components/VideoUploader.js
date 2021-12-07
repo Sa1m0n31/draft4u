@@ -7,21 +7,35 @@ import {getUserVideos, uploadVideo} from "../helpers/video";
 import DraftLoader from "./Loader";
 import successIcon from '../static/img/success.svg'
 import failureIcon from '../static/img/failure.svg'
-import {removePolishChars} from "../helpers/others";
+import axios from "axios";
+import settings from "../settings";
 
 const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play}) => {
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(-1);
+    const [progress, setProgress] = useState(0);
 
     const getUploadParams = ({file, meta}) => {
         setLoading(true);
-        uploadVideo(file, userId, play)
-            .then((res) => {
-                setLoading(false);
-                setVideoUpload(videoUpload+1);
-                if(res?.data?.result) setResponse(1);
-                else setResponse(0);
-            });
+        const config = {
+            onUploadProgress: (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setProgress(percentCompleted);
+            },
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }
+        let formData = new FormData();
+        formData.append('file', file);
+        formData.append('userId', userId);
+        formData.append('play', play);
+
+       return axios.post(`${settings.API_URL}/video/upload`, formData, config)
+           .then((res) => {
+               setLoading(false);
+               setVideoUpload(videoUpload+1);
+               if(res?.data?.result) setResponse(1);
+               else setResponse(0);
+           });
     }
 
     return <main className="videoUploaderWrapper">
@@ -49,7 +63,19 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
                 <button className="button button--hover button--videoUploader">
                     <img className="btn__img" src={wybierzPlikBtn} alt="wybierz-plik" />
                 </button>
-            </> : (loading ? <DraftLoader /> : (response === 1 ? <>
+            </> : (loading ? <div className="videoLoadingWrapper">
+                <DraftLoader />
+
+                <span className="progressBar">
+                    <span className="progressBar__inner" style={{
+                        width: progress + '%'
+                    }}></span>
+                </span>
+
+                <span className="progressBar__percent">
+                    {progress} %
+                </span>
+            </div> : (response === 1 ? <>
                 <img className="videoUploader__responseImg" src={successIcon} alt="sukces" />
                 <h2 className="videoUploader__responseHeader">
                     Filmik został dodany

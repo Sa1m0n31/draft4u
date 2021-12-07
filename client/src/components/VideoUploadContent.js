@@ -10,7 +10,6 @@ import { Player } from 'video-react';
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import DeleteVideoModal from "./DeleteVideoModal";
 import threeDotsMenu from '../static/img/threeDotsMenu.svg'
-import DraftLoader from "./Loader";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
