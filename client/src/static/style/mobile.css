@@ -297,6 +297,13 @@
         padding: 40px 0;
     }
 
+    .playersWall__compareSection__item__deleteBtn {
+        top: -10px;
+        right: 30px;
+        width: 40px;
+        height: 40px;
+    }
+
     .myAccountStart__bottom__content__section {
         width: 100%;
         max-width: 500px;
@@ -1807,7 +1814,7 @@
     }
 
     .createSquad__squad__itemWrapper {
-        margin: 0 0 20px 0 !important;
+        margin: 0 0 20px 0;
         flex-basis: 100% !important;
         width: 96%;
     }
@@ -2079,6 +2086,14 @@
 
     .videoLoadingWrapper > div {
         transform: scale(.8);
+    }
+
+    .playerCard__balanceBtn--added {
+        background: rgba(0, 0, 0, .5);
+    }
+
+    .createSquad__squad__item {
+        width: 100%;
     }
 }
 

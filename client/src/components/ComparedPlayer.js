@@ -49,6 +49,12 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         setFavoritePlayer(!favoritePlayer);
     }
 
+    useEffect(() => {
+        if(playVideo) {
+
+        }
+    }, [playVideo]);
+
     return <section className="comparedPlayer">
         {playVideo ? <ModalVideoPlayer closeModal={() => { setPlayVideo(false); }} source={`${settings.API_URL}/video/get?url=/videos/${video.file_path}`} /> : ""}
 
@@ -83,7 +89,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                 <span className="comparedPlayer__section__key">
                     Wynagrodzenie
                 </span>
-                <span className="comparedPlayer__section__value">
+                <span className="comparedPlayer__section__value comparedPlayer__section__value--salary">
                     {player.salary_from ? player.salary_from + " - " + player.salary_to : "-"}
                 </span>
             </section>

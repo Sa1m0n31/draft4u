@@ -187,7 +187,7 @@ router.post("/register-local", (request, response) => {
    const hash = crypto.createHash('sha256').update(password).digest('hex');
    const gender = sex === 1;
 
-   const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, $5, $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+   const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD') + INTERVAL '1 DAY', $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
    const values = [email, firstName, lastName, gender, birthday, phoneNumber];
 
    db.query(query, values, (err, res) => {
@@ -253,7 +253,7 @@ router.post("/register-from-third-party", (request, response) => {
    const id = request.user;
    const gender = sex === 1;
 
-   const query = 'UPDATE users AS u SET first_name = $1, last_name = $2, sex = $3, birthday = $4, phone_number = $5 FROM identities AS i WHERE i.user_id = u.id AND i.id = $6 RETURNING u.id';
+   const query = `UPDATE users AS u SET first_name = $1, last_name = $2, sex = $3, birthday = TO_DATE($4, 'YYYY-MM-DD') + INTERVAL '1 DAY', phone_number = $5 FROM identities AS i WHERE i.user_id = u.id AND i.id = $6 RETURNING u.id`;
    const values = [firstName, lastName, gender, birthday, phoneNumber, id];
 
    db.query(query, values, (err, res) => {

@@ -278,14 +278,10 @@ router.put("/update-user-birthday", (request, response) => {
    const { birthday } = request.body;
    const userId = request.user;
 
-   const query = `UPDATE users u SET birthday = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2`;
+   const query = `UPDATE users u SET birthday = TO_DATE($1, 'YYYY-MM-DD') + INTERVAL '1 DAY' FROM identities i WHERE u.id = i.user_id AND i.id = $2`;
    const values = [birthday, userId];
 
-   db.query(query, values, (err, res) => {
-      const query = `UPDATE users SET birthday = birthday + INTERVAL '1 DAY' WHERE id = $1`;
-      const values = [userId];
-      updateQuery(query, values, response);
-   });
+   updateQuery(query, values, response);
 });
 
 router.put("/update-user-license-number", (request, response) => {

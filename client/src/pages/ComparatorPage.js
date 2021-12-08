@@ -28,28 +28,30 @@ const ComparatorPage = ({club}) => {
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
 
-        const firstParam = params.get('first');
-        const secondParam = params.get('second');
-        const thirdParam = params.get('third');
+        const comparedIds = [parseInt(params.get('first')), parseInt(params.get('second')), parseInt(params.get('third'))].filter((item) => {
+            return (item) && (!isNaN(item));
+        });
 
-        if((!firstParam)||(!secondParam)||(!thirdParam)||(firstParam === 'undefined')||(secondParam === 'undefined')||(thirdParam === 'undefined')) {
+        if(comparedIds.length < 2) {
             window.location = "/";
         }
         else {
-            const comparedIds = [parseInt(params.get('first')), parseInt(params.get('second')), parseInt(params.get('third'))];
+            localStorage.removeItem('draft4u-comparator');
+
             comparedIds.forEach((item, index) => {
               getPlayerHighlight(item)
                   .then((res) => {
-                      const result = res.data.result;
+                      const result = res?.data?.result;
+                      console.log(result);
                       switch(index) {
                           case 0:
-                              setFirstPlayerVideo(result);
+                              setFirstPlayerVideo(result[0]);
                               break;
                           case 1:
-                              setSecondPlayerVideo(result);
+                              setSecondPlayerVideo(result[0]);
                               break;
                           case 2:
-                              setThirdPlayerVideo(result);
+                              setThirdPlayerVideo(result[0]);
                               break;
                           default:
                               break;
@@ -58,7 +60,7 @@ const ComparatorPage = ({club}) => {
 
                getUserById(item)
                    .then((res) => {
-                       const result = res.data.result;
+                       const result = res?.data?.result;
                        switch(index) {
                            case 0:
                                setFirstPlayer(result);
@@ -107,11 +109,14 @@ const ComparatorPage = ({club}) => {
 
         <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
             {playersArray.map((item, index) => {
-                return <ComparedPlayer player={item} video={videosArray[index]} color={colors[index]} nameMinHeight={nameMinHeight} />
+                if(item) return <ComparedPlayer player={item}
+                                                video={videosArray[index]}
+                                                color={colors[index]}
+                                                nameMinHeight={nameMinHeight} />
             })}
         </main>
 
-        {playersArray[0] && playersArray[1] && playersArray[2] ? <ComparatorChart datasets={playersArray} /> : ""}
+        {playersArray?.filter((item) => { return item; }).length > 1 ? <ComparatorChart datasets={playersArray?.filter((item) => { return item; })} /> : ""}
 
         <Footer theme="dark" border={true} />
     </div>

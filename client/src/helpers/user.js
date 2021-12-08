@@ -164,7 +164,7 @@ const getPlayElementsByPosition = (position) => {
             return ['atak', 'przyjęcie', 'serwis', 'blok', 'highlights'];
             break;
         case 'rozgrywający':
-            return ['rozegranie', 'blok', 'serwis', 'highlights', 'pelen mecz'];
+            return ['rozegranie', 'blok', 'serwis', 'atak', 'obrona', 'highlights', 'pelen mecz'];
             break;
         case 'libero':
             return ['przyjecie', 'obrona', 'rozegranie', 'highlights', 'pelen mecz'];

@@ -1,7 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Chart from "react-apexcharts";
 
 const ComparatorChart = ({datasets}) => {
+    const [series, setSeries] = useState([]);
+
     const options = {
         chart: {
             id: "basic-bar"
@@ -58,7 +60,7 @@ const ComparatorChart = ({datasets}) => {
             }
         },
         fill: {
-            colors: ['#EE7700AD', '#D4C289', '#A9A9A9'],
+            colors: ['#EE770070', '#FFE9A270', '#FFFFFF70'],
             opacity: .7
         },
         stroke: {
@@ -85,24 +87,36 @@ const ComparatorChart = ({datasets}) => {
         }
     }
 
-    const series = [
-        {
-            name: datasets[0].first_name + " " + datasets[0].last_name,
-            data: [datasets[0].height, datasets[0].weight, datasets[0].attack_range, datasets[0].vertical_range, datasets[0].block_range]
-        },
-        {
-            name: datasets[1].first_name + " " + datasets[1].last_name,
-            data: [datasets[1].height, datasets[1].weight, datasets[1].attack_range, datasets[1].vertical_range, datasets[1].block_range]
-        },
-        {
-            name: datasets[2].first_name + " " + datasets[2].last_name,
-            data: [datasets[2].height, datasets[2].weight, datasets[2].attack_range, datasets[2].vertical_range, datasets[2].block_range]
-        }
-    ]
-
     useEffect(() => {
         console.log(datasets);
-    }, []);
+        if(datasets?.length === 3) {
+            setSeries([
+                {
+                    name: datasets[0].first_name + " " + datasets[0].last_name,
+                    data: [datasets[0].height, datasets[0].weight, datasets[0].attack_range, datasets[0].vertical_range, datasets[0].block_range]
+                },
+                {
+                    name: datasets[1].first_name + " " + datasets[1].last_name,
+                    data: [datasets[1].height, datasets[1].weight, datasets[1].attack_range, datasets[1].vertical_range, datasets[1].block_range]
+                },
+                {
+                    name: datasets[2].first_name + " " + datasets[2].last_name,
+                    data: [datasets[2].height, datasets[2].weight, datasets[2].attack_range, datasets[2].vertical_range, datasets[2].block_range]
+                }
+            ]);
+        }
+        else if(datasets?.length === 2) {
+            setSeries([
+                {
+                    name: datasets[0].first_name + " " + datasets[0].last_name,
+                    data: [datasets[0].height, datasets[0].weight, datasets[0].attack_range, datasets[0].vertical_range, datasets[0].block_range]
+                },
+                {
+                    name: datasets[1].first_name + " " + datasets[1].last_name,
+                    data: [datasets[1].height, datasets[1].weight, datasets[1].attack_range, datasets[1].vertical_range, datasets[1].block_range]
+                }]);
+        }
+    }, [datasets]);
 
     return <section className="comparator__chart d-desktop">
         <Chart

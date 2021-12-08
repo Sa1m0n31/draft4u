@@ -3472,6 +3472,30 @@ input::-webkit-inner-spin-button {
     flex-wrap: wrap;
 }
 
+.playersWall__compareSection__item__deleteBtn {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .2s all;
+    opacity: 0;
+    border-radius: 50%;
+}
+
+.playersWall__compareSection__item__deleteBtn .btn__img {
+    width: 40%;
+    filter: brightness(0) invert(1);
+}
+
+.playersWall__compareSection__item:hover .playersWall__compareSection__item__deleteBtn {
+    opacity: 1;
+}
+
 .playersWall .playerCard {
     margin-bottom: 50px;
 }
@@ -3517,6 +3541,7 @@ input::-webkit-inner-spin-button {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 100px;
 }
 
 .playersWall__compareSection__item {
@@ -3524,6 +3549,8 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    flex-basis: 20%;
 }
 
 .playersWall__compareSection__item__imgWrapper {
@@ -3568,6 +3595,11 @@ input::-webkit-inner-spin-button {
     justify-content: flex-start;
     align-items: center;
     width: 28%;
+    margin-right: 10%;
+}
+
+.comparedPlayer:last-of-type {
+    margin-right: 0;
 }
 
 .comparedPlayer__imgWrapper {
@@ -3636,13 +3668,17 @@ input::-webkit-inner-spin-button {
     text-align: right;
 }
 
+.comparedPlayer__section__value--salary {
+    font-size: 18px;
+}
+
 .button--comparedPlayer {
     width: 100%;
 }
 
 .comparator__main {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
 }
 
@@ -3704,7 +3740,7 @@ input::-webkit-inner-spin-button {
 }
 
 .comparedPlayer__videoSection > div > .video-react {
-    min-height: 300px;
+    min-height: 250px;
 }
 
 .comparedPlayer__videoSection .video-react .video-react-big-play-button {
@@ -3891,14 +3927,13 @@ input::-webkit-inner-spin-button {
 .createSquad__squad__itemWrapper {
     flex-grow: 0;
     flex-shrink: 0;
-    margin-right: 30px;
     cursor: pointer;
     position: relative;
 }
 
 .createSquad__squad__item {
     background: var(--gold);
-    width: 100%;
+    width: calc(100% - 30px);
     height: 170px;
     display: flex;
     justify-content: space-between;
@@ -3923,11 +3958,11 @@ input::-webkit-inner-spin-button {
     content: "";
     position: absolute;
     background: #474747;
-    top: 50%;
+    top: 53.2%;
     transform: translateY(calc(-50% - 1px));
     height: 13px;
     width: 100px;
-    border: 1px solid rgb(112, 112, 112);
+    border: 1px solid #707070 !important;
     z-index: 0;
 }
 
@@ -4803,4 +4838,11 @@ input::-webkit-inner-spin-button {
 
 .clubTeams__tableHeader__header:last-of-type {
     text-align: right;
+}
+
+.comparedPlayer .video-react {
+    height: auto !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

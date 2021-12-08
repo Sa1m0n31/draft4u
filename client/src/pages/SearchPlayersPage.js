@@ -16,6 +16,7 @@ import filterIcon from '../static/img/filter.svg'
 import rightArrow from '../static/img/right-arrow.svg'
 import pokazWynikiBtn from '../static/img/pokaz-wyniki-btn.png'
 import profileImg from '../static/img/profile-picture.png'
+import trashIcon from '../static/img/trash-black.svg'
 
 const SearchPlayersPage = ({club, favorites}) => {
     const [players, setPlayers] = useState([]);
@@ -64,6 +65,13 @@ const SearchPlayersPage = ({club, favorites}) => {
                     &&((item.salary_from >= salary[0] && item.salary_to <= salary[1]) || !isSalaryOn)
         }));
     }
+
+    useEffect(() => {
+        const comparatorFromLocalStorage = JSON.parse(localStorage.getItem('draft4u-comparator'));
+        if(comparatorFromLocalStorage) {
+            setComparator(comparatorFromLocalStorage);
+        }
+    }, []);
 
     useEffect(() => {
         filterPlayers();
@@ -176,6 +184,14 @@ const SearchPlayersPage = ({club, favorites}) => {
 
     const addPlayerToComparator = (player) => {
         if(!isPlayerInComparator(player)) {
+            /* Three players in comparator */
+            if(comparator.filter((item) => {
+                return item;
+            }).length === 3) {
+                window.scrollTo(0,document.body.scrollHeight);
+                return 0;
+            }
+
             let playerAdded = false;
             setComparator(comparator.map((item, index) => {
                 if(((item === 0)&&(!playerAdded))||((index === 2)&&(!playerAdded))) {
@@ -198,7 +214,12 @@ const SearchPlayersPage = ({club, favorites}) => {
                 }
             }));
         }
+        return 1;
     }
+
+    useEffect(() => {
+        localStorage.setItem('draft4u-comparator', JSON.stringify(comparator));
+    }, [comparator]);
 
     const showFilters = () => {
         setMobileFilters(true);
@@ -209,11 +230,19 @@ const SearchPlayersPage = ({club, favorites}) => {
     }
 
     const areThreeToCompare = (e) => {
-        if(comparator?.findIndex((item) => {
-            return !item;
-        }) !== -1) {
+        if(comparator?.filter((item) => {
+            return item;
+        }).length < 2) {
             e.preventDefault();
         }
+    }
+
+    const deleteFromComparator = (itemToDelete) => {
+        console.log(itemToDelete);
+        setComparator(comparator.map((item) => {
+            if(item.user_id !== itemToDelete.user_id) return item;
+            else return 0;
+        }));
     }
 
     return <div className="container container--dark">
@@ -332,7 +361,13 @@ const SearchPlayersPage = ({club, favorites}) => {
             {filteredPlayers?.length ? <Splide options={options}>
                 {filteredPlayers.map((item, index) => {
                     return <SplideSlide key={index}>
-                        <PlayerCard key={index} player={item} favoriteView={false} />
+                        <PlayerCard key={index}
+                                    player={item}
+                                    favoriteView={false}
+                                    inComparator={isPlayerInComparator(item)}
+                                    favorite={isPlayerFavorite(item.user_id)}
+                                    balance={true}
+                                    addPlayerToComparator={addPlayerToComparator} />
                     </SplideSlide>
                 })}
             </Splide> : (players?.length ? <h3 className="playersWall__playersNotFoundHeader">
@@ -344,7 +379,13 @@ const SearchPlayersPage = ({club, favorites}) => {
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {filteredPlayers?.length ? filteredPlayers.map((item, index) => {
                 if(isIndexOnCurrentPage(index)) {
-                    return <PlayerCard key={index} player={item} favoriteView={false} favorite={isPlayerFavorite(item.user_id)} balance={true} addPlayerToComparator={addPlayerToComparator} />
+                    return <PlayerCard key={index}
+                                       player={item}
+                                       favoriteView={false}
+                                       inComparator={isPlayerInComparator(item)}
+                                       favorite={isPlayerFavorite(item.user_id)}
+                                       balance={true}
+                                       addPlayerToComparator={addPlayerToComparator} />
                 }
             }) : <h3 className="playersWall__playersNotFoundHeader">
                 Nie znaleziono zawodników o podanych parametrach
@@ -363,6 +404,9 @@ const SearchPlayersPage = ({club, favorites}) => {
         <section className="playersWall__compareSection siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
             {comparator.map((item, index) => {
                 return <section className="playersWall__compareSection__item" key={index}>
+                    {item ?  <button className="playersWall__compareSection__item__deleteBtn" onClick={() => { deleteFromComparator(item); }}>
+                        <img className="btn__img" src={trashIcon} alt="usun" />
+                    </button> : ""}
                     <figure className="playersWall__compareSection__item__imgWrapper">
                         {item ? <img className="playersWall__compareSection__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profileImg} alt="porownaj-graczy" /> : ""}
                     </figure>

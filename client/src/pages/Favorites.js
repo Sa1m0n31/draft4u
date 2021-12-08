@@ -10,6 +10,10 @@ import {calculateAge, isElementInArray} from "../helpers/others";
 import filterIcon from '../static/img/filter.svg'
 import rightArrow from '../static/img/right-arrow.svg'
 import pokazWynikiBtn from '../static/img/pokaz-wyniki-btn.png'
+import trashIcon from "../static/img/trash-black.svg";
+import settings from "../settings";
+import profileImg from "../static/img/profile-picture.png";
+import compareBtn from "../static/img/compare-btn.png";
 
 const Favorites = ({club}) => {
     const [players, setPlayers] = useState([]);
@@ -29,6 +33,8 @@ const Favorites = ({club}) => {
     const [attackRange, setAttackRange] = useState([150, 350]);
     const [verticalRange, setVerticalRange] = useState([20, 130]);
     const [salary, setSalary] = useState([1000, 30000]);
+
+    const [comparator, setComparator] = useState([0, 0, 0]);
 
     const filterPlayers = () => {
         const gender = sex[0] === 0; // TRUE - man, FALSE - woman
@@ -72,6 +78,13 @@ const Favorites = ({club}) => {
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
             });
+    }, []);
+
+    useEffect(() => {
+        const comparatorFromLocalStorage = JSON.parse(localStorage.getItem('draft4u-comparator'));
+        if(comparatorFromLocalStorage) {
+            setComparator(comparatorFromLocalStorage);
+        }
     }, []);
 
     const isPlayerInFilteredGroup = (position) => {
@@ -158,6 +171,69 @@ const Favorites = ({club}) => {
 
     const hideFilters = () => {
         setMobileFilters(false);
+    }
+
+    const isPlayerInComparator = (player) => {
+        console.log(comparator);
+        console.log(player);
+        return comparator.findIndex((item) => {
+            return item.user_id === player.user_id;
+        }) !== -1;
+    }
+
+    const addPlayerToComparator = (player) => {
+        if(!isPlayerInComparator(player)) {
+            /* Three players in comparator */
+            if(comparator.filter((item) => {
+                return item;
+            }).length === 3) {
+                window.scrollTo(0,document.body.scrollHeight);
+                return 0;
+            }
+
+            let playerAdded = false;
+            setComparator(comparator.map((item, index) => {
+                if(((item === 0)&&(!playerAdded))||((index === 2)&&(!playerAdded))) {
+                    playerAdded = true;
+                    return player;
+                }
+                else {
+                    return item;
+                }
+            }));
+        }
+        else {
+            setComparator(comparator.map((item) => {
+                if(item) {
+                    if(item.user_id === player.user_id) return 0;
+                    else return item;
+                }
+                else {
+                    return item;
+                }
+            }));
+        }
+        return 1;
+    }
+
+    useEffect(() => {
+        localStorage.setItem('draft4u-comparator', JSON.stringify(comparator));
+    }, [comparator]);
+
+    const areThreeToCompare = (e) => {
+        if(comparator?.filter((item) => {
+            return item;
+        }).length < 2) {
+            e.preventDefault();
+        }
+    }
+
+    const deleteFromComparator = (itemToDelete) => {
+        console.log(itemToDelete);
+        setComparator(comparator.map((item) => {
+            if(item.user_id !== itemToDelete.user_id) return item;
+            else return 0;
+        }));
     }
 
     return <div className="container container--dark">
@@ -276,7 +352,13 @@ const Favorites = ({club}) => {
             {filteredPlayers?.length ? <Splide options={options}>
                 {filteredPlayers.map((item, index) => {
                     return <SplideSlide key={index}>
-                        <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                        <PlayerCard key={index}
+                                    player={item}
+                                    favoriteView={true}
+                                    inComparator={isPlayerInComparator(item)}
+                                    favorite={true}
+                                    balance={true}
+                                    addPlayerToComparator={addPlayerToComparator} />
                     </SplideSlide>
                 })}
             </Splide> : (players?.length ? <h3 className="playersWall__playersNotFoundHeader">
@@ -288,7 +370,13 @@ const Favorites = ({club}) => {
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {filteredPlayers?.length ? filteredPlayers.map((item, index) => {
                 if(isIndexOnCurrentPage(index)) {
-                    return <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                    return <PlayerCard key={index}
+                                       player={item}
+                                       favoriteView={true}
+                                       inComparator={isPlayerInComparator(item)}
+                                       favorite={true}
+                                       balance={true}
+                                       addPlayerToComparator={addPlayerToComparator} />
                 }
             }) : <h3 className="playersWall__playersNotFoundHeader">
                 Nie znaleziono zawodników o podanych parametrach
@@ -303,6 +391,25 @@ const Favorites = ({club}) => {
                 Dalej <span className="playersWall--nextPageBtn__arrow"> > </span>
             </button> : ""}
         </nav>
+
+        <section className="playersWall__compareSection siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+            {comparator.map((item, index) => {
+                return <section className="playersWall__compareSection__item" key={index}>
+                    {item ?  <button className="playersWall__compareSection__item__deleteBtn" onClick={() => { deleteFromComparator(item); }}>
+                        <img className="btn__img" src={trashIcon} alt="usun" />
+                    </button> : ""}
+                    <figure className="playersWall__compareSection__item__imgWrapper">
+                        {item ? <img className="playersWall__compareSection__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profileImg} alt="porownaj-graczy" /> : ""}
+                    </figure>
+                    <h3 className="playersWall__compareSection__item__name">
+                        {!item ? "Imię i nazwisko" : item.first_name + " " + item.last_name}
+                    </h3>
+                </section>
+            })}
+            <a className="button button--hover button--compare" onClick={(e) => { areThreeToCompare(e); }} href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}&third=${comparator[2].user_id}`}>
+                <img className="btn__img" src={compareBtn} alt="porownaj" />
+            </a>
+        </section>
 
         <Footer theme="dark" border={true} />
     </div>

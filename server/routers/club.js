@@ -160,13 +160,14 @@ router.get("/get-favorites", (request, response) => {
 router.get("/get-player-highlight", (request, response) => {
     const userId = request.query.player;
 
-    const query = 'SELECT v.file_path FROM videos v JOIN users u ON v.user_id = u.id WHERE u.id = $1 AND v.video_category = 4';
+    const query = 'SELECT v.file_path, v.video_category FROM videos v JOIN users u ON v.user_id = u.id WHERE u.id = $1 ORDER BY array_position(array[4, 1, 2, 3, 5, 6, 7], v.video_category)';
     const values = [userId];
 
     db.query(query, values, (err, res) => {
+        console.log(err);
        if(res) {
            response.send({
-               result: res.rows[0]
+               result: res.rows
            });
        }
        else {

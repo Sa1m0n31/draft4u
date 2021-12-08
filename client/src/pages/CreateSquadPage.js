@@ -42,6 +42,10 @@ const CreateSquadPage = ({club}) => {
     const [availablePlaces, setAvailablePlaces] = useState([0, 0, 0, 0, 0, 0, 0]);
 
     useEffect(() => {
+        console.log(scrollbar[0]);
+    }, [scrollbar]);
+
+    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
 
@@ -102,7 +106,8 @@ const CreateSquadPage = ({club}) => {
             .then((res) => {
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
-                setTrackWidth(res?.data?.result?.length * 480);
+                console.log(res?.data?.result?.length);
+                setTrackWidth(res?.data?.result?.length * 510);
                 setFlexBasis(100 / res?.data?.result?.length);
             });
     }, []);
@@ -124,9 +129,6 @@ const CreateSquadPage = ({club}) => {
                     const newX = initialX + deltaX;
                     const newY = initialY + deltaY;
 
-                    // target.remove();
-                    // document.querySelector(".container").appendChild(target);
-
                     target.style.opacity = "1";
 
                     target
@@ -146,6 +148,7 @@ const CreateSquadPage = ({club}) => {
                 event.target.style.opacity = ".5";
             },
             ondrop: function(event) {
+                event.stopPropagation();
                 const draggingElement = event.relatedTarget;
                 const dropzoneElement = event.target;
 
@@ -301,11 +304,33 @@ const CreateSquadPage = ({club}) => {
             }));
 
             Array.from(document.querySelectorAll(".createSquad__squad__item__dragging")).forEach((item) => {
-                console.log(item);
                 item.classList.remove("draggable");
             });
         }
     }
+
+    useEffect(() => {
+        setTrackWidth((filteredPlayers.length - selectedPlayers.length) * 510);
+
+            const allPlayersWrappers = Array.from(document.querySelectorAll('.createSquad__squad__itemWrapper'));
+            if(allPlayersWrappers) {
+                const remainingItems = allPlayersWrappers.filter((item) => {
+                    return item.textContent.length || window.getComputedStyle(item).getPropertyValue('width') === '0px';
+                }).length;
+                allPlayersWrappers?.forEach((item) => {
+                    if(!item.textContent.length) {
+                        if(window.innerWidth > 768) item.style.width = '0';
+                        item.style.flexBasis = '0';
+                        item.style.margin = '0';
+                    }
+                    else {
+                        if(window.innerWidth > 768) item.style.width = '510px';
+                        else item.style.marginBottom = '20px';
+                        item.style.flexBasis = `${100 / remainingItems}%`;
+                    }
+                });
+            }
+    }, [selectedPlayers]);
 
     const startDragging = (e, playerIndex) => {
         if(!isElementInArray(selectedPlayers, playerIndex) && !(window.innerWidth < 768)) {
@@ -334,10 +359,6 @@ const CreateSquadPage = ({club}) => {
         if(id) setNewPlayerOnCourt(id * -1);
         else setNewPlayerOnCourt(-999999);
 
-        console.log("remove player from court");
-        console.log(id);
-        console.log(playerId);
-
         setSelectedPlayers(selectedPlayers.filter((item) => {
             return item !== id;
         }));
@@ -362,7 +383,6 @@ const CreateSquadPage = ({club}) => {
         elementToRemove.setAttribute('data-x', 0);
         elementToRemove.setAttribute('data-y', 0);
 
-        // elementToRemove.classList.remove("element--dropped");
         elementToRemove.classList.add("draggable");
     }
 
@@ -374,19 +394,13 @@ const CreateSquadPage = ({club}) => {
             setTeamSaved("Wybierz co najmniej jednego zawodnika do swojego składu");
         }
         else {
-            console.log(team);
             addSquad(name, team)
                 .then((res) => {
-                    console.log(res?.data?.result);
                     if(res?.data?.result === 2) setTeamSaved("Drużyna została zaktualizowana");
                     else if(res?.data?.result === 1) setTeamSaved("Drużyna została dodana");
                     else setTeamSaved("Coś poszło nie tak... Prosimy spróbować później");
                 });
         }
-    }
-
-    const exportTeam = () => {
-
     }
 
     const isPlayerInUpdateTeam = (player) => {
@@ -416,6 +430,10 @@ const CreateSquadPage = ({club}) => {
         setFiltersVisible(!filtersVisible);
     }
 
+    const getScrollAreaWidth = () => {
+        return parseInt(window.getComputedStyle(document.querySelector('.createSquad__squad')).getPropertyValue('width').split('p')[0]);
+    }
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
@@ -441,7 +459,7 @@ const CreateSquadPage = ({club}) => {
                 <img className="btn__img createSquad__floor" src={floor} alt="boisko" />
 
                 {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
-                   return <div className={!updateTeam.length >= item ? `dropzone dropzone--player--${item}` : `dropzone dropzone--active dropzone--player--${item}`}>
+                   return <div className={!updateTeam.length-1 >= item ? `dropzone dropzone--player--${item}` : `dropzone dropzone--active dropzone--player--${item}`}>
                        <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
 
                        {updateTeam[item-1] ? <>
@@ -568,7 +586,7 @@ const CreateSquadPage = ({club}) => {
                     <div className="createSquad__squad__track"
                          style={{
                         width: `${trackWidth}px`,
-                        transform: `translateX(-${(scrollbar[0] > 1 ? scrollbar[0] : 0)*trackWidth * 0.0101}px)`
+                        transform: `translateX(-${scrollbar[0] > 1 ? trackWidth * scrollbar[0] / 100 - getScrollAreaWidth() : 0}px)`
                     }}>
 
                         {players?.map((item, index) => {
@@ -581,7 +599,8 @@ const CreateSquadPage = ({club}) => {
                                             onMouseDown={(e) => { startDragging(e, index); }} key={index}
                                             onClick={(e) => { mobileAddToSquad(e, index, item.id); }}
                                             >
-                                    <div className={isElementInArray(selectedPlayers, index) ? (!mobile ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging") : (!mobile ? "createSquad__squad__item__dragging draggable opacity-0" : "createSquad__squad__item__dragging opacity-0")} id={`draggable-${index}`} key={index}>
+                                    <div className={isElementInArray(selectedPlayers, index) ? (!mobile ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging") : (!mobile ? "createSquad__squad__item__dragging draggable opacity-0" : "createSquad__squad__item__dragging opacity-0")}
+                                         id={`draggable-${index}`} key={index}>
                                         <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
                                         <button className="createSquad__squad__item__dragging__trashBtn" onClick={(e) => { e.stopPropagation(); removePlayerFromCourt(index, item.id); }}>
