@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import example from '../static/img/profile-picture.png'
@@ -21,6 +21,7 @@ import leftArrowWhite from '../static/img/left-arrow-white.svg'
 import {editProfileImage, getUserById, getUserData} from "../helpers/user";
 import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 import Dropzone from "react-dropzone-uploader";
+import closeIcon from '../static/img/close-grey.svg'
 
 const ChatPage = ({club}) => {
     const [image, setImage] = useState(null);
@@ -48,6 +49,11 @@ const ChatPage = ({club}) => {
     const [loaded, setLoaded] = useState(true);
     const [receiverId, setReceiverId] = useState(0);
     const [chatRead, setChatRead] = useState(null);
+    const [currentLargeImage, setCurrentLargeImage] = useState(null);
+
+    const largeImageModal = useRef(null);
+
+    const MESSAGE_READ_KEY = '9e01e9b0-2656-440d-999b-7f237cc8ba43';
 
     /* --- 1 --- */
     useEffect(() => {
@@ -169,7 +175,7 @@ const ChatPage = ({club}) => {
                         return (!item.type) && (new Date(item.read_at) > new Date(item.created_at));
                     });
                     if(indexOfRead !== -1) {
-                        setChatRead(result[indexOfRead].read_at);
+                        setChatRead(new Date(result[indexOfRead].read_at));
                     }
                     else {
                         setChatRead(null);
@@ -213,7 +219,7 @@ const ChatPage = ({club}) => {
                                 if(result) {
                                     result.forEach((item) => {
                                         if(!item.type && new Date(item.read_at) > new Date(item.created_at)) {
-                                            setChatRead(true);
+                                            setChatRead(new Date(item.read_at));
                                         }
                                     });
                                 }
@@ -227,8 +233,15 @@ const ChatPage = ({club}) => {
     useEffect(() => {
         if(listenSocket) {
             listenSocket.on("message", (data) => {
-                /* GET NEW MESSAGE */
-                updateChatList(data);
+                if(data === `[message_read ${MESSAGE_READ_KEY}]`) {
+                    /* Info that message is read */
+                    console.log("MESSAGE IS READ");
+                    setChatRead(new Date());
+                }
+                else {
+                    /* Got new message */
+                    updateChatList(data);
+                }
             });
         }
     }, [listenSocket]);
@@ -253,8 +266,9 @@ const ChatPage = ({club}) => {
         setChatInLink(true);
 
         if(isNew) {
-            socket.emit('message', 'read', (data) => {
-
+            alert('socket emit');
+            socket.emit('message', `[message_read ${MESSAGE_READ_KEY}]`, (data) => {
+                console.log(data);
             });
             markAsRead(chatId, 'true')
                 .then((res) => {
@@ -283,8 +297,15 @@ const ChatPage = ({club}) => {
             });
     }
 
-    const sendMessage = (chatId) => {
+    const sendMessage = (chatId, messageReadInfo = false) => {
         const regex = /\S/g;
+        if(messageReadInfo) {
+            addMessage(chatId, `[message_read ${MESSAGE_READ_KEY}]`, 'true')
+                .then((res) => {
+
+                });
+        }
+
         if(previewUrl) {
             addImageToMessage(chatId, image, 'true')
                 .then((res) => {
@@ -304,7 +325,7 @@ const ChatPage = ({club}) => {
                     setMessage("");
                     updateChatList(false);
                     socket.emit("message", message, (data) => {
-
+                        console.log(data);
                     });
                 });
         }
@@ -344,11 +365,23 @@ const ChatPage = ({club}) => {
         document.querySelector(".chat").style.paddingBottom = window.innerWidth > 996 ? "150px" : "50px";
     }
 
+    const enlargeImage = (path) => {
+        setCurrentLargeImage(path);
+
+        largeImageModal.current.style.opacity = '1';
+        largeImageModal.current.style.zIndex = '100';
+
+    }
+
     const getChatMessage = (content) => {
         if(content.split(' ')[0] === '[image') {
             const filePath = content.split(`'`).length ? content.split(`'`)[1] : null;
             if(filePath) {
-                return <img onLoad={() => { updateStyle(); }} className="btn__img" src={`${settings.API_URL}/image?url=/media/chat/${filePath}`} alt="example" />
+                return <img onLoad={() => { updateStyle(); }}
+                            onClick={() => { enlargeImage(filePath); }}
+                            className="btn__img messageImg"
+                            src={`${settings.API_URL}/image?url=/media/chat/${filePath}`}
+                            alt="zdjecie-wyslane" />
             }
             else {
                 return content;
@@ -379,11 +412,26 @@ const ChatPage = ({club}) => {
         }
 
         setMaxChat(Math.max(1, allMessagesHeight - (window.innerWidth > 768 ? window.innerHeight * 0.74 : window.innerHeight * 0.60)));
+    }
 
+    const closeLargeImageModal = () => {
+        largeImageModal.current.style.opacity = '0';
+        setTimeout(() => {
+            largeImageModal.current.style.zIndex = '-1';
+            setCurrentLargeImage(null);
+        }, 400);
     }
 
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club?.file_path} messageRead={messages} />
+
+        <div className="modal modal--largeImage" ref={largeImageModal} onClick={() => { closeLargeImageModal(); }}>
+            <button className="modal--close" onClick={() => { closeLargeImageModal(); }}>
+                <img className="btn__img" src={closeIcon} alt="zamknij" />
+            </button>
+            <img className="modal--largeImage__img" onClick={(e) => { e.stopPropagation(); }}
+                 src={currentLargeImage ? `${settings.API_URL}/image?url=/media/chat/${currentLargeImage}` : ''} alt="powiekszone-zdjecie" />
+        </div>
 
         {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">
@@ -530,7 +578,8 @@ const ChatPage = ({club}) => {
                             </p>
                         </section>)}
                         {chatRead ? <span className="messageReadInfo">
-                            Odczytano: {chatRead?.toString()?.substring(0, 10)} {chatRead.toString()?.split('T')[1]?.substring(0, 8)}
+                            Odczytano: {chatRead.getDate() + '.' + chatRead.getMonth()+1 + '.' + chatRead.getFullYear()}
+                            {chatRead.getHours() + ':' + chatRead.getMinutes() + '.' + chatRead.getSeconds()}
                             <figure className="chat__list__item__imgWrapper">
                                 <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
                             </figure>

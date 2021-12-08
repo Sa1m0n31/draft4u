@@ -70,13 +70,17 @@ const isLoggedIn = (req, res, next) => {
 /* Socket.IO */
 io.on("connection", (socket) => {
     const { room, sender, receiver } = socket.handshake.query;
+    console.log("CONNECTION");
     if(receiver) {
         if(room) {
+            console.log("JOIN");
             socket.join(room + "-receiver");
         }
     }
 
     socket.on("message", (data) => {
+        console.log('socket.io message');
+        console.log(data);
         io.to(room+"-receiver").emit("message", {
             data,
             sender

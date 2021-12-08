@@ -7,7 +7,6 @@ const upload = multer({ dest: 'media/chat' })
 
 router.get("/get-user-messages", (request, response) => {
     if(request.user) {
-        console.log(request.user);
         const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type FROM
                     (
                         SELECT *, ROW_NUMBER() OVER(PARTITION BY chat_id ORDER BY created_at DESC) AS row
@@ -90,16 +89,13 @@ router.get("/get-chat-content", (request, response) => {
 
 router.get("/is-chat-read", (request, response) => {
     /* TODO */
-    console.log(request.query.id);
     const id = request.query.id;
 
     const query = `SELECT m.content, m.created_at, m.type as mes_type, rm.type, rm.read_at as read_at FROM read_messages rm LEFT OUTER JOIN messages m ON m.chat_id = rm.chat_id WHERE rm.chat_id = $1 ORDER BY m.created_at DESC LIMIT 1;`;
     const values = [id];
 
     db.query(query, values, (err, res) => {
-        console.log(res.rows);
-       console.log(err);
-       if(res) {
+        if(res) {
            response.send({
                result: res.rows
            });
