@@ -157,8 +157,8 @@ const SearchPlayersPage = ({club, favorites}) => {
     }
 
     const nextPage = () => {
-        setCurrentPage(currentPage+1);
         goToTopOfTheWall();
+        setCurrentPage(currentPage+1);
     }
 
     const prevPage = () => {

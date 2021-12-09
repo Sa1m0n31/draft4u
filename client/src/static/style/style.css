@@ -4434,8 +4434,11 @@ input::-webkit-inner-spin-button {
     border: none;
     outline: none;
     margin-right: 20px;
-    cursor: pointer;
     position: relative;
+}
+
+.chat__btn, .chat__btn * {
+    cursor: pointer;
 }
 
 .chat__main .dzu-previewContainer {
@@ -4490,6 +4493,10 @@ input::-webkit-inner-spin-button {
     text-align: right;
     color: #fff;
     font-size: 13px;
+}
+
+.container--light .messageReadInfo {
+    color: #313131;
 }
 
 .chat__main__content {
@@ -4849,6 +4856,7 @@ input::-webkit-inner-spin-button {
 
 .messageImg {
     cursor: pointer;
+    max-width: 400px;
 }
 
 .modal--largeImage {

@@ -7,7 +7,7 @@ const upload = multer({ dest: 'media/chat' })
 
 router.get("/get-user-messages", (request, response) => {
     if(request.user) {
-        const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type FROM
+        const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type, c.id FROM
                     (
                         SELECT *, ROW_NUMBER() OVER(PARTITION BY chat_id ORDER BY created_at DESC) AS row
                         FROM messages
@@ -90,8 +90,25 @@ router.get("/get-chat-content", (request, response) => {
 router.get("/is-chat-read", (request, response) => {
     /* TODO */
     const id = request.query.id;
+    const club = request.query.club;
 
-    const query = `SELECT m.content, m.created_at, m.type as mes_type, rm.type, rm.read_at as read_at FROM read_messages rm LEFT OUTER JOIN messages m ON m.chat_id = rm.chat_id WHERE rm.chat_id = $1 ORDER BY m.created_at DESC LIMIT 1;`;
+    console.log(club);
+    let query;
+    if(club === 'true') {
+        console.log('mes_type = true, read = false');
+        query = `SELECT m.content, m.created_at - INTERVAL '1 HOUR' as created_at, m.type as mes_type, rm.type, rm.read_at - INTERVAL '1 HOUR' as read_at 
+    FROM read_messages rm LEFT OUTER JOIN messages m ON m.chat_id = rm.chat_id 
+    WHERE rm.chat_id = $1 AND m.type = true AND rm.type = false
+    ORDER BY m.created_at DESC LIMIT 1;`;
+    }
+    else {
+        console.log('mes_type = false, read = true');
+        query = `SELECT m.content, m.created_at - INTERVAL '1 HOUR' as created_at, m.type as mes_type, rm.type, rm.read_at - INTERVAL '1 HOUR' as read_at 
+    FROM read_messages rm LEFT OUTER JOIN messages m ON m.chat_id = rm.chat_id 
+    WHERE rm.chat_id = $1 AND m.type = false AND rm.type = true
+    ORDER BY m.created_at DESC LIMIT 1;`;
+    }
+
     const values = [id];
 
     db.query(query, values, (err, res) => {

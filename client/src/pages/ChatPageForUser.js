@@ -127,7 +127,7 @@ const ChatPageForUser = ({user, isLocal}) => {
                                     setCurrentReceiver(result.name);
                                     setCurrentReceiverImg(result.file_path);
                                 }
-                            })
+                            });
                     });
             }
         }
@@ -264,7 +264,13 @@ const ChatPageForUser = ({user, isLocal}) => {
     }
 
     return <div className="container container--light">
-        <Header loggedIn={true} player={true} menu="dark" theme="light" profileImage={user?.file_path} messageRead={messages} isLocal={isLocal} />
+        <Header loggedIn={true}
+                player={true}
+                menu="dark"
+                theme="light"
+                profileImage={user?.file_path}
+                messageRead={messages}
+                isLocal={isLocal} />
 
         {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">

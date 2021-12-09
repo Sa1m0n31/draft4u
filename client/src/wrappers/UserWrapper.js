@@ -16,6 +16,7 @@ import Notifications from "../pages/Notifications";
 import {getAdminData} from "../helpers/admin";
 import SingleArticle from "../pages/SingleArticle";
 import ChangePassword from "../pages/ChangePassword";
+import ChatPage from "../pages/ChatPage";
 
 const UserContext = React.createContext(5);
 
@@ -59,7 +60,7 @@ const UserWrapper = ({page}) => {
                                             setRenderSwitch(<PaymentReturnPage user={user} isLocal={isLocal} />);
                                             break;
                                         case 7:
-                                            setRenderSwitch(<ChatPageForUser user={user} isLocal={isLocal} />);
+                                            setRenderSwitch(<ChatPage user={user} isLocal={isLocal} />);
                                             break;
                                         case 8:
                                             setRenderSwitch(<Notifications user={user} isLocal={isLocal} />);

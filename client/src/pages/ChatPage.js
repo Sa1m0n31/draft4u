@@ -6,16 +6,18 @@ import {getTrackBackground, Range} from "react-range";
 import { Direction } from 'react-range';
 import pictureIcon from '../static/img/picture.svg'
 import sendIcon from '../static/img/send.svg'
+import pictureIconForUser from '../static/img/picture-dark.svg'
+import sendIconForUser from '../static/img/send-gold.svg';
 import {
     addImageToMessage,
     addMessage,
     getChatContent,
-    getClubMessages,
+    getClubMessages, getUserMessages,
     isMessageRead,
     markAsRead
 } from "../helpers/chat";
 import settings from "../settings";
-import {getClubData} from "../helpers/club";
+import {getClubById, getClubData} from "../helpers/club";
 import { io } from "socket.io-client";
 import leftArrowWhite from '../static/img/left-arrow-white.svg'
 import {editProfileImage, getUserById, getUserData} from "../helpers/user";
@@ -23,7 +25,7 @@ import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 import Dropzone from "react-dropzone-uploader";
 import closeIcon from '../static/img/close-grey.svg'
 
-const ChatPage = ({club}) => {
+const ChatPage = ({club, user, isLocal}) => {
     const [image, setImage] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [scrollbarList, setScrollbarList] = useState([1]);
@@ -50,6 +52,11 @@ const ChatPage = ({club}) => {
     const [receiverId, setReceiverId] = useState(0);
     const [chatRead, setChatRead] = useState(null);
     const [currentLargeImage, setCurrentLargeImage] = useState(null);
+    const [currentChatId, setCurrentChatId] = useState('');
+
+    const [username, setUsername] = useState("");
+    const [userId, setUserId] = useState("");
+    const [clubIdParam, setClubIdParam] = useState("");
 
     const largeImageModal = useRef(null);
 
@@ -57,42 +64,88 @@ const ChatPage = ({club}) => {
 
     /* --- 1 --- */
     useEffect(() => {
-        getClubData()
-            .then((res) => {
-                setClubId(res?.data?.result?.id);
-                setClubName(res?.data?.result?.name);
-            });
+        if(club) {
+            console.log('get club data');
+            getClubData()
+                .then((res) => {
+                    setClubId(res?.data?.result?.id);
+                    setClubName(res?.data?.result?.name);
+                });
 
-        getClubMessages()
-            .then((res) => {
-                const result = res?.data?.result;
-                if(result?.length) {
-                    setMessages(getUniqueListBy(result, 'chat_id'));
-                    setCurrentReceiver(result[0].first_name + " " + result[0].last_name);
-                    setCurrentReceiverImg(result[0].file_path);
-                    setReceiverId(result[0].id);
+            getClubMessages()
+                .then((res) => {
+                    const result = res?.data?.result;
+                    if(result?.length) {
+                        setMessages(getUniqueListBy(result, 'chat_id'));
+                        setCurrentReceiver(result[0].first_name + " " + result[0].last_name);
+                        setCurrentReceiverImg(result[0].file_path);
+                        setReceiverId(result[0].id);
 
-                    if(!chatInLink) {
-                        getChatContent(result[0].chat_id)
-                            .then((res) => {
-                                if(res?.data?.result) {
-                                    setCurrentChat(res.data.result);
-                                    setLoaded(true);
-                                }
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                            })
+                        if(!chatInLink) {
+                            setCurrentChatId(result[0].chat_id);
+                            getChatContent(result[0].chat_id)
+                                .then((res) => {
+                                    if(res?.data?.result) {
+                                        setCurrentChat(res.data.result);
+                                        setLoaded(true);
+                                    }
+                                })
+                                .catch((err) => {
+                                    //console.log(err);
+                                })
+                        }
+                        else {
+                            setLoaded(true);
+                        }
                     }
                     else {
+                        setNoMessages(true);
                         setLoaded(true);
                     }
-                }
-                else {
-                    setNoMessages(true);
-                    setLoaded(true);
-                }
-            });
+                });
+        }
+        else {
+            console.log('get user data');
+            getUserData()
+                .then((res) => {
+                    const result = res?.data?.result;
+                    if(result) {
+                        setUserId(result.id);
+                        setUsername(result.first_name + " " + result.last_name);
+                    }
+                });
+
+            getUserMessages()
+                .then((res) => {
+                    const result = res?.data?.result;
+                    if(result?.length) {
+                        setMessages(getUniqueListBy(result, 'chat_id'));
+                        setCurrentReceiver(result[0].name);
+                        setCurrentReceiverImg(result[0].file_path);
+
+                        if(!chatInLink) {
+                            setCurrentChatId(result[0].chat_id);
+                            getChatContent(result[0].chat_id)
+                                .then((res) => {
+                                    if(res?.data?.result) {
+                                        setCurrentChat(res.data.result);
+                                        setLoaded(true);
+                                    }
+                                })
+                                .catch((err) => {
+                                    //console.log(err);
+                                })
+                        }
+                        else {
+                            setLoaded(true);
+                        }
+                    }
+                    else {
+                        setNoMessages(true);
+                        setLoaded(true);
+                    }
+                });
+        }
     }, []);
 
     /* --- 2 --- */
@@ -132,32 +185,62 @@ const ChatPage = ({club}) => {
         }
 
         /* LOGIC PART */
-        let newPlayerToChat;
+        let newPlayerToChat, newClubToChat;
         if(clubId) {
             const params = new URLSearchParams(window.location.search);
-            newPlayerToChat = params.get('new');
-            setUserIdParam(newPlayerToChat);
+            if(club) {
+                newPlayerToChat = params.get('new');
+                setUserIdParam(newPlayerToChat);
+            }
+            else {
+                newClubToChat = params.get('new');
+                setClubIdParam(newClubToChat);
+            }
 
-            if(newPlayerToChat && !chatInLink) {
-                getChatContent(`${clubId};${newPlayerToChat}`)
-                    .then((res) => {
-                        setChatInLink(true);
+            if(club) {
+                if(newPlayerToChat && !chatInLink) {
+                    getChatContent(`${clubId};${newPlayerToChat}`)
+                        .then((res) => {
+                            setChatInLink(true);
 
-                        if(res?.data?.result) {
-                            setCurrentChat(res.data.result);
-                            setMobileCurrentChat(res.data.result);
-                        }
+                            if(res?.data?.result) {
+                                setCurrentChat(res.data.result);
+                                setMobileCurrentChat(res.data.result);
+                            }
 
-                        getUserById(newPlayerToChat)
-                            .then((res) => {
-                                const result = res?.data?.result;
-                                if(result) {
-                                    setReceiverId(newPlayerToChat);
-                                    setCurrentReceiver(result.first_name + " " + result.last_name);
-                                    setCurrentReceiverImg(result.file_path);
-                                }
-                            })
-                    });
+                            getUserById(newPlayerToChat)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    if(result) {
+                                        setReceiverId(newPlayerToChat);
+                                        setCurrentReceiver(result.first_name + " " + result.last_name);
+                                        setCurrentReceiverImg(result.file_path);
+                                    }
+                                })
+                        });
+                }
+            }
+            else {
+                if(newClubToChat && !chatInLink && !currentChat) {
+                    getChatContent(`${newClubToChat};${userId}`)
+                        .then((res) => {
+                            setChatInLink(true);
+
+                            if(res?.data?.result) {
+                                setCurrentChat(res.data.result);
+                                setMobileCurrentChat(res.data.result);
+                            }
+
+                            getClubById(newClubToChat)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    if(result) {
+                                        setCurrentReceiver(result.name);
+                                        setCurrentReceiverImg(result.file_path);
+                                    }
+                                });
+                        });
+                }
             }
         }
 
@@ -166,19 +249,18 @@ const ChatPage = ({club}) => {
             return this;
         }
 
-        isMessageRead(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`)
+        isMessageRead(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`, club)
             .then((res) => {
                 const result = res?.data?.result;
-                console.log(result);
                 if(result) {
                     const indexOfRead = result.findIndex((item) => {
                         return (!item.type) && (new Date(item.read_at) > new Date(item.created_at));
                     });
                     if(indexOfRead !== -1) {
-                        setChatRead(new Date(result[indexOfRead].read_at));
+                        //setChatRead(new Date(result[indexOfRead].read_at));
                     }
                     else {
-                        setChatRead(null);
+                        // setChatRead(null);
                     }
 
 
@@ -186,65 +268,128 @@ const ChatPage = ({club}) => {
             });
 
         /* Socket part */
-        if(currentChat.length || (newPlayerToChat && clubId)) {
-            if(socket) {
-                if(socket.io.opts.query.split("&") !== `room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}`) {
-                    socket.disconnect();
-                    setSocket(io(`${settings.API_URL}?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}&sender=${clubId ? clubId : currentChat[0].chat_id.split(";")[0]}`));
+        if(club) {
+            if(currentChat.length || (newPlayerToChat && clubId)) {
+                if(socket) {
+                    if(socket.io.opts.query.split("&") !== `room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}`) {
+                        socket.disconnect();
+                        setSocket(io(`${settings.API_URL}?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newPlayerToChat}&sender=${clubId ? clubId : currentChat[0].chat_id.split(";")[0]}`));
+                    }
+                }
+                else if(currentChat[0]?.chat_id) {
+                    setSocket(io(`${settings.API_URL}?room=${currentChat[0].chat_id.split(";")[1]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newPlayerToChat}`));
                 }
             }
-            else {
-                setSocket(io(`${settings.API_URL}?room=${clubId ? clubId : currentChat[0].chat_id.split(";")[1]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newPlayerToChat}`));
+        }
+        else {
+            if(currentChat.length || (newClubToChat && userId)) {
+                if(socket) {
+                    if(socket.io.opts.query.split("&") !== `room=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newClubToChat}`) {
+                        socket.disconnect();
+                        setSocket(io(`${settings.API_URL}?room=${currentChat?.length ? currentChat[0].chat_id.split(";")[0] : newClubToChat}&sender=${userId ? userId : currentChat[0].chat_id.split(";")[1]}`));
+                    }
+                }
+                else if(currentChat[0]?.chat_id) {
+                    setSocket(io(`${settings.API_URL}?room=${currentChat[0].chat_id.split(";")[0]}&sender=${currentChat?.length ? currentChat[0].chat_id.split(";")[1] : newClubToChat}`));
+                }
             }
         }
-    }, [currentChat, clubId]);
+    }, [currentChat, clubId, userId]);
 
     /* --- 3 --- */
     useEffect(() => {
         if(messages.length) {
             if(!listenSocket) {
-                setListenSocket(io(`${settings.API_URL}?room=${messages[0].chat_id.split(";")[0]}&receiver=true`));
+                setListenSocket(io(`${settings.API_URL}?room=${messages[0].chat_id.split(";")[club ? 0 : 1]}&receiver=true`));
             }
         }
 
-        if(currentChat.length || userIdParam) {
-            getChatContent(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`)
-                .then((res) => {
-                    if(res?.data?.result) {
-                        setCurrentChat(res.data.result);
+        console.log(messages);
 
-                        isMessageRead(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`)
-                            .then((res) => {
-                                const result = res?.data?.result;
-                                if(result) {
-                                    result.forEach((item) => {
-                                        if(!item.type && new Date(item.read_at) > new Date(item.created_at)) {
-                                            setChatRead(new Date(item.read_at));
-                                        }
-                                    });
-                                }
-                            });
-                    }
-                });
+        if(club) {
+            console.log("CLUB");
+            if(currentChatId || userIdParam) {
+                getChatContent(currentChatId ? currentChatId : `${clubId};${userIdParam}`)
+                    .then((res) => {
+                        if(res?.data?.result) {
+                            console.log("SET CURRENT CHAT");
+                            setCurrentChat(res.data.result);
+
+                            isMessageRead(currentChatId ? currentChatId : `${clubId};${userIdParam}`, true)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    if(result) {
+                                        result.forEach((item) => {
+                                            console.log(item);
+                                            if(!item.mes_type && new Date(item.read_at) > new Date(item.created_at)) {
+                                                console.log("READ AT: " + item.read_at);
+                                                setChatRead(new Date(item.read_at));
+                                            }
+                                        });
+                                    }
+                                });
+                        }
+                    });
+            }
         }
-    }, [messages]);
+        else {
+            console.log("USER");
+            console.log(currentChatId);
+            console.log(currentChat);
+            if(currentChatId || clubIdParam) {
+                getChatContent(currentChatId ? currentChatId : `${clubIdParam};${userId}`)
+                    .then((res) => {
+                        if(res?.data?.result) {
+                            setCurrentChat(res.data.result);
+
+                            console.log("CHECK IF MESSAGE READ");
+                            isMessageRead(currentChatId ? currentChatId : `${clubIdParam};${userId}`, false)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    if(result) {
+                                        result.forEach((item) => {
+                                            if(!item.mes_type && new Date(item.read_at) > new Date(item.created_at)) {
+                                                console.log("READ AT: " + item.read_at);
+                                                setChatRead(new Date(item.read_at));
+                                            }
+                                        });
+                                    }
+                                });
+                        }
+                    });
+            }
+        }
+    }, [messages, currentChatId]);
 
     /* Socket effects */
     useEffect(() => {
         if(listenSocket) {
             listenSocket.on("message", (data) => {
-                if(data === `[message_read ${MESSAGE_READ_KEY}]`) {
+                setChatRead(null);
+                console.log(data.data);
+                if(((data.data === `[message_read ${MESSAGE_READ_KEY} club ${currentChatId}]`) && !club)||(((data.data === `[message_read ${MESSAGE_READ_KEY} user ${currentChatId}]`) && club))) {
                     /* Info that message is read */
-                    console.log("MESSAGE IS READ");
+                    console.log("aktualny rozmowca przeczytal wiadomosc");
                     setChatRead(new Date());
                 }
                 else {
+                    setChatRead(null);
                     /* Got new message */
                     updateChatList(data);
+
                 }
             });
         }
     }, [listenSocket]);
+
+    useEffect(() => {
+        if(chatRead) {
+            updateStyle(true);
+        }
+        else {
+            updateStyle(false);
+        }
+    }, [chatRead]);
 
     useEffect(() => {
         if(socket) {
@@ -258,25 +403,39 @@ const ChatPage = ({club}) => {
         }
     }, [socket]);
 
-    const getChat = (chatId, fullName, img, userId, isNew) => {
-        setReceiverId(userId);
+    const getChat = (chatId, fullName, img, userOrClubId, isNew) => {
+        setReceiverId(userOrClubId);
         setCurrentReceiver(fullName);
         setCurrentReceiverImg(img);
+        setCurrentChatId(chatId);
 
         setChatInLink(true);
+        setChatRead(null);
 
         if(isNew) {
-            alert('socket emit');
-            socket.emit('message', `[message_read ${MESSAGE_READ_KEY}]`, (data) => {
-                console.log(data);
+            socket.emit('message', `[message_read ${MESSAGE_READ_KEY} ${club ? 'club' : 'user'} ${chatId}]`, (data) => {
+                //console.log(data);
             });
-            markAsRead(chatId, 'true')
-                .then((res) => {
-                    getClubMessages()
-                        .then((res) => {
-                            setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
-                        });
-                });
+           if(club) {
+               console.log("GETCHAT->CLUB");
+               markAsRead(chatId, 'true')
+                   .then((res) => {
+                       getClubMessages()
+                           .then((res) => {
+                               console.log(res?.data?.result);
+                               setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                           });
+                   });
+           }
+           else {
+               markAsRead(chatId,'false')
+                   .then((res) => {
+                       getUserMessages()
+                           .then((res) => {
+                               setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                           });
+                   });
+           }
         }
 
         getChatContent(chatId)
@@ -286,28 +445,91 @@ const ChatPage = ({club}) => {
             });
     }
 
+    useEffect(() => {
+        if(club) {
+            console.log("CLUB");
+            if(currentChat.length || userIdParam) {
+                getChatContent(currentChatId ? currentChatId : `${clubId};${userIdParam}`)
+                    .then((res) => {
+                        if(res?.data?.result) {
+                            const result = res.data.result;
+                            setCurrentChat(result);
+
+                            isMessageRead(result[0] ? result[0].chat_id : `${clubId};${userIdParam}`, true)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    console.log(result);
+                                    if(result) {
+                                        result.forEach((item) => {
+                                            console.log(item.type);
+                                            console.log(new Date(item.created_at));
+                                            console.log(new Date(item.read_at));
+                                            if(item.mes_type && new Date(item.read_at) > new Date(item.created_at)) {
+                                                // console.log("READ AT: " + item.read_at);
+                                                setChatRead(new Date(item.read_at));
+                                            }
+                                        });
+                                    }
+                                });
+                        }
+                    });
+            }
+        }
+        else {
+            if(currentChat.length || clubIdParam) {
+                getChatContent(currentChatId ? currentChatId : `${clubIdParam};${userId}`)
+                    .then((res) => {
+                        if(res?.data?.result) {
+                            const result = res.data.result;
+                            setCurrentChat(result);
+
+                            isMessageRead(result[0] ? result[0].chat_id : `${clubIdParam};${userId}`, false)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    if(result) {
+                                        result.forEach((item) => {
+                                            if(!item.mes_type && new Date(item.read_at) > new Date(item.created_at)) {
+                                                console.log("READ AT: " + item.read_at);
+                                                setChatRead(new Date(item.read_at));
+                                            }
+                                        });
+                                    }
+                                });
+                        }
+                    });
+            }
+        }
+    }, [currentChatId]);
+
     const updateChatList = (newMessage) => {
-        getClubMessages()
-            .then((res) => {
-                const result = res?.data?.result;
-                if(result?.length) {
-                    setMessages(getUniqueListBy(result, 'chat_id'));
-                    if(newMessage) setNewMsg(newMessage);
-                }
-            });
-    }
-
-    const sendMessage = (chatId, messageReadInfo = false) => {
-        const regex = /\S/g;
-        if(messageReadInfo) {
-            addMessage(chatId, `[message_read ${MESSAGE_READ_KEY}]`, 'true')
+        if(club) {
+            getClubMessages()
                 .then((res) => {
-
+                    const result = res?.data?.result;
+                    if(result?.length) {
+                        setMessages(getUniqueListBy(result, 'chat_id'));
+                        if(newMessage) setNewMsg(newMessage);
+                    }
                 });
         }
+        else {
+            getUserMessages()
+                .then((res) => {
+                    const result = res?.data?.result;
+                    if(result?.length) {
+                        setMessages(getUniqueListBy(result, 'chat_id'));
+                        if(newMessage) setNewMsg(newMessage);
+                    }
+                });
+        }
+    }
+
+    const sendMessage = (chatId) => {
+        const regex = /\S/g;
 
         if(previewUrl) {
-            addImageToMessage(chatId, image, 'true')
+            setChatRead(null);
+            addImageToMessage(chatId, image, club ? 'true' : 'false')
                 .then((res) => {
                     setImage(null);
                     setPreviewUrl(null);
@@ -320,12 +542,13 @@ const ChatPage = ({club}) => {
                 });
         }
         else if(message && message.match(regex)) {
-            addMessage(chatId, message, 'true')
+            setChatRead(null);
+            addMessage(chatId, message, club ? 'true' : 'false')
                 .then((res) => {
                     setMessage("");
                     updateChatList(false);
                     socket.emit("message", message, (data) => {
-                        console.log(data);
+                        // console.log(data);
                     });
                 });
         }
@@ -354,7 +577,8 @@ const ChatPage = ({club}) => {
     const changeMessage = (e) => {
         if(e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
-            sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`);
+            if(club) sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`);
+            else sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubIdParam};${userId}`);
         }
     }
 
@@ -390,7 +614,7 @@ const ChatPage = ({club}) => {
         else return content;
     }
 
-    const updateStyle = () => {
+    const updateStyle = (read = false) => {
         /* STYLE PART */
         const objDiv = document.querySelector(".chat__main__content");
         objDiv.scrollTop = objDiv.scrollHeight;
@@ -411,7 +635,8 @@ const ChatPage = ({club}) => {
             setMax(Math.max(1, allMessagesShortsHeight - listHeight));
         }
 
-        setMaxChat(Math.max(1, allMessagesHeight - (window.innerWidth > 768 ? window.innerHeight * 0.74 : window.innerHeight * 0.60)));
+        if(read) setMaxChat(Math.max(1, allMessagesHeight - (window.innerWidth > 768 ? window.innerHeight * 0.74 : window.innerHeight * 0.60) + 50));
+        else setMaxChat(Math.max(1, allMessagesHeight - (window.innerWidth > 768 ? window.innerHeight * 0.74 : window.innerHeight * 0.60)));
     }
 
     const closeLargeImageModal = () => {
@@ -422,8 +647,15 @@ const ChatPage = ({club}) => {
         }, 400);
     }
 
-    return <div className="container container--dark">
-        <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club?.file_path} messageRead={messages} />
+    return <div className={club ? "container container--dark" : "container container--light"}>
+        <Header loggedIn={true}
+                club={club}
+                player={user}
+                menu={club ? "light" : "dark"}
+                theme={club ? "dark" : "light"}
+                profileImage={club ? club?.file_path : user?.file_path}
+                messageRead={messages}
+                isLocal={isLocal} />
 
         <div className="modal modal--largeImage" ref={largeImageModal} onClick={() => { closeLargeImageModal(); }}>
             <button className="modal--close" onClick={() => { closeLargeImageModal(); }}>
@@ -439,14 +671,21 @@ const ChatPage = ({club}) => {
             </h1>
 
             <header className="chat__header__user d-desktop">
-                <a className="chat__main__header__section" href={`/profil-zawodnika?id=${receiverId}`}>
+                {club ? <a className="chat__main__header__section" href={`/profil-zawodnika?id=${receiverId}`}>
                     {currentReceiver ? <figure className="chat__list__item__imgWrapper">
                         <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure> : ""}
                     <h3 className="chat__main__header__fullName">
                         {currentReceiver}
                     </h3>
-                </a>
+                </a> : <section className="chat__main__header__section">
+                    {currentReceiver ? <figure className="chat__list__item__imgWrapper">
+                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
+                    </figure> : ""}
+                    <h3 className="chat__main__header__fullName">
+                        {currentReceiver}
+                    </h3>
+                </section>}
             </header>
         </header> : ""}
         {mobileCurrentChat !== -1 && loaded ? <header className="chat__mobileHeader d-mobile">
@@ -455,7 +694,7 @@ const ChatPage = ({club}) => {
             </button>
             <a className="chat__main__header__section" href={`/profil-zawodnika?id=${receiverId}`}>
                 <figure className="chat__list__item__imgWrapper">
-                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
+                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
                 </figure>
                 <h3 className="chat__main__header__fullName">
                     {currentReceiver}
@@ -466,14 +705,18 @@ const ChatPage = ({club}) => {
             <section className={mobileCurrentChat === -1 ? "chat__list" : "chat__list d-desktop"}>
                 <main className="chat__list__main" onScroll={(e) => { chatListScroll(e); }}>
                     {messages?.length ? messages.map((item, index) => {
-                        return <button className={new Date(item.created_at) > new Date(item.read_at) && !item.type ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id, item.first_name + " " + item.last_name, item.file_path, item.id, ((new Date(item.created_at) > new Date(item.read_at)) && !item.type)); }}>
+                        return <button className={(new Date(item.created_at) > new Date(item.read_at)) && ((!item.type && club) || (item.type && !club)) ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id, club ? (item.first_name + " " + item.last_name) : item.name, item.file_path, item.id, ((new Date(item.created_at) > new Date(item.read_at)) && ((!item.type && club) || (item.type && !club)))); }}>
                             <figure className="chat__list__item__imgWrapper" key={index}>
-                                <img className="chat__list__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : example} alt={item.last_name} />
+                                <img className="chat__list__item__img"
+                                     src={item.file_path ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example}
+                                     alt={club ? item.last_name : item.name} />
                             </figure>
                             <section className="chat__list__item__content">
-                                <h4 className="chat__list__item__name">
+                                {club ? <h4 className="chat__list__item__name">
                                     {item.first_name} {item.last_name}
-                                </h4>
+                                </h4> : <h4 className="chat__list__item__name">
+                                    {item.name}
+                                </h4>}
                                 <p className="chat__list__item__text">
                                     {getMessagePreview(item.content)}
                                 </p>
@@ -514,7 +757,7 @@ const ChatPage = ({club}) => {
                                     border: '1px solid #707070',
                                     background: getTrackBackground({
                                         values: scrollbarList[0] ? scrollbarList : [1000, 3000],
-                                        colors: ['#474747', '#474747', '#474747'],
+                                        colors: [club ? '#474747' : '#ECECEC'],
                                         min: 0,
                                         max: max,
                                         rtl: false
@@ -547,11 +790,13 @@ const ChatPage = ({club}) => {
                     <main className="chat__main__content" onScroll={(e) => { chatMainScroll(e); }}>
                         {currentChat.length ? currentChat.map((item, index, array) => {
                             return <section className="chat__main__content__section" key={index}>
-                                <div className={item.type ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
+                                <div className={(item.type && club)||(!item.type && !club) ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
                                     <header className="chat__message__header">
-                                        <h4 className="chat__message__header__name">
+                                        {club ? <h4 className="chat__message__header__name">
                                             {item.type ? clubName : currentReceiver}
-                                        </h4>
+                                        </h4> : <h4 className="chat__message__header__name">
+                                            {item.type ? currentReceiver : username}
+                                        </h4>}
                                         <h5 className="chat__message__header__date">
                                             <span>{item.created_at.substring(11, 16)}</span>
                                             <span>{item.created_at.substring(0, 10)}</span>
@@ -562,7 +807,7 @@ const ChatPage = ({club}) => {
                                     </span>
                                 </div>
                             </section>
-                        }) : (currentReceiver ? <section className="chat__main__noMessages">
+                        }) : (club ? (currentReceiver ? <section className="chat__main__noMessages">
                             <h3 className="chat__main__noMessages__header">
                                 Rozpocznij konwersacje
                             </h3>
@@ -576,12 +821,26 @@ const ChatPage = ({club}) => {
                             <p className="chat__main__noMessages__text">
                                 Wyszukaj odpowiadających Ci zawodników i skontaktuj się z nimi!
                             </p>
-                        </section>)}
+                        </section>) : (currentReceiver ? <section className="chat__main__noMessages">
+                            <h3 className="chat__main__noMessages__header">
+                                Nie możesz prowadzić konwersacji z tym klubem
+                            </h3>
+                            <p className="chat__main__noMessages__text">
+                                Ten klub nie odezwał się jeszcze do Ciebie.
+                            </p>
+                        </section> : <section className="chat__main__noMessages">
+                            <h3 className="chat__main__noMessages__header">
+                                Nie posiadasz póki co żadnych wiadomości
+                            </h3>
+                            <p className="chat__main__noMessages__text">
+                                Tutaj pojawią się Twoje wiadomości od klubów
+                            </p>
+                        </section>))}
                         {chatRead ? <span className="messageReadInfo">
-                            Odczytano: {chatRead.getDate() + '.' + chatRead.getMonth()+1 + '.' + chatRead.getFullYear()}
-                            {chatRead.getHours() + ':' + chatRead.getMinutes() + '.' + chatRead.getSeconds()}
+                            Odczytano: {chatRead.getDate() + '.' + (parseInt(chatRead.getMonth())+1) + '.' + chatRead.getFullYear()}
+                            {' ' + (parseInt(chatRead.getHours()) < 10 ? '0' + chatRead.getHours() : chatRead.getHours()) + ':' + (parseInt(chatRead.getMinutes()) < 10 ? '0' + chatRead.getMinutes() : chatRead.getMinutes()) + '.' + (parseInt(chatRead.getSeconds()) < 10 ? '0' + chatRead.getSeconds() : chatRead.getSeconds())}
                             <figure className="chat__list__item__imgWrapper">
-                                <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
+                                <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
                             </figure>
                         </span> : ""}
                     </main>
@@ -603,10 +862,10 @@ const ChatPage = ({club}) => {
                                     accept="image/*"
                                     multiple={false}
                                 />
-                                <img className="btn__img" src={pictureIcon} alt="wyslij-zdjecie" />
+                                <img className="btn__img" src={club ? pictureIcon : pictureIconForUser} alt="wyslij-zdjecie" />
                             </label>
                             <button className="chat__btn" onClick={() => { sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`); }}>
-                                <img className="btn__img" src={sendIcon} alt="wyslij-wiadomosc" />
+                                <img className="btn__img" src={club ? sendIcon : sendIconForUser} alt="wyslij-wiadomosc" />
                             </button>
                         </section>
                     </section> : ""}
@@ -643,7 +902,7 @@ const ChatPage = ({club}) => {
                                         border: '1px solid #707070',
                                         background: getTrackBackground({
                                             values: scrollbarChat[0] ? scrollbarChat : [1000, 3000],
-                                            colors: ['#474747', '#474747', '#474747'],
+                                            colors: [club ? '#474747' : '#ECECEC'],
                                             min: 0,
                                             max: maxChat,
                                             rtl: false
@@ -674,8 +933,8 @@ const ChatPage = ({club}) => {
             </main>
         </main>
 
-
-        <Footer theme="dark" border={true} />
+        <Footer theme={club ? "dark" : "light"}
+                border={true} />
     </div>
 }
 
