@@ -11,23 +11,34 @@ import tloStrefaZawodnika from '../static/img/tlo-strefy-zawodnika.png'
 
 const LandingPage = () => {
     const animationLeft = () => {
-        const container = document.querySelector(".container");
-        container.classList.add('container--animation');
+        if(window.innerWidth > 786) {
+            const container = document.querySelector(".container");
+            container.classList.add('container--animation');
+        }
     }
 
     const animationLeftEnd = () => {
         const container = document.querySelector(".container");
         container.classList.remove('container--animation');
+        if(window.innerWidth > 786) {
+
+        }
     }
 
     const animationRight = () => {
-        const container = document.querySelector(".container");
-        container.classList.add('container--animationRight');
+        if(window.innerWidth > 768) {
+            const container = document.querySelector(".container");
+            const overlay = document.querySelector('.homepage--overlay--right');
+            container.classList.add('container--animationRight');
+            overlay.classList.add('homepage--overlay--right--animation');
+        }
     }
 
     const animationRightEnd = () => {
         const container = document.querySelector(".container");
+        const overlay = document.querySelector('.homepage--overlay--right');
         container.classList.remove('container--animationRight');
+        overlay.classList.remove('homepage--overlay--right--animation');
     }
 
     return <main className="landingPage">
@@ -75,6 +86,9 @@ const LandingPage = () => {
                      id="strefaKlubowa"
                      src={strefaKlubowa}
                      alt="strefa-klubowa" />
+
+
+                     <div className="homepage--overlay--right"></div>
             </a>
         </main>
 

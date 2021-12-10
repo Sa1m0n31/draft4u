@@ -16,6 +16,7 @@
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/RegisterFromThirdParty.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/RegisterFromThirdParty.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
     </list>
@@ -164,7 +165,9 @@
       <workItem from="1638977930398" duration="21353000" />
       <workItem from="1639042927667" duration="7000" />
       <workItem from="1639086550801" duration="342000" />
-      <workItem from="1639087872497" duration="12211000" />
+      <workItem from="1639087872497" duration="13017000" />
+      <workItem from="1639135701199" duration="236000" />
+      <workItem from="1639135974282" duration="11022000" />
     </task>
     <servers />
   </component>
@@ -224,9 +227,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1638920477974" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1639101869302">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1639147359819">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1639101869302" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1639147359819" />
   </component>
 </project>

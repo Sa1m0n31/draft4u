@@ -529,11 +529,12 @@ ul {
 .container--homepage::after {
     content:  "";
     position: absolute;
-    width: 50%;
+    width: 50vw;
     height: 1800px;
     z-index: -1;
     top: 0;
-    transition: .3s all;
+    border-left: 0 solid red;
+    transition: .3s all ease-in-out;
     /*transform: skewX(-16.5deg);*/
 }
 
@@ -547,19 +548,9 @@ ul {
     right: 0;
     background: var(--dark);
     z-index: -1;
-    width: 54.5%;
+    width: 54.5vw;
     transform: skewX(-17deg);
     transform-origin: center;
-}
-
-.container--animation::after {
-    transition: .4s all;
-    width: 50% !important;
-}
-
-.container--animationRight::after {
-    transition: .4s all;
-    width: 65% !important;
 }
 
 /* Landing page */
@@ -601,7 +592,7 @@ ul {
     width: 90%;
     bottom: 0;
     left: 1.5%;
-    z-index: 3;
+    z-index: 300;
 }
 
 #strefaZawodnika {
@@ -662,7 +653,37 @@ ul {
     width: 56%;
 }
 
+.homepage--overlay--right {
+    background: var(--dark);
+    display: none;
+    /*background: red;*/
+    /*background: linear-gradient(*/
+    /*        90deg, rgba(40,40,40,1) 0%, rgba(40,40,40,0.9) 80%, rgba(40, 40, 40, 0.4) 100%);*/
+    position: absolute;
+    z-index: 5;
+    transform: skewX(-17deg) scaleX(1);
+    transform-origin: top right;
+    height: 125%;
+    width: 11vw;
+    left: -6vw;
+    top: -13%;
+    transition: .3s all ease-in-out;
+}
 
+.homepage--overlay--right--animation {
+    transform: skewX(-17deg) scaleX(1);
+}
+
+.container--animation::after {
+    transition: .3s all ease-in-out;
+    width: 50% !important;
+}
+
+.container--animationRight::after {
+    transition: .3s all ease-in-out;
+    /*transition-delay: 0.05s;*/
+    /*border-left: 9.2vw solid red;*/
+}
 
 @media(-webkit-min-device-pixel-ratio: 1.05) {
     .landingPage__inner {
@@ -681,9 +702,13 @@ ul {
 /* Club slider */
 .clubCarousel {
     width: 100%;
-    margin: 20vh auto 30px;
+    margin: 200px auto 30px;
     height: 240px;
     background: rgba(255, 255, 255, .7);
+}
+
+.container--homepage .clubCarousel {
+    margin-top: 100px;
 }
 
 .page .clubCarousel {
@@ -5017,7 +5042,7 @@ input::-webkit-inner-spin-button {
     bottom: 0;
     right: 0;
     width: 50vw;
-    height: 1000px;
+    height: 700px;
     transform: translate(10%, 10%);
     background: var(--dark);
     z-index: -1;

@@ -31,7 +31,7 @@ const RegisterFromThirdParty = () => {
             });
     }, []);
 
-    return <div className="container container--light container--registerFromThirdParty">
+    return <div className="container container--homepage container--registerFromThirdParty">
         {loaded ? <>
             <Header menu="dark"
                     registerFromThirdParty={!mobile}
@@ -44,7 +44,7 @@ const RegisterFromThirdParty = () => {
                                lastName={lastName}
                                registerFromThirdParty={true} />
             </div>}
-            <Footer theme="light" />
+            <Footer theme="dark" />
         </> : <LoadingPage />}
     </div>
 }

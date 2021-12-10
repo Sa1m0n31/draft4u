@@ -34,6 +34,12 @@
     }
 }
 
+@media(max-width: 1600px) {
+    .container--homepage::after {
+        width: 59.7%;
+    }
+}
+
 @media(max-width: 1500px) {
     .container--homepage::after {
         width: 60%;
@@ -123,6 +129,10 @@
 
     .siteHeader__menu__link {
         font-size: 15px;
+    }
+
+    .siteHeader__menu {
+        height: 60px;
     }
 
     .siteHeader__btn {
@@ -341,6 +351,17 @@
     }
 }
 
+@media(max-width: 1320px) {
+    .container--homepage::after {
+        width: 62.5%;
+    }
+
+    #strefaZawodnikaTlo {
+        left: -3.5%;
+        bottom: -10%;
+    }
+}
+
 @media(max-width: 1200px) {
     .d-over-1200 {
         display: none;
@@ -349,6 +370,14 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .clubCarousel {
+        margin-top: 0;
+    }
+
+    .homepage--overlay--right {
+        transform: skewX(-14.5deg);
     }
 
     .container--homepage::after {
@@ -664,6 +693,14 @@
 
     .d-mobile-900-flex {
         display: flex !important;
+    }
+
+    .siteHeader__menu {
+        padding: 0 10px;
+    }
+
+    .siteHeader__menu__link {
+        font-size: 14px;
     }
 
     .container--homepage::after {
@@ -1136,6 +1173,7 @@
 
     .clubCarousel {
         height: 140px;
+        margin-top: 50px;
     }
 
     .clubCarousel__header {
@@ -2171,19 +2209,40 @@
     }
 }
 
-@media(max-width: 650px) {
+@media(max-width: 700px) {
     .container--homepage::after {
         width: 68%;
     }
 }
 
+@media(max-width: 630px) {
+    .container--homepage::after {
+        width: 70%;
+    }
+}
+
 @media(max-width: 576px) {
-    .chat__message {
-        min-width: 100%;
+    .container--homepage .clubCarousel::after {
+        display: none;
+    }
+
+    .container--homepage .clubCarousel {
+        margin-top: 40px;
     }
 
     .landingPage__inner {
-        transform: translateX(-50%) scale(.25);
+        width: 90%;
+        height: 300px;
+        transform: translateX(-50%);
+    }
+
+
+    .container--homepage::after {
+        width: 83%;
+    }
+
+    .chat__message {
+        min-width: 100%;
     }
 
     .chat {
@@ -2257,9 +2316,94 @@
     }
 }
 
+@media(max-width: 540px) {
+    .landingPage__inner {
+        height: 270px;
+    }
+
+    .container--homepage::after {
+        width: 85%;
+    }
+}
+
+@media(max-width: 510px) {
+    .container--homepage::after {
+        width: 88%;
+    }
+}
+
+@media(max-width: 480px) {
+    .container--homepage::after {
+        width: 90%;
+    }
+}
+
+@media(max-width: 460px) {
+    .landingPage__inner {
+        height: 245px;
+    }
+
+    .container--homepage::after {
+        width: 92%;
+    }
+}
+
+@media(max-width: 440px) {
+    .container--homepage::after {
+        width: 94%;
+    }
+}
+
+@media(max-width: 430px) {
+    .container--homepage::after {
+        width: 96%;
+    }
+}
+
+@media(max-width: 420px) {
+    .landingPage__inner {
+        height: 210px;
+    }
+
+    .container--homepage::after {
+        width: 98%;
+    }
+}
+
 @media(max-width: 400px) {
     .aboutUs__header {
         margin-bottom: 130px;
+    }
+
+    .container--homepage::after {
+        width: 100%;
+    }
+}
+
+@media(max-width: 390px) {
+    .container--homepage::after {
+        width: 102%;
+    }
+}
+
+@media(max-width: 380px) {
+    .container--homepage::after {
+        width: 104%;
+    }
+
+    #strefaZawodnikaTlo {
+        bottom: -12%;
+        left: -4%;
+    }
+}
+
+@media(max-width: 360px) {
+    .container--homepage::after {
+        width: 107%;
+    }
+
+    .landingPage__inner {
+        height: 190px;
     }
 }
 
@@ -2272,6 +2416,36 @@
         height: 60px;
         width: 60px;
     }
+
+    .container--homepage::after {
+        width: 110%;
+    }
+}
+
+@media(max-width: 330px) {
+    .container--homepage::after {
+        width: 113%;
+    }
+
+    .landingPage__inner {
+        height: 170px;
+    }
+}
+
+@media(max-width: 320px) {
+    .container--homepage::after {
+        width: 118%;
+    }
+}
+
+@media(max-width: 320px) {
+    .container--homepage::after {
+        width: 122%;
+    }
+
+    .landingPage__inner {
+        height: 150px;
+    }
 }
 
 @media(-webkit-min-device-pixel-ratio: 1.2) {
@@ -2283,14 +2457,160 @@
         transform-origin: top left;
         transform: scale(.85) translate(-50%, -50%);
     }
-
-    .container--homepage::before, .container--homepage::after {
-        height: 190vh;
-    }
 }
 
 @media(min-height: 1300px) {
     .aboutUs__main {
         padding: 150px 0 120px;
+    }
+}
+
+@media(-webkit-min-device-pixel-ratio: 1.05) {
+    .container--homepage::after {
+        width: 56.5%;
+    }
+
+    @media(max-width: 2700px) {
+        .container--homepage::after {
+            width: 56.5%;
+        }
+    }
+
+    @media(max-width: 2500px) {
+        .container--homepage::after {
+            width: 57.5%;
+        }
+    }
+
+    @media(max-width: 2100px) {
+        .container--homepage::after {
+            width: 58%;
+        }
+    }
+
+    @media(max-width: 2000px) {
+        .container--homepage::after {
+            width: 58.8%;
+        }
+    }
+
+    @media(max-width: 1900px) {
+        .container--homepage::after {
+            width: 59.5%;
+        }
+    }
+
+    @media(max-width: 1700px) {
+        .container--homepage::after {
+            width: 60.5%;
+        }
+    }
+
+    @media(max-width: 1600px) {
+        .container--homepage::after {
+            width: 61%;
+        }
+    }
+
+    @media(max-width: 1500px) {
+        .container--homepage::after {
+            width: 62%;
+        }
+    }
+
+    @media(max-width: 1400px) {
+        .container--homepage::after {
+            width: 63%;
+        }
+    }
+
+    @media(max-width: 1300px) {
+        .container--homepage::after {
+            width: 64%;
+        }
+    }
+
+    @media(max-width: 900px) {
+        .container--homepage::after {
+            width: 66%;
+        }
+    }
+
+    @media(max-width: 776px) {
+        .container--homepage::after {
+            width: 68%;
+        }
+    }
+
+    @media(max-width: 720px) {
+        .container--homepage::after {
+            width: 70%;
+        }
+    }
+
+    @media(max-width: 610px) {
+        .container--homepage::after {
+            width: 72%;
+        }
+    }
+
+    @media(max-width: 576px) {
+        .container--homepage::after {
+            width: 83%;
+        }
+    }
+
+    @media(max-width: 540px) {
+        .container--homepage::after {
+            width: 86%;
+        }
+    }
+
+    @media(max-width: 520px) {
+        .container--homepage::after {
+            width: 90%;
+        }
+    }
+
+    @media(max-width: 490px) {
+        .container--homepage::after {
+            width: 93%;
+        }
+    }
+
+    @media(max-width: 450px) {
+        .container--homepage::after {
+            width: 96%;
+        }
+    }
+
+    @media(max-width: 420px) {
+        .container--homepage::after {
+            width: 99%;
+        }
+    }
+
+    @media(max-width: 390px) {
+        .container--homepage::after {
+            width: 102%;
+        }
+    }
+
+    @media(max-width: 370px) {
+        .container--homepage::after {
+            width: 105%;
+        }
+    }
+
+    @media(max-width: 350px) {
+        .container--homepage::after {
+            width: 110%;
+        }
+    }
+
+    @media(max-width: 320px) {
+        .container--homepage::after {
+            width: 115%;
+        }
     }
 }
