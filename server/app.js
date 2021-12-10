@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const fs = require('fs');
 const http = require('http');
 var flash = require('connect-flash');
+require('dotenv').config()
 
 const server = http.createServer(app);
 const { Server } = require("socket.io");

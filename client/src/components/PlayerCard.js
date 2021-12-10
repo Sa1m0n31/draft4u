@@ -7,7 +7,7 @@ import {calculateAge} from "../helpers/others";
 import settings from "../settings";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 
-const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerToComparator, inComparator}) => {
+const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerToComparator, inComparator, addPlayerToFavorites}) => {
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
 
@@ -24,14 +24,14 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
         }
     }, [favorite]);
 
-    const addPlayerToFavorites = () => {
-        if(!favoritePlayer) {
+    const addPlayerToFavoritesFallback = () => {
+        if(!favorite) {
             addToFavorites(player.id ? player.id : player.user_id);
         }
         else {
             deleteFromFavorites(player.id ? player.id : player.user_id);
         }
-        setFavoritePlayer(!favoritePlayer);
+        setFavoritePlayer(!favorite);
     }
 
     return <section key={index} className={favoriteView ? "playerCard playerCard--favorite" : "playerCard"}>
@@ -45,7 +45,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
             <h3 className="playerCard__header__h">
                 {player.first_name} {player.last_name}
             </h3>
-            <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites(); }}>
+            <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites ? addPlayerToFavorites(player.user_id) : addPlayerToFavoritesFallback(); }}>
                 {!favoritePlayer ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}
             </button>
         </header>

@@ -68,11 +68,7 @@ const addToVisited = (userId) => {
 }
 
 const getThreeNewest = () => {
-    return axios.get(`${API_URL}/club/get-three-newest`);
-}
-
-const getThreeFavorites = () => {
-    return axios.get(`${API_URL}/club/get-three-favorites`, {
+    return axios.get(`${API_URL}/club/get-three-newest`, {
         withCredentials: true
     });
 }
@@ -137,14 +133,6 @@ const updateClub = (clubId, name, league, login, x, y, img) => {
     return axios.post(`${API_URL}/club/update`, formData, config);
 }
 
-const deleteClub = (id) => {
-    return axios.delete(`${API_URL}/club/delete`, {
-        params: {
-            id
-        }
-    });
-}
-
 const changeClubPassword = (oldPassword, newPassword) => {
     return axios.post(`${API_URL}/club/change-password`, {
         oldPassword, newPassword
@@ -159,4 +147,4 @@ const changeClubPasswordFromAdminPanel = (clubId, oldPassword, newPassword) => {
     });
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, deleteClub, changeClubPasswordFromAdminPanel, changeClubPassword }
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, changeClubPasswordFromAdminPanel, changeClubPassword }

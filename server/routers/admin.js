@@ -68,7 +68,7 @@ router.get("/get-clubs", (request, response) => {
 });
 
 router.get("/get-users", (request, response) => {
-    const query = 'SELECT i.id, i.user_id, i.adapter, i.active, u.first_name, u.last_name, u.email, s.expire FROM users u JOIN identities i ON u.id = i.user_id LEFT OUTER JOIN subscriptions s ON u.id = s.user_id ORDER BY i.user_id DESC';
+    const query = `SELECT i.id, i.user_id, i.adapter, i.active, i.subscription + INTERVAL '1 DAY', u.first_name, u.last_name, u.email FROM users u JOIN identities i ON u.id = i.user_id ORDER BY i.user_id DESC`;
 
     db.query(query, [], (err, res) => {
         if(res) {

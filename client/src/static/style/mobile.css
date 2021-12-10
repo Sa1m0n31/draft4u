@@ -995,6 +995,10 @@
     .findNewPlayerWrapper--clubAccountStart .findNewPlayer {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .paymentMethod__list {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media(max-width: 900px) {
@@ -1427,6 +1431,10 @@
 
     .player__header {
         margin-left: 5vw;
+    }
+
+    .player .player__header {
+        margin-left: 0;
     }
 
     .videoUpload__backBtn, .videoTable__header {
@@ -2298,8 +2306,12 @@
     }
 
     .paymentMethod__btn {
-        width: 30%;
-        height: 65px;
+        width: 100%;
+        height: 70px;
+    }
+
+    .paymentMethod__list {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .paymentMethod__name {

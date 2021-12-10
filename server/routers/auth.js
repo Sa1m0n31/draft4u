@@ -24,12 +24,15 @@ function isNumeric(str) {
 }
 
 const sendVerificationEmail = (email, token, response) => {
+    console.log(process.env.EMAIL_PASSWORD);
+    console.log(process.env.EMAIL_ADDRESS);
+    console.log(process.env.EMAIL_HOST);
     let transporter = nodemailer.createTransport(smtpTransport ({
         auth: {
-            user: 'powiadomienia@skylo-pl.atthost24.pl',
-            pass: 'SwinkaPeppa-31'
+            user: process.env.EMAIL_ADDRESS,
+            pass: process.env.EMAIL_PASSWORD
         },
-        host: 'skylo-pl.atthost24.pl',
+        host: process.env.EMAIL_HOST,
         secureConnection: true,
         port: 465,
         tls: {
@@ -38,7 +41,7 @@ const sendVerificationEmail = (email, token, response) => {
     }));
 
     let mailOptions = {
-        from: 'powiadomienia@skylo-pl.atthost24.pl',
+        from: process.env.EMAIL_ADDRESS,
         to: email,
         subject: 'Zweryfikuj swoje konto w serwisie Draft4U',
         html: '<h2>Cieszymy się, że jesteś z nami!</h2> ' +
@@ -49,6 +52,9 @@ const sendVerificationEmail = (email, token, response) => {
     }
 
     transporter.sendMail(mailOptions, function(error, info) {
+        console.log("NODEMAILER");
+        console.log(error);
+        console.log(info);
         response.send({
             result: 1
         });
@@ -99,7 +105,6 @@ router.get('/verification', (request, response) => {
 
 router.get("/auth", (request, response) => {
     if(request.user) {
-        console.log(request.user);
         if(isNumeric(request.user.toString())) {
            /* Admin */
             response.send({result: 2});
@@ -173,13 +178,6 @@ router.get('/google/callback',
         res.redirect('http://localhost:3000/zarejestruj-przez-google');
     });
 
-const add14DaysSubscription = (userId) => {
-    const query = `INSERT INTO subscriptions VALUES ($1, NOW() + INTERVAL '14 DAY', 0)`;
-    const values = [userId];
-
-    db.query(query, values);
-}
-
 router.post("/register-local", (request, response) => {
    const { email, password, firstName, lastName, sex, birthday, phoneNumber } = request.body;
 
@@ -194,12 +192,10 @@ router.post("/register-local", (request, response) => {
        if(res) {
            const insertedUserId = res.rows[0].id;
            const id = uuidv4();
-           const query = 'INSERT INTO identities VALUES ($1, $2, 1, $3, false)';
+           const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, NOW() + INTERVAL '14 DAY')`;
            const values = [id, insertedUserId, hash];
            db.query(query, values, (err, res) => {
                if(res) {
-                   add14DaysSubscription(insertedUserId);
-
                    const token = uuidv4();
                    const query = 'INSERT INTO verification VALUES ($1, $2, NOW())';
                    const values = [id, token];
@@ -231,7 +227,7 @@ router.post("/register-local", (request, response) => {
 
 router.get("/get-user-subscription", (request, response) => {
    const userId = request.query.user;
-   const query = 'SELECT expire, type FROM subscriptions WHERE user_id = $1';
+   const query = 'SELECT subscription FROM identities WHERE user_id = $1';
    const values = [userId];
 
    db.query(query, values, (err, res) => {
@@ -258,9 +254,6 @@ router.post("/register-from-third-party", (request, response) => {
 
    db.query(query, values, (err, res) => {
        if(res) {
-           const userId =  res.rows[0].id;
-           add14DaysSubscription(userId);
-
            const query = 'UPDATE identities SET active = true WHERE id = $1';
            const values = [id];
            db.query(query, values, (err, res) => {
@@ -274,7 +267,7 @@ router.post("/register-from-third-party", (request, response) => {
                        result: 0
                    });
                }
-           })
+           });
        }
        else {
            response.send({

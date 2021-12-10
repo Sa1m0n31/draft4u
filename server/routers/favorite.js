@@ -51,7 +51,6 @@ router.get("/get-favorites-by-club", (request, response) => {
     const values = [clubId];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
        if(res) {
            response.send({
                result: res.rows

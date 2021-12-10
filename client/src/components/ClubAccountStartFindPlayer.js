@@ -1,7 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react'
-import man from '../static/img/profile-picture.png'
-import heart from '../static/img/heart.svg'
-import heartFilled from '../static/img/heart-filled.svg'
 import przegladajBtn from '../static/img/przegladaj-btn.png'
 import PlayerCard from "./PlayerCard";
 import { Splide, SplideSlide } from '@splidejs/react-splide';
@@ -13,6 +10,7 @@ const ClubAccountStartFindPlayer = () => {
     useEffect(() => {
         getThreeNewest()
             .then((res) => {
+                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
             });
     }, []);
@@ -30,18 +28,24 @@ const ClubAccountStartFindPlayer = () => {
         {/* MOBILE */}
         <main className="findNewPlayer--mobile d-mobile">
             <Splide options={options}>
-                {players.map((item, index) => {
-                    return <SplideSlide key={index}>
-                        <PlayerCard key={index} player={item} favoriteView={false} favorite={item.club_id} />
-                    </SplideSlide>
+                {players?.map((item, index) => {
+                        return <SplideSlide key={index}>
+                            <PlayerCard key={index}
+                                        player={item}
+                                        favoriteView={false}
+                                        favorite={false} />
+                        </SplideSlide>
                 })}
             </Splide>
         </main>
 
         {/* DESKTOP */}
         <main className="findNewPlayer d-desktop">
-            {players.map((item, index) => {
-                return <PlayerCard key={index} player={item} favoriteView={false} favorite={item.club_id} />
+            {players?.map((item, index) => {
+                return <PlayerCard key={index}
+                                   player={item}
+                                   favoriteView={false}
+                                   favorite={false} />
             })}
         </main>
 

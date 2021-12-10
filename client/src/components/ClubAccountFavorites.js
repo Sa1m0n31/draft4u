@@ -2,17 +2,13 @@ import React, {useEffect, useState} from 'react'
 import PlayerCard from "./PlayerCard";
 import przegladajBtn from "../static/img/zobacz-btn.png";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
-import {getThreeFavorites} from "../helpers/club";
 
-const ClubAccountFavorites = () => {
+const ClubAccountFavorites = ({favoritesProp}) => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        getThreeFavorites()
-            .then((res) => {
-                setPlayers(res?.data?.result);
-            });
-    }, []);
+        setPlayers(favoritesProp);
+    }, [favoritesProp]);
 
     const options = {
         perPage: 1.5,
@@ -29,9 +25,11 @@ const ClubAccountFavorites = () => {
             <main className="findNewPlayer--mobile d-mobile">
                 <Splide options={options}>
                     {players.map((item, index) => {
-                        return <SplideSlide key={index}>
-                            <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
-                        </SplideSlide>
+                        if(index < 6) {
+                            return <SplideSlide key={index}>
+                                <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                            </SplideSlide>
+                        }
                     })}
                 </Splide>
             </main>
@@ -39,7 +37,9 @@ const ClubAccountFavorites = () => {
             {/* DESKTOP */}
             <main className="findNewPlayer d-desktop">
                 {players.map((item, index) => {
-                    return <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                    if(index < 3) {
+                        return <PlayerCard key={index} player={item} favoriteView={true} favorite={true} />
+                    }
                 })}
             </main>
         </> : <h3 className="playersWall__playersNotFoundHeader">

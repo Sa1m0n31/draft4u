@@ -84,32 +84,24 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
 
     useEffect(() => {
         /* Register payment for card method */
-        registerPayment(amount ? amount : cost, 218, email, userId, type)
-            .then((res) => {
-                const token = res.data.result;
-                const sign = res.data.sign;
-
-                document.getElementById("P24FormContainer").setAttribute('data-sign', sign);
-
-                const script = document.createElement('script');
-
-                script.src = `https://sandbox.przelewy24.pl/inchtml/ajaxPayment/ajax.js?token=${token}`;
-                // script.src = 'https://platnosci.skylo-test1.pl/main.js'
-                script.async = true;
-
-                setTimeout(() => {
-                    document.body.appendChild(script);
-                }, 5000);
-            });
+        // registerPayment(amount ? amount : cost, 218, email, userId, type)
+        //     .then((res) => {
+        //         const token = res.data.result;
+        //         const sign = res.data.sign;
+        //
+        //         document.getElementById("P24FormContainer").setAttribute('data-sign', sign);
+        //
+        //         const script = document.createElement('script');
+        //
+        //         script.src = `https://sandbox.przelewy24.pl/inchtml/ajaxPayment/ajax.js?token=${token}`;
+        //         // script.src = 'https://platnosci.skylo-test1.pl/main.js'
+        //         script.async = true;
+        //
+        //         setTimeout(() => {
+        //             document.body.appendChild(script);
+        //         }, 5000);
+        //     });
     }, []);
-
-    function finishCardPayment(res) {
-        console.log(res);
-    }
-
-    function paymentCardError(err) {
-        console.log(err);
-    }
 
     return <main className="payment siteWidthSuperNarrow">
         <h2 className="payment__header">
@@ -119,7 +111,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
             Członkostwo rozpocznie się po skonfigurowaniu płatności.
         </p>
         <p className="payment__text payment__text--marginBottom">
-            Wybrałeś pakiet {type} w kwocie <b>{amount ? amount : cost} PLN</b>
+            Opłacasz swoje członkostwo do dnia 31 stycznia 2022 w kwocie <b>{amount ? amount : cost} PLN</b>
         </p>
 
         <section className="paymentItemWrapper">
@@ -150,79 +142,30 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
             </section>
         </section>
 
-        <section className="paymentItemWrapper">
-            <button className="payment__item" onClick={() => { changePaymentItem(2); }}>
-                <h3 className="payment__item__header">
-                    Płać kartą kredytową lub debetową
-                </h3>
-                <img className="payment__item__icon" src={kartyIcon} alt="karty-kredytowe" />
+{/*        <section className="paymentItemWrapper">*/}
+{/*            <button className="payment__item" onClick={() => { changePaymentItem(2); }}>*/}
+{/*                <h3 className="payment__item__header">*/}
+{/*                    Płać kartą kredytową lub debetową*/}
+{/*                </h3>*/}
+{/*                <img className="payment__item__icon" src={kartyIcon} alt="karty-kredytowe" />*/}
 
-                <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
-            </button>
+{/*                <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />*/}
+{/*            </button>*/}
 
-            <div
-                id="P24FormContainer"
-                data-sign=""
-                data-successCallback="finishCardPayment"
-                data-failureCallback="paymentCardError"
-                data-dictionary='{
-        "cardHolderLabel": "string",
-        "cardNumberLabel": "0",
-        "cvvLabel": "0",
-        "expDateLabel": "string",
-        "payButtonCaption": "string"
-}'>
-            </div>
-
-            {/*{paymentItem === 2 ? <main className="payment__item__formWrapper">*/}
-            {/*    <form className="payment__item__form">*/}
-            {/*        <label>*/}
-            {/*            <input className="input input--payment"*/}
-            {/*                   name="firstName"*/}
-            {/*                   value={firstName}*/}
-            {/*                   onChange={(e) => { setFirstName(e.target.value); }}*/}
-            {/*                   placeholder="Imię" />*/}
-            {/*        </label>*/}
-            {/*        <label>*/}
-            {/*            <input className="input input--payment"*/}
-            {/*                   name="lastName"*/}
-            {/*                   value={lastName}*/}
-            {/*                   onChange={(e) => { setLastName(e.target.value); }}*/}
-            {/*                   placeholder="Nazwisko" />*/}
-            {/*        </label>*/}
-            {/*        <label>*/}
-            {/*            <input className="input input--payment"*/}
-            {/*                   name="cardNumber"*/}
-            {/*                   value={cardNumber}*/}
-            {/*                   onChange={(e) => { setCardNumber(e.target.value); }}*/}
-            {/*                   placeholder="Numer karty" />*/}
-            {/*        </label>*/}
-            {/*        <span className="payment__item__form__flex">*/}
-            {/*            <label>*/}
-            {/*                <input className="input input--payment"*/}
-            {/*                       name="cardDate"*/}
-            {/*                       value={cardDate}*/}
-            {/*                       onChange={(e) => { setCardDate(e.target.value); }}*/}
-            {/*                       placeholder="Data wygaśnięcia (MM/RR)" />*/}
-            {/*             </label>*/}
-            {/*            <label>*/}
-            {/*                <input className="input input--payment"*/}
-            {/*                       name={cvv}*/}
-            {/*                       onChange={(e) => { setCvv(e.target.value); }}*/}
-            {/*                       placeholder="Kod zabezpieczający (CVV)" />*/}
-            {/*            </label>*/}
-            {/*        </span>*/}
-
-            {/*        <button type="button" className="button button--hover button--payment button--payment--card" onClick={() => { addCard(); }}>*/}
-            {/*            <img className="btn__img" src={payBtn} alt="dodaj-karte" />*/}
-            {/*        </button>*/}
-
-            {/*        <p className="payment__disclaimer">*/}
-            {/*            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam blandit nisl sit amet venenatis facilisis. Ut imperdiet nunc cursus eros posuere molestie. Nullam ultrices augue at leo pellentesque pretium. Morbi tincidunt magna ultricies nisl blandit, ut pulvinar sem fermentum.*/}
-            {/*        </p>*/}
-            {/*    </form>*/}
-            {/*</main> : ""}*/}
-        </section>
+{/*            <div*/}
+{/*                id="P24FormContainer"*/}
+{/*                data-sign=""*/}
+{/*                data-successCallback="finishCardPayment"*/}
+{/*                data-failureCallback="paymentCardError"*/}
+{/*                data-dictionary='{*/}
+{/*        "cardHolderLabel": "string",*/}
+{/*        "cardNumberLabel": "0",*/}
+{/*        "cvvLabel": "0",*/}
+{/*        "expDateLabel": "string",*/}
+{/*        "payButtonCaption": "string"*/}
+{/*}'>*/}
+{/*            </div>*/}
+{/*        </section>*/}
 
         <section className="payment__couponCode">
             <label>

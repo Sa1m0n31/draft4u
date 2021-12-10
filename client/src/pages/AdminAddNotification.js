@@ -276,7 +276,7 @@ const AdminAddNotification = () => {
                                     <button className={isElementInArray(sendList, item.id) ? "admin__notificationChecklist__btn admin__notificationChecklist__btn--selected" : "admin__notificationChecklist__btn"} onClick={() => { addToSendList(item.id, false); }}>
 
                                     </button>
-                                    {item.first_name} {item.last_name} ({item.email})
+                                    {item.first_name} {item.last_name} ({item.email.split('@')[1] !== 'facebookauth.com' ? item.email : 'Zarejestrowany przez Facebooka/Google'})
                                 </label>
                             })}
                         </section>

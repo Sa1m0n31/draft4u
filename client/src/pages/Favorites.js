@@ -5,7 +5,13 @@ import Footer from "../components/Footer";
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import PlayerCard from "../components/PlayerCard";
-import {getAllPlayers, getFavoritesByClub, isPlayerFavorite} from "../helpers/club";
+import {
+    addToFavorites,
+    deleteFromFavorites,
+    getAllPlayers,
+    getFavoritesByClub,
+    isPlayerFavorite
+} from "../helpers/club";
 import {calculateAge, isElementInArray} from "../helpers/others";
 import filterIcon from '../static/img/filter.svg'
 import rightArrow from '../static/img/right-arrow.svg'
@@ -15,9 +21,10 @@ import settings from "../settings";
 import profileImg from "../static/img/profile-picture.png";
 import compareBtn from "../static/img/compare-btn.png";
 
-const Favorites = ({club}) => {
+const Favorites = ({club, favorites}) => {
     const [players, setPlayers] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
+    const [favoritesState, setFavoritesState] = useState([]);
 
     const [mobileFilters, setMobileFilters] = useState(false);
 
@@ -35,6 +42,10 @@ const Favorites = ({club}) => {
     const [salary, setSalary] = useState([1000, 30000]);
 
     const [comparator, setComparator] = useState([0, 0, 0]);
+
+    useEffect(() => {
+        setFavoritesState(favorites);
+    }, [favorites]);
 
     const filterPlayers = () => {
         const gender = sex[0] === 0; // TRUE - man, FALSE - woman
@@ -174,8 +185,6 @@ const Favorites = ({club}) => {
     }
 
     const isPlayerInComparator = (player) => {
-        console.log(comparator);
-        console.log(player);
         return comparator.findIndex((item) => {
             return item.user_id === player.user_id;
         }) !== -1;
@@ -229,11 +238,40 @@ const Favorites = ({club}) => {
     }
 
     const deleteFromComparator = (itemToDelete) => {
-        console.log(itemToDelete);
         setComparator(comparator.map((item) => {
             if(item.user_id !== itemToDelete.user_id) return item;
             else return 0;
         }));
+    }
+
+    useEffect(() => {
+        console.log(filteredPlayers);
+    }, [filteredPlayers]);
+
+    const isPlayerFavorite = (userId) => {
+        if(!userId || !favoritesState.length) return false;
+
+        return favoritesState.findIndex((item) => {
+            return item.id === userId;
+        }) !== -1;
+    }
+
+    const addPlayerToFavorites = (userId) => {
+        if(!isPlayerFavorite(userId)) {
+            addToFavorites(userId);
+            setFavoritesState(prevState => {
+                return [...prevState, {
+                    id: userId,
+                    user_id: userId
+                }];
+            });
+        }
+        else {
+            deleteFromFavorites(userId);
+            setFavoritesState(favoritesState.filter((item) => {
+                return item.id !== userId;
+            }));
+        }
     }
 
     return <div className="container container--dark">
@@ -356,7 +394,8 @@ const Favorites = ({club}) => {
                                     player={item}
                                     favoriteView={true}
                                     inComparator={isPlayerInComparator(item)}
-                                    favorite={true}
+                                    favorite={isPlayerFavorite(item.user_id)}
+                                    addPlayerToFavorites={addPlayerToFavorites}
                                     balance={true}
                                     addPlayerToComparator={addPlayerToComparator} />
                     </SplideSlide>
@@ -374,7 +413,8 @@ const Favorites = ({club}) => {
                                        player={item}
                                        favoriteView={true}
                                        inComparator={isPlayerInComparator(item)}
-                                       favorite={true}
+                                       favorite={isPlayerFavorite(item.user_id)}
+                                       addPlayerToFavorites={addPlayerToFavorites}
                                        balance={true}
                                        addPlayerToComparator={addPlayerToComparator} />
                 }

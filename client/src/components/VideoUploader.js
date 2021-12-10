@@ -3,19 +3,22 @@ import closeIcon from "../static/img/close-grey.svg";
 import uploadIcon from '../static/img/upload.svg'
 import wybierzPlikBtn from '../static/img/wybierz-plik.png'
 import Dropzone from "react-dropzone-uploader";
-import {getUserVideos, uploadVideo} from "../helpers/video";
 import DraftLoader from "./Loader";
 import successIcon from '../static/img/success.svg'
 import failureIcon from '../static/img/failure.svg'
 import axios from "axios";
 import settings from "../settings";
+import {removePolishChars} from "../helpers/others";
 
 const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play}) => {
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(-1);
     const [progress, setProgress] = useState(0);
+    const [fileToLarge, setFileToLarge] = useState(false);
 
     const getUploadParams = ({file, meta}) => {
+        console.log(file);
+        console.log(meta);
         setLoading(true);
         const config = {
             onUploadProgress: (progressEvent) => {
@@ -27,7 +30,7 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
         let formData = new FormData();
         formData.append('file', file);
         formData.append('userId', userId);
-        formData.append('play', play);
+        formData.append('play', removePolishChars(play));
 
        return axios.post(`${settings.API_URL}/video/upload`, formData, config)
            .then((res) => {
@@ -50,19 +53,29 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
 
             {!loading && response === -1 ? <>
                 <Dropzone
+                    onChangeStatus={(a, b, c) => {
+                        if(b === 'error_file_size') {
+                            setFileToLarge(true);
+                        }
+                    }}
                     getUploadParams={getUploadParams}
-                    accept="video/*"
+                    accept="video/mp4,video/x-m4v,video/*"
+                    maxSizeBytes={500000000}
                     maxFiles={1} />
 
                 <figure className="videoUploader__imgWrapper">
                     <img className="videoUploader__img" src={uploadIcon} alt="dodaj-filmik" />
                 </figure>
-                <h3 className="videoUploader__text">
-                    Przeciągnij i upuść pliki wideo, które chcesz przesłać
-                </h3>
-                <button className="button button--hover button--videoUploader">
-                    <img className="btn__img" src={wybierzPlikBtn} alt="wybierz-plik" />
-                </button>
+                {!fileToLarge ? <>
+                    <h3 className="videoUploader__text">
+                        Przeciągnij i upuść pliki wideo, które chcesz przesłać
+                    </h3>
+                    <button className="button button--hover button--videoUploader">
+                        <img className="btn__img" src={wybierzPlikBtn} alt="wybierz-plik" />
+                    </button>
+                </> : <h4 className="videoUploader__text">
+                    Wysłane video jest za duże. Skompresuj swój plik do maksymalnie 500MB i ponów próbę.
+                </h4>}
             </> : (loading ? <div className="videoLoadingWrapper">
                 <DraftLoader />
 

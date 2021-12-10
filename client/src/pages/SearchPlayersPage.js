@@ -7,7 +7,7 @@ import { Range, getTrackBackground } from 'react-range';
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import PlayerCard from "../components/PlayerCard";
-import {getAllPlayers, getFavoritesByClub} from "../helpers/club";
+import {addToFavorites, deleteFromFavorites, getAllPlayers, getFavoritesByClub} from "../helpers/club";
 import {calculateAge, isElementInArray} from "../helpers/others";
 import compareBtn from '../static/img/compare-btn.png'
 import settings from "../settings";
@@ -18,7 +18,7 @@ import pokazWynikiBtn from '../static/img/pokaz-wyniki-btn.png'
 import profileImg from '../static/img/profile-picture.png'
 import trashIcon from '../static/img/trash-black.svg'
 
-const SearchPlayersPage = ({club, favorites}) => {
+const SearchPlayersPage = ({club, favorites, playersProp}) => {
     const [players, setPlayers] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
 
@@ -37,7 +37,13 @@ const SearchPlayersPage = ({club, favorites}) => {
     const [verticalRange, setVerticalRange] = useState([20, 130]);
     const [salary, setSalary] = useState([1000, 30000]);
 
+    const [favoritesState, setFavoritesState] = useState([]);
+
     const [comparator, setComparator] = useState([0, 0, 0]);
+
+    useEffect(() => {
+        setFavoritesState(favorites);
+    }, [favorites]);
 
     const filterPlayers = () => {
         const gender = sex[0] === 0; // TRUE - man, FALSE - woman
@@ -83,17 +89,14 @@ const SearchPlayersPage = ({club, favorites}) => {
     }, [filteredPlayers]);
 
     useEffect(() => {
-        getAllPlayers()
-            .then((res) => {
-                setPlayers(res?.data?.result);
-                setFilteredPlayers(res?.data?.result);
-            });
-    }, []);
+        setPlayers(playersProp);
+        setFilteredPlayers(playersProp);
+    }, [playersProp]);
 
     const isPlayerFavorite = (userId) => {
-        if(!userId || !favorites.length) return false;
+        if(!userId || !favoritesState.length) return false;
 
-        return favorites.findIndex((item) => {
+        return favoritesState.findIndex((item) => {
            return item.id === userId;
         }) !== -1;
     }
@@ -245,6 +248,24 @@ const SearchPlayersPage = ({club, favorites}) => {
         }));
     }
 
+    const addPlayerToFavorites = (userId) => {
+        if(!isPlayerFavorite(userId)) {
+            addToFavorites(userId);
+            setFavoritesState(prevState => {
+                return [...prevState, {
+                    id: userId,
+                    user_id: userId
+                }];
+            });
+        }
+        else {
+            deleteFromFavorites(userId);
+            setFavoritesState(favoritesState.filter((item) => {
+                return item.id !== userId;
+            }));
+        }
+    }
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 
@@ -366,6 +387,7 @@ const SearchPlayersPage = ({club, favorites}) => {
                                     favoriteView={false}
                                     inComparator={isPlayerInComparator(item)}
                                     favorite={isPlayerFavorite(item.user_id)}
+                                    addPlayerToFavorites={addPlayerToFavorites}
                                     balance={true}
                                     addPlayerToComparator={addPlayerToComparator} />
                     </SplideSlide>
@@ -379,11 +401,14 @@ const SearchPlayersPage = ({club, favorites}) => {
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {filteredPlayers?.length ? filteredPlayers.map((item, index) => {
                 if(isIndexOnCurrentPage(index)) {
+                    console.log("USER: " + item.first_name + " " + item.last_name);
+                    console.log("Is favorite: " + isPlayerFavorite(item.user_id));
                     return <PlayerCard key={index}
                                        player={item}
                                        favoriteView={false}
                                        inComparator={isPlayerInComparator(item)}
                                        favorite={isPlayerFavorite(item.user_id)}
+                                       addPlayerToFavorites={addPlayerToFavorites}
                                        balance={true}
                                        addPlayerToComparator={addPlayerToComparator} />
                 }

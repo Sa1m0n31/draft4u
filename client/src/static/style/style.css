@@ -132,6 +132,7 @@ ul {
 
 .siteHeader__logo {
     width: 20%;
+    max-width: 250px;
 }
 
 .siteHeader__logo__img {
@@ -168,6 +169,7 @@ ul {
     font-size: 21px;
     padding: 0 20px;
     opacity: .8;
+    text-transform: uppercase;
 }
 
 .siteHeader__menu--dark .siteHeader__menu__link {
@@ -179,6 +181,7 @@ ul {
 }
 
 .siteHeader__btn {
+    text-transform: uppercase;
     width: 220px;
     height: 70px;
     border-radius: 4px;
@@ -194,6 +197,7 @@ ul {
 }
 
 .siteHeader__btn--register {
+    width: 250px;
     margin: 0 4% 0 10%;
     background: transparent linear-gradient(180deg, #F3D48B 0%, #CB9150 100%) 0% 0% no-repeat padding-box;
 }
@@ -842,7 +846,7 @@ ul {
     position: absolute;
     top: 0;
     width: 200px;
-    left: 100px;
+    left: 60px;
 }
 
 /* Login box */
@@ -1921,7 +1925,7 @@ ul {
 
 .faq__question__main {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin: 0;
     height: 0;
@@ -3218,10 +3222,12 @@ input::-webkit-inner-spin-button {
 }
 
 .paymentMethod__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    justify-content: center;
+    justify-items: center;
 }
 
 .paymentMethod__btn {
@@ -3234,7 +3240,6 @@ input::-webkit-inner-spin-button {
     align-items: center;
     border: 1px solid rgba(70, 70, 70, .5);
     padding: 20px 10px;
-    margin-bottom: 15px;
     transition: .2s all;
 }
 

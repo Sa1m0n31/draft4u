@@ -123,9 +123,8 @@ const AdminPlayersList = () => {
                                 Subskrypcja
                             </h3>
                             <h4 className="admin__main__notification__item__value">
-                                {new Date(item.expire) > new Date() ? <>
-                                    <p className="green">{item.expire.substring(0, 10)}</p>
-                                    <p className="green">{item.expire.split('T')[1].substring(0, 8)}</p>
+                                {new Date(item.subscription) > new Date() ? <>
+                                    <p className="green">{item.subscription.substring(0, 10)}</p>
                                 </> : <p className="red">
                                     Nieaktywna
                                 </p>}

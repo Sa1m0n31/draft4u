@@ -40,7 +40,7 @@ const init = (passport) => {
                 else if(user.active === null) {
                     return done(null, false, { message: 'Konto zawodnika zostało zablokowane' });
                 }
-                else if(user.active === 0) {
+                else if(user.active === false) {
                     return done(null, false, { message: 'Zweryfikuj swój adres email aby się zalogować' });
                 }
                 else {
@@ -118,7 +118,7 @@ const init = (passport) => {
                     /* Add new identity */
                     if(res.rows) {
                         const userId = res.rows[0].id;
-                        query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false) RETURNING user_id`;
+                        query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY') RETURNING user_id`;
                         values = [uuid, userId, id.provider === 'facebook' ? 2 : 3, hash];
 
                         db.query(query, values, (err, res) => {

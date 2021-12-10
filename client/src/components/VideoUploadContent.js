@@ -10,6 +10,7 @@ import { Player } from 'video-react';
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import DeleteVideoModal from "./DeleteVideoModal";
 import threeDotsMenu from '../static/img/threeDotsMenu.svg'
+import {removePolishChars} from "../helpers/others";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
@@ -65,7 +66,7 @@ const VideoUploadContent = () => {
 
     const getVideoIndexByPlay = (play) => {
         return videos.findIndex((item) => {
-            return item.name === play;
+            return item.name === removePolishChars(play);
         });
     }
 

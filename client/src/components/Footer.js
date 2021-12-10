@@ -11,7 +11,7 @@ const Footer = ({theme, border}) => {
                 <h4 className="footer__col__header">
                     Kontakt
                 </h4>
-                <ul className="footer__col__list">
+                <ul className="footer__col__list footer__col__list--contact">
                     <li className="footer__col__list__item footer__contactItem">
                         <span>Tel</span>
                         <a className="footer__col__list__item__link" href="tel:+48790731997">

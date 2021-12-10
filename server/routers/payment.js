@@ -24,14 +24,8 @@ router.get("/get-payment-methods", (request, response) => {
 });
 
 router.post("/register-payment", (request, response) => {
-    const { amount, method, email, userId, type } = request.body;
+    const { amount, method, email, userId } = request.body;
     let paymentType;
-
-    console.log(request.body);
-
-    if(type === 'miesięczny') paymentType = 1;
-    else if(type === '3 miesięczny') paymentType = 2;
-    else paymentType = 3;
 
     let hash, data, gen_hash;
     const sessionId = uuidv4();
@@ -40,7 +34,7 @@ router.post("/register-payment", (request, response) => {
     gen_hash = data.digest('hex');
 
     const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
-    const values = [userId, sessionId, paymentType];
+    const values = [userId, sessionId, amount];
 
     db.query(query, values, (err, res) => {
         if(res) {
@@ -119,20 +113,18 @@ router.post("/verify", (request, response) => {
     data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${CRC}"}`, 'utf-8');
     gen_hash= data.digest('hex');
 
-    console.log("/verify");
-
-    /* Get card refId */
-    got.get(`https://sandbox.przelewy24.pl/api/v1/card/info/${orderId}`, {
-        headers: {
-            'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
-        }
-    })
-        .then((res) => {
-           console.log(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    // /* Get card refId */
+    // got.get(`https://sandbox.przelewy24.pl/api/v1/card/info/${orderId}`, {
+    //     headers: {
+    //         'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
+    //     }
+    // })
+    //     .then((res) => {
+    //        console.log(res.data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     })
 
     got.put("https://sandbox.przelewy24.pl/api/v1/transaction/verify", {
         json: {
@@ -151,26 +143,14 @@ router.post("/verify", (request, response) => {
     })
         .then(res => {
             if(res.body.data.status === 'success') {
-                const query = 'SELECT user_id, type FROM payments WHERE session_id = $1';
+                const query = 'SELECT user_id FROM payments WHERE session_id = $1';
                 const values = [sessionId];
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        const { user_id, type } = res.rows[0];
-                        let query = '';
-                        const values = [type, user_id];
-
-                        switch(type) {
-                            case 1:
-                                query = `UPDATE subscriptions SET expire = expire + INTERVAL '30 DAY', type = $1 WHERE user_id = $2`;
-                                break;
-                            case 2:
-                                query = `UPDATE subscriptions SET expire = expire + INTERVAL '90 DAY', type = $1 WHERE user_id = $2`;
-                                break;
-                            default:
-                                query = `UPDATE subscriptions SET expire = expire + INTERVAL '365 DAY', type = $1 WHERE user_id = $2`;
-                                break;
-                        }
+                        const { user_id } = res.rows[0];
+                        const query = `UPDATE identities SET subscription = '31.01.2022' WHERE user_id = $1`;
+                        const values = [user_id];
 
                         db.query(query, values, (err, res) => {
                             if(res) {

@@ -7,7 +7,7 @@ import ClubAccountStartFindPlayer from "../components/ClubAccountStartFindPlayer
 import ClubAccountFavorites from "../components/ClubAccountFavorites";
 import ClubAccountBottom from "../components/ClubAccountBottom";
 
-const ClubAccountStart = ({club}) => {
+const ClubAccountStart = ({club, favorites, playersProp}) => {
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
@@ -16,7 +16,7 @@ const ClubAccountStart = ({club}) => {
         </header>
 
         <ClubAccountStartFindPlayer />
-        <ClubAccountFavorites />
+        <ClubAccountFavorites favoritesProp={favorites} />
         <ClubAccountBottom />
 
         <Footer theme="dark" border={true} />
