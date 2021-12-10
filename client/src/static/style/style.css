@@ -532,32 +532,138 @@ ul {
     height: 180vh;
     max-height: 2800px;
     z-index: -1;
+    min-height: 110%;
 }
 
 .container--homepage::before {
-    top: -30vh;
+    top: -300px;
     left: -15vw;
     background: var(--light);
     transform: skewX(-15deg);
 }
 
 .container--homepage::after {
-    top: -30vh;
+    top: -300px;
     right: -22vw;
     background: var(--dark);
     transform: skewX(-15deg);
+    width: 73.8%;
 }
 
 /* Landing page */
-.landingPage__inner {
-    /*position: absolute;*/
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: var(--siteWidth);
-    height: 75vh;
-    background: transparent;
+.landingPage {
+    position: relative;
 }
+
+.landingPage__inner {
+    width: 1200px;
+    height: 720px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    position: relative;
+    left: 50%;
+    transform-origin: center center;
+    transform: translateX(-50%);
+}
+
+.landingPage__left, .landingPage__right {
+    display: block;
+    position: relative;
+    width: 50%;
+    height: 80%;
+}
+
+.landingPage__right {
+    margin-right: -3%;
+}
+
+.landingPage__img {
+    position: absolute;
+}
+
+#yellowLines {
+    width: 90%;
+    bottom: 0;
+    left: 1.5%;
+    z-index: 3;
+}
+
+#strefaZawodnika {
+    bottom: -1%;
+    left: 26%;
+    width: 39%;
+    z-index: 3;
+}
+
+#strefaZawodnikaTlo {
+    bottom: -9%;
+    left: 3%;
+    width: 85%;
+    z-index: 2;
+}
+
+#strefaKlubowa {
+    bottom: 12%;
+    left: 15%;
+    width: 35%;
+    z-index: 2;
+}
+
+#tloStrefaKlubowa {
+    position: absolute;
+    bottom: 31%;
+    left: 0;
+    width: 85%;
+    height: 10%;
+    z-index: 2;
+    transform: rotate(-9deg);
+    background: rgb(40,40,40);
+    background: linear-gradient(180deg, rgba(40,40,40,1) 0%, rgba(40,40,40,0.9) 46%, rgba(40, 40, 40, 0.8) 100%);
+}
+
+#zawodnikTlo {
+    width: 50%;
+    left: 25%;
+}
+
+#trenerTlo {
+    width: 100%;
+    top: -50%;
+    left: -20%;
+}
+
+#zawodnik {
+    z-index: 2;
+    width: 80%;
+    left: 5%;
+    top: -12%;
+}
+
+#trener {
+    z-index: 2;
+    top: -12%;
+    left: 6%;
+    width: 56%;
+}
+
+
+
+@media(-webkit-min-device-pixel-ratio: 1.05) {
+    .landingPage__inner {
+        transform: translateX(-50%) scale(.8);
+        margin-top: -5%;
+    }
+}
+
+
+
+
+
+
+
 
 /* Club slider */
 .clubCarousel {
@@ -4453,7 +4559,7 @@ input::-webkit-inner-spin-button {
     width: auto;
 }
 
-.chat__main__imgPreview .btn__img {
+.chat__main__imgPreiew .btn__img {
     height: 100%;
     width: auto;
 }

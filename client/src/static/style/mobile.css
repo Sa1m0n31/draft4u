@@ -156,7 +156,17 @@
     }
 }
 
+@media(max-width: 1500px) {
+    .landingPage__inner {
+        transform: translateX(-50%) scale(.8);
+    }
+}
+
 @media(max-width: 1400px) {
+    .container--homepage::after {
+        width: 75%;
+    }
+
     .footer__inner {
         width: var(--siteWidth);
     }
@@ -295,6 +305,10 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .landingPage__inner {
+        transform: translateX(-50%) scale(.7);
     }
 
     .playersWall__compareSection__item__deleteBtn {
@@ -1088,12 +1102,6 @@
 
     .resetPassword .button--back {
         width: 90%;
-    }
-
-    .container--homepage::before,
-    .container--homepage::after
-    {
-        transform: skewX(-8deg);
     }
 
     .container--homepage::after {
