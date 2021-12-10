@@ -1,3 +1,51 @@
+@media(max-width: 2700px) {
+    .container--homepage::after {
+        width: 57%;
+    }
+
+    #strefaZawodnikaTlo {
+        bottom: -11%;
+        left: -9%;
+    }
+}
+
+@media(max-width: 2100px) {
+    #strefaZawodnikaTlo {
+        bottom: -9%;
+        left: -1%;
+    }
+}
+
+@media(max-width: 2000px) {
+    .container--homepage::after {
+        width: 57.5%;
+    }
+}
+
+@media(max-width: 1900px) {
+    .container--homepage::after {
+        width: 58%;
+    }
+}
+
+@media(max-width: 1700px) {
+    .container--homepage::after {
+        width: 59%;
+    }
+}
+
+@media(max-width: 1500px) {
+    .container--homepage::after {
+        width: 60%;
+    }
+}
+
+@media(max-width: 1400px) {
+    .container--homepage::after {
+        width: 61%;
+    }
+}
+
 @media(max-width: 1800px) {
     .siteHeader__btn--register {
         margin-left: 3%;
@@ -163,10 +211,6 @@
 }
 
 @media(max-width: 1400px) {
-    .container--homepage::after {
-        width: 75%;
-    }
-
     .footer__inner {
         width: var(--siteWidth);
     }
@@ -305,6 +349,10 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .container--homepage::after {
+        transform: skewX(-14.5deg);
     }
 
     .landingPage__inner {
@@ -618,6 +666,14 @@
         display: flex !important;
     }
 
+    .container--homepage::after {
+        width: 62%;
+    }
+
+    .landingPage__inner {
+        transform: translateX(-50%) scale(.4);
+    }
+
     .clubTeams__header {
         font-size: 24px;
     }
@@ -904,6 +960,12 @@
     }
 }
 
+@media(max-width: 900px) {
+    .container--homepage::after {
+        width: 64%;
+    }
+}
+
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
@@ -911,6 +973,10 @@
 
     .d-desktop {
         display: none !important;
+    }
+
+    .container--homepage::after {
+        width: 66%;
     }
 
     .footer {
@@ -1104,9 +1170,9 @@
         width: 90%;
     }
 
-    .container--homepage::after {
-        right: -24vw;
-    }
+    /*.container--homepage::after {*/
+    /*    right: -24vw;*/
+    /*}*/
 
     .aboutUs__main {
         flex-direction: column;
@@ -2105,9 +2171,19 @@
     }
 }
 
+@media(max-width: 650px) {
+    .container--homepage::after {
+        width: 68%;
+    }
+}
+
 @media(max-width: 576px) {
     .chat__message {
         min-width: 100%;
+    }
+
+    .landingPage__inner {
+        transform: translateX(-50%) scale(.25);
     }
 
     .chat {

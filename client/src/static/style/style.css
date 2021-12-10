@@ -21,6 +21,7 @@
 }
 
 body {
+    overflow: hidden;
     position: relative;
 }
 
@@ -528,26 +529,37 @@ ul {
 .container--homepage::after {
     content:  "";
     position: absolute;
-    width: 75%;
-    height: 180vh;
-    max-height: 2800px;
+    width: 50%;
+    height: 1800px;
     z-index: -1;
-    min-height: 110%;
+    top: 0;
+    transition: .3s all;
+    /*transform: skewX(-16.5deg);*/
 }
 
 .container--homepage::before {
-    top: -300px;
-    left: -15vw;
+    left: 0;
     background: var(--light);
-    transform: skewX(-15deg);
+    z-index: -1;
 }
 
 .container--homepage::after {
-    top: -300px;
-    right: -22vw;
+    right: 0;
     background: var(--dark);
-    transform: skewX(-15deg);
-    width: 73.8%;
+    z-index: -1;
+    width: 54.5%;
+    transform: skewX(-17deg);
+    transform-origin: center;
+}
+
+.container--animation::after {
+    transition: .4s all;
+    width: 50% !important;
+}
+
+.container--animationRight::after {
+    transition: .4s all;
+    width: 65% !important;
 }
 
 /* Landing page */
@@ -562,11 +574,12 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5vh;
+    margin-top: 50px;
     position: relative;
     left: 50%;
     transform-origin: center center;
     transform: translateX(-50%);
+    overflow: hidden;
 }
 
 .landingPage__left, .landingPage__right {
@@ -599,8 +612,8 @@ ul {
 }
 
 #strefaZawodnikaTlo {
-    bottom: -9%;
-    left: 3%;
+    bottom: -10%;
+    left: -5%;
     width: 85%;
     z-index: 2;
 }
@@ -4992,4 +5005,20 @@ input::-webkit-inner-spin-button {
     border: none;
     outline: none;
     filter: brightness(0) invert(.8);
+}
+
+.container--homepage .clubCarousel {
+    position: relative;
+}
+
+.container--homepage .clubCarousel::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50vw;
+    height: 1000px;
+    transform: translate(10%, 10%);
+    background: var(--dark);
+    z-index: -1;
 }

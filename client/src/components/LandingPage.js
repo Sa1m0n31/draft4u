@@ -10,13 +10,35 @@ import zoltaRamka from '../static/img/zolta-ramka.png'
 import tloStrefaZawodnika from '../static/img/tlo-strefy-zawodnika.png'
 
 const LandingPage = () => {
+    const animationLeft = () => {
+        const container = document.querySelector(".container");
+        container.classList.add('container--animation');
+    }
+
+    const animationLeftEnd = () => {
+        const container = document.querySelector(".container");
+        container.classList.remove('container--animation');
+    }
+
+    const animationRight = () => {
+        const container = document.querySelector(".container");
+        container.classList.add('container--animationRight');
+    }
+
+    const animationRightEnd = () => {
+        const container = document.querySelector(".container");
+        container.classList.remove('container--animationRight');
+    }
+
     return <main className="landingPage">
         <main className="landingPage__inner">
             <img className="landingPage__img"
                  id="yellowLines"
                  src={zoltaRamka}
                  alt="ramka" />
-            <a className="landingPage__left" href="#">
+            <a className="landingPage__left" href="#"
+               onMouseLeave={() => { animationLeftEnd();} }
+               onMouseEnter={() => { animationLeft(); }}>
                 <img className="landingPage__img"
                      id="zawodnikTlo"
                      src={tloZawodnikow}
@@ -35,7 +57,10 @@ const LandingPage = () => {
                      src={strefaZawodnika}
                      alt="strefa-zawodnika" />
             </a>
-            <a className="landingPage__right" href="#">
+            <a className="landingPage__right"
+               onMouseEnter={() => { animationRight(); }}
+               onMouseLeave={() => { animationRightEnd(); }}
+               href="#">
                 <img className="landingPage__img"
                      id="trenerTlo"
                      src={tloTrenera}
