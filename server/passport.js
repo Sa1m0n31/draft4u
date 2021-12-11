@@ -118,7 +118,7 @@ const init = (passport) => {
                     /* Add new identity */
                     if(res.rows) {
                         const userId = res.rows[0].id;
-                        query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY') RETURNING user_id`;
+                        query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
                         values = [uuid, userId, id.provider === 'facebook' ? 2 : 3, hash];
 
                         db.query(query, values, (err, res) => {

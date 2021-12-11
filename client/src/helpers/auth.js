@@ -66,15 +66,15 @@ const loginApple = () => {
     return axios.get(`${API_URL}/auth/apple`);
 }
 
-const registerUser = (email, password, firstName, lastName, sex, birthday, phoneNumber) => {
+const registerUser = (email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory) => {
     return axios.post(`${API_URL}/auth/register-local`, {
-        email, password, firstName, lastName, sex, birthday, phoneNumber
+        email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory
     });
 }
 
-const registerFromThirdParty = (firstName, lastName, sex, birthday, phoneNumber) => {
+const registerFromThirdParty = (firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory) => {
     return axios.post(`${API_URL}/auth/register-from-third-party`, {
-        firstName, lastName, sex, birthday, phoneNumber
+        firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory
     }, {
         withCredentials: true
     });

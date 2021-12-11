@@ -590,6 +590,47 @@ ul {
 
 .landingPage__img {
     position: absolute;
+    transition: .3s all ease-in-out;
+}
+
+.landingPage__img--bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landingPage__block {
+    position: absolute;
+    top: -12%;
+    right: 0;
+    width: 30%;
+    height: 70%;
+    background: transparent;
+    opacity: 0;
+    z-index: 10;
+    transform: skewX(-17deg);
+}
+
+.landingPage__img--left,
+.landingPage__img--right {
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    transform: skewX(-17deg);
+    z-index: 5;
+    cursor: pointer;
+}
+
+.landingPage__img--left {
+    top: 0;
+    left: 0;
+    width: 45%;
+}
+
+.landingPage__img--right {
+    top: 0;
+    right: 0;
+    width: 55%;
 }
 
 #yellowLines {
@@ -4185,6 +4226,12 @@ input::-webkit-inner-spin-button {
     flex-shrink: 0;
     cursor: pointer;
     position: relative;
+    max-width: 700px;
+}
+
+.createSquad__squad__itemWrapper--notInFilter {
+    width: 0;
+    flex-basis: 0;
 }
 
 .createSquad__squad__item {
@@ -4197,6 +4244,7 @@ input::-webkit-inner-spin-button {
     padding: 30px;
     position: relative;
     z-index: 2;
+    transition: .3s all;
 }
 
 .opacity-0 {
@@ -4709,9 +4757,30 @@ input::-webkit-inner-spin-button {
     width: auto;
 }
 
-.chat__main__imgPreiew .btn__img {
+.chat__main__imgPreview .btn__img {
     height: 100%;
     width: auto;
+}
+
+.chat__main__imgPreview .modal--close {
+    width: 30px;
+    height: 30px;
+    top: -15px;
+    right: -15px;
+    opacity: 0;
+    z-index: 3;
+    background: #fff;
+    filter: none;
+    border-radius: 50%;
+}
+
+.chat__main__imgPreview:hover .modal--close {
+    opacity: 1;
+}
+
+.chat__main__imgPreview .modal--close .btn__img {
+    width: 50%;
+    height: auto;
 }
 
 .chat__btn__input {
@@ -4800,6 +4869,7 @@ input::-webkit-inner-spin-button {
 
 .chat__message__header__date {
     font-size: 14px;
+    white-space: nowrap;
 }
 
 .chat__message__header__date span:last-of-type {

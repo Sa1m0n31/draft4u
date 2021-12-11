@@ -16,7 +16,7 @@ const calculateAge = (dateOfBirth) => {
     const birthday = new Date(dateOfBirth);
     const ageDifMs = Date.now() - birthday;
     const ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
+    return ageDate.getUTCFullYear() - 1970;
 }
 
 const isElementInArray = (arr, el) => {

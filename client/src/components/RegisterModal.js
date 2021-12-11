@@ -148,15 +148,21 @@ const RegisterModal = (props) => {
         }
     }
 
+    const calculateAge = (birthday) => { // birthday is a date
+        const ageDifMs = Date.now() - new Date(birthday);
+        const ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return ageDate.getUTCFullYear() - 1970;
+    }
+
     const validateStep2 = (e) => {
         e.preventDefault();
         let error = false;
 
-        if(!firstName.length) {
+        if(!firstName?.length) {
             setFirstNameError("Wpisz swoje imię");
             error = true;
         }
-        if(!lastName.length) {
+        if(!lastName?.length) {
             setLastNameError("Wpisz swoje nazwisko");
             error = true;
         }
@@ -165,17 +171,24 @@ const RegisterModal = (props) => {
             sexFieldPlaceholder.current.textContent = "";
             error = true;
         }
-        if(!birthday.length) {
+        if(!birthday?.length) {
             setBirthdayError("Wybierz datę urodzenia");
             birthdayOverlay.current.textContent = "";
             error = true;
         }
+        else if(calculateAge(birthday) < 16) {
+            setBirthdayError("Minimalny wiek zawodnika to 16 lat");
+            birthdayOverlay.current.textContent = "";
+            birthdayOverlay.current.style.display = "block";
+            error = true;
+        }
+
         if(!checkboxCompulsory) {
             error = true;
             setCheckboxError(true);
         }
 
-        if(!phoneNumber.length) {
+        if(!phoneNumber?.length) {
             error = true;
             setPhoneNumber("");
             setPhoneNumberError("Wpisz swój numer telefonu")
@@ -194,7 +207,8 @@ const RegisterModal = (props) => {
                 registerUser(
                     email, password,
                     firstName, lastName, sex,
-                    birthday, phoneNumber
+                    birthday, phoneNumber,
+                    checkboxObligatory
                 )
                     .then(res => {
                         setLoading(false);
@@ -208,7 +222,7 @@ const RegisterModal = (props) => {
             }
             else {
                 registerFromThirdParty(
-                    firstName, lastName, sex, birthday, phoneNumber
+                    firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory
                 )
                     .then((res) => {
                        setLoading(false);

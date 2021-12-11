@@ -13,11 +13,16 @@ const MyAccountStartBottom = ({userId}) => {
             .then((res) => {
                 const result = res?.data?.result[0];
                 if(result) {
-                    const currentDate = new Date();
-                    const expireDate = new Date(Date.parse(result.subscription));
+                    if(result.subscription) {
+                        const currentDate = new Date();
+                        const expireDate = new Date(Date.parse(result.subscription));
 
-                    const daysToExpire = Math.abs(Math.floor((currentDate - expireDate) / 86400000));
-                    setDays(daysToExpire);
+                        const daysToExpire = Math.abs(Math.floor((currentDate - expireDate) / 86400000));
+                        setDays(daysToExpire);
+                    }
+                    else {
+                        setDays(0);
+                    }
                 }
             });
     }, []);

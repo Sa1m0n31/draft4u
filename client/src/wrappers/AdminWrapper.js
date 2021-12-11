@@ -12,6 +12,7 @@ import AdminChangePassword from "../pages/AdminChangePassword";
 import AdminAddCode from "../pages/AdminAddCode";
 import AdminCodesList from "../pages/AdminCodesList";
 import AdminPlayersList from "../pages/AdminPlayersList";
+import AdminMailingList from "../pages/AdminMailingList";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -57,6 +58,9 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 11:
                             setRenderSwitch(<AdminCodesList admin={result} />);
+                            break;
+                        case 12:
+                            setRenderSwitch(<AdminMailingList admin={result} />);
                             break;
                         default:
                             break;

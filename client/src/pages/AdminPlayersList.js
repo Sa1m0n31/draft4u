@@ -100,7 +100,13 @@ const AdminPlayersList = () => {
         <main className="admin">
             <PanelMenu menuOpen={1} />
             <main className="admin__main">
+                <header className="admin__flex">
+                    <h1 className="admin__main__header">
+                        Lista zawodników
+                    </h1>
+                </header>
                 {players?.map((item, index) => {
+                    console.log(item);
                     return <section className="admin__main__notification__item" key={index}>
                         <section className="admin__main__notification__item__col col-2">
                             <h3 className="admin__main__notification__item__key">

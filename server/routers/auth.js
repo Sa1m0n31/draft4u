@@ -179,7 +179,9 @@ router.get('/google/callback',
     });
 
 router.post("/register-local", (request, response) => {
-   const { email, password, firstName, lastName, sex, birthday, phoneNumber } = request.body;
+   const { email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory } = request.body;
+
+   console.log("CHECKBOX: " + checkboxObligatory);
 
    /* Password hash */
    const hash = crypto.createHash('sha256').update(password).digest('hex');
@@ -192,8 +194,8 @@ router.post("/register-local", (request, response) => {
        if(res) {
            const insertedUserId = res.rows[0].id;
            const id = uuidv4();
-           const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, NOW() + INTERVAL '14 DAY')`;
-           const values = [id, insertedUserId, hash];
+           const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, NOW() + INTERVAL '14 DAY', $4)`;
+           const values = [id, insertedUserId, hash, checkboxObligatory];
            db.query(query, values, (err, res) => {
                if(res) {
                    const token = uuidv4();

@@ -1,14 +1,10 @@
 import React from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import tmpImg from "../static/img/placeholder.png"
-import phone from "../static/img/telefon.png";
-import ctaBtn from '../static/img/btn-cta.png'
 import header from '../static/img/strefa-klubowa-header.png'
 import img1 from '../static/img/strefa-zawodnika-1.png'
 import img2 from '../static/img/strefa-klubowa-2.png'
 import img3 from '../static/img/strefa-zawodnika-2.png'
-import FAQPage from "./FAQPage";
 import PlayerFAQ from "../components/PlayerFAQ";
 
 const Club = () => {

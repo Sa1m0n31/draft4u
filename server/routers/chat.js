@@ -7,7 +7,7 @@ const upload = multer({ dest: 'media/chat' })
 
 router.get("/get-user-messages", (request, response) => {
     if(request.user) {
-        const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type, c.id FROM
+        const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type, c.id, rm.type as read_by_club FROM
                     (
                         SELECT *, ROW_NUMBER() OVER(PARTITION BY chat_id ORDER BY created_at DESC) AS row
                         FROM messages
@@ -41,7 +41,7 @@ router.get("/get-user-messages", (request, response) => {
 router.get("/get-club-messages", (request, response) => {
     const { user } = request;
 
-    const query = `SELECT m.chat_id, m.content, m.created_at, u.first_name, u.last_name, u.id, img.file_path, rm.read_at, m.type FROM
+    const query = `SELECT m.chat_id, m.content, m.created_at, u.first_name, u.last_name, u.id, img.file_path, rm.read_at, m.type, rm.type as read_by_club FROM
                     (
                         SELECT *, ROW_NUMBER() OVER(PARTITION BY chat_id ORDER BY created_at DESC) AS row
                         FROM messages

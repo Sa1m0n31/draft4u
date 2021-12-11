@@ -366,8 +366,7 @@ const ChatPage = ({club, user, isLocal}) => {
         if(listenSocket) {
             listenSocket.on("message", (data) => {
                 setChatRead(null);
-                console.log(data.data);
-                if(((data.data === `[message_read ${MESSAGE_READ_KEY} club ${currentChatId}]`) && !club)||(((data.data === `[message_read ${MESSAGE_READ_KEY} user ${currentChatId}]`) && club))) {
+                if(((data.data === `[message_read ${MESSAGE_READ_KEY} club ${currentChatId}]`) && !club)||((data.data === `[message_read ${MESSAGE_READ_KEY} user ${currentChatId}]`) && club)) {
                     /* Info that message is read */
                     console.log("aktualny rozmowca przeczytal wiadomosc");
                     setChatRead(new Date());
@@ -380,7 +379,7 @@ const ChatPage = ({club, user, isLocal}) => {
                 }
             });
         }
-    }, [listenSocket]);
+    }, [listenSocket, currentChatId]);
 
     useEffect(() => {
         if(chatRead) {
@@ -417,7 +416,6 @@ const ChatPage = ({club, user, isLocal}) => {
                 //console.log(data);
             });
            if(club) {
-               console.log("GETCHAT->CLUB");
                markAsRead(chatId, 'true')
                    .then((res) => {
                        getClubMessages()
@@ -500,6 +498,27 @@ const ChatPage = ({club, user, isLocal}) => {
             }
         }
     }, [currentChatId]);
+
+    const markAsReadCurrentMessage = () => {
+        if(club) {
+            markAsRead(currentChatId, 'true')
+                .then((res) => {
+                    getClubMessages()
+                        .then((res) => {
+                            setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                        });
+                });
+        }
+        else {
+            markAsRead(currentChatId,'false')
+                .then((res) => {
+                    getUserMessages()
+                        .then((res) => {
+                            setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                        });
+                });
+        }
+    }
 
     const updateChatList = (newMessage) => {
         if(club) {
@@ -589,6 +608,20 @@ const ChatPage = ({club, user, isLocal}) => {
         document.querySelector(".chat").style.paddingBottom = window.innerWidth > 996 ? "150px" : "50px";
     }
 
+    useEffect(() => {
+        if(!previewUrl) {
+            const chatMainInputWrapper = document.querySelector(".chat__main__inputWrapper");
+            const chat = document.querySelector(".chat");
+
+            if(chatMainInputWrapper) {
+                chatMainInputWrapper.style.height = "48px";
+            }
+            if(chat) {
+                chat.style.paddingBottom = "0";
+            }
+        }
+    }, [previewUrl]);
+
     const enlargeImage = (path) => {
         setCurrentLargeImage(path);
 
@@ -646,6 +679,28 @@ const ChatPage = ({club, user, isLocal}) => {
             setCurrentLargeImage(null);
         }, 400);
     }
+
+    const isCurrentChatNew = () => {
+        console.log(messages);
+        const currentChatIndex = messages.findIndex((item) => {
+           return item.chat_id === currentChatId;
+        });
+        if(currentChatIndex !== -1) {
+            const currentChat = messages[currentChatIndex];
+            console.log(currentChat);
+            console.log(currentChat.read_at);
+            console.log(currentChat.created_at)
+            if(currentChat.read_at > currentChat.created_at) console.log("current chat is old");
+            else console.log("current chat id old");
+            return currentChat.read_at > currentChat.created_at;
+        }
+        else return false;
+    }
+
+    useEffect(() => {
+        console.log("NEW CURRENT CHAT ID: " + currentChatId);
+        isCurrentChatNew();
+    }, [currentChatId]);
 
     return <div className={club ? "container container--dark" : "container container--light"}>
         <Header loggedIn={true}
@@ -705,7 +760,7 @@ const ChatPage = ({club, user, isLocal}) => {
             <section className={mobileCurrentChat === -1 ? "chat__list" : "chat__list d-desktop"}>
                 <main className="chat__list__main" onScroll={(e) => { chatListScroll(e); }}>
                     {messages?.length ? messages.map((item, index) => {
-                        return <button className={(new Date(item.created_at) > new Date(item.read_at)) && ((!item.type && club) || (item.type && !club)) ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id, club ? (item.first_name + " " + item.last_name) : item.name, item.file_path, item.id, ((new Date(item.created_at) > new Date(item.read_at)) && ((!item.type && club) || (item.type && !club)))); }}>
+                        return <button className={(new Date(item.created_at) > new Date(item.read_at)) && ((!item.type && club) || (item.type && !club)) ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id, club ? (item.first_name + " " + item.last_name) : item.name, item.file_path, item.id, ((new Date(item.created_at) > new Date(item.read_at)) && ((!item.read_by_club && club) || (item.read_by_club && !club)))); }}>
                             <figure className="chat__list__item__imgWrapper" key={index}>
                                 <img className="chat__list__item__img"
                                      src={item.file_path ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example}
@@ -847,11 +902,15 @@ const ChatPage = ({club, user, isLocal}) => {
 
                     {currentReceiver ? <section className="chat__main__inputWrapper">
                         {previewUrl ? <div className="chat__main__imgPreview">
+                            <button className="modal--close" onClick={() => { setPreviewUrl(null); setImage(null); }}>
+                                <img className="btn__img" src={closeIcon} alt="usun" />
+                            </button>
                             <img className="btn__img" src={previewUrl} />
                         </div> : null}
                         <textarea className="chat__main__input"
                                   disabled={previewUrl}
                                   value={message}
+                                  onClick={() => { markAsReadCurrentMessage(); }}
                                   onKeyUp={(e) => { changeMessage(e); }}
                                   onChange={(e) => { setMessage(e.target.value); }}
                                   placeholder={previewUrl ? "" : "Aa"} />

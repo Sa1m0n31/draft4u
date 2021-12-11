@@ -4,6 +4,7 @@ import players from '../static/img/admin-players.svg'
 import notifications from '../static/img/admin-notifications.svg'
 import articles from '../static/img/admin-articles.svg'
 import settings from '../static/img/admin-settings.svg'
+import mail from '../static/img/letter-icon.svg'
 
 const PanelMenu = ({menuOpen, menuSelected}) => {
     const [submenu, setSubmenu] = useState(-1);
@@ -14,6 +15,7 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         { name: 'Powiadomienia', icon: notifications },
         { name: 'Artykuły', icon: articles },
         { name: 'Kody rabatowe', icon: settings },
+        { name: 'Newsletter', icon: mail }
     ]
 
     const submenus = [
@@ -35,6 +37,9 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         [
             {name: 'Dodaj kod rabatowy', link: '/dodaj-kod'},
             {name: 'Lista kodów', link: '/lista-kodow'}
+        ],
+        [
+            { name: 'Lista mailingowa', link: '/lista-mailingowa' }
         ]
     ]
 

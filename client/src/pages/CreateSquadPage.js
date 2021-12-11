@@ -42,10 +42,6 @@ const CreateSquadPage = ({club}) => {
     const [availablePlaces, setAvailablePlaces] = useState([0, 0, 0, 0, 0, 0, 0]);
 
     useEffect(() => {
-        console.log(scrollbar[0]);
-    }, [scrollbar]);
-
-    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
 
@@ -59,7 +55,6 @@ const CreateSquadPage = ({club}) => {
                     setTeam(result);
 
                     const updateTeamLength = result.length;
-                    console.log(result);
                     setAvailablePlaces(availablePlaces.map((item, index) => {
                         if(index < updateTeamLength) return result[index].id;
                         else return item;
@@ -92,9 +87,7 @@ const CreateSquadPage = ({club}) => {
     }
 
     useEffect(() => {
-        console.log(window.innerWidth);
-       if(window.innerWidth < 768) {
-           console.log(document.querySelectorAll(".createSquad__squad__item__dragging"));
+        if(window.innerWidth < 768) {
            Array.from(document.querySelectorAll(".createSquad__squad__item__dragging")).forEach((item) => {
                item.classList.remove("draggable");
            });
@@ -106,7 +99,6 @@ const CreateSquadPage = ({club}) => {
             .then((res) => {
                 setPlayers(res?.data?.result);
                 setFilteredPlayers(res?.data?.result);
-                console.log(res?.data?.result?.length);
                 setTrackWidth(res?.data?.result?.length * 510);
                 setFlexBasis(100 / res?.data?.result?.length);
             });
@@ -137,6 +129,33 @@ const CreateSquadPage = ({club}) => {
 
                     target.setAttribute('data-x', newX);
                     target.setAttribute('data-y', newY);
+                },
+                end (event) {
+                    if(!event.relatedTarget) {
+                        /* Wroc zawodnika */
+                        // const draggingElement = event.target;
+                        // const draggingElementId = draggingElement.getAttribute('id').split('-')[1];
+                        // const draggingElementParent = document.getElementById(`createSquad__squad__itemWrapper--${draggingElementId}`);
+                        //
+                        // setSelectedPlayers(selectedPlayers.filter((item) => {
+                        //     return item !== parseInt(draggingElementId);
+                        // }));
+                        //
+                        // draggingElement.style.top = "0";
+                        // draggingElement.style.left = "0";
+                        // draggingElement.style.transform = "none";
+                        // draggingElement.style.opacity = "0";
+                        // draggingElement.style.width = "100%";
+                        //
+                        // draggingElement.setAttribute('data-x', 0);
+                        // draggingElement.setAttribute('data-y', 0);
+                        //
+                        // draggingElement.classList.add("draggable");
+                        //
+                        // if(draggingElementParent) {
+                        //     draggingElementParent.appendChild(draggingElement);
+                        // }
+                    }
                 }
             }
         });
@@ -166,7 +185,7 @@ const CreateSquadPage = ({club}) => {
                 event.target.style.opacity = "1";
             }
         });
-    }, [players]);
+    }, [players, selectedPlayers]);
 
     useEffect(() => {
         setTeam(players.filter((item, index) => {
@@ -309,14 +328,42 @@ const CreateSquadPage = ({club}) => {
         }
     }
 
+    const isPlayerInCurrentTeam = (player) => {
+        console.log(player);
+        console.log(selectedPlayers);
+        return selectedPlayers.findIndex(((item) => {
+            return players[item].id === player.id;
+        })) !== -1;
+    }
+
+    const getPlayerByIndex = (index) => {
+        return players[index];
+    }
+
+    const isPlayerInCurrentFilter = (player) => {
+        return filteredPlayers.findIndex((item) => {
+            return item.id === player.id;
+        }) !== -1;
+    }
+
+    const numberOfSelectedPlayersFromCurrentFilter = () => {
+        return selectedPlayers.filter((item) => {
+            return isPlayerInCurrentFilter(players[item]);
+        }).length;
+    }
+
     useEffect(() => {
-        setTrackWidth((filteredPlayers.length - selectedPlayers.length) * 510);
+        console.log((filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter()) );
+        /* Trzeba odjac selectedPlayers z aktualnie filtrowanej grupy */
+        setTrackWidth((filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter()) * 510);
 
             const allPlayersWrappers = Array.from(document.querySelectorAll('.createSquad__squad__itemWrapper'));
             if(allPlayersWrappers) {
+                console.log(allPlayersWrappers);
                 const remainingItems = allPlayersWrappers.filter((item) => {
-                    return item.textContent.length || window.getComputedStyle(item).getPropertyValue('width') === '0px';
+                    return item.textContent.length || window.getComputedStyle(item).getPropertyValue('width') === '0';
                 }).length;
+                console.log(remainingItems);
                 allPlayersWrappers?.forEach((item) => {
                     if(!item.textContent.length) {
                         if(window.innerWidth > 768) item.style.width = '0';
@@ -326,11 +373,12 @@ const CreateSquadPage = ({club}) => {
                     else {
                         if(window.innerWidth > 768) item.style.width = '510px';
                         else item.style.marginBottom = '20px';
-                        item.style.flexBasis = `${100 / remainingItems}%`;
+                        item.style.flexBasis = `${100 / (filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter())}%`;
                     }
                 });
             }
-    }, [selectedPlayers]);
+            console.log("---");
+    }, [selectedPlayers, filteredPlayers]);
 
     const startDragging = (e, playerIndex) => {
         if(!isElementInArray(selectedPlayers, playerIndex) && !(window.innerWidth < 768)) {
@@ -356,34 +404,39 @@ const CreateSquadPage = ({club}) => {
     }
 
     const removePlayerFromCourt = (id, playerId) => {
-        if(id) setNewPlayerOnCourt(id * -1);
-        else setNewPlayerOnCourt(-999999);
+        if(playersOnCourt.findIndex((item) => {
+            return item === id;
+        }) !== -1) {
+            if(id) setNewPlayerOnCourt(id * -1);
+            else setNewPlayerOnCourt(-999999);
 
-        setSelectedPlayers(selectedPlayers.filter((item) => {
-            return item !== id;
-        }));
-        setAvailablePlaces(availablePlaces.map((item) => {
-            if(item === playerId) return 0;
-            else return item;
-        }));
+            setSelectedPlayers(selectedPlayers.filter((item) => {
+                return item !== id;
+            }));
+            setAvailablePlaces(availablePlaces.map((item) => {
+                if(item === playerId) return 0;
+                else return item;
+            }));
 
-        const elementToRemove = document.getElementById(`draggable-${id}`);
-        const parentOfElementToRemove = document.getElementById(`createSquad__squad__itemWrapper--${id}`);
+            const elementToRemove = document.getElementById(`draggable-${id}`);
+            const parentOfElementToRemove = document.getElementById(`createSquad__squad__itemWrapper--${id}`);
+            parentOfElementToRemove.style.transition = 'none';
 
-        elementToRemove.parentElement.classList.add("dropzone--active");
-        elementToRemove.parentElement.removeChild(elementToRemove);
+            elementToRemove.parentElement.classList.add("dropzone--active");
+            elementToRemove.parentElement.removeChild(elementToRemove);
 
-        parentOfElementToRemove.appendChild(elementToRemove);
-        elementToRemove.style.top = "0";
-        elementToRemove.style.left = "0";
-        elementToRemove.style.transform = "none";
-        elementToRemove.style.opacity = "0";
-        elementToRemove.style.width = "100%";
+            parentOfElementToRemove.appendChild(elementToRemove);
+            elementToRemove.style.top = "0";
+            elementToRemove.style.left = "0";
+            elementToRemove.style.transform = "none";
+            elementToRemove.style.opacity = "0";
+            elementToRemove.style.width = "100%";
 
-        elementToRemove.setAttribute('data-x', 0);
-        elementToRemove.setAttribute('data-y', 0);
+            elementToRemove.setAttribute('data-x', 0);
+            elementToRemove.setAttribute('data-y', 0);
 
-        elementToRemove.classList.add("draggable");
+            elementToRemove.classList.add("draggable");
+        }
     }
 
     const saveTeam = () => {
@@ -590,7 +643,7 @@ const CreateSquadPage = ({club}) => {
                     }}>
 
                         {players?.map((item, index) => {
-                            if(isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item)) {
+                            if(isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item) && !isPlayerInCurrentTeam(item)) {
                                 return <div className={`createSquad__squad__itemWrapper`}
                                             style={{
                                                 flexBasis: `${flexBasis}%`

@@ -177,6 +177,9 @@ function App() {
       <Route path="/lista-kodow">
           <AdminWrapper page={11} />
       </Route>
+      <Route path="/lista-mailingowa">
+          <AdminWrapper page={12} />
+      </Route>
 
   </Router>
 }

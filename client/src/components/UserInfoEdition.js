@@ -62,7 +62,9 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
 
     const changeUserPhoneNumber = () => {
         setEditPhoneNumber(false);
-        updateUserPhoneNumber(phoneNumber);
+        if(phoneNumber?.length < 15) {
+            updateUserPhoneNumber(phoneNumber);
+        }
     }
 
     const changeUserEmail = () => {
@@ -84,7 +86,9 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
 
     const changeUserAge = () => {
         setEditAge(false);
-        updateUserBirthday(age);
+        if(calculateAge(age) > 16) {
+            updateUserBirthday(age);
+        }
     }
 
     const changeUserLicence = () => {

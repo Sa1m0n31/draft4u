@@ -18,7 +18,7 @@
 
 @media(max-width: 2000px) {
     .container--homepage::after {
-        width: 57.5%;
+        width: 58%;
     }
 }
 
@@ -897,10 +897,6 @@
 
     .userInfoEdition__graphSection > svg {
         max-width: 80vw;
-    }
-
-    .label--marginRightMinus .input--editProfile {
-        margin-right: -52px;
     }
 
     .userInfoEdition__form {
