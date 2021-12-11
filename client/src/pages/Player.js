@@ -1,13 +1,19 @@
 import React from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-
-import phone from '../static/img/telefon.png'
+import label from '../static/img/strefa-zawodnika-label.png'
 import registerBtn from '../static/img/register-btn.png'
 import buyNowBtn from '../static/img/buy-now.png'
-import tmpImg from '../static/img/placeholder.png'
+import playerHeader from '../static/img/strefa-zawodnika-header.png'
+import img1 from '../static/img/strefa-zawodnika-1.png'
+import img2 from '../static/img/strefa-zawodnika-2.png'
+import step1 from '../static/img/krok-1.svg'
+import step2 from '../static/img/krok-2.svg'
+import step3 from '../static/img/krok-3.svg'
 import PlayerFAQ from "../components/PlayerFAQ";
 import ClubSlider from "../components/ClubSlider";
+import discountImg from '../static/img/discount.png'
+import phone from '../static/img/ekran-glowny.png'
 
 const Player = () => {
     const openRegisterModal = () => {
@@ -24,12 +30,14 @@ const Player = () => {
         <Header menu="dark" />
         <main className="player">
             <figure className="player__firstImgWrapper">
-                <img className="player__firstImgWrapper__img" src={tmpImg} alt="draft4u" />
+                <img className="player__label" src={label} alt="strefa-zawodnika" />
+                <img className="player__firstImgWrapper__img" src={playerHeader} alt="draft4u" />
             </figure>
 
             <section className="player__section player__flex player__flex--section player__section--1">
-                <figure className="player__flex__imgWrapper">
-                    <img className="player__flex__img" src={phone} alt="widok" />
+                <figure className="player__flex__imgWrapper player__flex__imgWrapper--phone">
+                    <img className="player__flex__img d-desktop" src={img1} alt="widok" />
+                    <img className="player__flex__img d-mobile" src={phone} alt="widok" />
                 </figure>
 
                 <article className="player__flex__content">
@@ -52,30 +60,28 @@ const Player = () => {
 
                 <section className="player__flex player__flex--margin">
                     <section className="player__step">
-                        <figure className="player__step__imgWrapper">
-
-                        </figure>
+                        <img className="player__step__img" src={step2} alt="krok1" />
                         <h3 className="player__step__header">
                             Wpisz dane
                         </h3>
                     </section>
                     <section className="player__step">
-                        <figure className="player__step__imgWrapper">
-
-                        </figure>
+                        <img className="player__step__img" src={step1} alt="krok2" />
                         <h3 className="player__step__header">
                             Wgraj wideo
                         </h3>
                     </section>
                     <section className="player__step">
-                        <figure className="player__step__imgWrapper">
-
-                        </figure>
+                        <img className="player__step__img" src={step3} alt="krok3" />
                         <h3 className="player__step__header">
                             Wybierz warunki umowy
                         </h3>
                     </section>
                 </section>
+
+                <p className="player__flex__text player__flex__text--afterSteps">
+                    To wszystko! Resztę pracy wykonują nasze algorytmy, które zaprezentują klubom listę zawodników dopasowanych do ich wymagań. Dzięki temu możesz być łatwiej dostrzeżony i szybciej znajdziesz nowy klub.
+                </p>
             </section>
 
             <section className="player__section player__flex player__flex--section">
@@ -86,63 +92,41 @@ const Player = () => {
                     <p className="player__flex__text">
                         Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa. Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa.
                     </p>
-                    <button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>
-                        <img className="btn__img" src={registerBtn} alt="zarejestruj-sie" />
-                    </button>
+                    {/*<button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>*/}
+                    {/*    <img className="btn__img" src={registerBtn} alt="zarejestruj-sie" />*/}
+                    {/*</button>*/}
                 </article>
                 <figure className="player__flex__imgWrapper tmpWrapper d-desktop">
-
+                    <img className="btn__img" src={img2} alt="dolacz-za-darmo" />
                 </figure>
             </section>
 
-            <section className="player__section">
-                <h2 className="player__header">
-                    Pakiety
-                </h2>
-                <section className="player__flex player__flex--options player__flex--margin">
+            <section className="player__section player__flex player__flex--section">
+                <article className="player__flex__content player__flex__content--first14">
+                    <h2 className="player__header">
+                        Promocja na start
+                    </h2>
+                    <p className="player__flex__text">
+                        Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa. Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa.
+                    </p>
+                </article>
+                <div className="player__flex__imgWrapper tmpWrapper">
                     <section className="player__option">
+                        <img className="player__option__discount" src={discountImg} alt="promocja" />
                         <h3 className="player__option__name">
-                            Miesięczny
+                            Tylko
                         </h3>
                         <h4 className="player__option__price">
-                            199
+                            99
                             <span className="player__option__currency">
                                 PLN
                             </span>
                         </h4>
-                        <button className="button button--hover button--buyNow" onClick={() => { openRegisterModal(); }}>
+                        <a className="button button--hover button--buyNow" href="/zaplac?pakiet=3">
                             <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                        </button>
+                        </a>
                     </section>
-                    <section className="player__option">
-                        <h3 className="player__option__name">
-                            3-miesięczny
-                        </h3>
-                        <h4 className="player__option__price">
-                            399
-                            <span className="player__option__currency">
-                                PLN
-                            </span>
-                        </h4>
-                        <button className="button button--hover button--buyNow" onClick={() => { openRegisterModal(); }}>
-                            <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                        </button>
-                    </section>
-                    <section className="player__option">
-                        <h3 className="player__option__name">
-                            Roczny
-                        </h3>
-                        <h4 className="player__option__price">
-                            999
-                            <span className="player__option__currency">
-                                PLN
-                            </span>
-                        </h4>
-                        <button className="button button--hover button--buyNow" onClick={() => { openRegisterModal(); }}>
-                            <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                        </button>
-                    </section>
-                </section>
+                </div>
             </section>
 
             <section className="player__section player__section--faq">

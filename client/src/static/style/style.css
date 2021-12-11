@@ -1574,7 +1574,9 @@ ul {
 /* About us */
 .aboutUs {
     /*height: 100vh;*/
+    padding-top: 40px;
     overflow: hidden;
+    min-height: 950px;
 }
 
 .aboutUs::after {
@@ -1609,7 +1611,7 @@ ul {
 
 .aboutUs__header {
     font-family: 'Oxanium', cursive;
-    color: var(--gold);
+    color: #CE9662;
     font-weight: 500;
     font-size: 50px;
     text-transform: uppercase;
@@ -1639,7 +1641,7 @@ ul {
 .aboutUs__quote {
     font-weight: 700;
     font-style: italic;
-    color: var(--gold);
+    color: #CE9662;
 }
 
 .aboutUs__desc {
@@ -1648,6 +1650,8 @@ ul {
     color: var(--grey);
     width: 550px;
     max-width: 100%;
+    font-weight: 500;
+    line-height: 25px;
 }
 
 .aboutUs__images {
@@ -1663,7 +1667,7 @@ ul {
     width: 100%;
     height: auto;
     transform-origin: 25% 50%;
-    transform: scale(2.2) translateX(10%);
+    transform: scale(2.2);
 }
 
 .aboutUs__profileWrapper--foreground {
@@ -1702,10 +1706,27 @@ ul {
     transform: rotateY(180deg);
 }
 
+.aboutUs__profileWrapper--background .aboutUs__profileImg--michal,
+.aboutUs__profileWrapper--foreground .aboutUs__profileImg--bartek {
+    display: none;
+}
+
+.aboutUs__profileImg--bartek {
+    margin-top: -250px;
+}
+
+.aboutUs__profileImg--michal {
+    margin-top: -100px;
+}
+
 /* Player */
 .club, .player {
-    width: var(--siteWidthNarrow);
+    width: var(--siteWidthSuperNarrow);
     margin: 50px auto;
+}
+
+.club .player__flex {
+    align-items: flex-end;
 }
 
 .player__section {
@@ -1716,8 +1737,11 @@ ul {
 .player__firstImgWrapper {
     /*background: #fff;*/
     width: 100%;
-    max-height: 400px;
     overflow: hidden;
+}
+
+.container--club .player__firstImgWrapper {
+    background: var(--dark);
 }
 
 .player__flex {
@@ -1744,7 +1768,7 @@ ul {
 }
 
 .player__header {
-    color: var(--gold);
+    color: #CE9662;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 36px;
@@ -1754,6 +1778,12 @@ ul {
     margin-top: 30px;
     color: var(--grey);
     font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+}
+
+.player__flex__text--afterSteps {
+    margin: 80px 0 30px;
 }
 
 .player__step {
@@ -1764,13 +1794,10 @@ ul {
     align-items: center;
 }
 
-.player__step__imgWrapper {
-    width: 20vw;
-    height: 20vw;
-    background: #fff;
-    border-radius: 50%;
-    margin-bottom: 40px;
-    border: 1px solid var(--grey);
+.player__step__img {
+    width: 80%;
+    margin-bottom: 20px;
+    max-width: 300px;
 }
 
 .player__step__header {
@@ -1791,9 +1818,8 @@ ul {
 }
 
 .tmpWrapper {
-    height: 400px;
-    background: #fff;
-    margin-bottom: 30px;
+    background: transparent;
+    margin-bottom: 50px;
 }
 
 .player__flex__content--first14 {
@@ -1828,6 +1854,15 @@ ul {
 
 .button--buyNow {
     width: 100%;
+}
+
+.container--dark .faq * {
+    color: #fff;
+}
+
+.container--dark .faq__header {
+    color: #fff;
+    background: #474747;
 }
 
 .faq * {
@@ -1896,6 +1931,16 @@ ul {
     margin-top: 30px;
 }
 
+.container--dark .faq {
+    margin-bottom: 150px;
+}
+
+.container--dark .faq__question,
+.container--dark .faq__question__main,
+.container--dark .faq__question__header {
+    background: #474747;
+}
+
 .faq__question__header {
     display: flex;
     justify-content: space-between;
@@ -1937,10 +1982,56 @@ ul {
     margin-top: 50px;
 }
 
+.player__firstImgWrapper {
+    position: relative;
+    background: #fff;
+    border-radius: 15px;
+}
+
 .player__firstImgWrapper__img {
     width: 100%;
     height: auto;
     min-width: 100%;
+}
+
+.player__label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5%;
+    width: 450px;
+    z-index: 3;
+    max-width: 45%;
+}
+
+.player .player__option {
+    width: 100%;
+    max-width: 410px;
+}
+
+.player .player__option__price {
+    font-size: 170px;
+    line-height: 180px;
+}
+
+.player .player__option__currency {
+    font-size: 65px;
+}
+
+.player .button--buyNow {
+    margin-top: -30px;
+    display: block;
+}
+
+.player .player__option {
+    position: relative;
+}
+
+.player .player__option__discount {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 128px;
 }
 
 /* Club */
@@ -2138,6 +2229,22 @@ ul {
 .player__flex__imgWrapper--profile .player__flex__img {
     min-width: 100%;
     min-height: 100%;
+}
+
+.player__flex__imgWrapper--phone {
+    margin-bottom: -24px;
+}
+
+.container--club .player__flex__imgWrapper--phone {
+    margin-bottom: -52px;
+}
+
+.player__flex__imgWrapper--clubImg2 {
+    width: 100%;
+}
+
+.player__flex__imgWrapper--clubImg3 {
+    width: 100%;
 }
 
 .blogSection__title {

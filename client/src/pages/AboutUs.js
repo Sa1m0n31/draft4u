@@ -3,9 +3,9 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import rightArrow from '../static/img/right-arrow.svg'
 import michalCaption from '../static/img/michal-napis.png'
-import michalImg from '../static/img/michal-zdjecie.png'
+import michalImg from '../static/img/michal.png'
 import bartekCaption from '../static/img/bartek-napis.png'
-import bartekImg from '../static/img/bartek-zdjecie.png'
+import bartekImg from '../static/img/bartek.png'
 
 const AboutUs = () => {
     useEffect(() => {
@@ -67,13 +67,20 @@ const AboutUs = () => {
 
     const [foregroundPlayer, setForegroundPlayer] = useState(player1);
     const [backgroundPlayer, setBackgroundPlayer] = useState(player2);
+    const [animationCounter, setAnimationCounter] = useState(true);
 
     const nextPlayer = () => {
         /* Animation */
+        const michalForeground = document.querySelector('.aboutUs__profileWrapper--foreground>.aboutUs__profileImg--michal');
+        const michalBackground = document.querySelector('.aboutUs__profileWrapper--background>.aboutUs__profileImg--michal');
+        const bartekForeground = document.querySelector('.aboutUs__profileWrapper--foreground>.aboutUs__profileImg--bartek');
+        const bartekBackground = document.querySelector('.aboutUs__profileWrapper--background>.aboutUs__profileImg--bartek');
+
         document.querySelector(".aboutUs__images").style.opacity = "0";
         document.querySelector(".aboutUs__captionWrapper").style.opacity = "0";
         document.querySelector(".aboutUs__subheader").style.opacity = "0";
         document.querySelector(".aboutUs__desc").style.opacity = "0";
+
         setTimeout(() => {
             /* Content */
             let tmp;
@@ -81,6 +88,20 @@ const AboutUs = () => {
             setForegroundPlayer(backgroundPlayer);
             setBackgroundPlayer(tmp);
             setTimeout(() => {
+                if(animationCounter) {
+                    michalForeground.style.display = 'none';
+                    bartekBackground.style.display = 'none';
+                    michalBackground.style.display = 'block';
+                    bartekForeground.style.display = 'block';
+                }
+                else {
+                    michalForeground.style.display = 'block';
+                    bartekBackground.style.display = 'block';
+                    michalBackground.style.display = 'none';
+                    bartekForeground.style.display = 'none';
+                }
+                setAnimationCounter(!animationCounter);
+
                 document.querySelector(".aboutUs__images").style.opacity = "1";
                 document.querySelector(".aboutUs__captionWrapper").style.opacity = "1";
                 document.querySelector(".aboutUs__subheader").style.opacity = "1";
@@ -127,10 +148,12 @@ const AboutUs = () => {
                 </section>
                 <section className="aboutUs__images">
                     <figure className="aboutUs__profileWrapper aboutUs__profileWrapper--foreground">
-                        <img className="aboutUs__profileImg" src={foregroundPlayer.img} alt="michal-makowski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--michal" src={michalImg} alt="michal-makowski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--bartek" src={bartekImg} alt="michal-makowski" />
                     </figure>
                     <figure className="aboutUs__profileWrapper aboutUs__profileWrapper--background">
-                        <img className="aboutUs__profileImg" src={backgroundPlayer.img} alt="bartosz-czyzewski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--michal" src={michalImg} alt="bartosz-cedzynski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--bartek" src={bartekImg} alt="bartosz-cedzynski" />
                     </figure>
                 </section>
             </main>
