@@ -329,15 +329,9 @@ const CreateSquadPage = ({club}) => {
     }
 
     const isPlayerInCurrentTeam = (player) => {
-        console.log(player);
-        console.log(selectedPlayers);
         return selectedPlayers.findIndex(((item) => {
             return players[item].id === player.id;
         })) !== -1;
-    }
-
-    const getPlayerByIndex = (index) => {
-        return players[index];
     }
 
     const isPlayerInCurrentFilter = (player) => {
@@ -353,17 +347,12 @@ const CreateSquadPage = ({club}) => {
     }
 
     useEffect(() => {
-        console.log((filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter()) );
         /* Trzeba odjac selectedPlayers z aktualnie filtrowanej grupy */
-        setTrackWidth((filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter()) * 510);
+        const remainingItems = filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter();
+        setTrackWidth(remainingItems * 510);
 
             const allPlayersWrappers = Array.from(document.querySelectorAll('.createSquad__squad__itemWrapper'));
             if(allPlayersWrappers) {
-                console.log(allPlayersWrappers);
-                const remainingItems = allPlayersWrappers.filter((item) => {
-                    return item.textContent.length || window.getComputedStyle(item).getPropertyValue('width') === '0';
-                }).length;
-                console.log(remainingItems);
                 allPlayersWrappers?.forEach((item) => {
                     if(!item.textContent.length) {
                         if(window.innerWidth > 768) item.style.width = '0';
@@ -373,11 +362,10 @@ const CreateSquadPage = ({club}) => {
                     else {
                         if(window.innerWidth > 768) item.style.width = '510px';
                         else item.style.marginBottom = '20px';
-                        item.style.flexBasis = `${100 / (filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter())}%`;
+                        item.style.flexBasis = `${100 / (remainingItems)}%`;
                     }
                 });
             }
-            console.log("---");
     }, [selectedPlayers, filteredPlayers]);
 
     const startDragging = (e, playerIndex) => {
@@ -404,6 +392,9 @@ const CreateSquadPage = ({club}) => {
     }
 
     const removePlayerFromCourt = (id, playerId) => {
+        console.log('removing...');
+        console.log(playersOnCourt);
+        console.log(id);
         if(playersOnCourt.findIndex((item) => {
             return item === id;
         }) !== -1) {
@@ -469,6 +460,7 @@ const CreateSquadPage = ({club}) => {
     }, [updateTeam]);
 
     const removePlayerFromUpdateTeam = (id) => {
+        console.log("removing from update team");
         setUpdateTeam(updateTeam.map((item) => {
             if(item?.id === id) return null;
             else return item;
@@ -643,73 +635,146 @@ const CreateSquadPage = ({club}) => {
                     }}>
 
                         {players?.map((item, index) => {
-                            if(isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item) && !isPlayerInCurrentTeam(item)) {
-                                return <div className={`createSquad__squad__itemWrapper`}
-                                            style={{
-                                                flexBasis: `${flexBasis}%`
-                                            }}
-                                            id={`createSquad__squad__itemWrapper--${index}`}
-                                            onMouseDown={(e) => { startDragging(e, index); }} key={index}
-                                            onClick={(e) => { mobileAddToSquad(e, index, item.id); }}
-                                            >
-                                    <div className={isElementInArray(selectedPlayers, index) ? (!mobile ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging") : (!mobile ? "createSquad__squad__item__dragging draggable opacity-0" : "createSquad__squad__item__dragging opacity-0")}
-                                         id={`draggable-${index}`} key={index}>
-                                        <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
+                            if(isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item)) {
+                                if(!isPlayerInCurrentTeam(item)) {
+                                    return <div className={`createSquad__squad__itemWrapper`}
+                                                style={{
+                                                    flexBasis: `${flexBasis}%`
+                                                }}
+                                                id={`createSquad__squad__itemWrapper--${index}`}
+                                                onMouseDown={(e) => { startDragging(e, index); }} key={index}
+                                                onClick={(e) => { mobileAddToSquad(e, index, item.id); }}
+                                    >
+                                        <div className={isElementInArray(selectedPlayers, index) ? (!mobile ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging") : (!mobile ? "createSquad__squad__item__dragging draggable opacity-0" : "createSquad__squad__item__dragging opacity-0")}
+                                             id={`draggable-${index}`} key={index}>
+                                            <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
-                                        <button className="createSquad__squad__item__dragging__trashBtn" onClick={(e) => { e.stopPropagation(); removePlayerFromCourt(index, item.id); }}>
-                                            <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />
-                                        </button>
+                                            <button className="createSquad__squad__item__dragging__trashBtn"
+                                                    onClick={(e) => { e.stopPropagation(); removePlayerFromCourt(index, item.id); }}>
+                                                <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />
+                                            </button>
 
-                                        <figure className="createSquad__squad__item__dragging__imgWrapper">
-                                            <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
-                                        </figure>
+                                            <figure className="createSquad__squad__item__dragging__imgWrapper">
+                                                <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
+                                            </figure>
 
-                                        <section className="createSquad__squad__item__dragging__header">
-                                            <h3 className="createSquad__squad__item__dragging__header__name">
-                                                {item.first_name} {item.last_name}
-                                            </h3>
-                                            <h4 className="createSquad__squad__item__dragging__header__position">
-                                                {getPositionById(item.position)}
-                                            </h4>
-                                        </section>
+                                            <section className="createSquad__squad__item__dragging__header">
+                                                <h3 className="createSquad__squad__item__dragging__header__name">
+                                                    {item.first_name} {item.last_name}
+                                                </h3>
+                                                <h4 className="createSquad__squad__item__dragging__header__position">
+                                                    {getPositionById(item.position)}
+                                                </h4>
+                                            </section>
+                                        </div>
+
+                                        {!isElementInArray(selectedPlayers, index) ? <div className="createSquad__squad__item">
+                                            <figure className="createSquad__squad__item__imgWrapper">
+                                                <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
+                                            </figure>
+                                            <section className="createSquad__squad__item__data">
+                                                <h3 className="createSquad__squad__item__name">
+                                                    {item.first_name} {item.last_name}
+                                                </h3>
+                                                <h4 className="createSquad__squad__item__position">
+                                                    {getPositionById(item.position)}
+                                                </h4>
+                                                <section className="createSquad__squad__item__data__section">
+                                                    <h4 className="createSquad__squad__item__data__key">
+                                                        Wzrost
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__value">
+                                                        {item.height ? item.height + " cm" : "-"}
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__key">
+                                                        Waga
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__value">
+                                                        {item.weight ? item.weight + " kg" : "-"}
+                                                    </h4>
+                                                </section>
+                                                <section className="createSquad__squad__item__data__section">
+                                                    <h4 className="createSquad__squad__item__data__key">
+                                                        Wynagrodzenie
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__value">
+                                                        {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
+                                                    </h4>
+                                                </section>
+                                            </section>
+                                        </div> : ""}
                                     </div>
+                                }
+                                else {
+                                    return <div className={`createSquad__squad__itemWrapper-1`}
+                                                style={{
+                                                    flexBasis: `0`,
+                                                    width: '0'
+                                                }}
+                                                id={`createSquad__squad__itemWrapper--${index}`}
+                                                onMouseDown={(e) => { startDragging(e, index); }} key={index}
+                                                onClick={(e) => { mobileAddToSquad(e, index, item.id); }}
+                                    >
+                                        <div className={isElementInArray(selectedPlayers, index) ? (!mobile ? "createSquad__squad__item__dragging draggable" : "createSquad__squad__item__dragging") : (!mobile ? "createSquad__squad__item__dragging draggable opacity-0" : "createSquad__squad__item__dragging opacity-0")}
+                                             id={`draggable-${index}`} key={index}>
+                                            <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
-                                    {!isElementInArray(selectedPlayers, index) ? <div className="createSquad__squad__item">
-                                        <figure className="createSquad__squad__item__imgWrapper">
-                                            <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
-                                        </figure>
-                                        <section className="createSquad__squad__item__data">
-                                            <h3 className="createSquad__squad__item__name">
-                                                {item.first_name} {item.last_name}
-                                            </h3>
-                                            <h4 className="createSquad__squad__item__position">
-                                                {getPositionById(item.position)}
-                                            </h4>
-                                            <section className="createSquad__squad__item__data__section">
-                                                <h4 className="createSquad__squad__item__data__key">
-                                                    Wzrost
-                                                </h4>
-                                                <h4 className="createSquad__squad__item__data__value">
-                                                    {item.height ? item.height + " cm" : "-"}
-                                                </h4>
-                                                <h4 className="createSquad__squad__item__data__key">
-                                                    Waga
-                                                </h4>
-                                                <h4 className="createSquad__squad__item__data__value">
-                                                    {item.weight ? item.weight + " kg" : "-"}
+                                            <button className="createSquad__squad__item__dragging__trashBtn"
+                                                    onClick={(e) => { e.stopPropagation(); removePlayerFromCourt(index, item.id); }}>
+                                                <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />
+                                            </button>
+
+                                            <figure className="createSquad__squad__item__dragging__imgWrapper">
+                                                <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
+                                            </figure>
+
+                                            <section className="createSquad__squad__item__dragging__header">
+                                                <h3 className="createSquad__squad__item__dragging__header__name">
+                                                    {item.first_name} {item.last_name}
+                                                </h3>
+                                                <h4 className="createSquad__squad__item__dragging__header__position">
+                                                    {getPositionById(item.position)}
                                                 </h4>
                                             </section>
-                                            <section className="createSquad__squad__item__data__section">
-                                                <h4 className="createSquad__squad__item__data__key">
-                                                    Wynagrodzenie
+                                        </div>
+
+                                        {!isElementInArray(selectedPlayers, index) ? <div className="createSquad__squad__item">
+                                            <figure className="createSquad__squad__item__imgWrapper">
+                                                <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
+                                            </figure>
+                                            <section className="createSquad__squad__item__data">
+                                                <h3 className="createSquad__squad__item__name">
+                                                    {item.first_name} {item.last_name}
+                                                </h3>
+                                                <h4 className="createSquad__squad__item__position">
+                                                    {getPositionById(item.position)}
                                                 </h4>
-                                                <h4 className="createSquad__squad__item__data__value">
-                                                    {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
-                                                </h4>
+                                                <section className="createSquad__squad__item__data__section">
+                                                    <h4 className="createSquad__squad__item__data__key">
+                                                        Wzrost
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__value">
+                                                        {item.height ? item.height + " cm" : "-"}
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__key">
+                                                        Waga
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__value">
+                                                        {item.weight ? item.weight + " kg" : "-"}
+                                                    </h4>
+                                                </section>
+                                                <section className="createSquad__squad__item__data__section">
+                                                    <h4 className="createSquad__squad__item__data__key">
+                                                        Wynagrodzenie
+                                                    </h4>
+                                                    <h4 className="createSquad__squad__item__data__value">
+                                                        {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
+                                                    </h4>
+                                                </section>
                                             </section>
-                                        </section>
-                                    </div> : ""}
-                                </div>
+                                        </div> : ""}
+                                    </div>
+                                }
                             }
                         })}
                     </div>
