@@ -133,28 +133,28 @@ const CreateSquadPage = ({club}) => {
                 end (event) {
                     if(!event.relatedTarget) {
                         /* Wroc zawodnika */
-                        // const draggingElement = event.target;
-                        // const draggingElementId = draggingElement.getAttribute('id').split('-')[1];
-                        // const draggingElementParent = document.getElementById(`createSquad__squad__itemWrapper--${draggingElementId}`);
-                        //
-                        // setSelectedPlayers(selectedPlayers.filter((item) => {
-                        //     return item !== parseInt(draggingElementId);
-                        // }));
-                        //
-                        // draggingElement.style.top = "0";
-                        // draggingElement.style.left = "0";
-                        // draggingElement.style.transform = "none";
-                        // draggingElement.style.opacity = "0";
-                        // draggingElement.style.width = "100%";
-                        //
-                        // draggingElement.setAttribute('data-x', 0);
-                        // draggingElement.setAttribute('data-y', 0);
-                        //
-                        // draggingElement.classList.add("draggable");
-                        //
-                        // if(draggingElementParent) {
-                        //     draggingElementParent.appendChild(draggingElement);
-                        // }
+                        const draggingElement = event.target;
+                        const draggingElementId = draggingElement.getAttribute('id').split('-')[1];
+                        const draggingElementParent = document.getElementById(`createSquad__squad__itemWrapper--${draggingElementId}`);
+
+                        setSelectedPlayers(selectedPlayers.filter((item) => {
+                            return item !== parseInt(draggingElementId);
+                        }));
+
+                        draggingElement.style.top = "0";
+                        draggingElement.style.left = "0";
+                        draggingElement.style.transform = "none";
+                        draggingElement.style.opacity = "0";
+                        draggingElement.style.width = "100%";
+
+                        draggingElement.setAttribute('data-x', 0);
+                        draggingElement.setAttribute('data-y', 0);
+
+                        draggingElement.classList.add("draggable");
+
+                        if(draggingElementParent) {
+                            draggingElementParent.appendChild(draggingElement);
+                        }
                     }
                 }
             }
@@ -635,8 +635,8 @@ const CreateSquadPage = ({club}) => {
                     }}>
 
                         {players?.map((item, index) => {
-                            if(isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item)) {
-                                if(!isPlayerInCurrentTeam(item)) {
+                            if(1) {
+                                if(!isPlayerInCurrentTeam(item) && isPlayerInFilteredGroup(item.position) && !isPlayerInUpdateTeam(item)) {
                                     return <div className={`createSquad__squad__itemWrapper`}
                                                 style={{
                                                     flexBasis: `${flexBasis}%`
