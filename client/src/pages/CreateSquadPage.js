@@ -33,7 +33,6 @@ const CreateSquadPage = ({club}) => {
     const [newPlayerOnCourt, setNewPlayerOnCourt] = useState(-1);
     const [minCost, setMinCost] = useState(0);
     const [maxCost, setMaxCost] = useState(0);
-    const [currentDrag, setCurrentDrag] = useState(-1);
     const [teamSaved, setTeamSaved] = useState("");
     const [team, setTeam] = useState([]);
     const [updateTeam, setUpdateTeam] = useState([]);
@@ -41,15 +40,6 @@ const CreateSquadPage = ({club}) => {
     const [filtersVisible, setFiltersVisible] = useState(false);
     const [availablePlaces, setAvailablePlaces] = useState([0, 0, 0, 0, 0, 0, 0]);
     const [teamsJoined, setTeamsJoined] = useState(false);
-    const [unique, setUnique] = useState(false);
-
-    useEffect(() => {
-        // console.log(selectedPlayers);
-    }, [selectedPlayers]);
-
-    useEffect(() => {
-        console.log(playersOnCourt);
-    }, [playersOnCourt]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -68,7 +58,7 @@ const CreateSquadPage = ({club}) => {
                             const result = res?.data?.result;
                             setName(result[0]?.name);
                             setUpdateTeam(result);
-                            setTeam(result);
+                            // setTeam(result);
 
                             const updateTeamLength = result.length;
                             setAvailablePlaces(availablePlaces.map((item, index) => {
@@ -129,21 +119,9 @@ const CreateSquadPage = ({club}) => {
             if(index === updateTeam.length-1) {
                 setSelectedPlayers(indexesToAdd);
                 setPlayersOnCourt(indexesToAdd);
-                setUnique(true);
             }
         });
     }
-
-    useEffect(() => {
-        if(unique) {
-            const uniqueJoin = getUniqueListBy(players, 'id');
-            console.log(uniqueJoin);
-            // setPlayers(uniqueJoin);
-            // setFilteredPlayers(uniqueJoin);
-            setTrackWidth((uniqueJoin.length - updateTeam.length) * 510);
-            setFlexBasis(100 / uniqueJoin.length - updateTeam.length);
-        }
-    }, [unique]);
 
     const checkIfMobile = () => {
         if(window.innerWidth < 768) setMobile(true);
@@ -160,8 +138,8 @@ const CreateSquadPage = ({club}) => {
 
     useEffect(() => {
         const join = players.concat(updateTeam);
-        setTrackWidth((join.length) * 510);
-        setFlexBasis(100 / (join.length));
+        setTrackWidth((getUniqueListBy(join, 'id').length - numberOfSelectedPlayersInUpdateTeam()) * 510);
+        setFlexBasis((100 / ((getUniqueListBy(join, 'id').length) - numberOfSelectedPlayersInUpdateTeam())).toFixed(2));
         setTeamsJoined(true);
 
         setPlayers(join);
@@ -261,7 +239,7 @@ const CreateSquadPage = ({club}) => {
     useEffect(() => {
         setTeam(players.filter((item, index) => {
             return isElementInArray(playersOnCourt, index);
-        }).concat(updateTeam));
+        }));
     }, [playersOnCourt]);
 
     useEffect(() => {
@@ -415,13 +393,33 @@ const CreateSquadPage = ({club}) => {
 
     const numberOfSelectedPlayersFromCurrentFilter = () => {
         return selectedPlayers.filter((item) => {
-            return isPlayerInCurrentFilter(players[item]);
+            return isPlayerInCurrentFilter(players[item]) && !isPlayerInUpdateTeam(players[item]);
         }).length;
+    }
+
+    const numberOfSelectedPlayersInUpdateTeam = () => {
+        return Array.from(getUniqueListBy(filteredPlayers, 'id')).filter((item) => {
+            return isElementInArray(updateTeam.map((item) => {
+                return item.id;
+            }), item.id) && isPlayerInCurrentTeam(item);
+        }).length;
+    }
+
+    const numberOfFavoritesSelectedPlayersInUpdateTeam = () => {
+        return filteredPlayers.length - Array.from(getUniqueListBy(filteredPlayers, 'id')).length;
     }
 
     useEffect(() => {
         /* Trzeba odjac selectedPlayers z aktualnie filtrowanej grupy */
-        const remainingItems = filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter();
+        let remainingItems
+        numberOfFavoritesSelectedPlayersInUpdateTeam();
+        if(updateMode) {
+            remainingItems = filteredPlayers.length - numberOfSelectedPlayersInUpdateTeam() - numberOfSelectedPlayersFromCurrentFilter() - numberOfFavoritesSelectedPlayersInUpdateTeam();
+        }
+        else {
+            remainingItems = filteredPlayers.length - numberOfSelectedPlayersFromCurrentFilter();
+        }
+
         setTrackWidth(remainingItems * 510);
 
             const allPlayersWrappers = Array.from(document.querySelectorAll('.createSquad__squad__itemWrapper'));
@@ -450,8 +448,6 @@ const CreateSquadPage = ({club}) => {
 
     const startDragging = (e, playerIndex) => {
         if(!(window.innerWidth < 768)) {
-            setCurrentDrag(playerIndex);
-
             let elementToDrag = document.getElementById(`draggable-${playerIndex}`);
 
             let x, y;
@@ -543,12 +539,6 @@ const CreateSquadPage = ({club}) => {
             return item?.id === player?.id;
         }) !== -1;
     }
-
-    // useEffect(() => {
-    //     setTeam(players.filter((item, index) => {
-    //         return isElementInArray(playersOnCourt, index);
-    //     }).concat(updateTeam));
-    // }, [updateTeam]);
 
     const toggleFiltersVisibility = () => {
         setFiltersVisible(!filtersVisible);

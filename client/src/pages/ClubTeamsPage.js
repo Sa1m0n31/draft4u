@@ -32,11 +32,8 @@ const ClubTeamsPage = ({club}) => {
         setCurrentTeam(-1);
     }, [deleteResult]);
 
-    useEffect(() => {
-
-    }, [players]);
-
     const getSquad = (team) => {
+        console.log(players);
         return players.filter((item) => {
             return item.squad_id === team;
         });
@@ -107,6 +104,10 @@ const ClubTeamsPage = ({club}) => {
         setTeamToDelete(id);
         setDeleteModal(true);
     }
+
+    useEffect(() => {
+        console.log(teams[currentTeam]);
+    }, [currentTeam]);
 
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />

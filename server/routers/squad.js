@@ -159,7 +159,7 @@ router.get("/get-club-squads", (request, response) => {
    const clubId = request.user;
 
    if(clubId) {
-       const query = 'SELECT sp.squad_id, sp.user_id, s.name, s.created_at, p.name as position, u.first_name, u.last_name, u.salary_from, u.salary_to, i.file_path FROM squads s JOIN selected_players sp ON s.id = sp.squad_id JOIN users u ON sp.user_id = u.id JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE s.club = $1';
+       const query = 'SELECT sp.squad_id, sp.user_id, s.name, s.created_at, p.name as position, u.first_name, u.last_name, u.salary_from, u.salary_to, i.file_path FROM squads s JOIN selected_players sp ON s.id = sp.squad_id JOIN users u ON sp.user_id = u.id LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE s.club = $1 ORDER BY s.created_at DESC';
        const values = [clubId];
        db.query(query, values, (err, res) => {
           if(res) sendResponse(response, res.rows);
