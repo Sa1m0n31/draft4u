@@ -4237,6 +4237,7 @@ input::-webkit-inner-spin-button {
 .createSquad__squad__itemWrapper-1 {
     opacity: 0 !important;
     height: 0 !important;
+    margin: 0 !important;
 }
 
 .createSquad__squad__item {
