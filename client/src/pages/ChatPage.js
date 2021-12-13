@@ -120,7 +120,6 @@ const ChatPage = ({club, user, isLocal}) => {
                         }
                         else {
                             if(idParam) setIdInLink(idParam);
-                            setLoaded(true);
                         }
                     }
                     else {
@@ -151,7 +150,6 @@ const ChatPage = ({club, user, isLocal}) => {
                         }
                         else {
                             if(idParam) setIdInLink(idParam);
-                            setLoaded(true);
                         }
                     }
                     else {
@@ -196,6 +194,10 @@ const ChatPage = ({club, user, isLocal}) => {
             }
         }
     }, [currentChatId, idInLink, clubId, userId]);
+
+    useEffect(() => {
+        console.log(socket);
+    }, [socket]);
 
     useEffect(() => {
         if(clubId && idInLink) {
@@ -322,23 +324,36 @@ const ChatPage = ({club, user, isLocal}) => {
                 .then((res) => {
                     if(res?.data?.result) {
                         const resultCurrentChat = res.data.result;
-                        setCurrentChat(resultCurrentChat);
-                        setCurrentReceiver(getReceiverName());
-                        setReceiverId(getReceiverId());
-                        setCurrentReceiverImg(getReceiverImage());
-                        setLoaded(true);
+                        if(resultCurrentChat.length) {
+                            setCurrentChat(resultCurrentChat);
+                            setCurrentReceiver(getReceiverName());
+                            setReceiverId(getReceiverId());
+                            setCurrentReceiverImg(getReceiverImage());
+                            setLoaded(true);
 
-                        isMessageRead(currentChatId, true)
-                            .then((res) => {
-                                const result = res?.data?.result;
-                                if(result) {
-                                    result.forEach((item) => {
-                                        if((new Date(item.read_at) > new Date(item.created_at)) && (resultCurrentChat[resultCurrentChat.length-1].type)) {
-                                            setChatRead(new Date(item.read_at));
-                                        }
-                                    });
-                                }
-                            });
+                            isMessageRead(currentChatId, true)
+                                .then((res) => {
+                                    const result = res?.data?.result;
+                                    if(result) {
+                                        result.forEach((item) => {
+                                            if((new Date(item.read_at) > new Date(item.created_at)) && (resultCurrentChat[resultCurrentChat.length-1].type)) {
+                                                setChatRead(new Date(item.read_at));
+                                            }
+                                        });
+                                    }
+                                });
+                        }
+                        else {
+                            /* Chat with new player */
+                            getUserById(currentChatId.split(';')[1])
+                                .then((res) => {
+                                    const result = res.data.result;
+                                    if(result.first_name) setCurrentReceiver(result.first_name + " " + result.last_name);
+                                    setCurrentReceiverImg(result.file_path);
+                                    setReceiverId(result.id);
+                                    setLoaded(true);
+                                });
+                        }
                     }
                 });
         }
@@ -419,11 +434,11 @@ const ChatPage = ({club, user, isLocal}) => {
         }
     }
 
-    const sendMessage = (chatId) => {
+    const sendMessage = () => {
         const regex = /\S/g;
 
         if(previewUrl) {
-            addImageToMessage(chatId, image, club ? 'true' : 'false')
+            addImageToMessage(currentChatId, image, club ? 'true' : 'false')
                 .then((res) => {
                     setImage(null);
                     setPreviewUrl(null);
@@ -436,7 +451,7 @@ const ChatPage = ({club, user, isLocal}) => {
                 });
         }
         else if(message && message.match(regex)) {
-            addMessage(chatId, message, club ? 'true' : 'false')
+            addMessage(currentChatId, message, club ? 'true' : 'false')
                 .then((res) => {
                     setMessage("");
                     updateChatList(false);
@@ -470,8 +485,8 @@ const ChatPage = ({club, user, isLocal}) => {
     const changeMessage = (e) => {
         if(e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
-            if(club) sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`);
-            else sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubIdParam};${userId}`);
+            if(club) sendMessage();
+            else sendMessage();
         }
     }
 
@@ -582,14 +597,14 @@ const ChatPage = ({club, user, isLocal}) => {
                         <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure> : ""}
                     <h3 className="chat__main__header__fullName">
-                        {currentReceiver}
+                        {currentReceiver ? currentReceiver : ""}
                     </h3>
                 </a> : <section className="chat__main__header__section">
                     {currentReceiver ? <figure className="chat__list__item__imgWrapper">
                         <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure> : ""}
                     <h3 className="chat__main__header__fullName">
-                        {currentReceiver}
+                        {currentReceiver ? currentReceiver : ""}
                     </h3>
                 </section>}
             </header>
@@ -603,7 +618,7 @@ const ChatPage = ({club, user, isLocal}) => {
                     <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
                 </figure>
                 <h3 className="chat__main__header__fullName">
-                    {currentReceiver}
+                    {currentReceiver ? currentReceiver : ""}
                 </h3>
             </a>
         </header> : ""}
@@ -699,9 +714,9 @@ const ChatPage = ({club, user, isLocal}) => {
                                 <div className={(item.type && club)||(!item.type && !club) ? "chat__message chat__message--right" : "chat__message chat__message--left"}>
                                     <header className="chat__message__header">
                                         {club ? <h4 className="chat__message__header__name">
-                                            {item.type ? clubName : currentReceiver}
+                                            {item.type ? (clubName ? clubName : "") : (currentReceiver ? currentReceiver : "")}
                                         </h4> : <h4 className="chat__message__header__name">
-                                            {item.type ? currentReceiver : username}
+                                            {item.type ? (currentReceiver ? currentReceiver : "") : (username ? username : "")}
                                         </h4>}
                                         <h5 className="chat__message__header__date">
                                             <span>{item.created_at.substring(11, 16)}</span>
@@ -774,7 +789,7 @@ const ChatPage = ({club, user, isLocal}) => {
                                 />
                                 <img className="btn__img" src={club ? pictureIcon : pictureIconForUser} alt="wyslij-zdjecie" />
                             </label>
-                            <button className="chat__btn" onClick={() => { sendMessage(currentChat[0] ? currentChat[0].chat_id : `${clubId};${userIdParam}`); }}>
+                            <button className="chat__btn" onClick={() => { sendMessage(); }}>
                                 <img className="btn__img" src={club ? sendIcon : sendIconForUser} alt="wyslij-wiadomosc" />
                             </button>
                         </section>
