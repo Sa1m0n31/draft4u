@@ -220,11 +220,25 @@ const ChatPage = ({club, user, isLocal}) => {
         }
     }, [idInLink, clubId, userIdentity]);
 
+    useEffect(() => {
+        if(socket) {
+            if(club) {
+                socket.emit('message', `[message_read ${MESSAGE_READ_KEY} club ${clubId};${idInLink}]`, (data) => {
+
+                });
+            }
+            else {
+                socket.emit('message', `[message_read ${MESSAGE_READ_KEY} 'user' ${idInLink};${userIdentity}]`, (data) => {
+
+                });
+            }
+        }
+    }, [socket, idInLink]);
+
     /* Socket effects */
     useEffect(() => {
         if(listenSocket) {
             listenSocket.on("message", (data) => {
-                console.log(data.data);
                 if(((data.data === `[message_read ${MESSAGE_READ_KEY} club ${currentChatId}]`) && !club)||((data.data === `[message_read ${MESSAGE_READ_KEY} user ${currentChatId}]`) && club)) {
                     /* Info that message is read */
                     setChatRead(new Date());
@@ -264,14 +278,16 @@ const ChatPage = ({club, user, isLocal}) => {
     }, [socket]);
 
     const getChat = (chatId) => {
-        setChatRead(null);
         setCurrentChatId(chatId);
 
         setChatInLink(true);
 
-        // socket.emit('message', `[message_read ${MESSAGE_READ_KEY} ${club ? 'club' : 'user'} ${chatId}]`, (data) => {
-        //     //console.log(data);
-        // });
+       if(socket) {
+           socket.emit('message', `[message_read ${MESSAGE_READ_KEY} ${club ? 'club' : 'user'} ${chatId}]`, (data) => {
+
+           });
+       }
+
        if(club) {
            markAsRead(chatId, 'true')
                .then((res) => {
@@ -351,11 +367,15 @@ const ChatPage = ({club, user, isLocal}) => {
                     }
                 });
         }
-
-        isCurrentChatNew();
     }, [currentChatId, messages]);
 
     const markAsReadCurrentMessage = () => {
+        if(socket) {
+            socket.emit('message', `[message_read ${MESSAGE_READ_KEY} ${club ? 'club' : 'user'} ${currentChatId}]`, (data) => {
+
+            });
+        }
+
         if(club) {
             markAsRead(currentChatId, 'true')
                 .then((res) => {
@@ -403,7 +423,6 @@ const ChatPage = ({club, user, isLocal}) => {
         const regex = /\S/g;
 
         if(previewUrl) {
-            // setChatRead(null);
             addImageToMessage(chatId, image, club ? 'true' : 'false')
                 .then((res) => {
                     setImage(null);
@@ -417,7 +436,6 @@ const ChatPage = ({club, user, isLocal}) => {
                 });
         }
         else if(message && message.match(regex)) {
-            // setChatRead(null);
             addMessage(chatId, message, club ? 'true' : 'false')
                 .then((res) => {
                     setMessage("");
@@ -535,20 +553,6 @@ const ChatPage = ({club, user, isLocal}) => {
         }, 400);
     }
 
-    const isCurrentChatNew = () => {
-        const currentChatIndex = messages.findIndex((item) => {
-           return item.chat_id === currentChatId;
-        });
-        if(currentChatIndex !== -1) {
-            console.log(messages[currentChatIndex]);
-            const currentChat = messages[currentChatIndex];
-            if(currentChat.read_at > currentChat.created_at) console.log("current chat is old");
-            else console.log("current chat id old");
-            return currentChat.read_at > currentChat.created_at;
-        }
-        else return false;
-    }
-
     return <div className={club ? "container container--dark" : "container container--light"}>
         <Header loggedIn={true}
                 club={club}
@@ -590,7 +594,7 @@ const ChatPage = ({club, user, isLocal}) => {
                 </section>}
             </header>
         </header> : ""}
-        {mobileCurrentChat !== -1 && loaded ? <header className="chat__mobileHeader d-mobile">
+        {window.innerWidth < 768 && mobileCurrentChat !== -1 && loaded ? <header className="chat__mobileHeader d-mobile">
             <button className="chat__mobileHeader__btn" onClick={() => { setMobileCurrentChat(-1); }}>
                 <img className="btn__img" src={leftArrowWhite} alt="wroc" />
             </button>

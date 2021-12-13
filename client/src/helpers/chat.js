@@ -46,7 +46,6 @@ const markAsRead = (chatId, isClub) => {
 }
 
 const isMessageRead = (chatId, isClub) => {
-    console.log(isClub);
     return axios.get(`${API_URL}/chat/is-chat-read`, {
         params: {
             id: chatId,
