@@ -92,7 +92,6 @@ router.get("/is-chat-read", (request, response) => {
     const id = request.query.id;
     const club = request.query.club;
 
-    console.log(club);
     let query;
     if(club === 'true') {
         console.log('mes_type = true, read = false');
