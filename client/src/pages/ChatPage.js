@@ -46,20 +46,15 @@ const ChatPage = ({club, user, isLocal}) => {
     const [newMsg, setNewMsg] = useState(null);
     const [mobileCurrentChat, setMobileCurrentChat] = useState(-1);
     const [clubId, setClubId] = useState("");
-    const [chatInLink, setChatInLink] = useState(false);
-    const [userIdParam, setUserIdParam] = useState("");
     const [loaded, setLoaded] = useState(true);
     const [receiverId, setReceiverId] = useState(0);
     const [chatRead, setChatRead] = useState(null);
     const [currentLargeImage, setCurrentLargeImage] = useState(null);
     const [currentChatId, setCurrentChatId] = useState('');
     const [userIdentity, setUserIdentity] = useState("");
-
     const [idInLink, setIdInLink] = useState("");
-
     const [username, setUsername] = useState("");
     const [userId, setUserId] = useState("");
-    const [clubIdParam, setClubIdParam] = useState("");
 
     const largeImageModal = useRef(null);
 
@@ -123,8 +118,14 @@ const ChatPage = ({club, user, isLocal}) => {
                         }
                     }
                     else {
-                        setNoMessages(true);
-                        setLoaded(true);
+                        if(idParam) {
+                            setIdInLink(idParam);
+                            setLoaded(true);
+                        }
+                        else {
+                            setNoMessages(true);
+                            setLoaded(true);
+                        }
                     }
                 });
         }
@@ -196,12 +197,9 @@ const ChatPage = ({club, user, isLocal}) => {
     }, [currentChatId, idInLink, clubId, userId]);
 
     useEffect(() => {
-        console.log(socket);
-    }, [socket]);
-
-    useEffect(() => {
         if(clubId && idInLink) {
             setCurrentChatId(`${clubId};${idInLink}`);
+            setMobileCurrentChat(`${clubId};${idInLink}`);
             markAsRead(`${clubId};${idInLink}`, 'true')
                 .then((res) => {
                     getClubMessages()
@@ -212,6 +210,7 @@ const ChatPage = ({club, user, isLocal}) => {
         }
         else if(userIdentity && idInLink) {
             setCurrentChatId(`${idInLink};${userIdentity}`);
+            setMobileCurrentChat(`${idInLink};${userIdentity}`);
             markAsRead(`${idInLink};${userIdentity}`, 'false')
                 .then((res) => {
                     getUserMessages()
@@ -281,8 +280,7 @@ const ChatPage = ({club, user, isLocal}) => {
 
     const getChat = (chatId) => {
         setCurrentChatId(chatId);
-
-        setChatInLink(true);
+        setMobileCurrentChat(chatId);
 
        if(socket) {
            socket.emit('message', `[message_read ${MESSAGE_READ_KEY} ${club ? 'club' : 'user'} ${chatId}]`, (data) => {

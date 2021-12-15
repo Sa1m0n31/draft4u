@@ -1,20 +1,15 @@
 const db = require("./database/db");
-const express = require("express");
 const crypto = require('crypto');
-const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-// const FACEBOOK_APP_ID = '398060821923746';
-const FACEBOOK_APP_ID = '915512152656525';
-// const FACEBOOK_SECRET = 'c2a1d5e0a92e010b5547a739a010f0ce';
-const FACEBOOK_SECRET = '12d3f21bfc7fcdd96de536fb40779f15';
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+const FACEBOOK_SECRET = process.env.FACEBOOK_SECRET;
 
-const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
-const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
+const GOOGLE_APP_ID = process.env.GOOGLE_APP_ID;
+const GOOGLE_SECRET = process.env.GOOGLE_SECRET;
 
 function isNumeric(str) {
     if (typeof str != "string") return false // we only process strings!
@@ -87,7 +82,7 @@ const init = (passport) => {
     passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_SECRET,
-        callbackURL: "http://localhost:5000/auth/facebook/callback",
+        callbackURL: `${process.env.API_URL}/auth/facebook/callback"`,
         profileFields: ['id', 'emails', 'name']
     }, function(accessToken, refreshToken, profile, done) {
         return done(null, profile);
@@ -96,7 +91,7 @@ const init = (passport) => {
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_APP_ID,
         clientSecret: GOOGLE_SECRET,
-        callbackURL: "http://localhost:5000/auth/google/callback"
+        callbackURL: `${process.env.API_URL}/auth/google/callback`
     }, googleAuth));
 
     passport.serializeUser((user, done) => {

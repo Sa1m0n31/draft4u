@@ -327,7 +327,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
             {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
                 <li className="mobileMenu__bottom__item">
-                    <a className="mobileMenu__bottom__link" href="/odzyskiwanie-hasla">
+                    <a className="mobileMenu__bottom__link" href="/zmien-haslo-zawodnika">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
                         Zmiana hasła
                     </a>
@@ -367,15 +367,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
             {club ? <ul className="mobileMenu__bottom mobileMenu__bottom--club" ref={mobileMenuBottom}>
                 <li className="mobileMenu__bottom__item">
-                    <a className="mobileMenu__bottom__link" href="/odzyskiwanie-hasla">
+                    <a className="mobileMenu__bottom__link" href="/zmien-haslo-klubu">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
                         Zmiana hasła
-                    </a>
-                </li>
-                <li className="mobileMenu__bottom__item">
-                    <a className="mobileMenu__bottom__link" href="/faq">
-                        <img className="mobileMenu__bottom__img" src={question} alt="zmien-haslo" />
-                        Pomoc online
                     </a>
                 </li>
                 <li className="mobileMenu__bottom__item">

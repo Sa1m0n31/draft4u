@@ -16,7 +16,7 @@ const { Server } = require("socket.io");
 
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000", "https://drafcik.skylo-test1.pl:3000"],
+        origin: [`${process.env.API_URL}:3000`],
         methods: ["GET", "POST"]
     }
 });
@@ -44,7 +44,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(cors({
     credentials: true,
     //origin: "*"
-    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', 'http://skylo-test4.pl']
+    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', process.env.API_URL]
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -73,13 +73,11 @@ io.on("connection", (socket) => {
     const { room, sender, receiver } = socket.handshake.query;
     if(receiver) {
         if(room) {
-            console.log("NEW USER JOIN TO ROOM: " + room + '-receiver');
             socket.join(room + "-receiver");
         }
     }
 
     socket.on("message", (data) => {
-        console.log('EMIT NEW MESSAGE TO ROOM: ' + room+'-receiver');
         io.to(room+"-receiver").emit("message", {
             data,
             sender

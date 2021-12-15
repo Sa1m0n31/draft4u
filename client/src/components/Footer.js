@@ -20,8 +20,8 @@ const Footer = ({theme, border}) => {
                     </li>
                     <li className="footer__col__list__item footer__contactItem">
                         <span>Mail</span>
-                        <a className="footer__col__list__item__link" href="mailto:biuro@draft4u.pl">
-                            biuro@draft4u.pl
+                        <a className="footer__col__list__item__link" href="mailto:biuro@draft4u.com.pl">
+                            biuro@draft4u.com.pl
                         </a>
                     </li>
                 </ul>

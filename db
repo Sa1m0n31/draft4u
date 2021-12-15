@@ -1,0 +1,1026 @@
+--
+-- server741663_draft4uQL database dump
+--
+
+-- Dumped from database version 13.4
+-- Dumped by pg_dump version 13.3
+
+-- Started on 2021-12-15 02:16:26
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 16388)
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+
+--
+-- TOC entry 2471 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner:
+--
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 201 (class 1259 OID 17711)
+-- Name: adapters; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.adapters (
+    id integer NOT NULL,
+    name text
+);
+
+
+ALTER TABLE public.adapters OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 202 (class 1259 OID 17717)
+-- Name: admins; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.admins (
+    id integer NOT NULL,
+    login text,
+    password text
+);
+
+
+ALTER TABLE public.admins OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 203 (class 1259 OID 17723)
+-- Name: articles; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.articles (
+    id integer NOT NULL,
+    title text,
+    content text,
+    created_at timestamp without time zone,
+    image integer,
+    excerpt text
+);
+
+
+ALTER TABLE public.articles OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 235 (class 1259 OID 35126)
+-- Name: articles_id; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.articles_id
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.articles_id OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 204 (class 1259 OID 17729)
+-- Name: clubs; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.clubs (
+    id text NOT NULL,
+    name text,
+    league integer,
+    login text,
+    password text,
+    logo integer,
+    x double precision,
+    y double precision
+);
+
+
+ALTER TABLE public.clubs OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 205 (class 1259 OID 17735)
+-- Name: coupons; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.coupons (
+    id integer NOT NULL,
+    name text,
+    value integer,
+    date_from date,
+    date_to date,
+    use_limit integer
+);
+
+
+ALTER TABLE public.coupons OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 236 (class 1259 OID 39779)
+-- Name: coupons_id; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.coupons_id
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.coupons_id OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 206 (class 1259 OID 17741)
+-- Name: custom_fields; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.custom_fields (
+    key text NOT NULL,
+    value text
+);
+
+
+ALTER TABLE public.custom_fields OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 207 (class 1259 OID 17747)
+-- Name: custom_images; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.custom_images (
+    key text NOT NULL,
+    image text
+);
+
+
+ALTER TABLE public.custom_images OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 208 (class 1259 OID 17753)
+-- Name: favorites; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.favorites (
+    club_id text NOT NULL,
+    user_id integer NOT NULL,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.favorites OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 209 (class 1259 OID 17759)
+-- Name: identities; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.identities (
+    id text NOT NULL,
+    user_id integer,
+    adapter integer,
+    hash text,
+    active boolean,
+    subscription date,
+    newsletter boolean
+);
+
+
+ALTER TABLE public.identities OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 210 (class 1259 OID 17765)
+-- Name: identities_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.identities_id_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.identities_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 211 (class 1259 OID 17767)
+-- Name: images; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.images (
+    id integer NOT NULL,
+    file_path text
+);
+
+
+ALTER TABLE public.images OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 229 (class 1259 OID 19876)
+-- Name: images_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.images_id_sequence
+    START WITH 3
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.images_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 212 (class 1259 OID 17773)
+-- Name: leagues; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.leagues (
+    id integer NOT NULL,
+    name text,
+    sex boolean
+);
+
+
+ALTER TABLE public.leagues OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 232 (class 1259 OID 32751)
+-- Name: message_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.message_id_sequence
+    START WITH 10
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.message_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 213 (class 1259 OID 17779)
+-- Name: messages; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.messages (
+    id integer NOT NULL,
+    chat_id text,
+    content text,
+    created_at timestamp without time zone,
+    type boolean
+);
+
+
+ALTER TABLE public.messages OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 214 (class 1259 OID 17785)
+-- Name: notifications; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.notifications (
+    id integer NOT NULL,
+    image integer,
+    content text,
+    link text,
+    title text,
+    created_at timestamp with time zone
+);
+
+
+ALTER TABLE public.notifications OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 234 (class 1259 OID 32782)
+-- Name: notifications_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.notifications_id_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notifications_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 215 (class 1259 OID 17791)
+-- Name: notifications_receivers; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.notifications_receivers (
+    notification_id integer NOT NULL,
+    receiver_id text,
+    read boolean
+);
+
+
+ALTER TABLE public.notifications_receivers OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 216 (class 1259 OID 17797)
+-- Name: password_remind; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.password_remind (
+    identity text,
+    token text NOT NULL,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.password_remind OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 230 (class 1259 OID 25755)
+-- Name: payments; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.payments (
+    user_id integer NOT NULL,
+    session_id text NOT NULL,
+    price integer
+);
+
+
+ALTER TABLE public.payments OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 217 (class 1259 OID 17803)
+-- Name: positions; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.positions (
+    id integer NOT NULL,
+    name text
+);
+
+
+ALTER TABLE public.positions OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 218 (class 1259 OID 17809)
+-- Name: prices; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.prices (
+    months integer NOT NULL,
+    price double precision
+);
+
+
+ALTER TABLE public.prices OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 233 (class 1259 OID 32753)
+-- Name: read_messages; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.read_messages (
+    chat_id text NOT NULL,
+    read_at timestamp without time zone,
+    type boolean NOT NULL
+);
+
+
+ALTER TABLE public.read_messages OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 219 (class 1259 OID 17812)
+-- Name: selected_players; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.selected_players (
+    squad_id integer,
+    user_id integer
+);
+
+
+ALTER TABLE public.selected_players OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 220 (class 1259 OID 17815)
+-- Name: squads; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.squads (
+    id integer NOT NULL,
+    name text,
+    club text,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.squads OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 221 (class 1259 OID 17821)
+-- Name: squads_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.squads_id_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.squads_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 231 (class 1259 OID 25770)
+-- Name: subscriptions; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.subscriptions (
+    user_id integer NOT NULL,
+    expire timestamp without time zone,
+    type integer
+);
+
+
+ALTER TABLE public.subscriptions OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 222 (class 1259 OID 17826)
+-- Name: users; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    email text,
+    first_name text,
+    last_name text,
+    sex boolean,
+    birthday date,
+    phone_number text,
+    attack_range integer,
+    vertical_range integer,
+    block_range integer,
+    height integer,
+    weight integer,
+    "position" integer,
+    profile_picture integer,
+    salary_from integer,
+    salary_to integer,
+    licence_number text,
+    club text
+);
+
+
+ALTER TABLE public.users OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 223 (class 1259 OID 17832)
+-- Name: users_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.users_id_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 224 (class 1259 OID 17834)
+-- Name: verification; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.verification (
+    identity text NOT NULL,
+    token text,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.verification OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 225 (class 1259 OID 17840)
+-- Name: video_categories; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.video_categories (
+    id integer NOT NULL,
+    name text
+);
+
+
+ALTER TABLE public.video_categories OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 226 (class 1259 OID 17846)
+-- Name: videos; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.videos (
+    id integer NOT NULL,
+    file_path text,
+    user_id integer,
+    video_category integer,
+    date date
+);
+
+
+ALTER TABLE public.videos OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 228 (class 1259 OID 17997)
+-- Name: videos_id_sequence; Type: SEQUENCE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE SEQUENCE public.videos_id_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.videos_id_sequence OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 227 (class 1259 OID 17852)
+-- Name: visited; Type: TABLE; Schema: public; Owner: server741663_draft4u
+--
+
+CREATE TABLE public.visited (
+    club_id text NOT NULL,
+    user_id integer NOT NULL,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.visited OWNER TO server741663_draft4u;
+
+--
+-- TOC entry 2259 (class 2606 OID 17859)
+-- Name: adapters adapters_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.adapters
+    ADD CONSTRAINT adapters_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2261 (class 2606 OID 17861)
+-- Name: admins admins_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.admins
+    ADD CONSTRAINT admins_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2263 (class 2606 OID 17863)
+-- Name: articles articles_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.articles
+    ADD CONSTRAINT articles_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2265 (class 2606 OID 35125)
+-- Name: clubs clubs_login_unique; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT clubs_login_unique UNIQUE (login);
+
+
+--
+-- TOC entry 2267 (class 2606 OID 35123)
+-- Name: clubs clubs_name_unique; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT clubs_name_unique UNIQUE (name);
+
+
+--
+-- TOC entry 2269 (class 2606 OID 17865)
+-- Name: clubs clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT clubs_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2271 (class 2606 OID 17867)
+-- Name: coupons coupons_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.coupons
+    ADD CONSTRAINT coupons_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2273 (class 2606 OID 17869)
+-- Name: custom_fields custom_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.custom_fields
+    ADD CONSTRAINT custom_fields_pkey PRIMARY KEY (key);
+
+
+--
+-- TOC entry 2275 (class 2606 OID 17871)
+-- Name: custom_images custom_images_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.custom_images
+    ADD CONSTRAINT custom_images_pkey PRIMARY KEY (key);
+
+
+--
+-- TOC entry 2277 (class 2606 OID 42542)
+-- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT favorites_pkey PRIMARY KEY (club_id, user_id);
+
+
+--
+-- TOC entry 2279 (class 2606 OID 17873)
+-- Name: identities identities_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.identities
+    ADD CONSTRAINT identities_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2283 (class 2606 OID 17875)
+-- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT images_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2285 (class 2606 OID 17877)
+-- Name: leagues leagues_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.leagues
+    ADD CONSTRAINT leagues_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2287 (class 2606 OID 17879)
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2289 (class 2606 OID 17881)
+-- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.notifications
+    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2291 (class 2606 OID 17885)
+-- Name: password_remind password_remind_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.password_remind
+    ADD CONSTRAINT password_remind_pkey PRIMARY KEY (token);
+
+
+--
+-- TOC entry 2311 (class 2606 OID 25781)
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (session_id);
+
+
+--
+-- TOC entry 2293 (class 2606 OID 17887)
+-- Name: positions positions_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.positions
+    ADD CONSTRAINT positions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2295 (class 2606 OID 17889)
+-- Name: prices prices_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.prices
+    ADD CONSTRAINT prices_pkey PRIMARY KEY (months);
+
+
+--
+-- TOC entry 2315 (class 2606 OID 32774)
+-- Name: read_messages readed_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.read_messages
+    ADD CONSTRAINT readed_messages_pkey PRIMARY KEY (chat_id, type);
+
+
+--
+-- TOC entry 2297 (class 2606 OID 17891)
+-- Name: squads squads_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.squads
+    ADD CONSTRAINT squads_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2313 (class 2606 OID 25774)
+-- Name: subscriptions subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.subscriptions
+    ADD CONSTRAINT subscriptions_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 2281 (class 2606 OID 25764)
+-- Name: identities user_id_unique; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.identities
+    ADD CONSTRAINT user_id_unique UNIQUE (user_id);
+
+
+--
+-- TOC entry 2299 (class 2606 OID 39778)
+-- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_unique UNIQUE (email);
+
+
+--
+-- TOC entry 2301 (class 2606 OID 17895)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2303 (class 2606 OID 17897)
+-- Name: verification verification_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.verification
+    ADD CONSTRAINT verification_pkey PRIMARY KEY (identity);
+
+
+--
+-- TOC entry 2305 (class 2606 OID 17899)
+-- Name: video_categories video_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.video_categories
+    ADD CONSTRAINT video_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2307 (class 2606 OID 17901)
+-- Name: videos videos_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.videos
+    ADD CONSTRAINT videos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2309 (class 2606 OID 28974)
+-- Name: visited visited_pkey; Type: CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.visited
+    ADD CONSTRAINT visited_pkey PRIMARY KEY (club_id, user_id);
+
+
+--
+-- TOC entry 2316 (class 2606 OID 17902)
+-- Name: articles articles_images_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.articles
+    ADD CONSTRAINT articles_images_fkey FOREIGN KEY (image) REFERENCES public.images(id) NOT VALID;
+
+
+--
+-- TOC entry 2317 (class 2606 OID 17907)
+-- Name: clubs clubs_images_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT clubs_images_fkey FOREIGN KEY (logo) REFERENCES public.images(id) NOT VALID;
+
+
+--
+-- TOC entry 2318 (class 2606 OID 17912)
+-- Name: clubs clubs_leagues_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT clubs_leagues_fkey FOREIGN KEY (league) REFERENCES public.leagues(id) NOT VALID;
+
+
+--
+-- TOC entry 2319 (class 2606 OID 17917)
+-- Name: favorites favorites_clubs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT favorites_clubs_fkey FOREIGN KEY (club_id) REFERENCES public.clubs(id) NOT VALID;
+
+
+--
+-- TOC entry 2320 (class 2606 OID 17922)
+-- Name: favorites favorites_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT favorites_users_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 2321 (class 2606 OID 17927)
+-- Name: identities identities_adapters_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.identities
+    ADD CONSTRAINT identities_adapters_fkey FOREIGN KEY (adapter) REFERENCES public.adapters(id) NOT VALID;
+
+
+--
+-- TOC entry 2322 (class 2606 OID 17932)
+-- Name: notifications notifications_images_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.notifications
+    ADD CONSTRAINT notifications_images_fkey FOREIGN KEY (image) REFERENCES public.images(id) NOT VALID;
+
+
+--
+-- TOC entry 2323 (class 2606 OID 17937)
+-- Name: notifications_receivers notificationsreceivers_notifications_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.notifications_receivers
+    ADD CONSTRAINT notificationsreceivers_notifications_fkey FOREIGN KEY (notification_id) REFERENCES public.notifications(id) NOT VALID;
+
+
+--
+-- TOC entry 2324 (class 2606 OID 17942)
+-- Name: password_remind password_remind_identites_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.password_remind
+    ADD CONSTRAINT password_remind_identites_fkey FOREIGN KEY (identity) REFERENCES public.identities(id);
+
+
+--
+-- TOC entry 2334 (class 2606 OID 25765)
+-- Name: payments payments_identities_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_identities_fkey FOREIGN KEY (user_id) REFERENCES public.identities(user_id) NOT VALID;
+
+
+--
+-- TOC entry 2325 (class 2606 OID 17947)
+-- Name: selected_players selectedplayers_squads_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.selected_players
+    ADD CONSTRAINT selectedplayers_squads_fkey FOREIGN KEY (squad_id) REFERENCES public.squads(id) NOT VALID;
+
+
+--
+-- TOC entry 2326 (class 2606 OID 17952)
+-- Name: selected_players selectedplayers_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.selected_players
+    ADD CONSTRAINT selectedplayers_users_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 2327 (class 2606 OID 17957)
+-- Name: squads squads_clubs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.squads
+    ADD CONSTRAINT squads_clubs_fkey FOREIGN KEY (club) REFERENCES public.clubs(id) NOT VALID;
+
+
+--
+-- TOC entry 2335 (class 2606 OID 25775)
+-- Name: subscriptions subscriptions_identities_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.subscriptions
+    ADD CONSTRAINT subscriptions_identities_fkey FOREIGN KEY (user_id) REFERENCES public.identities(user_id);
+
+
+--
+-- TOC entry 2328 (class 2606 OID 17967)
+-- Name: users users_images_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_images_fkey FOREIGN KEY (profile_picture) REFERENCES public.images(id) NOT VALID;
+
+
+--
+-- TOC entry 2329 (class 2606 OID 17972)
+-- Name: verification verification_identities_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.verification
+    ADD CONSTRAINT verification_identities_fkey FOREIGN KEY (identity) REFERENCES public.identities(id);
+
+
+--
+-- TOC entry 2330 (class 2606 OID 17977)
+-- Name: videos videos_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.videos
+    ADD CONSTRAINT videos_users_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+--
+-- TOC entry 2331 (class 2606 OID 17982)
+-- Name: videos videos_videocategories_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.videos
+    ADD CONSTRAINT videos_videocategories_fkey FOREIGN KEY (video_category) REFERENCES public.video_categories(id) NOT VALID;
+
+
+--
+-- TOC entry 2332 (class 2606 OID 17987)
+-- Name: visited visited_clubs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.visited
+    ADD CONSTRAINT visited_clubs_fkey FOREIGN KEY (club_id) REFERENCES public.clubs(id) NOT VALID;
+
+
+--
+-- TOC entry 2333 (class 2606 OID 17992)
+-- Name: visited visited_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: server741663_draft4u
+--
+
+ALTER TABLE ONLY public.visited
+    ADD CONSTRAINT visited_users_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) NOT VALID;
+
+
+-- Completed on 2021-12-15 02:16:42
+
+--
+-- server741663_draft4uQL database dump complete
+--
+

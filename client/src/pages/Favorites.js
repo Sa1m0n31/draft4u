@@ -28,9 +28,10 @@ const Favorites = ({club, favorites}) => {
 
     const [mobileFilters, setMobileFilters] = useState(false);
 
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(null);
     const [numberOfPages, setNumberOfPages] = useState(0);
     const [positionFilters, setPositionFilters] = useState([0]);
+    const [initial, setInitial] = useState(true);
 
     const [sex, setSex] = useState([0]);
     const [age, setAge] = useState([16, 50]);
@@ -79,7 +80,7 @@ const Favorites = ({club, favorites}) => {
     }, [players, sex, age, weight, height, blockRange, attackRange, verticalRange, salary, positionFilters]);
 
     useEffect(() => {
-        setCurrentPage(0);
+        if(!initial) setCurrentPage(0);
         setNumberOfPages(Math.ceil(parseFloat(filteredPlayers.length / 9)));
     }, [filteredPlayers]);
 
@@ -157,14 +158,18 @@ const Favorites = ({club, favorites}) => {
     }
 
     const nextPage = () => {
+        setInitial(false);
         setCurrentPage(currentPage+1);
-        goToTopOfTheWall();
     }
 
     const prevPage = () => {
+        setInitial(false);
         setCurrentPage(currentPage-1);
-        goToTopOfTheWall();
     }
+
+    useEffect(() => {
+        if(!initial) goToTopOfTheWall();
+    }, [currentPage]);
 
     const isIndexOnCurrentPage = (index) => {
         if(currentPage === 0) {
@@ -243,10 +248,6 @@ const Favorites = ({club, favorites}) => {
             else return 0;
         }));
     }
-
-    useEffect(() => {
-        console.log(filteredPlayers);
-    }, [filteredPlayers]);
 
     const isPlayerFavorite = (userId) => {
         if(!userId || !favoritesState.length) return false;

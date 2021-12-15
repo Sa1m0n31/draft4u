@@ -1033,8 +1033,13 @@
         display: block !important;
     }
 
+    .playerCard__balanceBtn,
     .d-desktop {
         display: none !important;
+    }
+
+    .playerVideoView {
+        margin-top: -60px;
     }
 
     .aboutUs__profileImg--bartek {
@@ -1874,10 +1879,6 @@
     .playBtn {
         width: 30px;
         height: 30px;
-    }
-
-    .userInfoEdition__form--dark .label--marginRightMinus .input--editProfile {
-        margin-right: -17px;
     }
 
     .playerVideoView__carousel {

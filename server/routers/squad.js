@@ -4,7 +4,6 @@ const db = require("../database/db");
 const sendResponse = require("../helpers/sendResponse");
 
 const addSquad = (players, name, clubId, response) => {
-    console.log("addSquad");
     const query = `INSERT INTO squads VALUES (nextval('squads_id_sequence'), $1, $2, NOW()) RETURNING id`;
     const values = [name, clubId];
 
@@ -48,11 +47,9 @@ const updateSquad = (id, name, players, response) => {
             const values = [id];
 
             db.query(query, values, (err, res) => {
-                console.log(err);
                 if(res) {
                     /* 2 - Add new players to squad */
                     if(players) {
-                        console.log(players);
                         let query, values;
                         players.forEach((item, index, array) => {
                             if(item) {
@@ -117,12 +114,10 @@ router.delete("/delete", (request, response) => {
        const query = 'DELETE FROM selected_players WHERE squad_id = $1';
        const values = [id];
        db.query(query, values, (err, res) => {
-           console.log(err);
            if(res) {
                const query = 'DELETE FROM squads WHERE id = $1';
                const values = [id];
                db.query(query, values, (err, res) => {
-                   console.log(err);
                    if(res) sendResponse(response, 1);
                    else sendResponse(response, 0);
                })

@@ -2716,7 +2716,7 @@ input::-webkit-inner-spin-button {
 
 @-moz-document url-prefix() {
     .label--marginRightMinus>.input--editProfile {
-        margin-right: -20px;
+        /*margin-right: -20px;*/
     }
 }
 

@@ -5,6 +5,7 @@ import facebookIcon from '../static/img/facebook.svg'
 import loginBtn from '../static/img/zaloguj-btn.png'
 import appleBtn from '../static/img/button-apple.png'
 import {loginApple, loginUser} from "../helpers/auth";
+import settings from "../settings";
 
 const LoginBox = () => {
     const [email, setEmail] = useState("");
@@ -77,12 +78,12 @@ const LoginBox = () => {
             lub
         </span>
 
-        <a className="button button--facebook" href="http://localhost:5000/auth/facebook">
+        <a className="button button--facebook" href={`${settings.API_URL}/auth/facebook`}>
             <img className="button--facebook__img" src={facebookIcon} alt="facebook" />
             Continue with Facebook
         </a>
 
-        <a className="button button--google" href="http://localhost:5000/auth/google">
+        <a className="button button--google" href={`${settings.API_URL}/auth/google`}>
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
         </a>

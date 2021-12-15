@@ -36,6 +36,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     const [attackRange, setAttackRange] = useState([150, 350]);
     const [verticalRange, setVerticalRange] = useState([20, 130]);
     const [salary, setSalary] = useState([1000, 30000]);
+    const [initial, setInitial] = useState(true);
 
     const [favoritesState, setFavoritesState] = useState([]);
 
@@ -160,14 +161,18 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     }
 
     const nextPage = () => {
-        goToTopOfTheWall();
+        setInitial(false);
         setCurrentPage(currentPage+1);
     }
 
     const prevPage = () => {
+        setInitial(false);
         setCurrentPage(currentPage-1);
-        goToTopOfTheWall();
     }
+
+    useEffect(() => {
+        if(!initial) goToTopOfTheWall();
+    }, [currentPage]);
 
     const isIndexOnCurrentPage = (index) => {
         if(currentPage === 0) {
@@ -401,8 +406,6 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
         <main className="playersWall d-desktop siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {filteredPlayers?.length ? filteredPlayers.map((item, index) => {
                 if(isIndexOnCurrentPage(index)) {
-                    console.log("USER: " + item.first_name + " " + item.last_name);
-                    console.log("Is favorite: " + isPlayerFavorite(item.user_id));
                     return <PlayerCard key={index}
                                        player={item}
                                        favoriteView={false}
