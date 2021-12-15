@@ -380,8 +380,6 @@ router.put("/update-user-position", (request, response) => {
     const { position } = request.body;
     const userId = request.user;
 
-    console.log(position);
-
     const query = 'UPDATE users u SET position = (SELECT id FROM positions WHERE name = $1) FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [position, userId];
 

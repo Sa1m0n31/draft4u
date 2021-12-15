@@ -33,6 +33,10 @@ import ChatPage from "./pages/ChatPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminWrapper from "./wrappers/AdminWrapper";
 import RegisterFromThirdParty from "./pages/RegisterFromThirdParty";
+import axios from "axios";
+import AUTH_HEADER from "./static/restrict/credentials";
+
+axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 
 function App() {
   return <Router>

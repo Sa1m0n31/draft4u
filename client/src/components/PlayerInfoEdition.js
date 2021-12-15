@@ -12,6 +12,7 @@ import {
 } from "../helpers/user";
 
 import Chart from "react-apexcharts";
+import {unicodeToUTF8} from "../helpers/others";
 
 const PlayerInfoEdition = ({player, theme}) => {
     const [editAttackRange, setEditAttackRange] = useState(false);
@@ -33,7 +34,9 @@ const PlayerInfoEdition = ({player, theme}) => {
     useEffect(() => {
         getAllPositions()
             .then(res => {
-                setPositions(res?.data?.result);
+                setPositions(res?.data?.result?.map((item) => {
+                    return unicodeToUTF8(item.name);
+                }));
             });
     }, []);
 
@@ -292,8 +295,8 @@ const PlayerInfoEdition = ({player, theme}) => {
                                                 onChange={(e) => { console.log(e.target); setPosition(e.target.value); }}
                         >
                             {positions?.map((item, index) => {
-                                return <option value={item.name} key={index}>
-                                    {item.name}
+                                return <option value={item} key={index}>
+                                    {item}
                                 </option>
                             })}
                         </select> : <input className="input--editProfile"

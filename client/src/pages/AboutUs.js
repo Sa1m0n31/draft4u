@@ -2,32 +2,28 @@ import React, { useState, useEffect, useRef } from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import rightArrow from '../static/img/right-arrow.svg'
-import michalCaption from '../static/img/michal-napis.png'
+import michalCaption from '../static/img/michal-napis.svg'
 import michalImg from '../static/img/michal.png'
 import bartekCaption from '../static/img/bartek-napis.png'
 import bartekImg from '../static/img/bartek.png'
 
 const AboutUs = () => {
-    useEffect(() => {
-        document.querySelector(".aboutUs__content").addEventListener('touchstart', handleTouchStart, false);
-        document.querySelector(".aboutUs__content").addEventListener('touchmove', handleTouchMove, false);
-    }, []);
-
     let xDown = null;
     let yDown = null;
 
     function getTouches(evt) {
-        return evt.touches ||             // browser API
-            evt.originalEvent.touches; // jQuery
+        return evt.touches || evt.originalEvent.touches;
     }
 
     function handleTouchStart(evt) {
+        evt.stopPropagation();
         const firstTouch = getTouches(evt)[0];
         xDown = firstTouch.clientX;
         yDown = firstTouch.clientY;
     }
 
     function handleTouchMove(evt) {
+        evt.stopPropagation();
         if ( ! xDown || ! yDown ) {
             return;
         }
@@ -38,11 +34,10 @@ const AboutUs = () => {
         let xDiff = xDown - xUp;
         let yDiff = yDown - yUp;
 
-        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-            nextPlayer();
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
+            nextPlayer(true);
         }
 
-        /* reset values */
         xDown = null;
         yDown = null;
     }
@@ -62,52 +57,58 @@ const AboutUs = () => {
         img: bartekImg,
         subheader: "- trzy słowa, które określają mnie jako zawodnika.",
         quote: `„Wiara, ambicja, walka”`,
-        desc: "Od 12 lat profesjonalnie gram w siatkówkę. Zaczynałem swoją przygodę na plaży - reprezentowałem Polskę na arenie krajowej i międzynarodowej. Obecnie gram na parkietach ligowych - doskonale wiem jak wygląda praca zawodnika od podszewki."
+        desc: "Pierwsze siatkarskie kroki stawiałem 15 lat temu - w małym łódzkim klubie. Swój zapal oraz chęć ciągłego doskonalenia się zawdzięczam siatkówce. To ona ukształtowała mój charakter oraz to jakim człowiekiem jestem. Siatkówka to moja pasja - realizuję się zawodowo i robię w życiu to, co kocham."
     }
 
     const [foregroundPlayer, setForegroundPlayer] = useState(player1);
     const [backgroundPlayer, setBackgroundPlayer] = useState(player2);
     const [animationCounter, setAnimationCounter] = useState(true);
 
-    const nextPlayer = () => {
+    const michalForeground = useRef(null);
+    const michalBackground = useRef(null);
+    const bartekForeground = useRef(null);
+    const bartekBackground = useRef(null);
+
+    const nextPlayer = (mobile = false) => {
         /* Animation */
-        const michalForeground = document.querySelector('.aboutUs__profileWrapper--foreground>.aboutUs__profileImg--michal');
-        const michalBackground = document.querySelector('.aboutUs__profileWrapper--background>.aboutUs__profileImg--michal');
-        const bartekForeground = document.querySelector('.aboutUs__profileWrapper--foreground>.aboutUs__profileImg--bartek');
-        const bartekBackground = document.querySelector('.aboutUs__profileWrapper--background>.aboutUs__profileImg--bartek');
+        if(!mobile || window.innerWidth < 768) {
+            document.querySelector(".aboutUs__images").style.opacity = "0";
+            document.querySelector(".aboutUs__captionWrapper").style.opacity = "0";
+            document.querySelector(".aboutUs__subheader").style.opacity = "0";
+            document.querySelector(".aboutUs__desc").style.opacity = "0";
 
-        document.querySelector(".aboutUs__images").style.opacity = "0";
-        document.querySelector(".aboutUs__captionWrapper").style.opacity = "0";
-        document.querySelector(".aboutUs__subheader").style.opacity = "0";
-        document.querySelector(".aboutUs__desc").style.opacity = "0";
-
-        setTimeout(() => {
-            /* Content */
-            let tmp;
-            tmp = foregroundPlayer;
-            setForegroundPlayer(backgroundPlayer);
-            setBackgroundPlayer(tmp);
+            setAnimationCounter(prevState => {
+                return !prevState;
+            });
             setTimeout(() => {
-                if(animationCounter) {
-                    michalForeground.style.display = 'none';
-                    bartekBackground.style.display = 'none';
-                    michalBackground.style.display = 'block';
-                    bartekForeground.style.display = 'block';
-                }
-                else {
-                    michalForeground.style.display = 'block';
-                    bartekBackground.style.display = 'block';
-                    michalBackground.style.display = 'none';
-                    bartekForeground.style.display = 'none';
-                }
-                setAnimationCounter(!animationCounter);
+                /* Content */
+                let tmp;
+                tmp = foregroundPlayer;
+                setForegroundPlayer(backgroundPlayer);
+                setBackgroundPlayer(tmp);
+                setTimeout(() => {
+                    if(animationCounter) {
+                        michalForeground.current.style.display = 'none';
+                        michalForeground.current.style.marginTop = '0';
+                        bartekBackground.current.style.display = 'none';
+                        michalBackground.current.style.display = 'block';
+                        bartekForeground.current.style.display = 'block';
+                    }
+                    else {
+                        michalForeground.current.style.display = 'block';
+                        michalForeground.current.style.marginTop = '20px';
+                        bartekBackground.current.style.display = 'block';
+                        michalBackground.current.style.display = 'none';
+                        bartekForeground.current.style.display = 'none';
+                    }
 
-                document.querySelector(".aboutUs__images").style.opacity = "1";
-                document.querySelector(".aboutUs__captionWrapper").style.opacity = "1";
-                document.querySelector(".aboutUs__subheader").style.opacity = "1";
-                document.querySelector(".aboutUs__desc").style.opacity = "1";
-            }, 50);
-        }, 500);
+                    document.querySelector(".aboutUs__images").style.opacity = "1";
+                    document.querySelector(".aboutUs__captionWrapper").style.opacity = "1";
+                    document.querySelector(".aboutUs__subheader").style.opacity = "1";
+                    document.querySelector(".aboutUs__desc").style.opacity = "1";
+                }, 50);
+            }, 500);
+        }
     }
 
     return <div className="container container--light">
@@ -117,7 +118,10 @@ const AboutUs = () => {
                 <h2 className="aboutUs__header aboutUs__header--mobile d-mobile">
                     Kto stoi za projektem
                 </h2>
-                <section className="aboutUs__content">
+                <section className="aboutUs__content"
+                         onTouchStart={(e) => { handleTouchStart(e); }}
+                         onTouchMove={(e) => { handleTouchMove(e); }}
+                >
                     <h2 className="aboutUs__header d-desktop">
                         Kto stoi za projektem
                     </h2>
@@ -148,12 +152,12 @@ const AboutUs = () => {
                 </section>
                 <section className="aboutUs__images">
                     <figure className="aboutUs__profileWrapper aboutUs__profileWrapper--foreground">
-                        <img className="aboutUs__profileImg aboutUs__profileImg--michal" src={michalImg} alt="michal-makowski" />
-                        <img className="aboutUs__profileImg aboutUs__profileImg--bartek" src={bartekImg} alt="michal-makowski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--michal" ref={michalForeground} src={michalImg} alt="michal-makowski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--bartek" ref={bartekForeground} src={bartekImg} alt="michal-makowski" />
                     </figure>
                     <figure className="aboutUs__profileWrapper aboutUs__profileWrapper--background">
-                        <img className="aboutUs__profileImg aboutUs__profileImg--michal" src={michalImg} alt="bartosz-cedzynski" />
-                        <img className="aboutUs__profileImg aboutUs__profileImg--bartek" src={bartekImg} alt="bartosz-cedzynski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--michal" ref={michalBackground} src={michalImg} alt="bartosz-cedzynski" />
+                        <img className="aboutUs__profileImg aboutUs__profileImg--bartek" ref={bartekBackground} src={bartekImg} alt="bartosz-cedzynski" />
                     </figure>
                 </section>
             </main>

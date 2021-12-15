@@ -35,7 +35,7 @@ const PaymentPage = ({user, isLocal}) => {
                      coupons={coupons}
                      userId={user.id}
                      email={user.email} />
-        <Footer theme="light" />
+        <Footer theme="light" border={true} />
     </div>
 }
 

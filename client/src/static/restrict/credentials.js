@@ -1,0 +1,3 @@
+const AUTH_HEADER = 'Basic ZHJhZnQ0dTo1YjU2NjFiOWQ5NDk0MzE1OWIwMjViM2U1OWYzZDdlYw==';
+
+export default AUTH_HEADER;

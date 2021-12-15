@@ -154,7 +154,6 @@ router.get("/get-last-article", (request, response) => {
    const query = 'SELECT a.id, a.title, a.created_at, a.excerpt, i.file_path FROM articles a LEFT OUTER JOIN images i ON a.image = i.id ORDER BY a.created_at DESC LIMIT 1';
 
    db.query(query, [], (err, res) => {
-       console.log(err);
         if(res) {
             response.send({
                 result: res.rows[0]

@@ -289,7 +289,7 @@ const RegisterModal = (props) => {
                     <button className="registerForm__checkBtn" onClick={(e) => { handleCheckbox(e, 0); }}>
                         {checkboxObligatory ? <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" /> : ""}
                     </button>
-                    Wyrażam zgodę na otrzymywanie informacji handlowych drogą elektroniczną, w szczególności w celu przedstawiania informacji o promocjach, konkursach i ofertach bonusowych.
+                    Tutaj miejsce na dobrowolną zgodę marketingową
                 </label>
 
                 <button className="registerForm--nextBtn" onClick={(e) => { validateStep1(e); }}>

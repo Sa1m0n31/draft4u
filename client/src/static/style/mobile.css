@@ -1,54 +1,24 @@
-@media(max-width: 2700px) {
+@media(min-width: 2300px) {
     .container--homepage::after {
-        width: 57%;
-    }
-
-    #strefaZawodnikaTlo {
-        bottom: -11%;
-        left: -9%;
+        width: 52%;
     }
 }
 
-@media(max-width: 2100px) {
-    #strefaZawodnikaTlo {
-        bottom: -9%;
-        left: -1%;
+@media(min-width: 996px) {
+    .player__flex__text--marginRight {
+        margin-right: 5%;
+    }
+}
+
+@media(max-width: 2300px) {
+    .container--homepage::after {
+        width: 52.4%;
     }
 }
 
 @media(max-width: 2000px) {
     .container--homepage::after {
-        width: 58%;
-    }
-}
-
-@media(max-width: 1900px) {
-    .container--homepage::after {
-        width: 58%;
-    }
-}
-
-@media(max-width: 1700px) {
-    .container--homepage::after {
-        width: 59%;
-    }
-}
-
-@media(max-width: 1600px) {
-    .container--homepage::after {
-        width: 59.7%;
-    }
-}
-
-@media(max-width: 1500px) {
-    .container--homepage::after {
-        width: 60%;
-    }
-}
-
-@media(max-width: 1400px) {
-    .container--homepage::after {
-        width: 61%;
+        width: 52.7%;
     }
 }
 
@@ -226,6 +196,12 @@
 }
 
 @media(max-width: 1400px) {
+    .clubCarousel__item__img {
+        height: 70px;
+        width: auto;
+        max-width: 90px;
+    }
+
     .footer__inner {
         width: var(--siteWidth);
     }
@@ -236,10 +212,6 @@
 
     .player .player__option__currency {
         font-size: 50px;
-    }
-
-    .clubCarousel__item__img {
-        width: 90px;
     }
 
     .siteHeader__logo__img {
@@ -364,14 +336,9 @@
     }
 }
 
-@media(max-width: 1320px) {
+@media(max-width: 1300px) {
     .container--homepage::after {
-        width: 62.5%;
-    }
-
-    #strefaZawodnikaTlo {
-        left: -3.5%;
-        bottom: -10%;
+        width: 55%;
     }
 }
 
@@ -383,6 +350,10 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .container--homepage::after {
+        width: 56.5%;
     }
 
     .aboutUs__profileImg--bartek {
@@ -398,10 +369,6 @@
     }
 
     .homepage--overlay--right {
-        transform: skewX(-14.5deg);
-    }
-
-    .container--homepage::after {
         transform: skewX(-14.5deg);
     }
 
@@ -707,6 +674,12 @@
     }
 }
 
+@media(max-width: 1100px) {
+    .container--homepage::after {
+        width: 57%;
+    }
+}
+
 @media(max-width: 996px) {
     .d-desktop-900 {
         display: none !important;
@@ -720,16 +693,17 @@
         display: flex !important;
     }
 
+    .container--homepage::after {
+        width: 59%;
+    }
+
     .siteHeader__menu {
-        padding: 0 10px;
+        padding: 0 5px;
     }
 
     .siteHeader__menu__link {
-        font-size: 14px;
-    }
-
-    .container--homepage::after {
-        width: 62%;
+        font-size: 12px;
+        white-space: nowrap;
     }
 
     .landingPage__inner {
@@ -754,7 +728,7 @@
     }
 
     .clubCarousel__item__img {
-        width: 60px;
+        max-width: 60px;
     }
 
     .clubCarousel {
@@ -1024,7 +998,19 @@
 
 @media(max-width: 900px) {
     .container--homepage::after {
-        width: 64%;
+        width: 60%;
+    }
+}
+
+@media(max-width: 850px) {
+    .container--homepage::after {
+        width: 60.5%;
+    }
+}
+
+@media(max-width: 800px) {
+    .container--homepage::after {
+        width: 61%;
     }
 }
 
@@ -1040,6 +1026,14 @@
 
     .playerVideoView {
         margin-top: -60px;
+    }
+
+    .aboutUs__main {
+        max-width: 90vw;
+    }
+
+    .container--club .player__flex__imgWrapper--phone {
+        margin-bottom: -48px;
     }
 
     .aboutUs__profileImg--bartek {
@@ -1087,7 +1081,7 @@
     }
 
     .container--homepage::after {
-        width: 66%;
+        width: 64%;
     }
 
     .footer {
@@ -2281,17 +2275,17 @@
     .createSquad__squad__item {
         width: 100%;
     }
+
+    @media(min-width: 700px) {
+        .landingPage__link--left::after {
+            display: none;
+        }
+    }
 }
 
 @media(max-width: 700px) {
     .container--homepage::after {
-        width: 68%;
-    }
-}
-
-@media(max-width: 630px) {
-    .container--homepage::after {
-        width: 70%;
+        width: 61.5%;
     }
 }
 
@@ -2300,23 +2294,36 @@
         display: none;
     }
 
+    #belka {
+        left: 0.6%;
+    }
+
+    .landingPage__link--left::after {
+        right: 6%;
+        height: 100px;
+    }
+
+    .landingPage__inner {
+        height: 57vw !important;
+        width: 101% !important;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     .aboutUs__header {
         margin-bottom: 90px !important;
     }
 
-    .container--homepage .clubCarousel {
-        margin-top: 40px;
-    }
-
-    .landingPage__inner {
-        width: 90%;
-        height: 300px;
-        transform: translateX(-50%);
-    }
-
-
     .container--homepage::after {
-        width: 83%;
+        width: 79.7%;
+        transform-origin: top right;
+        transform: rotate(
+                14deg);
+        right: -49%;
+    }
+
+    .container--homepage .clubCarousel {
+        margin-top: 70px;
     }
 
     .chat__message {
@@ -2405,100 +2412,92 @@
     .club .faq {
         margin-bottom: 0;
     }
-}
 
-@media(max-width: 540px) {
-    .landingPage__inner {
-        height: 270px;
+    .landingPage {
+        z-index: 3;
     }
 
-    .container--homepage::after {
-        width: 85%;
-    }
-}
-
-@media(max-width: 510px) {
-    .container--homepage::after {
-        width: 88%;
-    }
-}
-
-@media(max-width: 480px) {
-    .container--homepage::after {
-        width: 90%;
-    }
-}
-
-@media(max-width: 460px) {
-    .landingPage__inner {
-        height: 245px;
+    .footer {
+        z-index: 1;
     }
 
-    .container--homepage::after {
-        width: 92%;
+    .container--homepage .footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 280px;
+        background: var(--dark);
+        transform: translateY(-100%) skewY(
+                -8deg);
+        z-index: -1;
     }
 }
 
-@media(max-width: 440px) {
-    .container--homepage::after {
-        width: 94%;
+@media(max-width: 500px) {
+    .landingPage__link--left::after {
+        height: 50px;
+    }
+
+    #belka {
+        left: 0.3%;
+    }
+
+    .container--homepage .footer::before {
+        height: 275px;
+    }
+}
+
+@media(max-width: 450px) {
+    #belka {
+        left: 0;
     }
 }
 
 @media(max-width: 430px) {
-    .container--homepage::after {
-        width: 96%;
+    .container--homepage .footer::before {
+        height: 271px;
+    }
+}
+
+@media(max-width: 370px) {
+    .landingPage__link--left::after {
+        height: 30px;
+    }
+
+    .container--homepage .footer::before {
+        height: 267px;
+    }
+}
+
+@media(max-width: 320px) {
+    .container--homepage .footer::before {
+        height: 264px;
     }
 }
 
 @media(max-width: 420px) {
-    .landingPage__inner {
-        height: 210px;
-    }
-
-    .container--homepage::after {
-        width: 98%;
-    }
-}
-
-@media(max-width: 400px) {
-    .aboutUs__header {
-        margin-bottom: 130px;
-    }
-
-    .container--homepage::after {
-        width: 100%;
-    }
-
-    .player {
-        padding-top: 120px;
+    #belka {
+        left: -0.5%;
     }
 }
 
 @media(max-width: 390px) {
-    .container--homepage::after {
-        width: 102%;
+    #belka {
+        left: -0.7%;
     }
 }
 
 @media(max-width: 380px) {
-    .container--homepage::after {
-        width: 104%;
-    }
-
-    #strefaZawodnikaTlo {
-        bottom: -12%;
-        left: -4%;
+    #belka {
+        left: -0.9%;
     }
 }
 
-@media(max-width: 360px) {
-    .container--homepage::after {
-        width: 107%;
-    }
-
-    .landingPage__inner {
-        height: 190px;
+@media(max-width: 370px) {
+    #belka {
+        left: -1%;
     }
 }
 
@@ -2510,36 +2509,6 @@
     .createSquad__squad__item__imgWrapper {
         height: 60px;
         width: 60px;
-    }
-
-    .container--homepage::after {
-        width: 110%;
-    }
-}
-
-@media(max-width: 330px) {
-    .container--homepage::after {
-        width: 113%;
-    }
-
-    .landingPage__inner {
-        height: 170px;
-    }
-}
-
-@media(max-width: 320px) {
-    .container--homepage::after {
-        width: 118%;
-    }
-}
-
-@media(max-width: 320px) {
-    .container--homepage::after {
-        width: 122%;
-    }
-
-    .landingPage__inner {
-        height: 150px;
     }
 }
 
@@ -2562,150 +2531,48 @@
 
 @media(-webkit-min-device-pixel-ratio: 1.05) {
     .container--homepage::after {
-        width: 56.5%;
+        transform: skewX(-14.1deg) scaleX(1.09);
     }
 
-    @media(max-width: 2700px) {
+    @media(max-width: 996px) {
         .container--homepage::after {
-            width: 56.5%;
+            transform: skewX(-14.1deg) scaleX(1.19);
         }
     }
 
-    @media(max-width: 2500px) {
+    @media(max-width: 700px) {
         .container--homepage::after {
-            width: 57.5%;
+            transform: skewX(-14.1deg) scaleX(1.3);
         }
     }
 
-    @media(max-width: 2100px) {
+    @media(max-width: 600px) {
         .container--homepage::after {
-            width: 58%;
-        }
-    }
-
-    @media(max-width: 2000px) {
-        .container--homepage::after {
-            width: 58.8%;
-        }
-    }
-
-    @media(max-width: 1900px) {
-        .container--homepage::after {
-            width: 59.5%;
-        }
-    }
-
-    @media(max-width: 1700px) {
-        .container--homepage::after {
-            width: 60.5%;
-        }
-    }
-
-    @media(max-width: 1600px) {
-        .container--homepage::after {
-            width: 61%;
-        }
-    }
-
-    @media(max-width: 1500px) {
-        .container--homepage::after {
-            width: 62%;
-        }
-    }
-
-    @media(max-width: 1400px) {
-        .container--homepage::after {
-            width: 63%;
-        }
-    }
-
-    @media(max-width: 1300px) {
-        .container--homepage::after {
-            width: 64%;
-        }
-    }
-
-    @media(max-width: 900px) {
-        .container--homepage::after {
-            width: 66%;
-        }
-    }
-
-    @media(max-width: 776px) {
-        .container--homepage::after {
-            width: 68%;
-        }
-    }
-
-    @media(max-width: 720px) {
-        .container--homepage::after {
-            width: 70%;
-        }
-    }
-
-    @media(max-width: 610px) {
-        .container--homepage::after {
-            width: 72%;
+            transform: skewX(-14.1deg) scaleX(1.37);
         }
     }
 
     @media(max-width: 576px) {
         .container--homepage::after {
-            width: 83%;
+            transform: skewX(-14.1deg) scaleX(1.025);
         }
     }
 
-    @media(max-width: 540px) {
-        .container--homepage::after {
-            width: 86%;
+    @media(max-width: 360px) {
+        .landingPage__link--left::after {
+            right: 6%;
         }
     }
 
-    @media(max-width: 520px) {
-        .container--homepage::after {
-            width: 90%;
+    @media(min-width: 1900px) {
+        .landingPage__link--left::after {
+            right: 6%;
         }
     }
 
-    @media(max-width: 490px) {
-        .container--homepage::after {
-            width: 93%;
-        }
-    }
-
-    @media(max-width: 450px) {
-        .container--homepage::after {
-            width: 96%;
-        }
-    }
-
-    @media(max-width: 420px) {
-        .container--homepage::after {
-            width: 99%;
-        }
-    }
-
-    @media(max-width: 390px) {
-        .container--homepage::after {
-            width: 102%;
-        }
-    }
-
-    @media(max-width: 370px) {
-        .container--homepage::after {
-            width: 105%;
-        }
-    }
-
-    @media(max-width: 350px) {
-        .container--homepage::after {
-            width: 110%;
-        }
-    }
-
-    @media(max-width: 320px) {
-        .container--homepage::after {
-            width: 115%;
+    @media(min-width: 2500px) {
+        .landingPage__link--left::after {
+            right: 8%;
         }
     }
 }

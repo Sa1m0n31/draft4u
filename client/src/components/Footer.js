@@ -61,18 +61,13 @@ const Footer = ({theme, border}) => {
                 </h4>
                 <ul className="footer__col__list--socialMedia">
                     <li className="footer__col__list__item">
-                        <a className="footer__col__socialMediaLink" href="https://facebook.com" target="_blank">
+                        <a className="footer__col__socialMediaLink" href="https://www.facebook.com/Draft4uPolska/" target="_blank">
                             <img className="footer__col__socialMediaLink__img" src={fbIcon} alt="facebook" />
                         </a>
                     </li>
                     <li className="footer__col__list__item">
-                        <a className="footer__col__socialMediaLink" href="https://instagram.com" target="_blank">
+                        <a className="footer__col__socialMediaLink" href="https://www.instagram.com/draft4u.com.pl/?fbclid=IwAR2T5cPxFXcSmGdxxpBkclPct0HKQl9ezqeNLdVYwdDYZ_c6E74llzmbihY" target="_blank">
                             <img className="footer__col__socialMediaLink__img" src={instaIcon} alt="instagram" />
-                        </a>
-                    </li>
-                    <li className="footer__col__list__item">
-                        <a className="footer__col__socialMediaLink" href="https://youtube.com" target="_blank">
-                            <img className="footer__col__socialMediaLink__img" src={ytIcon} alt="youtube" />
                         </a>
                     </li>
                 </ul>

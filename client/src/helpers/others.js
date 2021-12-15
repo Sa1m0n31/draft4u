@@ -12,6 +12,19 @@ const removePolishChars = (str) => {
         .replace(/ż/g, "z");
 }
 
+const unicodeToUTF8 = (str) => {
+    return str
+        .replace(/\\u0105/g, "ą")
+        .replace(/\\u0107/g, "ć")
+        .replace(/\\u0119/g, "ę")
+        .replace(/\\u0142/g, "ł")
+        .replace(/\\u0144/g, "ń")
+        .replace(/\\u0F3/g, "ó")
+        .replace(/\\u015b/g, "ś")
+        .replace(/\\u017A/g, "ż")
+        .replace(/\\u017C/g, "ź");
+}
+
 const calculateAge = (dateOfBirth) => {
     const birthday = new Date(dateOfBirth);
     const ageDifMs = Date.now() - birthday;
@@ -60,4 +73,4 @@ const convertStringToURL = (str) => {
     return removePolishChars(str.replace(/ /g, "-"));
 }
 
-export { removePolishChars, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber, convertStringToURL }
+export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber, convertStringToURL }

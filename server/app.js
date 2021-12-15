@@ -3,13 +3,15 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const session = require('express-session');
-const FileStore = require('session-file-store')(session);
+const apiAuth = require('./apiAuth');
 const app = express();
 const morgan = require('morgan');
 const fs = require('fs');
 const http = require('http');
-var flash = require('connect-flash');
+const flash = require('connect-flash');
 require('dotenv').config()
+
+const basicAuth = new apiAuth().basicAuth;
 
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -240,22 +242,22 @@ const adminRouter = require("./routers/admin");
 const paymentRouter = require("./routers/payment");
 const chatRouter = require("./routers/chat");
 
-app.use("/auth", authRouter);
-app.use("/image", imageRouter);
-app.use("/video", videoRouter);
-app.use("/custom-field", customFieldRouter);
-app.use("/notification", notificationRouter);
-app.use("/squad", squadRouter);
-app.use("/visited", visitedRouter);
-app.use("/favorite", favoriteRouter);
-app.use("/coupon", couponRouter);
-app.use("/club", clubRouter);
-app.use("/user", userRouter);
-app.use("/blog", blogRouter);
-app.use("/price", priceRouter);
-app.use("/league", leagueRouter);
-app.use("/admin", adminRouter);
-app.use("/payment", paymentRouter);
-app.use("/chat", chatRouter);
+app.use("/auth", basicAuth, authRouter);
+app.use("/image", basicAuth, imageRouter);
+app.use("/video", basicAuth, videoRouter);
+app.use("/custom-field", basicAuth, customFieldRouter);
+app.use("/notification", basicAuth, notificationRouter);
+app.use("/squad", basicAuth, squadRouter);
+app.use("/visited", basicAuth, visitedRouter);
+app.use("/favorite", basicAuth, favoriteRouter);
+app.use("/coupon", basicAuth, couponRouter);
+app.use("/club", basicAuth, clubRouter);
+app.use("/user", basicAuth, userRouter);
+app.use("/blog", basicAuth, blogRouter);
+app.use("/price", basicAuth, priceRouter);
+app.use("/league", basicAuth, leagueRouter);
+app.use("/admin", basicAuth, adminRouter);
+app.use("/payment", basicAuth, paymentRouter);
+app.use("/chat", basicAuth, chatRouter);
 
 server.listen(5000);

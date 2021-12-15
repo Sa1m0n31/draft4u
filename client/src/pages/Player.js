@@ -30,7 +30,7 @@ const Player = () => {
         <Header menu="dark" />
         <main className="player">
             <figure className="player__firstImgWrapper">
-                <img className="player__label" src={label} alt="strefa-zawodnika" />
+                {/*<img className="player__label" src={label} alt="strefa-zawodnika" />*/}
                 <img className="player__firstImgWrapper__img" src={playerHeader} alt="draft4u" />
             </figure>
 
@@ -74,13 +74,13 @@ const Player = () => {
                     <section className="player__step">
                         <img className="player__step__img" src={step3} alt="krok3" />
                         <h3 className="player__step__header">
-                            Wybierz warunki umowy
+                            Podaj warunki umowy
                         </h3>
                     </section>
                 </section>
 
                 <p className="player__flex__text player__flex__text--afterSteps">
-                    To wszystko! Resztę pracy wykonują nasze algorytmy, które zaprezentują klubom listę zawodników dopasowanych do ich wymagań. Dzięki temu możesz być łatwiej dostrzeżony i szybciej znajdziesz nowy klub.
+                    To wszystko! Resztę pracy wykonają nasze algorytmy, które zaprezentują klubom listę zawodników dopasowanych do ich wymagań. Dzięki temu możesz być łatwiej dostrzeżony i szybciej znajdziesz nowy klub.
                 </p>
             </section>
 
@@ -90,11 +90,11 @@ const Player = () => {
                         Pierwsze 14 dni za darmo
                     </h2>
                     <p className="player__flex__text">
-                        Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa. Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa.
+                        Przez pierwsze 14 dni nie ponosisz żadnych opłat! To okazja, aby wypróbować wszystkie możliwości serwisu. Po uzupełnieniu danych twój profil pojawi się w wynikach wyszukiwania.
                     </p>
-                    {/*<button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>*/}
-                    {/*    <img className="btn__img" src={registerBtn} alt="zarejestruj-sie" />*/}
-                    {/*</button>*/}
+                    <button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>
+                        <img className="btn__img" src={registerBtn} alt="zarejestruj-sie" />
+                    </button>
                 </article>
                 <figure className="player__flex__imgWrapper tmpWrapper d-desktop">
                     <img className="btn__img" src={img2} alt="dolacz-za-darmo" />
@@ -104,10 +104,10 @@ const Player = () => {
             <section className="player__section player__flex player__flex--section">
                 <article className="player__flex__content player__flex__content--first14">
                     <h2 className="player__header">
-                        Promocja na start
+                        Tylko 99 PLN za pierwszy rok
                     </h2>
                     <p className="player__flex__text">
-                        Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa. Dołącz już teraz - do grudnia możesz się zarejestrować za darmo. Dzięki temu wypróbujesz nasz serwis i zobaczysz jak to działa.
+                        Wypróbuj w promocyjnej cenie: za pierwszy rok dostępu zapłacisz tylko 99 PLN! Twój profil będzie aktywny do 31.01.2023 r., a Ty nie poniesiesz żadnych dodatkowych opłat. Pamiętaj - im szybciej dołączysz, tym więcej dni dostępu zyskasz w promocyjnej cenie.
                     </p>
                 </article>
                 <div className="player__flex__imgWrapper tmpWrapper">
@@ -122,7 +122,7 @@ const Player = () => {
                                 PLN
                             </span>
                         </h4>
-                        <a className="button button--hover button--buyNow" href="/zaplac?pakiet=3">
+                        <a className="button button--hover button--buyNow" href="/">
                             <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
                         </a>
                     </section>

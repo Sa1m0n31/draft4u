@@ -111,7 +111,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
             Członkostwo rozpocznie się po skonfigurowaniu płatności.
         </p>
         <p className="payment__text payment__text--marginBottom">
-            Opłacasz swoje członkostwo do dnia 31 stycznia 2022 w kwocie <b>{amount ? amount : cost} PLN</b>
+            Opłacasz swoje członkostwo do dnia 31 stycznia 2023 w kwocie <b>{amount ? amount : cost} PLN</b>
         </p>
 
         <section className="paymentItemWrapper">

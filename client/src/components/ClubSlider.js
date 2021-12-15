@@ -3,6 +3,7 @@ import ReactSiema from 'react-siema'
 
 import logo1 from '../static/img/zzaksa.png';
 import logo2 from '../static/img/jw.png';
+import {getClubs} from "../helpers/admin";
 
 const ClubSlider = () => {
     const [logos, setLogos] = useState([]);
@@ -11,6 +12,11 @@ const ClubSlider = () => {
 
     useEffect(() => {
         /* Get club's logos */
+        getClubs()
+            .then((res) => {
+                const result = res?.data?.result;
+            });
+
         setLogos([logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2]);
 
         /* Initialize carousel */
@@ -22,7 +28,7 @@ const ClubSlider = () => {
             if(slider) {
                 slider.next();
             }
-        }, 2000);
+        }, 4000);
     }
 
     return <section className="clubCarousel">
@@ -32,8 +38,7 @@ const ClubSlider = () => {
             </h3>
             <ReactSiema perPage={{
                 100: 3,
-                300: 4,
-                1400: 7
+                1400: 4
             }}
                         ref={(siema) => { slider = siema }}
                         loop={true}>

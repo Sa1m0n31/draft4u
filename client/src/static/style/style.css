@@ -539,7 +539,6 @@ ul {
     top: 0;
     border-left: 0 solid red;
     transition: .3s all ease-in-out;
-    /*transform: skewX(-16.5deg);*/
 }
 
 .container--homepage::before {
@@ -552,8 +551,8 @@ ul {
     right: 0;
     background: var(--dark);
     z-index: -1;
-    width: 54.5vw;
-    transform: skewX(-17deg);
+    width: 53.3%;
+    transform: skewX(-14.1deg);
     transform-origin: center;
 }
 
@@ -563,7 +562,7 @@ ul {
 }
 
 .landingPage__inner {
-    width: 1200px;
+    width: 1100px;
     height: 720px;
     background: transparent;
     display: flex;
@@ -574,7 +573,6 @@ ul {
     left: 50%;
     transform-origin: center center;
     transform: translateX(-50%);
-    overflow: hidden;
 }
 
 .landingPage__left, .landingPage__right {
@@ -633,69 +631,82 @@ ul {
     width: 55%;
 }
 
-#yellowLines {
-    width: 90%;
+#belka {
     bottom: 0;
-    left: 1.5%;
-    z-index: 300;
-}
-
-#strefaZawodnika {
-    bottom: -1%;
-    left: 26%;
-    width: 39%;
-    z-index: 3;
-}
-
-#strefaZawodnikaTlo {
-    bottom: -10%;
-    left: -5%;
-    width: 85%;
-    z-index: 2;
-}
-
-#strefaKlubowa {
-    bottom: 12%;
-    left: 15%;
-    width: 35%;
-    z-index: 2;
-}
-
-#tloStrefaKlubowa {
-    position: absolute;
-    bottom: 31%;
     left: 0;
-    width: 85%;
-    height: 10%;
-    z-index: 2;
-    transform: rotate(-9deg);
-    background: rgb(40,40,40);
-    background: linear-gradient(180deg, rgba(40,40,40,1) 0%, rgba(40,40,40,0.9) 46%, rgba(40, 40, 40, 0.8) 100%);
-}
-
-#zawodnikTlo {
-    width: 50%;
-    left: 25%;
-}
-
-#trenerTlo {
     width: 100%;
-    top: -50%;
-    left: -20%;
+    z-index: 15;
 }
 
-#zawodnik {
-    z-index: 2;
-    width: 80%;
+.landingPage__link {
+    overflow: hidden;
+    z-index: 100 !important;
+}
+
+#boisko {
+    top: 3%;
+    right: -1.5%;
+    width: 45%;
+    z-index: -1;
+}
+
+#pilka {
+    top: 5%;
     left: 5%;
-    top: -12%;
+    width: 40%;
+}
+
+#tlo {
+    top: -35%;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+#zawodnicy {
+    left: 0;
+    top: -5%;
+    width: 49%;
+    z-index: 3;
+    transform: scale(.9);
+    transition: .3s all ease-in-out;
 }
 
 #trener {
-    z-index: 2;
-    top: -12%;
-    left: 6%;
-    width: 56%;
+    right: 10%;
+    top: 0;
+    width: 30%;
+    z-index: 14;
+    transition: .3s all ease-in-out;
+}
+
+.landingPage__link {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    z-index: 10;
+    transform: translateX(7%) skewX(-14deg);
+    background: transparent;
+}
+
+.landingPage__link--left {
+    top: 0;
+    left: 0;
+}
+
+.landingPage__link--right {
+    top: 0;
+    right: 0;
+}
+
+.landingPage__link--left::after {
+    content: "";
+    position: absolute;
+    right: 4%;
+    top: 0;
+    width: 40px;
+    height: 400px;
+    background: var(--light);
 }
 
 .homepage--overlay--right {
@@ -733,16 +744,9 @@ ul {
 @media(-webkit-min-device-pixel-ratio: 1.05) {
     .landingPage__inner {
         transform: translateX(-50%) scale(.8);
-        margin-top: -5%;
+        transform-origin: top center;
     }
 }
-
-
-
-
-
-
-
 
 /* Club slider */
 .clubCarousel {
@@ -782,8 +786,8 @@ ul {
 }
 
 .clubCarousel__item__img {
-    width: 115px;
-    height: auto;
+    height: 110px;
+    width: auto;
 }
 
 /* Footer */
@@ -869,6 +873,11 @@ ul {
     height: auto;
     display: block;
     margin: 0 20px;
+    opacity: .8;
+}
+
+.footer__col__socialMediaLink:hover {
+    opacity: 1;
 }
 
 .footer__col__list__item:first-of-type .footer__col__socialMediaLink {
@@ -929,6 +938,23 @@ ul {
     border-bottom: 20px solid #fff;
     background: transparent;
     z-index: 3;
+}
+
+.container--dark .loginBox::before {
+    border-bottom-color: #313131;
+}
+
+.container--dark .loginBox {
+    background: #313131;
+}
+
+.container--dark .loginBox__passwordRemindLink {
+    color: #d4d4d4;
+}
+
+.container--dark .loginBox__or,
+.container--dark .loginBox__passwordRemindLink:hover {
+    color: #fff;
 }
 
 .loginBox__form {
@@ -1767,7 +1793,7 @@ ul {
 }
 
 .club .player__flex {
-    align-items: flex-end;
+    align-items: center;
 }
 
 .player__section {
@@ -1776,7 +1802,6 @@ ul {
 }
 
 .player__firstImgWrapper {
-    /*background: #fff;*/
     width: 100%;
     overflow: hidden;
 }
@@ -1853,7 +1878,7 @@ ul {
 
 .button--player--register {
     display: block;
-    margin: 50px auto 30px;
+    margin: 50px 0 30px;
     width: 100%;
     max-width: 450px;
 }
@@ -2045,30 +2070,30 @@ ul {
     max-width: 45%;
 }
 
-.player .player__option {
+.player__option {
     width: 100%;
     max-width: 410px;
 }
 
-.player .player__option__price {
+.player__option__price {
     font-size: 170px;
     line-height: 180px;
 }
 
-.player .player__option__currency {
+.player__option__currency {
     font-size: 65px;
 }
 
-.player .button--buyNow {
+.button--buyNow {
     margin-top: -30px;
     display: block;
 }
 
-.player .player__option {
+.player__option {
     position: relative;
 }
 
-.player .player__option__discount {
+.player__option__discount {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -2316,6 +2341,12 @@ ul {
     font-weight: 700;
     margin-top: 15px;
     text-transform: uppercase;
+}
+
+.myAccountStart__bottom .player__option {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
 }
 
 .myAccountStart__bottom__content {
@@ -3263,6 +3294,7 @@ input::-webkit-inner-spin-button {
 
 /* Payment page */
 .payment {
+    padding-bottom: 50px;
     padding-top: 60px;
 }
 
@@ -5139,6 +5171,10 @@ input::-webkit-inner-spin-button {
     color: #fff;
 }
 
+.container--dark .input::placeholder {
+    color: #d4d4d4;
+}
+
 .container--admin .changePassword {
     width: 100%;
 }
@@ -5230,7 +5266,7 @@ input::-webkit-inner-spin-button {
     bottom: 0;
     right: 0;
     width: 50vw;
-    height: 700px;
+    height: 600px;
     transform: translate(10%, 10%);
     background: var(--dark);
     z-index: -1;
