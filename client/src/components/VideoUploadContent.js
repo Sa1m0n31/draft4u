@@ -10,7 +10,7 @@ import { Player } from 'video-react';
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import DeleteVideoModal from "./DeleteVideoModal";
 import threeDotsMenu from '../static/img/threeDotsMenu.svg'
-import {removePolishChars} from "../helpers/others";
+import {removePolishChars, unicodeToUTF8} from "../helpers/others";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
@@ -30,7 +30,7 @@ const VideoUploadContent = () => {
             .then(res => {
                 const position = res.data.result.name;
                 if(position) {
-                    setVideoNames(getPlayElementsByPosition(position));
+                    setVideoNames(getPlayElementsByPosition(unicodeToUTF8(position)));
                 }
                 setUserId(res.data.result.id);
                 getUserVideos(res.data.result.id)
@@ -101,6 +101,11 @@ const VideoUploadContent = () => {
         </header> : ""}
 
         {videoNames?.length ? videoNames?.map((item, index) => {
+            let positionName = '';
+            if(item === 'przyjecie') positionName = 'przyjęcie';
+            else if(item === 'pelen mecz') positionName = 'pełen mecz';
+            else positionName = item;
+
             return <section className="videoTable__item" id={item} key={index} onClick={() => { setMobileMenuVisible(-1); openUploader(item); }}>
                 <section className="videoTable__item__miniature" onClick={(e) => { if(getVideoIndexByPlay(item) !== -1) e.stopPropagation(); setPlayVideo(getVideoIndexByPlay(item)); }}>
                     {getVideoIndexByPlay(item) !== -1 ? <Player
@@ -112,7 +117,7 @@ const VideoUploadContent = () => {
                 </section>
 
                 <h3 className="videoTable__item__element">
-                    {item}
+                    {positionName}
                 </h3>
 
                 <h3 className="videoTable__item__element">

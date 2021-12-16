@@ -148,10 +148,6 @@
         width: 45%;
     }
 
-    .player__option {
-        width: 31%;
-    }
-
     .player__option__price {
         font-size: 75px;
     }
@@ -865,7 +861,7 @@
     }
 
     .userInfoEdition__graphSection {
-        margin-left: 0;
+        margin-left: 30px;
         margin-top: 10px;
     }
 
@@ -929,6 +925,10 @@
     .video-react-big-play-button {
         width: 40px;
         height: 40px;
+    }
+
+    .container--light .playerVideoView {
+        margin-bottom: 0;
     }
 
     .playerVideoView {

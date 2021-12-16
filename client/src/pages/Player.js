@@ -125,6 +125,9 @@ const Player = () => {
                         <a className="button button--hover button--buyNow" href="/">
                             <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
                         </a>
+                        <span className="player__option--bottom">
+                            Pakiet ważny do 31.01.2023
+                        </span>
                     </section>
                 </div>
             </section>

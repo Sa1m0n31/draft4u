@@ -68,9 +68,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
                     const paymentUri = "https://sandbox.przelewy24.pl/trnRequest/";
                     const token = res.data.result;
                     setP24Sign(res.data.sign);
-                    console.log(token);
-                    console.log(res.data.sign);
-                    //window.location = `${paymentUri}${token}`;
+                    window.location = `${paymentUri}${token}`;
                 })
         // }
     }

@@ -1,15 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const morgan = require('morgan');
+const fs = require('fs');
 const path = require("path");
 const session = require('express-session');
 const apiAuth = require('./apiAuth');
 const app = express();
-const morgan = require('morgan');
-const fs = require('fs');
 const http = require('http');
 const flash = require('connect-flash');
-require('dotenv').config()
+require('dotenv').config();
 
 const basicAuth = new apiAuth().basicAuth;
 
@@ -24,17 +24,27 @@ const io = new Server(server, {
 });
 
 /* Redirect http to https */
-// app.enable('trust proxy');
-// app.use (function (req, res, next) {
-//     if (req.secure) {
-//         // request was via https, so do no special handling
-//         next();
-//     } else {
-//         // request was via http, so redirect to https
-//         res.redirect('https://' + req.headers.host + req.url);
-//     }
-// });
+app.enable('trust proxy');
 
+function redirectWwwTraffic(req, res, next) {
+    if (req.headers.host.slice(0, 4) === "www.") {
+        var newHost = req.headers.host.slice(4);
+        return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
+    }
+    next();
+}
+
+app.use (function (req, res, next) {
+    if (req.secure) {
+        // request was via https, so do no special handling
+        console.log('secure');
+        next();
+    } else {
+        // request was via http, so redirect to https
+        res.redirect('https://' + req.headers.host + req.url);
+    }
+});
+app.use(redirectWwwTraffic);
 
 // create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
@@ -218,6 +228,18 @@ app.get("/lista-artykulow", (req, res) => {
 app.get("/dodaj-artykul", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+app.get("/lista-mailingowa", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/lista-zawodnikow", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/dodaj-kod", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/lista-kodow", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 app.get("/return", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
@@ -242,9 +264,9 @@ const adminRouter = require("./routers/admin");
 const paymentRouter = require("./routers/payment");
 const chatRouter = require("./routers/chat");
 
-app.use("/auth", basicAuth, authRouter);
-app.use("/image", basicAuth, imageRouter);
-app.use("/video", basicAuth, videoRouter);
+app.use("/auth", authRouter);
+app.use("/image", imageRouter);
+app.use("/video", videoRouter);
 app.use("/custom-field", basicAuth, customFieldRouter);
 app.use("/notification", basicAuth, notificationRouter);
 app.use("/squad", basicAuth, squadRouter);
@@ -257,7 +279,21 @@ app.use("/blog", basicAuth, blogRouter);
 app.use("/price", basicAuth, priceRouter);
 app.use("/league", basicAuth, leagueRouter);
 app.use("/admin", basicAuth, adminRouter);
-app.use("/payment", basicAuth, paymentRouter);
+app.use("/payment", paymentRouter);
 app.use("/chat", basicAuth, chatRouter);
+
+// app.use(function (err, req, res, next) {
+//     // set locals, only providing error in development
+//     res.locals.message = err.message;
+//     res.locals.error = err;
+//
+//     // render the error page
+//     console.error(err);
+//     res.status(err.status || 500);
+//     res.render('error', {
+//         message: err.message,
+//         error: err
+//     });
+// });
 
 server.listen(5000);

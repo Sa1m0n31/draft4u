@@ -46,10 +46,10 @@ router.get("/is-email-available", (request, response) => {
 const sendPasswordRemindLink = (email, token, response) => {
     let transporter = nodemailer.createTransport(smtpTransport ({
         auth: {
-            user: 'powiadomienia@skylo-pl.atthost24.pl',
-            pass: 'SwinkaPeppa-31'
+            user: process.env.EMAIL_ADDRESS,
+            pass: process.env.EMAIL_PASSWORD
         },
-        host: 'skylo-pl.atthost24.pl',
+        host: process.env.EMAIL_HOST,
         secureConnection: true,
         port: 465,
         tls: {
@@ -58,12 +58,12 @@ const sendPasswordRemindLink = (email, token, response) => {
     }));
 
     let mailOptions = {
-        from: 'powiadomienia@skylo-pl.atthost24.pl',
+        from: process.env.EMAIL_ADDRESS,
         to: email,
         subject: 'Odzyskaj hasło do swojego konta',
         html: '<h2>Odzyskaj hasło do swojego konta</h2> ' +
             '<p>W celu odzyskania hasła do swojego konta w serwisie Draf4U, kliknij w poniższy link:</p> ' +
-            `<a href="https://drafcik.skylo-test1.pl/resetowanie-hasla?email=${email}&token=${token}">http://drafcik.skylo-test1.pl/resetowanie-hasla?token=${token}</a>` +
+            `<a href="` + process.env.API_URL + `/resetowanie-hasla?email=${email}&token=${token}">` + process.env.API_URL + `/resetowanie-hasla?token=${token}</a>` +
             `<p>Pozdrawiamy</p>` +
             `<p>Zespół Draft4U</p>`
     }
@@ -214,7 +214,7 @@ const getUserData = (request, response, userId) => {
                     });
                 }
                 else {
-                    got.get(`https://drafcik.skylo-test1.pl/club/get-club-data?id=${userId}`)
+                    got.get(`${process.env.API_URL}/club/get-club-data?id=${userId}`)
                         .then((res) => {
                             const result = res.body.result;
                             response.send({
@@ -380,7 +380,9 @@ router.put("/update-user-position", (request, response) => {
     const { position } = request.body;
     const userId = request.user;
 
-    const query = 'UPDATE users u SET position = (SELECT id FROM positions WHERE name = $1) FROM identities i WHERE u.id = i.user_id AND i.id = $2';
+    console.log(position);
+
+    const query = 'UPDATE users u SET position = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [position, userId];
 
     updateQuery(query, values, response);

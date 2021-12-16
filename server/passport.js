@@ -82,7 +82,7 @@ const init = (passport) => {
     passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_SECRET,
-        callbackURL: `${process.env.API_URL}/auth/facebook/callback"`,
+        callbackURL: process.env.API_URL,
         profileFields: ['id', 'emails', 'name']
     }, function(accessToken, refreshToken, profile, done) {
         return done(null, profile);
@@ -91,7 +91,7 @@ const init = (passport) => {
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_APP_ID,
         clientSecret: GOOGLE_SECRET,
-        callbackURL: `${process.env.API_URL}/auth/google/callback`
+        callbackURL: process.env.API_URL
     }, googleAuth));
 
     passport.serializeUser((user, done) => {
@@ -102,75 +102,80 @@ const init = (passport) => {
     passport.deserializeUser((id, done) => {
         let query, values, hash;
 
-        if(id.name) {
-            /* Facebook or Google */
-            const uuid = uuidv4();
-            hash = crypto.createHash('sha256').update(id.id).digest('hex');
-            query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
-            values = [hash, id.name.givenName, id.name.familyName];
-            db.query(query, values, (err, res) => {
-                if(res) {
-                    /* Add new identity */
-                    if(res.rows) {
-                        const userId = res.rows[0].id;
-                        query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                        values = [uuid, userId, id.provider === 'facebook' ? 2 : 3, hash];
+        if(id) {
+            if(id.name) {
+                /* Facebook or Google */
+                const uuid = uuidv4();
+                hash = crypto.createHash('sha256').update(id.id).digest('hex');
+                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                values = [hash, id.name.givenName, id.name.familyName];
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        /* Add new identity */
+                        if(res.rows) {
+                            const userId = res.rows[0].id;
+                            query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
+                            values = [uuid, userId, 3, hash];
 
-                        db.query(query, values, (err, res) => {
-                            if(res) {
-                                done(null, uuid);
-                            }
-                            else {
-                                done(null, null);
-                            }
-                        });
+                            db.query(query, values, (err, res) => {
+                                if(res) {
+                                    done(null, uuid);
+                                }
+                                else {
+                                    done(null, null);
+                                }
+                            });
+                        }
+                        else {
+                            done(null, null);
+                        }
                     }
                     else {
-                        done(null, null);
-                    }
-                }
-                else {
-                    /* Error - user from Facebook already exists */
-                    if(parseInt(err.code) === 23505) {
-                        const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1`;
-                        const values = [hash];
+                        /* Error - user from Facebook already exists */
+                        if(parseInt(err.code) === 23505) {
+                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1`;
+                            const values = [hash];
 
-                        db.query(query, values, (err, res) => {
-                           if(res) {
-                               done(null, res.rows[0].id);
-                           }
-                           else {
-                               done(null, null);
-                           }
-                        });
+                            db.query(query, values, (err, res) => {
+                                if(res) {
+                                    done(null, res.rows[0].id);
+                                }
+                                else {
+                                    done(null, null);
+                                }
+                            });
+                        }
+                        else {
+                            done(null, null);
+                        }
                     }
-                    else {
-                        done(null, null);
-                    }
-                }
-            });
-        }
-        else if(isNumeric(id.toString())) {
-            /* Admin */
-            query = 'SELECT id FROM admins WHERE id = $1';
-            values = [id];
+                });
+            }
+            else if(isNumeric(id.toString())) {
+                /* Admin */
+                query = 'SELECT id FROM admins WHERE id = $1';
+                values = [id];
 
-            db.query(query, values, (err, res) => {
-                if(res) {
-                    if(res.rows.length) done(null, res.rows[0].id);
-                }
-            });
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        if(res.rows.length) done(null, res.rows[0].id);
+                    }
+                });
+            }
+            else {
+                /* User or club */
+                query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON i.id = c.id WHERE i.id = $1';
+                values = [id];
+
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        if(res.rows.length) done(null, res.rows[0].id);
+                    }
+                });
+            }
         }
         else {
-            /* User or club */
-            query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON i.id = c.id WHERE i.id = $1';
-            values = [id];
-
-            db.query(query, values, (err, res) => {
-                if(res) {
-                    if(res.rows.length) done(null, res.rows[0].id);
-                }
-            });
+            done(null, null);
         }
     });
 }

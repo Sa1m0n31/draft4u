@@ -36,7 +36,7 @@ const changeUserPassword = (oldPassword, newPassword) => {
 const getUserData = () => {
     return axios.get(`${API_URL}/user/get-user-data`, {
         headers: {
-            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
+            'Access-Control-Allow-Origin': settings.API_URL
         },
         withCredentials: true
     });
@@ -133,9 +133,27 @@ const updateUserHeight = (height) => {
 }
 
 const updateUserPosition = (position) => {
-    console.log(position);
+    let positionId;
+    switch(position) {
+        case 'atakujący':
+            positionId = 1;
+            break;
+        case 'rozgrywający':
+            positionId = 2;
+            break;
+        case 'przyjmujący':
+            positionId = 3;
+            break;
+        case 'środkowy':
+            positionId = 4;
+            break;
+        default:
+            positionId = 5;
+            break;
+    }
+
     return axios.put(`${API_URL}/user/update-user-position`, {
-        position
+        position: positionId
     }, {
         withCredentials: true
     });

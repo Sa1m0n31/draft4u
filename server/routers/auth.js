@@ -9,14 +9,6 @@ require('../passport')(passport);
 const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
 
-const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
-const GOOGLE_SECRET = '_onZWhS3GID4ujR-3KaX0U2N';
-
-const isLoggedIn = (req, res, next) => {
-    if(req.user) next();
-    else res.redirect("/");
-}
-
 function isNumeric(str) {
     if (typeof str != "string") return false // we only process strings!
     return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
@@ -24,9 +16,6 @@ function isNumeric(str) {
 }
 
 const sendVerificationEmail = (email, token, response) => {
-    console.log(process.env.EMAIL_PASSWORD);
-    console.log(process.env.EMAIL_ADDRESS);
-    console.log(process.env.EMAIL_HOST);
     let transporter = nodemailer.createTransport(smtpTransport ({
         auth: {
             user: process.env.EMAIL_ADDRESS,
@@ -46,15 +35,12 @@ const sendVerificationEmail = (email, token, response) => {
         subject: 'Zweryfikuj swoje konto w serwisie Draft4U',
         html: '<h2>Cieszymy się, że jesteś z nami!</h2> ' +
             '<p>W celu weryfikacji Twojego konta, kliknij w poniższy link: </p> ' +
-            `<a href="https://drafcik.skylo-test1.pl/weryfikacja?token=${token}">http://drafcik.skylo-test1.pl/weryfikacja?token=${token}</a>` +
+            `<a href="` + process.env.API_URL + `/weryfikacja?token=${token}">` + process.env.API_URL + `/weryfikacja?token=${token}</a>` +
             `<p>Pozdrawiamy</p>` +
             `<p>Zespół Draft4U</p>`
     }
 
     transporter.sendMail(mailOptions, function(error, info) {
-        console.log("NODEMAILER");
-        console.log(error);
-        console.log(info);
         response.send({
             result: 1
         });
@@ -136,12 +122,20 @@ router.post("/login",
 );
 
 router.get('/failure', (request, response) => {
+    console.log('faulure');
     const errorMsg = request.flash().error[0];
+    console.log(errorMsg);
     response.send({
         result: 0,
         msg: errorMsg
     });
-})
+});
+
+router.get('/failure-third-party', (request, response) => {
+    response.send({
+        result: 0
+    });
+});
 
 router.post("/admin",
     passport.authenticate('admin-local', { session: true }),
@@ -152,36 +146,38 @@ router.post("/admin",
 });
 
 router.get("/facebook", cors(), passport.authenticate('facebook', {
-    failureRedirect: '/auth/failure',
-    successRedirect: 'http://localhost:3000',
+    failureRedirect: '/auth/failure-third-party',
+    successRedirect: process.env.API_URL,
     session: true,
     scope:['public_profile', 'email']
 }));
 
 router.get("/facebook/callback",  passport.authenticate("facebook", {
-    successRedirect: "http://localhost:3000/zarejestruj-przez-facebooka",
-    failureRedirect: "/auth/failure"
+    successRedirect: `${process.env.API_URL}/zarejestruj-przez-facebooka`,
+    failureRedirect: "/auth/failure-third-party"
 }), (request, response) => {
-    console.log("HELLO FROM CALLBACK");
+
 });
 
 router.get('/google',
     passport.authenticate('google', {
         scope: ['https://www.googleapis.com/auth/plus.login'],
-        failureRedirect: '/auth/failure'
+        failureRedirect: '/auth/failure',
+        successRedirect: process.env.API_URL,
+        session: true
     }));
 
 router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/auth/failure' }),
+    passport.authenticate('google',
+        { failureRedirect: '/',
+                successRedirect: process.env.API_URL }),
     function(req, res) {
         // Successful authentication, redirect success.
-        res.redirect('http://localhost:3000/zarejestruj-przez-google');
+        res.redirect(`${process.env.API_URL}/zarejestruj-przez-google`);
     });
 
 router.post("/register-local", (request, response) => {
    const { email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory } = request.body;
-
-   console.log("CHECKBOX: " + checkboxObligatory);
 
    /* Password hash */
    const hash = crypto.createHash('sha256').update(password).digest('hex');

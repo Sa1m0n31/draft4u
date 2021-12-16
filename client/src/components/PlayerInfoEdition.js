@@ -47,13 +47,12 @@ const PlayerInfoEdition = ({player, theme}) => {
     }, [height]);
 
     useEffect(() => {
-        console.log(player.vertical_range);
         setAttackRange(player.attack_range);
         setVerticalRange(player.vertical_range);
         setBlockRange(player.block_range);
         setWeight(player.weight);
         setHeight(player.height);
-        setPosition(player.name);
+        if(player.name) setPosition(unicodeToUTF8(player.name));
     }, [player]);
 
     const options = {
@@ -292,7 +291,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                         {editPosition ? <select className="select--editProfile"
                                                 disabled={!editPosition}
                                                 value={position}
-                                                onChange={(e) => { console.log(e.target); setPosition(e.target.value); }}
+                                                onChange={(e) => { setPosition(e.target.value); }}
                         >
                             {positions?.map((item, index) => {
                                 return <option value={item} key={index}>

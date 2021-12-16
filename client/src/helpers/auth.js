@@ -10,13 +10,11 @@ const isLoggedIn = () => {
 }
 
 const loginUser = (email, password) => {
+    console.log('/auth/login');
     return axios.post(`${API_URL}/auth/login`, {
         username: email,
         password: password
     }, {
-        headers: {
-            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
-        },
         withCredentials: true
     });
 }
@@ -27,7 +25,7 @@ const loginAdmin = (login, password) => {
         password: password
     }, {
         headers: {
-            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
+            'Access-Control-Allow-Origin': API_URL
         },
         withCredentials: true
     });
@@ -47,8 +45,6 @@ const loginFacebook = () => {
             console.log(err);
         })
 }
-
-const GOOGLE_APP_ID = '888809203937-ju07csqet2hl5tj2kmmimpph7frsqn5r.apps.googleusercontent.com';
 
 const loginGoogle = () => {
     return axios.get(`${API_URL}/auth/google`)
@@ -91,7 +87,7 @@ const verifyUser = (token) => {
 const logoutUser = () => {
     return axios.get(`${API_URL}/auth/logout`, {
         headers: {
-            'Access-Control-Allow-Origin': 'https://drafcik.skylo-test1.pl'
+            'Access-Control-Allow-Origin': API_URL
         },
         withCredentials: true
     });

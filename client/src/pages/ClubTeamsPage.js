@@ -142,7 +142,7 @@ const ClubTeamsPage = ({club}) => {
                 Zapisane składy
             </h1>
 
-            <header className="clubTeams__tableHeader">
+            {teams.length ? <header className="clubTeams__tableHeader">
                 <h4 className="clubTeams__tableHeader__header">
                     Nazwa
                 </h4>
@@ -158,7 +158,7 @@ const ClubTeamsPage = ({club}) => {
                 <h4 className="clubTeams__tableHeader__header d-desktop">
                     Działania
                 </h4>
-            </header>
+            </header> : ""}
             {teams.length ? teams.map((item, index) => {
                 return <section className="clubTeams__team" key={index}>
                     <button className={currentTeam === index ? "clubTeams__item clubTeams__item--gold" : "clubTeams__item"} onClick={() => { if(currentTeam !== index) setCurrentTeam(index); else setCurrentTeam(-1); }}>

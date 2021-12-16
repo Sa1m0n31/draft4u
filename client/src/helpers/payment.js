@@ -8,6 +8,7 @@ const getPaymentMethods = () => {
 }
 
 const registerPayment = (amount, method, email, userId, type) => {
+    console.log(type);
     return axios.post(`${API_URL}/payment/register-payment`, {
         amount, method, email, userId, type
     });

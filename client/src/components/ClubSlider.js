@@ -4,6 +4,7 @@ import ReactSiema from 'react-siema'
 import logo1 from '../static/img/zzaksa.png';
 import logo2 from '../static/img/jw.png';
 import {getClubs} from "../helpers/admin";
+import settings from "../settings";
 
 const ClubSlider = () => {
     const [logos, setLogos] = useState([]);
@@ -15,9 +16,23 @@ const ClubSlider = () => {
         getClubs()
             .then((res) => {
                 const result = res?.data?.result;
+                if(result) {
+                    if(result.length > 3) {
+                        for(let i=0; i<10; i++) {
+                            setLogos(prevState => {
+                                return prevState.concat(result.map((item) => {
+                                    return item.file_path;
+                                }));
+                            })
+                        }
+                    }
+                    else {
+                        setLogos(result.map((item) => {
+                            return item.file_path;
+                        }));
+                    }
+                }
             });
-
-        setLogos([logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2, logo1, logo2]);
 
         /* Initialize carousel */
         carouselInit(slider);
@@ -42,9 +57,9 @@ const ClubSlider = () => {
             }}
                         ref={(siema) => { slider = siema }}
                         loop={true}>
-                {logos.map((item, index) => {
+                {logos?.map((item, index) => {
                     return <figure className="clubCarousel__item" key={index}>
-                        <img className="clubCarousel__item__img" src={item} alt="logo-klubu" />
+                        <img className="clubCarousel__item__img" src={`${settings.API_URL}/image?url=/media/users/${item}`} alt="logo-klubu" />
                     </figure>
                 })}
             </ReactSiema>

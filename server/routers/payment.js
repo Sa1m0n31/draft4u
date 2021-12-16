@@ -27,6 +27,11 @@ router.post("/register-payment", (request, response) => {
     const { amount, method, email, userId } = request.body;
     let paymentType;
 
+    console.log(amount);
+    console.log(method);
+    console.log(email);
+    console.log(userId);
+
     let hash, data, gen_hash;
     const sessionId = uuidv4();
     hash = crypto.createHash('sha384');
@@ -53,10 +58,8 @@ router.post("/register-payment", (request, response) => {
                     language: "pl",
                     encoding: "utf-8",
                     method: method,
-                    // urlReturn: "https://platnosci.skylo-test1.pl/return.html",
-                    // urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
-                    urlReturn: "https://drafcik.skylo-test1.pl/return",
-                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    urlReturn: `${process.env.API_URL}/subskrypcja-przedluzona`,
+                    urlStatus: `${process.env.API_URL}/payment/verify`,
                     sign: gen_hash
                 };
             }
@@ -72,10 +75,8 @@ router.post("/register-payment", (request, response) => {
                     country: "PL",
                     language: "pl",
                     encoding: "utf-8",
-                    // urlReturn: "https://platnosci.skylo-test1.pl/return.html",
-                    // urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
-                    urlReturn: "https://drafcik.skylo-test1.pl/return",
-                    urlStatus: "https://drafcik.skylo-test1.pl/payment/verify",
+                    urlReturn: `${process.env.API_URL}/subskrypcja-przedluzona`,
+                    urlStatus: `${process.env.API_URL}/payment/verify`,
                     sign: gen_hash
                 };
             }
@@ -126,6 +127,8 @@ router.post("/verify", (request, response) => {
     //         console.log(err);
     //     })
 
+    console.log('verify');
+
     got.put("https://sandbox.przelewy24.pl/api/v1/transaction/verify", {
         json: {
             merchantId,
@@ -142,6 +145,8 @@ router.post("/verify", (request, response) => {
         }
     })
         .then(res => {
+            console.log('status:');
+            console.log(res.body.data.status);
             if(res.body.data.status === 'success') {
                 const query = 'SELECT user_id FROM payments WHERE session_id = $1';
                 const values = [sessionId];
@@ -149,7 +154,7 @@ router.post("/verify", (request, response) => {
                 db.query(query, values, (err, res) => {
                     if(res) {
                         const { user_id } = res.rows[0];
-                        const query = `UPDATE identities SET subscription = '31.01.2022' WHERE user_id = $1`;
+                        const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
                         const values = [user_id];
 
                         db.query(query, values, (err, res) => {
