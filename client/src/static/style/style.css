@@ -2677,6 +2677,10 @@ ul {
     max-width: 200px;
 }
 
+.playerInfoEdition .input--editProfile[type=number] {
+    max-width: 100px;
+}
+
 .input--editProfile {
     opacity: 1 !important;
 }

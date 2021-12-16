@@ -31,6 +31,12 @@ const PlayerInfoEdition = ({player, theme}) => {
 
     const [positions, setPositions] = useState([]);
 
+    const attackRangeRef = useRef(null);
+    const verticalRangeRef = useRef(null);
+    const blockRangeRef = useRef(null);
+    const heightRef = useRef(null);
+    const weightRef = useRef(null);
+
     useEffect(() => {
         getAllPositions()
             .then(res => {
@@ -175,6 +181,41 @@ const PlayerInfoEdition = ({player, theme}) => {
         updateUserPosition(position);
     }
 
+    useEffect(() => {
+        if(editBlockRange) {
+            blockRangeRef.current.focus();
+            blockRangeRef.current.select();
+        }
+    }, [editBlockRange]);
+
+    useEffect(() => {
+        if(editVerticalRange) {
+            verticalRangeRef.current.focus();
+            verticalRangeRef.current.select();
+        }
+    }, [editVerticalRange]);
+
+    useEffect(() => {
+        if(editAttackRange) {
+            attackRangeRef.current.focus();
+            attackRangeRef.current.select();
+        }
+    }, [editAttackRange]);
+
+    useEffect(() => {
+        if(editHeight) {
+            heightRef.current.focus();
+            heightRef.current.select();
+        }
+    }, [editHeight]);
+
+    useEffect(() => {
+        if(weightRef) {
+            weightRef.current.focus();
+            weightRef.current.select();
+        }
+    }, [editWeight]);
+
     return <section className="playerInfoEdition siteWidthSuperNarrow">
         <section className={theme === 'dark' ? "userInfoEdition__form userInfoEdition__form--dark" : "userInfoEdition__form"}>
             <label className="userInfoEdition__form__field">
@@ -185,11 +226,16 @@ const PlayerInfoEdition = ({player, theme}) => {
                     <label className={editAttackRange ? "label--edit" : ""}>
                         <input value={attackRange ? attackRange : 0}
                                type="number"
-                               onChange={(e) => { setAttackRange(e.target.value); }}
+                               ref={attackRangeRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserAttackRange(); }}
+                               onChange={(e) => { setAttackRange(prevState => {
+                                   if(e.target.value?.toString()?.length > 3) return prevState;
+                                   else return e.target.value;
+                               }); }}
                                disabled={!editAttackRange}
                                max={400}
                                className="input--editProfile"
-                               name="attackRange" />
+                               name="attackRange" /> cm
                         {!editAttackRange ? <button className="userInfoEdition__btn" onClick={() => { setEditAttackRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserAttackRange(); }}>
@@ -206,11 +252,16 @@ const PlayerInfoEdition = ({player, theme}) => {
                     <label className={editVerticalRange ? "label--edit" : ""}>
                         <input value={verticalRange ? verticalRange : 0}
                                type="number"
-                               onChange={(e) => { setVerticalRange(e.target.value); }}
+                               ref={verticalRangeRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserVerticalRange(); }}
+                               onChange={(e) => { setVerticalRange(prevState => {
+                                   if(e.target.value?.toString()?.length > 3) return prevState;
+                                   else return e.target.value;
+                               }); }}
                                disabled={!editVerticalRange}
                                className="input--editProfile"
                                max={400}
-                               name="verticalRange" />
+                               name="verticalRange" /> cm
                         {!editVerticalRange ? <button className="userInfoEdition__btn" onClick={() => { setEditVerticalRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserVerticalRange(); }}>
@@ -225,13 +276,18 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editBlockRange ? "label--edit" : ""}>
-                        <input value={blockRange ? blockRange : 0}
+                        <input value={blockRange}
                                type="number"
-                               onChange={(e) => { setBlockRange(e.target.value); }}
+                               ref={blockRangeRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserBlockRange(); }}
+                               onChange={(e) => { setBlockRange(prevState => {
+                                   if(e.target.value?.toString()?.length > 3) return prevState;
+                                   else return e.target.value;
+                               }); }}
                                disabled={!editBlockRange}
                                className="input--editProfile"
                                max={400}
-                               name="blockRange" />
+                               name="blockRange" /> cm
                         {!editBlockRange ? <button className="userInfoEdition__btn" onClick={() => { setEditBlockRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserBlockRange(); }}>
@@ -248,11 +304,16 @@ const PlayerInfoEdition = ({player, theme}) => {
                     <label className={editHeight ? "label--edit" : 0}>
                         <input value={height ? height : 0}
                                type="number"
-                               onChange={(e) => { setHeight(e.target.value); }}
+                               ref={heightRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserHeight(); }}
+                               onChange={(e) => { setHeight(prevState => {
+                                   if(e.target.value?.toString()?.length > 3) return prevState;
+                                   else return e.target.value;
+                               }); }}
                                disabled={!editHeight}
                                className="input--editProfile"
                                max={300}
-                               name="height" />
+                               name="height" /> cm
                         {!editHeight ? <button className="userInfoEdition__btn" onClick={() => { setEditHeight(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserHeight(); }}>
@@ -269,11 +330,16 @@ const PlayerInfoEdition = ({player, theme}) => {
                     <label className={editWeight ? "label--edit" : 0}>
                         <input value={weight ? weight : 0}
                                type="number"
-                               onChange={(e) => { setWeight(e.target.value); }}
+                               ref={weightRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserWeight(); }}
+                               onChange={(e) => { setWeight(prevState => {
+                                   if(e.target.value?.toString()?.length > 3) return prevState;
+                                   else return e.target.value;
+                               }); }}
                                disabled={!editWeight}
                                className="input--editProfile"
                                max={200}
-                               name="weight" />
+                               name="weight" /> kg
                         {!editWeight ? <button className="userInfoEdition__btn" onClick={() => { setEditWeight(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserWeight(); }}>

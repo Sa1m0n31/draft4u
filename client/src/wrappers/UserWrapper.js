@@ -86,7 +86,6 @@ const UserWrapper = ({page}) => {
                                 }
                             }
                             else {
-                                console.log("not user");
                                 getClubData()
                                     .then((res) => {
                                         if(res?.data?.result) {
