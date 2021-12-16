@@ -25,7 +25,7 @@ const MyAccountStartBottom = ({userId}) => {
                         console.log(expireDate);
                         console.log(daysToExpire);
 
-                        if(currentDate > expireDate) setDays(daysToExpire * (-1));
+                        if(currentDate < expireDate) setDays(daysToExpire * (-1));
                         else setDays(daysToExpire);
                     }
                     else {

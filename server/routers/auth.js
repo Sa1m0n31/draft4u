@@ -90,6 +90,7 @@ router.get('/verification', (request, response) => {
 });
 
 router.get("/auth", (request, response) => {
+    console.log(request.user);
     if(request.user) {
         if(isNumeric(request.user.toString())) {
            /* Admin */

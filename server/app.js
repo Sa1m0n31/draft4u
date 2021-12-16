@@ -56,7 +56,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(cors({
     credentials: true,
     //origin: "*"
-    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', process.env.API_URL]
+    origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', `${process.env.API_URL}:3000`, `${process.env.API_URL}:5000`]
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -273,8 +273,8 @@ app.use("/squad", basicAuth, squadRouter);
 app.use("/visited", basicAuth, visitedRouter);
 app.use("/favorite", basicAuth, favoriteRouter);
 app.use("/coupon", basicAuth, couponRouter);
-app.use("/club", basicAuth, clubRouter);
-app.use("/user", basicAuth, userRouter);
+app.use("/club", clubRouter);
+app.use("/user", userRouter);
 app.use("/blog", basicAuth, blogRouter);
 app.use("/price", basicAuth, priceRouter);
 app.use("/league", basicAuth, leagueRouter);

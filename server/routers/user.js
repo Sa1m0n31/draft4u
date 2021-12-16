@@ -190,6 +190,7 @@ function isNumeric(str) {
 
 const getUserData = (request, response, userId) => {
     let facebook = false, google = false, hash = '', values;
+    console.log(userId);
     if(userId) {
         let query = '';
         if(facebook) {
@@ -207,6 +208,7 @@ const getUserData = (request, response, userId) => {
         }
 
         db.query(query, values, (err, res) => {
+            console.log('getting user data');
             if(res) {
                 if(res.rows.length) {
                     response.send({
@@ -214,13 +216,20 @@ const getUserData = (request, response, userId) => {
                     });
                 }
                 else {
-                    got.get(`${process.env.API_URL}/club/get-club-data?id=${userId}`)
-                        .then((res) => {
-                            const result = res.body.result;
-                            response.send({
-                                result: result
-                            });
-                        });
+                    // got.get(`${process.env.API_URL}/club/get-club-data`, {
+                    //     searchParams: {
+                    //         userId: userId
+                    //     }
+                    // })
+                    //     .then((res) => {
+                    //         const result = res.body.result;
+                    //         response.send({
+                    //             result: result
+                    //         });
+                    //     });
+                    response.send({
+                        result: 0
+                    })
                 }
             }
             else {
