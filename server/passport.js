@@ -20,7 +20,7 @@ function isNumeric(str) {
 const init = (passport) => {
     const userAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
-        const query = 'SELECT i.id, i.user_id, i.active FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE ((u.email = $1 AND i.hash = $2) OR (c.login = $1 AND i.hash = $2))';
+        const query = 'SELECT i.id, i.user_id, i.active FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON c.id = i.id WHERE ((LOWER(u.email) = LOWER($1) AND i.hash = $2) OR (LOWER(c.login) = LOWER($1) AND i.hash = $2))';
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {
@@ -50,7 +50,7 @@ const init = (passport) => {
 
     const adminAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
-        const query = 'SELECT id FROM admins WHERE login = $1 AND password = $2';
+        const query = 'SELECT id FROM admins WHERE LOWER(login) = LOWER($1) AND password = $2';
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {

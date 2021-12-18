@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import pen from '../static/img/pen.svg'
 import check from '../static/img/check.svg'
 
@@ -35,6 +35,10 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [editLicence, setEditLicence] = useState(false);
 
     const [favoritePlayer, setFavoritePlayer] = useState(false);
+
+    const phoneNumberRef = useRef(null);
+    const clubRef = useRef(null);
+    const licenseRef = useRef(null);
 
     const STEP = 1;
     const MIN = 1000;
@@ -106,6 +110,26 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         setFavoritePlayer(!favoritePlayer);
     }
 
+    useEffect(() => {
+        if(editPhoneNumber) {
+            phoneNumberRef.current.focus();
+        }
+    }, [editPhoneNumber]);
+
+    useEffect(() => {
+        if(editClub) {
+            clubRef.current.focus();
+            clubRef.current.select();
+        }
+    }, [editClub]);
+
+    useEffect(() => {
+        if(editLicence) {
+            licenseRef.current.focus();
+            licenseRef.current.select();
+        }
+    }, [editLicence]);
+
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
             <UserProfileImage user={player} club={clubProp} />
@@ -158,6 +182,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                         <span className="userInfoEdition__value">
                             <label className={editPhoneNumber ? "label--edit" : ""}>
                                 <input value={phoneNumber}
+                                       ref={phoneNumberRef}
+                                       onKeyDown={(e) => { if(e.keyCode === 13) changeUserPhoneNumber(); }}
                                        onChange={(e) => { setPhoneNumber(e.target.value); }}
                                        disabled={!editPhoneNumber}
                                        className="input--editProfile"
@@ -178,6 +204,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 <span className="userInfoEdition__value">
                     <label className={editClub ? "label--edit" : ""}>
                         <input value={club}
+                               ref={clubRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserClub(); }}
                                onChange={(e) => { setClub(e.target.value); }}
                                disabled={!editClub}
                                className="input--editProfile"
@@ -197,6 +225,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 <span className="userInfoEdition__value">
                     <label className={editLicence ? "label--edit" : ""}>
                         <input value={licence ? licence : "-"}
+                               ref={licenseRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserLicence(); }}
                                onChange={(e) => { setLicence(e.target.value); }}
                                disabled={!editLicence}
                                className="input--editProfile"
@@ -211,7 +241,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Wynagrodzenie
+                    Wynagrodzenie (netto)
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--salary">
                     {values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}

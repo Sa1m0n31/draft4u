@@ -60,6 +60,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
         /* Filter players */
         setFilteredPlayers(players?.filter((item) => {
+            if(item.first_name === 'Szymon') console.log(item);
             const playersAge = calculateAge(item.birthday);
             return (item.sex === gender)
                     &&(isPlayerInFilteredGroup(item.position))
@@ -103,6 +104,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     }
 
     const isPlayerInFilteredGroup = (position) => {
+        console.log("PLAYER POSITION: " + position);
         if(isElementInArray(positionFilters, 0)) return true;
         else {
             return positionFilters.findIndex((item) => {
@@ -319,16 +321,16 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
                     Wszyscy
                 </button>
-                <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                     Przyjmujący
                 </button>
-                <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
                     Atakujący
                 </button>
-                <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
                     Środkowy
                 </button>
-                <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
                     Rozgrywający
                 </button>
                 <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
@@ -363,16 +365,16 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
                     Wszyscy
                 </button>
-                <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                     Przyjmujący
                 </button>
-                <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
                     Atakujący
                 </button>
-                <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
                     Środkowy
                 </button>
-                <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
                     Rozgrywający
                 </button>
                 <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>

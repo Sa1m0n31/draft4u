@@ -579,31 +579,6 @@ const CreateSquadPage = ({club}) => {
                 {[1, 2, 3, 4, 5, 6, 7].map((item, index) => {
                    return <div className={!updateTeam.length-1 >= item ? `dropzone dropzone--active` : `dropzone dropzone--active dropzone--player--${item}`}>
                        <img className="btn__img" src={playerPlaceholder} alt="zawodnik" />
-
-                       {/*{updateTeam[item-1] ? <>*/}
-                       {/*    <div className="createSquad__squad__item__dragging createSquad__squad__item__dragging--update draggable"*/}
-                       {/*         onMouseDown={(e) => { startDragging(e, index * (-1)); }}*/}
-                       {/*         id="draggable-111">*/}
-                       {/*        <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />*/}
-
-                       {/*        <button className="createSquad__squad__item__dragging__trashBtn" onClick={() => { removePlayerFromUpdateTeam(updateTeam[item-1].id); }}>*/}
-                       {/*            <img className="createSquad__squad__item__dragging__trashBtn__img" src={trash} alt="usun" />*/}
-                       {/*        </button>*/}
-
-                       {/*        <figure className="createSquad__squad__item__dragging__imgWrapper">*/}
-                       {/*            <img className="createSquad__squad__item__dragging__img" src={profilePicture} alt={`test`} />*/}
-                       {/*        </figure>*/}
-
-                       {/*        <section className="createSquad__squad__item__dragging__header">*/}
-                       {/*            <h3 className="createSquad__squad__item__dragging__header__name">*/}
-                       {/*                {updateTeam[item-1].first_name} {updateTeam[item-1].last_name}*/}
-                       {/*            </h3>*/}
-                       {/*            <h4 className="createSquad__squad__item__dragging__header__position">*/}
-                       {/*                {getPositionById(updateTeam[item-1].position)}*/}
-                       {/*            </h4>*/}
-                       {/*        </section>*/}
-                       {/*    </div>*/}
-                       {/*</> : ""}*/}
                    </div>
                 })}
             </main>
@@ -662,16 +637,16 @@ const CreateSquadPage = ({club}) => {
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
                     Wszyscy
                     </button>
-                    <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                    <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                         Przyjmujący
                     </button>
-                    <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                    <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
                         Atakujący
                     </button>
-                    <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                    <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
                         Środkowy
                     </button>
-                    <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                    <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
                         Rozgrywający
                     </button>
                     <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
@@ -683,16 +658,16 @@ const CreateSquadPage = ({club}) => {
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
                     Wszyscy
                     </button>
-                    <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
+                    <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                         Przyjmujący
                     </button>
-                    <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
+                    <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
                         Atakujący
                     </button>
-                    <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
+                    <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
                         Środkowy
                     </button>
-                    <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
+                    <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
                         Rozgrywający
                     </button>
                     <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>

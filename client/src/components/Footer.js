@@ -19,6 +19,12 @@ const Footer = ({theme, border}) => {
                         </a>
                     </li>
                     <li className="footer__col__list__item footer__contactItem">
+                        <span>Tel</span>
+                        <a className="footer__col__list__item__link" href="tel:+48 535480814">
+                            535 480 814
+                        </a>
+                    </li>
+                    <li className="footer__col__list__item footer__contactItem">
                         <span>Mail</span>
                         <a className="footer__col__list__item__link" href="mailto:biuro@draft4u.com.pl">
                             biuro@draft4u.com.pl

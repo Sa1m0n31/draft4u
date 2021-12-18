@@ -70,6 +70,9 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
                     <h3 className="videoUploader__text">
                         Przeciągnij i upuść pliki wideo, które chcesz przesłać
                     </h3>
+                    <h4 className="videoUploader__smallText">
+                        Akceptowane są pliki z rozszerzeniem .mp4, .webm oraz .mov. Postaraj się, aby Twój plik nie ważył więcej niż 100 MB. Pliki powyżej 500 MB nie będą akceptowane.
+                    </h4>
                     <button className="button button--hover button--videoUploader">
                         <img className="btn__img" src={wybierzPlikBtn} alt="wybierz-plik" />
                     </button>

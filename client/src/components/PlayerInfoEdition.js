@@ -49,7 +49,7 @@ const PlayerInfoEdition = ({player, theme}) => {
     useEffect(() => {
         const div = document.createElement("div");
         div.textContent = "test";
-       document.querySelector(".apexcharts-grid").appendChild(div);
+        document.querySelector(".apexcharts-grid").appendChild(div);
     }, [height]);
 
     useEffect(() => {
@@ -147,7 +147,7 @@ const PlayerInfoEdition = ({player, theme}) => {
     const series = [
         {
             name: theme === 'dark' ? 'Wynik' : "Twój wynik",
-            data: [height, weight, attackRange, verticalRange, blockRange]
+            data: [height, weight * 2.1, attackRange, verticalRange * 2.5, blockRange]
         }
     ]
 
