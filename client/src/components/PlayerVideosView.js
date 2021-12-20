@@ -15,11 +15,12 @@ const PlayerVideoView = ({id, club}) => {
     const [playVideo, setPlayVideo] = useState(-1);
     const [identity, setIdentity] = useState("");
 
-    var player = useRef(null);
+    let player = useRef(null);
 
     useEffect(() => {
         getUserVideos(id)
             .then(res => {
+                console.log(res.data.result);
                 setVideos(res.data.result);
             });
     }, []);
@@ -50,6 +51,9 @@ const PlayerVideoView = ({id, club}) => {
                 {videos?.map((item, index) => {
                     return <SplideSlide key={index}>
                         <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); setPlayVideo(index); }}>
+                            <h4 className="video__title">
+                                {item.name}
+                            </h4>
                             <span className="playerVideoView__overlay"></span>
                             <button className="playBtn playBtn--marginLeftMinus">
                                 <img className="btn__img" src={playBtn} alt="odtworz" />

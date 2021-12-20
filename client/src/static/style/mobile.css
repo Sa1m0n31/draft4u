@@ -23,6 +23,14 @@
 }
 
 @media(max-width: 1800px) {
+    .userInfoEdition__value,
+    .input--editProfile, .select--editProfile,
+    .userInfoEdition__value label,
+    .playerInfoEdition .input--editProfile,
+    .userInfoEdition__key {
+        font-size: 16px;
+    }
+
     .siteHeader__btn--register {
         margin-left: 3%;
         margin-right: 2%;
@@ -2282,6 +2290,11 @@
 
     .createSquad__squad__item {
         width: 100%;
+    }
+
+    .video__title {
+        font-size: 15px;
+        padding: 5px 20px;
     }
 
     @media(min-width: 700px) {

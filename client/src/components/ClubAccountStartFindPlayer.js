@@ -10,7 +10,6 @@ const ClubAccountStartFindPlayer = () => {
     useEffect(() => {
         getThreeNewest()
             .then((res) => {
-                console.log(res?.data?.result);
                 setPlayers(res?.data?.result);
             });
     }, []);

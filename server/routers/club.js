@@ -110,7 +110,8 @@ router.get("/get-three-newest", (request, response) => {
             LEFT OUTER JOIN images i ON u.profile_picture = i.id 
             WHERE u.id NOT IN (
             SELECT user_id as id FROM favorites WHERE club_id = $1
-            ) AND id.active = true AND id.subscription >= NOW() LIMIT 3`;
+            ) AND id.active = true AND id.subscription >= NOW() AND u.weight IS NOT NULL AND u.height IS NOT NULL AND u.block_range IS NOT NULL
+             AND u.attack_range IS NOT NULL AND u.vertical_range IS NOT NULL LIMIT 3`;
    const values = [club];
 
    db.query(query, values, (err, res) => {

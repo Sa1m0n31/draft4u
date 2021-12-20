@@ -95,6 +95,43 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
         setFilteredPlayers(playersProp);
     }, [playersProp]);
 
+    useEffect(() => {
+        const shuffledPlayers = orderPlayersByInfo(shufflePlayers(players));
+        setFilteredPlayers(shuffledPlayers);
+    }, [players]);
+
+    const orderPlayersByInfo = (players) => {
+        return players.sort((a, b) => {
+            if(a.position === null) return 1;
+            else if(b.position === null) return -1;
+            else if(a.height === null) return 1;
+            else if(b.height === null) return -1;
+            else if(a.weight === null) return 1;
+            else if(b.weight === null) return -1;
+            else if(a.attack_range === null) return 1;
+            else if(b.attack_range === null) return -1;
+            else if(a.vertical_range === null) return 1;
+            else if(b.vertical_range === null) return -1;
+            else if(a.block_range === null) return 1;
+            else if(b.block_range === null) return -1;
+            else if(a.file_path === null) return 1;
+            else if(b.file_path === null) return -1;
+            else return -1;
+        });
+    }
+
+    const shufflePlayers = (array) => {
+        let currentIndex = array.length, randomIndex;
+
+        while (currentIndex != 0) {
+               randomIndex = Math.floor(Math.random() * currentIndex);
+               currentIndex--;
+               [array[currentIndex], array[randomIndex]] = [
+               array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
     const isPlayerFavorite = (userId) => {
         if(!userId || !favoritesState.length) return false;
 

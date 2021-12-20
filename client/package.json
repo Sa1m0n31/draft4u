@@ -27,6 +27,7 @@
     "react-dropzone-uploader": "^2.11.0",
     "react-glider": "^2.2.1",
     "react-glider-carousel": "^0.1.2",
+    "react-image-autofit-frame": "^0.1.0",
     "react-interactjs": "^0.1.2",
     "react-loader-spinner": "^4.0.0",
     "react-modal": "^3.14.3",

@@ -75,7 +75,7 @@ const MyAccountStartBottom = ({userId}) => {
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
                     </a>
                 </section> : <p className="player__flex__text">
-                       Dziękujemy, że jesteś z nami. Lorem ipsum dolor sit amet.
+                       Dziękujemy, że jesteś z nami.
                    </p>}
             </section>
 
