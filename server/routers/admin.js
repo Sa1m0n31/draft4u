@@ -87,7 +87,6 @@ router.get("/get-users", (request, response) => {
 router.post("/change-password", (request, response) => {
     const { oldPassword, newPassword } = request.body;
     const id = request.user;
-    console.log(id);
 
     const oldPasswordHash = crypto.createHash('sha256').update(oldPassword).digest('hex');
     const newPasswordHash = crypto.createHash('sha256').update(newPassword).digest('hex');
@@ -96,7 +95,6 @@ router.post("/change-password", (request, response) => {
     const values = [newPasswordHash, oldPasswordHash, id];
 
     db.query(query, values, (err, res) => {
-        console.log(res);
         if(res) {
             if(res.rowCount) {
                 response.send({
@@ -142,14 +140,51 @@ router.post("/unlock-user", (request, response) => {
 
     const query = 'UPDATE identities SET active = true WHERE id = $1';
     const values = [id];
-    console.log(id);
 
     db.query(query, values, (err, res) => {
-        console.log(err);
-        console.log(res);
         if(res) {
             response.send({
                 result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.delete("/delete-user", (request, response) => {
+    const { id } = request.query;
+
+    const query1 = 'DELETE FROM users USING identities WHERE users.id = identities.user_id AND identities.id = $1';
+    const query2 = 'DELETE FROM verification WHERE identity = $1';
+    const query3 = 'DELETE FROM identities WHERE id = $1';
+    const values = [id];
+
+    db.query(query1, values, (err, res) => {
+        if(res) {
+            db.query(query2, values, (err, res) => {
+                if(res) {
+                    db.query(query3, values, (err, res) => {
+                       if(res) {
+                           response.send({
+                               result: 1
+                           });
+                       }
+                       else {
+                           response.send({
+                               result: 0
+                           });
+                       }
+                    });
+                }
+                else {
+                    response.send({
+                        result: 0
+                    });
+                }
             });
         }
         else {

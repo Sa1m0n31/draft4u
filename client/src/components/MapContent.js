@@ -6,7 +6,6 @@ import { Range, getTrackBackground } from 'react-range';
 import manIcon from '../static/img/woman.svg'
 import womanIcon from '../static/img/man.svg'
 import settings from "../settings";
-import useEmblaCarousel from 'embla-carousel-react'
 import ReactSiema from 'react-siema'
 
 const MapContent = () => {
@@ -100,7 +99,6 @@ const MapContent = () => {
     useEffect(() => {
         if(loaded) {
             if(window.innerWidth > 996) clubsWrapper.current.style.opacity = "0";
-            console.log(league[0]);
             if(sex[0] === 0) {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
@@ -298,16 +296,26 @@ const MapContent = () => {
                 {filteredDots.map((item, index) => {
                     return <section className="mapDot" key={index} style={{top: `${item.y}%`, left: `${item.x}%`}}>
                         <button className="mapDot__btn" id={`mapDot-${index}`} onClick={(e) => { getClubsByDot(item.x, item.y); showClubsOnMap(e, index); }}>
-                            <span className="mapDot__btn__details"
-                                  style={{
-                                      width: currentDotClubs.length * (window.innerWidth > 996 ? 100 : 60) + "px"
-                                  }}
+                            <span className={item.x < 30 ? "mapDot__btn__details mapDot__btn__details--west" : (item.x > 70 ? "mapDot__btn__details mapDot__btn__details--east" : "mapDot__btn__details")}
                                   id={`mapDot__btn-${index}`}>
                                 {/* Show club's logos */}
                                 {currentDotClubs?.map((item, index) => {
-                                    return <figure className="mapDot__btn__details__imgWrapper" key={index}>
-                                        <img className="mapDot__btn__details__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="logo" />
-                                    </figure>
+                                    return <div className="mapDot__btn__details__singleClub">
+                                        <figure className="mapDot__btn__details__imgWrapper" key={index}>
+                                            <img className="mapDot__btn__details__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="logo" />
+                                        </figure>
+                                        <section className="mapDot__btn__details__data">
+                                            {item.city ? <span>
+                                                <b>Siedziba:</b> {item.city}
+                                            </span> : ""}
+                                            {item.nip ? <span>
+                                                <b>NIP:</b> {item.nip}
+                                            </span> : ""}
+                                            {item.krs ? <span>
+                                                <b>KRS:</b> {item.krs}
+                                            </span> : ""}
+                                        </section>
+                                    </div>
                                 })}
                             </span>
                         </button>

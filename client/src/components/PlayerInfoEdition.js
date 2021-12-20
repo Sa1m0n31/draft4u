@@ -276,7 +276,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editBlockRange ? "label--edit" : ""}>
-                        <input value={blockRange}
+                        <input value={blockRange ? blockRange : 0}
                                type="number"
                                ref={blockRangeRef}
                                onKeyDown={(e) => { if(e.keyCode === 13) changeUserBlockRange(); }}

@@ -3,8 +3,9 @@ import AdminTop from "../components/AdminTop";
 import PanelMenu from "../components/PanelMenu";
 import closeIcon from "../static/img/close-grey.svg";
 import trashIcon from "../static/img/block.svg";
+import deleteIcon from '../static/img/trash-black.svg'
 import unlockIcon from "../static/img/unlock.svg";
-import {banUser, getUsers, unlockUser} from "../helpers/admin";
+import {banUser, deleteUser, getUsers, unlockUser} from "../helpers/admin";
 
 const AdminPlayersList = () => {
     const [players, setPlayers] = useState([]);
@@ -12,6 +13,7 @@ const AdminPlayersList = () => {
     const [deleteStatus, setDeleteStatus] = useState(-1);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [blockMode, setBlockMode] = useState(true);
+    const [deleteUserMode, setDeleteUserMode] = useState(false);
 
     const deleteModal = useRef(null);
 
@@ -31,7 +33,14 @@ const AdminPlayersList = () => {
     }, [deleteStatus]);
 
     const banUserWrapper = () => {
-        if(blockMode) {
+        if(deleteUserMode) {
+            deleteUser(candidateToDelete)
+                .then((res) => {
+                   if(res?.data?.result) setDeleteStatus(1);
+                   else setDeleteStatus(0);
+                });
+        }
+        else if(blockMode) {
             banUser(candidateToDelete)
                 .then((res) => {
                     if(res?.data?.result) setDeleteStatus(1);
@@ -47,7 +56,10 @@ const AdminPlayersList = () => {
         }
     }
 
-    const openDeleteModal = (id, active) => {
+    const openDeleteModal = (id, active, deleteUser = false) => {
+        if(deleteUser) setDeleteUserMode(true);
+        else setDeleteUserMode(false);
+
         if(active) setBlockMode(true);
         else setBlockMode(false);
 
@@ -78,22 +90,24 @@ const AdminPlayersList = () => {
 
                 {deleteStatus === -1 ? <>
                     <h3 className="modal__header">
-                        Czy na pewno chcesz {blockMode ? "zablokować" : "odblokować"} konto tego zawodnika?
+                        Czy na pewno chcesz {deleteUserMode ? "usunąć" : (blockMode ? "zablokować" : "odblokować")} konto tego zawodnika?
                     </h3>
 
                     <div className="modal__buttons">
                         <button className="modal__btn" onClick={() => { banUserWrapper(); }}>
-                            {blockMode ? "Zablokuj" : "Odblokuj"}
+                            {deleteUserMode ? "Usuń" : (blockMode ? "Zablokuj" : "Odblokuj")}
                         </button>
                         <button className="modal__btn" onClick={() => { setDeleteModalOpen(false); }}>
                             Powrót
                         </button>
                     </div>
-                </> : (blockMode ? <h3 className="modal__header">
+                </> : (deleteUserMode ? <h3 className="modal__header">
+                    {deleteStatus === 1 ? "Zawodnik został usunięty" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
+                </h3> : (blockMode ? <h3 className="modal__header">
                     {deleteStatus === 1 ? "Zawodnik został zablokowany" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
                 </h3> : <h3 className="modal__header">
                     {deleteStatus === 1 ? "Zawodnik został odblokowany" : "Coś poszło nie tak... Prosimy spróbować później lub skontaktować się z administratorem"}
-                </h3>)}
+                </h3>))}
             </div>
         </div>
 
@@ -159,9 +173,11 @@ const AdminPlayersList = () => {
                                 Akcje
                             </h3>
                             <section className="admin__main__notification__item__buttons">
-                                <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active); }}>
+                                {!item.active && item.active !== null ? <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active, true); }}>
+                                    <img className="btn__img btn__img--invert" src={deleteIcon} alt="zablokuj" />
+                                </button> : <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active); }}>
                                     {item.active !== null ? <img className="btn__img" src={trashIcon} alt="zablokuj" /> : <img className="btn__img" src={unlockIcon} alt="odblokuj" />}
-                                </button>
+                                </button>}
                             </section>
                         </section>
                     </section>

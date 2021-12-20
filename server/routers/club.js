@@ -8,7 +8,7 @@ const multer  = require('multer')
 const upload = multer({ dest: 'media/clubs' })
 
 router.get("/get-all", (request, response) => {
-    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, l.sex, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id';
+    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, l.sex, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id';
     db.query(query, (err, res) => {
        if(res) {
             response.send({
@@ -24,7 +24,7 @@ router.get("/get-all", (request, response) => {
 });
 
 router.get("/get-locations", (request, response) => {
-    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c JOIN images i ON c.logo = i.id GROUP BY x, y`;
+    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id GROUP BY x, y`;
 
     db.query(query, [], (err, res) => {
         if(res) {
@@ -43,7 +43,7 @@ router.get("/get-locations", (request, response) => {
 router.get("/get-club-data", (request, response) => {
    const clubId = request.user;
 
-   const query = 'SELECT c.id, c.name, c.x, c.y, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
+   const query = 'SELECT c.id, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
    const values = [clubId];
 
    db.query(query, values, (err, res) => {
@@ -63,7 +63,7 @@ router.get("/get-club-data", (request, response) => {
 router.get("/get-club-by-id", (request, response) => {
    const id = request.query.id;
 
-    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
+    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, c.email, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
     const values = [id];
 
     db.query(query, values, (err, res) => {
@@ -170,7 +170,7 @@ router.get("/get-player-highlight", (request, response) => {
 });
 
 router.post("/update", upload.single("image"), (request, response) => {
-    const { clubId, name, login, league, x, y, imgUpdate } = request.body;
+    const { clubId, name, login, league, x, y, nip, krs, city, email, imgUpdate } = request.body;
 
     let filename = null;
     if(request.file) {
@@ -185,8 +185,8 @@ router.post("/update", upload.single("image"), (request, response) => {
             if(res) {
                 if(res.rows) {
                     const imageId = res.rows[0].id;
-                    const query = 'UPDATE clubs SET name = $1, league = $2, login = $3, x = $4, y = $5, logo = $6 WHERE id = $7';
-                    const values = [name, league, login, x, y, imageId, clubId];
+                    const query = 'UPDATE clubs SET name = $1, league = $2, login = $3, x = $4, y = $5, logo = $6, nip = $7, krs = $8, city = $9, email = $10 WHERE id = $11';
+                    const values = [name, league, login, x, y, imageId, nip, krs, city, email, clubId];
 
                     db.query(query, values, (err, res) => {
                         if(res) {
@@ -217,13 +217,13 @@ router.post("/update", upload.single("image"), (request, response) => {
     }
     else {
         let query;
-        const values = [name, league, login, x, y, clubId];
+        const values = [name, league, login, x, y, nip, krs, city, email, clubId];
 
         if(imgUpdate === 'delete') {
-            query = 'UPDATE clubs SET name = $1, league = $2, login = $3, x = $4, y = $5, logo = NULL WHERE id = $6';
+            query = 'UPDATE clubs SET name = $1, league = $2, login = $3, x = $4, y = $5, logo = NULL, nip = $6, krs = $7, city = $8, email = $9 WHERE id = $10';
         }
         else {
-            query = 'UPDATE clubs SET name = $1, league = $2, login = $3, x = $4, y = $5 WHERE id = $6';
+            query = 'UPDATE clubs SET name = $1, league = $2, login = $3, x = $4, y = $5, nip = $6, krs = $7, city = $8, email = $9 WHERE id = $10';
         }
 
         db.query(query, values, (err, res) => {
@@ -247,7 +247,7 @@ router.post("/update", upload.single("image"), (request, response) => {
 });
 
 router.post("/add", upload.single("image"), (request, response) => {
-    const {  name, login, password, league, x, y } = request.body;
+    const {  name, login, password, league, x, y, nip, krs, city, email } = request.body;
 
     let filename = null;
     if(request.file) {
@@ -265,8 +265,8 @@ router.post("/add", upload.single("image"), (request, response) => {
             if(res) {
                 if(res.rows) {
                     const imageId = res.rows[0].id;
-                    const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
-                    const values = [id, name, league, login, hash, imageId, x, y];
+                    const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)';
+                    const values = [id, name, league, login, hash, imageId, x, y, nip, krs, city, email];
 
                     db.query(query, values, (err, res) => {
                         if(res) {
@@ -304,8 +304,8 @@ router.post("/add", upload.single("image"), (request, response) => {
         });
     }
     else {
-        const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, NULL, $6, $7)';
-        const values = [id, name, league, login, hash, x, y];
+        const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, NULL, $6, $7, $8, $9, $10, $11)';
+        const values = [id, name, league, login, hash, x, y, nip, krs, city, email];
 
         db.query(query, values, (err, res) => {
             if(res) {

@@ -45,4 +45,12 @@ const unlockUser = (id) => {
     });
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser }
+const deleteUser = (id) => {
+    return axios.delete(`${API_URL}/admin/delete-user`, {
+        params: {
+            id
+        }
+    });
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser }

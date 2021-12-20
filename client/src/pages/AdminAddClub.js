@@ -25,6 +25,10 @@ const AdminAddClub = ({admin}) => {
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
     const [x, setX] = useState(null);
     const [y, setY] = useState(null);
+    const [nip, setNip] = useState("");
+    const [krs, setKrs] = useState("");
+    const [city, setCity] = useState("");
+    const [email, setEmail] = useState("");
     const [img, setImg] = useState(null);
     const [updateMode, setUpdateMode] = useState(false);
     const [updateImage, setUpdateImage] = useState(false);
@@ -80,6 +84,10 @@ const AdminAddClub = ({admin}) => {
                         setLeague(result.league);
                         setLocationSelected(2);
                         setUpdateImage(result.file_path);
+                        setNip(result.nip);
+                        setKrs(result.krs);
+                        setCity(result.city);
+                        setEmail(result.email);
                     }
                 });
         }
@@ -125,14 +133,14 @@ const AdminAddClub = ({admin}) => {
                 return 0;
             }
 
-            addClub(name, league, username, password, x, y, img?.file)
+            addClub(name, league, username, password, x, y, img?.file, nip, krs, city, email)
                 .then((res) => {
                     setAddResult(res?.data?.result);
                     window.scrollTo(0, 0);
                 });
         }
         else {
-            updateClub(clubId, name, league, username, x, y, imageUpdated ? (img ? img.file : 'delete') : null)
+            updateClub(clubId, name, league, username, x, y, imageUpdated ? (img ? img.file : 'delete') : null, nip, krs, city, email)
                 .then((res) => {
                     setAddResult(res?.data?.result);
                     window.scrollTo(0, 0);
@@ -331,6 +339,42 @@ const AdminAddClub = ({admin}) => {
                                        placeholder="Powtórz wpisane hasło" />
                             </label>
                         </>}
+                        <label className="admin__label">
+                            NIP
+                            <input className="admin__input admin__input--title"
+                                   name="nip"
+                                   autoComplete="off"
+                                   value={nip}
+                                   onChange={(e) => { setNip(e.target.value); }}
+                                   placeholder="Tu wpisz NIP klubu" />
+                        </label>
+                        <label className="admin__label">
+                            KRS
+                            <input className="admin__input admin__input--title"
+                                   name="krs"
+                                   autoComplete="off"
+                                   value={krs}
+                                   onChange={(e) => { setKrs(e.target.value); }}
+                                   placeholder="Tu wpisz KRS klubu" />
+                        </label>
+                        <label className="admin__label">
+                            Siedziba
+                            <input className="admin__input admin__input--title"
+                                   name="city"
+                                   autoComplete="off"
+                                   value={city}
+                                   onChange={(e) => { setCity(e.target.value); }}
+                                   placeholder="Tu wpisz siedzibę klubu" />
+                        </label>
+                        <label className="admin__label">
+                            Kontaktowy adres email
+                            <input className="admin__input admin__input--title"
+                                   name="email"
+                                   autoComplete="off"
+                                   value={email}
+                                   onChange={(e) => { setEmail(e.target.value); }}
+                                   placeholder="Tu wpisz kontaktowy adres email" />
+                        </label>
                         <label className="admin__label">
                             Logo klubu
                             <span className="admin__label__imgUpload">

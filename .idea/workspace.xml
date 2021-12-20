@@ -15,20 +15,19 @@
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/MapContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MapContent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/MyAccountStartBottom.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MyAccountStartBottom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerInfoEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerInfoEdition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/AdminAddClub.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AdminAddClub.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateSquadPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ResetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ResetPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ResetPasswordEmailForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ResetPasswordEmailForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AdminPlayersList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AdminPlayersList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +192,7 @@
       <workItem from="1639687370240" duration="6403000" />
       <workItem from="1639763128855" duration="8641000" />
       <workItem from="1639953146730" duration="8354000" />
-      <workItem from="1640000646963" duration="7590000" />
+      <workItem from="1640000646963" duration="16722000" />
     </task>
     <servers />
   </component>
@@ -253,11 +252,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1640015826185" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1640018151241">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1640032260875">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="498" y="178" width="672" height="538" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1639574970279" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1640018151241" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1640032260875" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
