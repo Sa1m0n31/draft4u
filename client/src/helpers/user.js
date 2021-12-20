@@ -33,6 +33,12 @@ const changeUserPassword = (oldPassword, newPassword) => {
     });
 }
 
+const resetPassword = (email, password) => {
+    return axios.post(`${API_URL}/user/reset-password`, {
+        email, password
+    });
+}
+
 const getUserData = () => {
     return axios.get(`${API_URL}/user/get-user-data`, {
         headers: {
@@ -254,5 +260,5 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     updateUserHeight, updateUserWeight, updateUserPosition,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
     getUserById, getUserFavorites, getUserVisited,
-    getIdentityById
+    getIdentityById, resetPassword
 }

@@ -14,7 +14,7 @@ router.get("/is-email-available", (request, response) => {
    const email = request.query.email;
 
    if(email) {
-       const query = 'SELECT * FROM users WHERE email = $1';
+       const query = 'SELECT * FROM users WHERE LOWER(email) = LOWER($1)';
        const values = [email];
        db.query(query, values, (err, res) => {
           if(res) {
@@ -78,7 +78,7 @@ const sendPasswordRemindLink = (email, token, response) => {
 router.post("/password-remind", (request, response) => {
     const { email } = request.body;
 
-    const query = 'SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE u.email = $1';
+    const query = 'SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE LOWER(u.email) = LOWER($1)';
     const values = [email];
 
     db.query(query, values, (err, res) => {
@@ -149,11 +149,44 @@ router.get("/check-remind-password-token", (request, response) => {
    }
 });
 
+router.post("/reset-password", (request, response) => {
+    const { email, password } = request.body;
+
+    const newPasswordHash = crypto.createHash('sha256').update(password).digest('hex');
+
+    console.log("RESET PASSWORD");
+    console.log(email);
+
+    const query = 'UPDATE identities i SET hash = $1 FROM users u WHERE i.user_id = u.id AND LOWER(u.email) = LOWER($2)';
+    const values = [newPasswordHash, email];
+
+    db.query(query, values, (err, res) => {
+        console.log(res);
+        console.log(err);
+        if(res) {
+            if(res.rowCount) {
+                response.send({
+                    result: 1
+                });
+            }
+            else {
+                response.send({
+                    result: -2
+                });
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            })
+        }
+    });
+});
+
 router.post("/change-password", (request, response) => {
     const { oldPassword, newPassword } = request.body;
     const id = request.user;
 
-    console.log(id);
     const oldPasswordHash = crypto.createHash('sha256').update(oldPassword).digest('hex');
     const newPasswordHash = crypto.createHash('sha256').update(newPassword).digest('hex');
 

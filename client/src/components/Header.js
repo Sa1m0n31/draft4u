@@ -70,11 +70,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             if(player) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
             else setProfilePicture(`${settings.API_URL}/image?url=/media/clubs/${profileImage}`);
         }
-    }, []);
-
-    useEffect(() => {
-        console.log(player);
-    }, []);
+    }, [profileImage]);
 
     useEffect(() => {
         if(notifications?.length) {
@@ -323,6 +319,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/edycja-profilu">Profil</a>
                 </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/mapa">Mapa</a>
+                </li>
             </ul> : ""}
 
             {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
@@ -362,6 +361,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 </li>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/zapisane-druzyny">Zapisane drużyny</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/mapa">Mapa</a>
                 </li>
             </ul> : ""}
 
@@ -436,6 +438,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                             Profil
                         </a>
                     </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/mapa">
+                            Mapa
+                        </a>
+                    </li>
                 </ul> : ""}
 
                 {/* Club menu */}
@@ -463,6 +470,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/zapisane-druzyny">
                             Zapisane drużyny
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item d-over-1200">
+                        <a className="siteHeader__menu__link" href="/mapa">
+                            Mapa
                         </a>
                     </li>
                 </ul> : ""}

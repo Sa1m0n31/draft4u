@@ -5,25 +5,23 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {getUserSubscription} from "../helpers/user";
 import discountImg from "../static/img/discount.png";
+import DraftLoader from "./Loader";
 
 const MyAccountStartBottom = ({userId}) => {
     const [days, setDays] = useState(0);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         getUserSubscription(userId)
             .then((res) => {
                 const result = res?.data?.result[0];
-                console.log(result);
+                setLoaded(true);
                 if(result) {
                     if(result.subscription) {
                         const currentDate = new Date();
                         const expireDate = new Date(Date.parse(result.subscription));
 
                         const daysToExpire = Math.floor((currentDate - expireDate) / 86400000);
-
-                        console.log(currentDate);
-                        console.log(expireDate);
-                        console.log(daysToExpire);
 
                         if(currentDate < expireDate) setDays(daysToExpire * (-1));
                         else setDays(daysToExpire);
@@ -36,7 +34,7 @@ const MyAccountStartBottom = ({userId}) => {
     }, []);
 
     return <section className="myAccountStart__bottom siteWidthSuperNarrow">
-        <main className="myAccountStart__bottom__content">
+        {loaded ? <main className="myAccountStart__bottom__content">
             <section className="myAccountStart__bottom__content__section">
                 <h3 className="player__header">
                     Twoja subskrypcja
@@ -75,8 +73,8 @@ const MyAccountStartBottom = ({userId}) => {
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
                     </a>
                 </section> : <p className="player__flex__text">
-                       Dziękujemy, że jesteś z nami.
-                   </p>}
+                    Dziękujemy, że jesteś z nami.
+                </p>}
             </section>
 
             <section className="myAccountStart__bottom__content__section">
@@ -96,7 +94,7 @@ const MyAccountStartBottom = ({userId}) => {
                     </> : <img className="myAccountStart__bottom__content__lock" src={lockRed} alt="konto-wygaslo" />}
                 </span>
             </section>
-        </main>
+        </main> : <DraftLoader />}
     </section>
 }
 

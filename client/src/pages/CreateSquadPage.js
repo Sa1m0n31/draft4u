@@ -860,7 +860,7 @@ const CreateSquadPage = ({club}) => {
                             <div
                                 ref={props.ref}
                                 style={{
-                                    height: !mobile ? '15px' : '10px',
+                                    height: !mobile ? '16px' : '10px',
                                     width: '100%',
                                     border: '1px solid #707070',
                                     borderRight: 'none',

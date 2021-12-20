@@ -39,7 +39,6 @@ const UserWrapper = ({page}) => {
                             const user = res?.data?.result;
                             const isLocal = !user?.adapter || user?.adapter === 1;
 
-                            console.log(user);
                             if(user) {
                                 if(user.active) {
                                     switch(page) {

@@ -53,7 +53,7 @@ const MapContent = () => {
         else {
             setFilteredDots(dots.filter((item) => {
                 return item.leagues.split(';').findIndex((item) => {
-                    return parseInt(item.toString()) === n+3;
+                    return parseInt(item.toString()) === n+4;
                 }) !== -1;
             }));
         }
@@ -100,6 +100,7 @@ const MapContent = () => {
     useEffect(() => {
         if(loaded) {
             if(window.innerWidth > 996) clubsWrapper.current.style.opacity = "0";
+            console.log(league[0]);
             if(sex[0] === 0) {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
@@ -116,7 +117,7 @@ const MapContent = () => {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
                         if(!league[0]) return !item.sex;
-                        else return !item.sex && parseInt(item.league) === league[0]+3;
+                        else return !item.sex && parseInt(item.league) === league[0]+4;
                     }));
                     if(league[0]) setDotsByLeague(0, league[0]);
                     else setFemaleDots();
@@ -140,12 +141,19 @@ const MapContent = () => {
     const showClubsOnMap = (e, index) => {
         e.stopPropagation();
 
+        console.log("SHOW CLUB: " + index);
+
         document.querySelectorAll(".mapDot__btn").forEach((item, i, array) => {
             item.style.background = "#fff";
             if(i === array.length-1) {
                 document.getElementById(`mapDot-${index}`).style.background = "#E2B76D";
             }
         });
+
+        document.querySelectorAll('.mapDot').forEach((item) => {
+            item.style.zIndex = '3';
+        });
+        document.querySelector(`.mapDot:nth-of-type(${index+1})`).style.zIndex = '100';
 
         document.querySelectorAll(".mapDot__btn__details").forEach((item, i, array) => {
             item.style.display = "none";
@@ -163,7 +171,7 @@ const MapContent = () => {
                         return (item.sex && item.league === league[0])
                     }
                     else {
-                        return (!item.sex && item.league === league[0]+3)
+                        return (!item.sex && item.league === league[0]+4)
                     }
                 }
                 else {
@@ -236,7 +244,7 @@ const MapContent = () => {
                     <Range
                         step={1}
                         min={0}
-                        max={3}
+                        max={4}
                         values={league}
                         onChange={(values) => {
                             setLeague(values);
@@ -248,7 +256,7 @@ const MapContent = () => {
                                 style={{
                                     ...props.style,
                                     height: '15px',
-                                    width: '350px',
+                                    width: '400px',
                                     maxWidth: '100%',
                                     borderRadius: '9px',
                                     backgroundColor: '#474747'
@@ -277,6 +285,7 @@ const MapContent = () => {
                         <span>Plus Liga</span>
                         <span>1. Liga</span>
                         <span>2. Liga</span>
+                        <span>3. Liga</span>
                     </aside>
                 </section>
             </section>

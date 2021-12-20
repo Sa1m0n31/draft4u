@@ -6,7 +6,7 @@ import nextBtn from "../static/img/dalej-btn.png";
 import backBtn from '../static/img/powrot-btn.png'
 import successImg from '../static/img/success.svg'
 import {isPasswordStrength} from "../helpers/validation";
-import {changeUserPassword, checkIfRemindPasswordTokenOk} from "../helpers/user";
+import {changeUserPassword, checkIfRemindPasswordTokenOk, resetPassword} from "../helpers/user";
 import DraftLoader from "../components/Loader";
 
 const ResetPassword = () => {
@@ -47,7 +47,7 @@ const ResetPassword = () => {
         }
         else {
             setLoading(true);
-            changeUserPassword(email, password)
+            resetPassword(email, password)
                 .then(res => {
                     setLoading(false);
                     if(res?.data?.result) {
@@ -88,6 +88,7 @@ const ResetPassword = () => {
                         <input className="input"
                                type="password"
                                name="repeatPassword"
+                               onKeyDown={(e) => { if(e.keyCode === 13) handleSubmit(e); }}
                                onClick={() => { setError(""); }}
                                value={repeatPassword}
                                onChange={(e) => { setRepeatPassword(e.target.value); }}

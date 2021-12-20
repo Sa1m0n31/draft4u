@@ -64,6 +64,7 @@ const ResetPasswordEmailForm = () => {
                         <input className="input input--remindPassword"
                                onClick={() => { setError(false); }}
                                value={email}
+                               onKeyDown={(e) => { if(e.keyCode === 13) handleSubmit(e); }}
                                onChange={(e) => { setEmail(e.target.value); }}
                                placeholder={error ? "" : "E-mail"} />
                     </label> : <div className="loaderWrapper--remindPassword">

@@ -52,7 +52,10 @@ const AdminAddClub = ({admin}) => {
     useEffect(() => {
         getLeagues()
             .then((res) => {
-                setLeagues(res?.data?.result);
+                setLeagues(res?.data?.result?.sort((a, b) => {
+                    if(a.name > b.name) return 1;
+                    else return -1;
+                }));
             });
 
         getClubLocations()

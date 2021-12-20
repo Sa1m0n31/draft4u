@@ -51,7 +51,7 @@ router.get("/get-admin-data", (request, response) => {
 });
 
 router.get("/get-clubs", (request, response) => {
-   const query = 'SELECT c.name, c.login, id.active, id.id, i.file_path FROM clubs c JOIN identities id USING(id) JOIN images i ON i.id = c.logo';
+   const query = 'SELECT c.name, c.login, id.active, id.id, i.file_path FROM clubs c JOIN identities id USING(id) LEFT OUTER JOIN images i ON i.id = c.logo';
 
    db.query(query, [], (err, res) => {
        if(res) {

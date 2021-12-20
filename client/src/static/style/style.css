@@ -2157,6 +2157,11 @@ ul {
     width: 100%;
 }
 
+.container--dark .mapDot__btn__details,
+.container--dark .mapImg__img {
+    filter: brightness(.8);
+}
+
 .mapDot {
     width: 4%;
     height: 4%;
@@ -4338,9 +4343,9 @@ input::-webkit-inner-spin-button {
     content: "";
     position: absolute;
     background: #474747;
-    top: 53.2%;
+    top: 55.8%;
     transform: translateY(calc(-50% - 1px));
-    height: 13px;
+    height: 14px;
     width: 100px;
     border: 1px solid #707070 !important;
     z-index: 0;
