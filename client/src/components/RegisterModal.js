@@ -386,9 +386,11 @@ const RegisterModal = (props) => {
                 {userRegistered === 1 ? <span>Udało się<br/>{props.registerFromThirdParty ? "Twoje konto zostało pomyślnie zarejestrowane" : "Na podany adres email wysłaliśmy link weryfikacyjny"}</span> : <span>Coś poszło nie tak<br/>Prosimy spróbować później</span>}
             </h4>
 
-            {userRegistered === 1 ? <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { goToLogin(); }}>
+            {userRegistered === 1 ? (props.mobile ? <a className="registerForm--nextBtn registerForm--nextBtn--login" href="/logowanie">
                 <img className="registerForm--nextBtn__img" src={loginBtn} alt="zaloguj-sie" />
-            </button> : ""}
+            </a> : <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { goToLogin(); }}>
+                <img className="registerForm--nextBtn__img" src={loginBtn} alt="zaloguj-sie" />
+            </button>) : ""}
         </section>) }
 
     </main>
