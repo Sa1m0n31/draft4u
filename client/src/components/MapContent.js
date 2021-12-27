@@ -15,6 +15,7 @@ const MapContent = () => {
     const [filteredDots, setFilteredDots] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [currentDotClubs, setCurrentDotClubs] = useState([]);
+    const [rangeValue, setRangeValue] = useState([0]);
 
     const [sex, setSex] = useState([0]);
     const [league, setLeague] = useState([0]);
@@ -74,7 +75,6 @@ const MapContent = () => {
             .then(res => {
                 if(res?.data?.result) {
                     const allClubs = res.data.result;
-                    console.log(allClubs);
                     setClubs(allClubs);
                     setFilteredClubs(allClubs.filter((item) => {
                         return item.sex;
@@ -138,8 +138,6 @@ const MapContent = () => {
 
     const showClubsOnMap = (e, index) => {
         e.stopPropagation();
-
-        console.log("SHOW CLUB: " + index);
 
         document.querySelectorAll(".mapDot__btn").forEach((item, i, array) => {
             item.style.background = "#fff";
@@ -242,11 +240,30 @@ const MapContent = () => {
                     <Range
                         step={1}
                         min={0}
-                        max={4}
-                        values={league}
+                        max={100}
+                        values={rangeValue}
                         onChange={(values) => {
-                            setLeague(values);
-
+                            const currentRange = values[0];
+                            if(currentRange < 20) {
+                                setRangeValue([0]);
+                                setLeague([0]);
+                            }
+                            else if(currentRange < 40) {
+                                setRangeValue([35]);
+                                setLeague([1]);
+                            }
+                            else if(currentRange < 60) {
+                                setRangeValue([56]);
+                                setLeague([2]);
+                            }
+                            else if(currentRange < 80) {
+                                setRangeValue([76]);
+                                setLeague([3]);
+                            }
+                            else {
+                                setRangeValue([100]);
+                                setLeague([4]);
+                            }
                         }}
                         renderTrack={({ props, children }) => (
                             <div

@@ -2697,6 +2697,10 @@ ul {
     margin: 20px 0;
 }
 
+.userInfoEdition__form__field--mail {
+    padding-right: 5px;
+}
+
 .userInfoEdition__key {
     color: var(--gold);
     display: block;
@@ -2738,6 +2742,33 @@ ul {
 
 .input--editProfile {
     opacity: 1 !important;
+}
+
+.userInfoEdition__value--salary {
+    width: 230px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.input--salary:first-of-type {
+    text-align: right;
+    /*padding-right: 35px;*/
+}
+
+.input--salary:last-of-type {
+    text-align: right;
+}
+
+.input--salary {
+    width: 42%;
+    font-variant-numeric: tabular-nums;
+}
+
+.betweenSalaryInputs {
+    display: block;
+    font-size: 24px;
+    padding-left: 10px;
 }
 
 .userInfoEdition__graphSection {
@@ -2792,6 +2823,10 @@ select::-ms-expand {
     padding: 5px;
     border: 1px solid transparent;
     white-space: nowrap;
+}
+
+.userInfoEdition__value--salary {
+    padding-right: 5px;
 }
 
 .label--edit {
@@ -4013,6 +4048,17 @@ input::-webkit-inner-spin-button {
     align-items: center;
     width: 28%;
     margin-right: 10%;
+    position: relative;
+}
+
+.comparedPlayer .playersWall__compareSection__item__deleteBtn {
+    top: 0;
+    right: 10px;
+    transition: .3s all;
+}
+
+.comparedPlayer:hover .playersWall__compareSection__item__deleteBtn {
+    opacity: 1;
 }
 
 .comparedPlayer:last-of-type {
@@ -5390,4 +5436,18 @@ input::-webkit-inner-spin-button {
 
 .registerPage .registerResult__img {
     transform: scale(.7);
+}
+
+.mapContent__header__item__labels {
+    /*width: 115%;*/
+    /*transform: translateX(-7.5%);*/
+}
+
+.mapContent__header__item__labels > span:first-of-type {
+    /*margin-left: -10%;*/
+    /*font-size: 12px;*/
+}
+
+.mapContent__header__item__labels > span:nth-of-type(2) {
+    /*margin-left: -45px;*/
 }

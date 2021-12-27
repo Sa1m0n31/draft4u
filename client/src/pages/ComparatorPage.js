@@ -42,7 +42,6 @@ const ComparatorPage = ({club}) => {
               getPlayerHighlight(item)
                   .then((res) => {
                       const result = res?.data?.result;
-                      console.log(result);
                       switch(index) {
                           case 0:
                               setFirstPlayerVideo(result[0]);

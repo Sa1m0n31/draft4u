@@ -102,6 +102,10 @@
     .createSquad__squad__item__dragging__header__position {
         font-size: 12px;
     }
+
+    .userInfoEdition__value--salary {
+        width: 180px;
+    }
 }
 
 @media(max-width: 1600px) {
@@ -697,6 +701,14 @@
         display: flex !important;
     }
 
+    .input--salary {
+        width: 30%;
+    }
+
+    .userInfoEdition__value--salary {
+        width: 140px;
+    }
+
     .container--homepage::after {
         width: 59%;
     }
@@ -903,10 +915,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .userInfoEdition__value--salary .userInfoEdition__btn {
-        margin-right: 5px;
     }
 
     .playerInfoEdition .userInfoEdition__btn--position {

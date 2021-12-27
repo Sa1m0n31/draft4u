@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import pen from '../static/img/pen.svg'
-import check from '../static/img/check.svg'
+import check from '../static/img/save-parameter.svg'
 
 import { Range, getTrackBackground } from 'react-range';
 import {
@@ -80,7 +80,12 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
 
     const changeUserSalary = () => {
         setEditSalary(false);
-        updateUserSalary(values[0], values[1]);
+        const valueFrom = parseInt(values[0]);
+        const valueTo = parseInt(values[1]);
+        const diff = valueTo - valueFrom;
+        if(diff >= 0 && diff <= 3000 && valueFrom >= 1000 && valueFrom <= 30000 && valueTo >= 1000 && valueFrom <= 30000) {
+            updateUserSalary(values[0], values[1]);
+        }
     }
 
     const changeUserClub = () => {
@@ -130,6 +135,39 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         }
     }, [editLicence]);
 
+    const editUserSalaryFrom = (salaryFrom) => {
+        if(salaryFrom <= 30000 && salaryFrom >= 0) {
+            setValues([salaryFrom, values[1]]);
+        }
+    }
+
+    const editUserSalaryTo = (salaryTo) => {
+        if(salaryTo <= 30000 && salaryTo >= 0) {
+                setValues([values[0], salaryTo]);
+        }
+    }
+
+    const selectSalaryFromInput = () => {
+        document.querySelector('.input--salary:first-of-type').select();
+    }
+
+    const selectSalaryToInput = () => {
+        document.querySelector('.input--salary:last-of-type').select();
+    }
+
+    useEffect(() => {
+        const numberOfDigitsInSalaryFrom = values[0].toString().length;
+        const numberOfDigitsInSalaryTo = values[1].toString().length;
+        const betweenSalaryInputs = document.querySelector('.betweenSalaryInputs');
+
+        if(numberOfDigitsInSalaryFrom < 5 && numberOfDigitsInSalaryTo < 5) {
+            betweenSalaryInputs.style.paddingLeft = '20px';
+        }
+        else {
+            betweenSalaryInputs.style.paddingLeft = '10px';
+        }
+    }, [values]);
+
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
             <UserProfileImage user={player} club={clubProp} />
@@ -167,7 +205,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 </span>
             </label>
             {!(theme === 'dark') ? <>
-                {player.adapter === 1 ? <label className="userInfoEdition__form__field">
+                {player.adapter === 1 ? <label className="userInfoEdition__form__field userInfoEdition__form__field--mail">
                     <span className="userInfoEdition__key">
                         Mail
                     </span>
@@ -244,7 +282,24 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     Wynagrodzenie (netto)
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--salary">
-                    {values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}
+                    <input className="input--editProfile input--salary"
+                           value={values[0] ? values[0] : (values[0] === '' ? '' : 1000)}
+                           onChange={(e) => { editUserSalaryFrom(e.target.value); }}
+                           onClick={() => { selectSalaryFromInput(); }}
+                           onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
+                           disabled={!editSalary}
+                           type="number" />
+                           <span className="betweenSalaryInputs">
+                               -
+                           </span>
+                   <input className="input--editProfile input--salary"
+                          value={values[1] ? values[1] : (values[1] === '' ? '' : 4000)}
+                          onChange={(e) => { editUserSalaryTo(e.target.value); }}
+                          onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
+                          onClick={() => { selectSalaryToInput(); }}
+                          disabled={!editSalary}
+                          type="number" />
+                    {/*{values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}*/}
                     {!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
                         <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                     </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserSalary(); }}>

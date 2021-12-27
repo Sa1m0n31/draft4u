@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import closeIcon from '../static/img/close-grey.svg'
-import playerImg from '../static/img/siatkarz.png'
+import playerImg from '../static/img/zawodnik-rejestracja.png'
 import nextBtn from '../static/img/dalej-btn.png'
 import registerBtnIcon from '../static/img/zarejestruj-btn.png'
 import triangleDown from '../static/img/triangle-down.svg'

@@ -710,3 +710,20 @@ html, body {
 .green {
     color: greenyellow;
 }
+
+.admin__map__img {
+    width: 100%;
+    height: auto;
+}
+
+@media(max-width: 1600px) {
+    .admin__map {
+        width: 500px;
+    }
+}
+
+@media(max-width: 1300px) {
+    .admin__map {
+        width: 400px;
+    }
+}

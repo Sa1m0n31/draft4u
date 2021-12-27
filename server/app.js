@@ -24,27 +24,27 @@ const io = new Server(server, {
 });
 
 /* Redirect http to https */
-app.enable('trust proxy');
-
-function redirectWwwTraffic(req, res, next) {
-    if (req.headers.host.slice(0, 4) === "www.") {
-        var newHost = req.headers.host.slice(4);
-        return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
-    }
-    next();
-}
-
-app.use (function (req, res, next) {
-    if (req.secure) {
-        // request was via https, so do no special handling
-        console.log('secure');
-        next();
-    } else {
-        // request was via http, so redirect to https
-        res.redirect('https://' + req.headers.host + req.url);
-    }
-});
-app.use(redirectWwwTraffic);
+// app.enable('trust proxy');
+//
+// function redirectWwwTraffic(req, res, next) {
+//     if (req.headers.host.slice(0, 4) === "www.") {
+//         var newHost = req.headers.host.slice(4);
+//         return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
+//     }
+//     next();
+// }
+//
+// app.use (function (req, res, next) {
+//     if (req.secure) {
+//         // request was via https, so do no special handling
+//         console.log('secure');
+//         next();
+//     } else {
+//         // request was via http, so redirect to https
+//         res.redirect('https://' + req.headers.host + req.url);
+//     }
+// });
+// app.use(redirectWwwTraffic);
 
 // create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
@@ -55,7 +55,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 /* Middleware */
 app.use(cors({
     credentials: true,
-    //origin: "*"
+    // origin: "*"
     origin: ['http://localhost:3000', 'http://localhost:5000', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', `${process.env.API_URL}:3000`, `${process.env.API_URL}:5000`]
 }));
 app.use(bodyParser.json());
@@ -66,7 +66,7 @@ app.use(
         resave: true,
         rolling: true,
         saveUninitialized: false,
-        cookie: { secure: false, expires: 1000 * 60 * 30 } /* Session expire in 60 minutes */
+        cookie: { secure: false, expires: 1000 * 60 * 30 } /* Session expire in 30 minutes */
     })
 );
 app.use(flash());

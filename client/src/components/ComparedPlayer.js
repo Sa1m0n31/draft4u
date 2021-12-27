@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import profile from '../static/img/profile-picture.png'
 import { Player, BigPlayButton } from 'video-react'
 import heart from '../static/img/heart.svg'
+import trashIcon from '../static/img/trash-black.svg'
 import heartFilled from '../static/img/heart-filled.svg'
 import balance from '../static/img/balance.svg'
 import writeMsgBtn from '../static/img/napisz-wiadomosc.png'
@@ -31,7 +32,6 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         if(player) {
             getIdentityById(player.id)
                 .then((res) => {
-                    console.log(res?.data?.result);
                     setPlayerIdentity(res?.data?.result?.id);
                 });
         }
@@ -55,9 +55,36 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         }
     }, [playVideo]);
 
+    const deletePlayerFromComparator = (id) => {
+        // Delete only if there are three players in comparator
+        const params = new URLSearchParams(window.location.search);
+        const first = parseInt(params.get('first'));
+        const second = parseInt(params.get('second'));
+        const third = parseInt(params.get('third'));
+        if(first > 0 && second > 0 && third > 0) {
+            const newUrl = window.location.href.replace(id, '-1');
+            window.location = newUrl;
+        }
+    }
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const first = parseInt(params.get('first'));
+        const second = parseInt(params.get('second'));
+        const third = parseInt(params.get('third'));
+        if(!(first > 0 && second > 0 && third > 0)) {
+            Array.from(document.querySelectorAll('.comparedPlayer>.playersWall__compareSection__item__deleteBtn')).forEach((item) => {
+                item.style.display = 'none';
+            });
+        }
+    }, []);
+
     return <section className="comparedPlayer">
         {playVideo ? <ModalVideoPlayer closeModal={() => { setPlayVideo(false); }} source={`${settings.API_URL}/video/get?url=/videos/${video.file_path}`} /> : ""}
 
+        <button className="playersWall__compareSection__item__deleteBtn" onClick={() => { deletePlayerFromComparator(player.id); }}>
+            <img className="btn__img" src={trashIcon} alt="usun" />
+        </button>
         <figure className="comparedPlayer__imgWrapper" style={{
             borderColor: color
         }}>
@@ -98,7 +125,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                     Aktualny klub
                 </span>
                 <span className="comparedPlayer__section__value">
-                    {player.club ? player.club : "-"}
+                    {player?.club ? player.club : "-"}
                 </span>
             </section>
         </section>

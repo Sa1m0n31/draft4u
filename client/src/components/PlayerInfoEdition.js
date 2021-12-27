@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import pen from "../static/img/pen.svg";
 
-import check from "../static/img/check.svg";
+import check from "../static/img/save-parameter.svg";
 import {
     getAllPositions,
     updateUserAttackRange,
@@ -224,7 +224,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editAttackRange ? "label--edit" : ""}>
-                        <input value={attackRange ? attackRange : 0}
+                        <input value={attackRange ? attackRange : (attackRange !== '' ? 0 : '')}
                                type="number"
                                ref={attackRangeRef}
                                onKeyDown={(e) => { if(e.keyCode === 13) changeUserAttackRange(); }}
@@ -250,7 +250,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editVerticalRange ? "label--edit" : ""}>
-                        <input value={verticalRange ? verticalRange : 0}
+                        <input value={verticalRange ? verticalRange : (verticalRange === '' ? '' : 0)}
                                type="number"
                                ref={verticalRangeRef}
                                onKeyDown={(e) => { if(e.keyCode === 13) changeUserVerticalRange(); }}
@@ -276,7 +276,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editBlockRange ? "label--edit" : ""}>
-                        <input value={blockRange ? blockRange : 0}
+                        <input value={blockRange ? blockRange : (blockRange === '' ? '' : 0)}
                                type="number"
                                ref={blockRangeRef}
                                onKeyDown={(e) => { if(e.keyCode === 13) changeUserBlockRange(); }}
@@ -302,7 +302,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editHeight ? "label--edit" : 0}>
-                        <input value={height ? height : 0}
+                        <input value={height ? height : (height === '' ? '' : 0)}
                                type="number"
                                ref={heightRef}
                                onKeyDown={(e) => { if(e.keyCode === 13) changeUserHeight(); }}
@@ -328,7 +328,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editWeight ? "label--edit" : 0}>
-                        <input value={weight ? weight : 0}
+                        <input value={weight ? weight : (weight === '' ? '' : 0)}
                                type="number"
                                ref={weightRef}
                                onKeyDown={(e) => { if(e.keyCode === 13) changeUserWeight(); }}
