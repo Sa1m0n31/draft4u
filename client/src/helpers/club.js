@@ -155,4 +155,10 @@ const changeClubPasswordFromAdminPanel = (clubId, oldPassword, newPassword) => {
     });
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, changeClubPasswordFromAdminPanel, changeClubPassword }
+const sendClubForm = (name, mail, phone, msg) => {
+    return axios.post(`${API_URL}/club/send-form`, {
+        name, mail, phone, msg
+    });
+}
+
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, changeClubPasswordFromAdminPanel, changeClubPassword, sendClubForm }

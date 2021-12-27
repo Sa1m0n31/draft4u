@@ -109,6 +109,13 @@
 }
 
 @media(max-width: 1600px) {
+    .clubForm .input,
+    .clubForm .textarea,
+    .clubForm .registerForm--nextBtn {
+        width: 300px;
+        font-size: 17px;
+    }
+
     .clubTeams .createSquad__squad__item__dragging__imgWrapper {
         width: 80px;
         height: 80px;
@@ -1039,6 +1046,20 @@
         display: none !important;
     }
 
+    .clubForm .player__flex__content {
+        margin-left: 0;
+    }
+
+    .clubForm .registerForm--nextBtn,
+    .clubForm .input,
+    .clubForm .textarea {
+        width: 100%;
+     }
+
+    .clubForm .registerForm--nextBtn {
+        height: 60px;
+    }
+
     .input--editProfile {
         max-width: 100px;
     }
@@ -1108,7 +1129,6 @@
     }
 
     .footer {
-        /*bottom: -550px;*/
         padding-bottom: 0;
     }
 

@@ -998,6 +998,7 @@ ul {
     margin-bottom: 20px;
 }
 
+.clubForm .input,
 .loginBox__form .input {
     padding: 10px;
     border: 1px solid var(--grey);
@@ -5438,16 +5439,60 @@ input::-webkit-inner-spin-button {
     transform: scale(.7);
 }
 
-.mapContent__header__item__labels {
-    /*width: 115%;*/
-    /*transform: translateX(-7.5%);*/
+.clubForm__inner {
+    margin: 30px 0;
 }
 
-.mapContent__header__item__labels > span:first-of-type {
-    /*margin-left: -10%;*/
-    /*font-size: 12px;*/
+.clubForm__inner .input {
+    width: 550px;
 }
 
-.mapContent__header__item__labels > span:nth-of-type(2) {
-    /*margin-left: -45px;*/
+.clubForm__inner label {
+    display: block;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.clubForm .textarea {
+    width: 550px;
+    background: transparent;
+    resize: none;
+    outline: none;
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.clubForm .textarea::placeholder {
+    color: rgba(255, 255, 255, .8);
+}
+
+.clubForm {
+    border-bottom: 3px solid var(--gold);
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+}
+
+.clubForm .player__flex__content {
+    margin-left: 10%;
+}
+
+.clubForm__confirmMsg {
+    text-align: center;
+    font-size: 17px;
+    color: #fff;
+    font-weight: 600;
+    max-width: 550px;
+}
+
+.clubForm .registerForm--nextBtn {
+    width: 550px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.clubForm .registerForm--nextBtn img {
+    height: 100%;
 }

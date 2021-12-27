@@ -3,9 +3,45 @@ const router = express.Router();
 const db = require("../database/db");
 const crypto = require("crypto");
 const { v4: uuidv4 } = require('uuid');
+const nodemailer = require("nodemailer");
+const smtpTransport = require('nodemailer-smtp-transport');
 
 const multer  = require('multer')
 const upload = multer({ dest: 'media/clubs' })
+
+router.post('/send-form', (request, response) => {
+    const { name, mail, phone, msg } = request.body;
+
+    let transporter = nodemailer.createTransport(smtpTransport ({
+        auth: {
+            user: process.env.EMAIL_ADDRESS,
+            pass: process.env.EMAIL_PASSWORD
+        },
+        host: process.env.EMAIL_HOST,
+        secureConnection: true,
+        port: 465,
+        tls: {
+            rejectUnauthorized: false
+        },
+    }));
+
+    let mailOptions = {
+        from: process.env.EMAIL_ADDRESS,
+        to: process.env.CONTACT_FORM_ADDRESS,
+        subject: 'Nowa wiadomość w formularzu kontaktowym',
+        html: `<h2>Nowe zgłoszenie w formularzu kontaktowym</h2>
+            <p>Imię i nazwisko / Nazwa firmy: <b>${name}</b></p>
+            <p>Adres e-mail: <b>${mail}</b></p>
+            <p>Nr telefonu: <b>${phone}</b></p>
+            <p>Wiadomość: <b>${msg}</b></p>`
+    }
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        response.send({
+            result: 1
+        });
+    });
+})
 
 router.get("/get-all", (request, response) => {
     const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, l.sex, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id';
