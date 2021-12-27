@@ -982,9 +982,16 @@
         width: 100%;
     }
 
+    .container--dark .mapContent__clubs--mobile {
+        background: #474747;
+        padding: 15px;
+    }
+
     .mapContent__clubs__img {
         height: 80px;
         width: auto;
+        max-width: 100%;
+        margin-left: 0;
     }
 
     .mapDot__btn__details {

@@ -156,15 +156,19 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     }
 
     useEffect(() => {
-        const numberOfDigitsInSalaryFrom = values[0].toString().length;
-        const numberOfDigitsInSalaryTo = values[1].toString().length;
-        const betweenSalaryInputs = document.querySelector('.betweenSalaryInputs');
+        if(values?.length === 2) {
+            const numberOfDigitsInSalaryFrom = values[0]?.toString()?.length;
+            const numberOfDigitsInSalaryTo = values[1]?.toString()?.length;
+            const betweenSalaryInputs = document.querySelector('.betweenSalaryInputs');
 
-        if(numberOfDigitsInSalaryFrom < 5 && numberOfDigitsInSalaryTo < 5) {
-            betweenSalaryInputs.style.paddingLeft = '20px';
-        }
-        else {
-            betweenSalaryInputs.style.paddingLeft = '10px';
+            if(betweenSalaryInputs) {
+                if(numberOfDigitsInSalaryFrom < 5 && numberOfDigitsInSalaryTo < 5) {
+                    betweenSalaryInputs.style.paddingLeft = '20px';
+                }
+                else {
+                    betweenSalaryInputs.style.paddingLeft = '10px';
+                }
+            }
         }
     }, [values]);
 
@@ -282,29 +286,32 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     Wynagrodzenie (netto)
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--salary">
-                    <input className="input--editProfile input--salary"
-                           value={values[0] ? values[0] : (values[0] === '' ? '' : 1000)}
-                           onChange={(e) => { editUserSalaryFrom(e.target.value); }}
-                           onClick={() => { selectSalaryFromInput(); }}
-                           onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
-                           disabled={!editSalary}
-                           type="number" />
-                           <span className="betweenSalaryInputs">
+                    {clubProp ? <span>
+                        {values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}
+                    </span> : <>
+                        <input className="input--editProfile input--salary"
+                               value={values[0] ? values[0] : (values[0] === '' ? '' : 1000)}
+                               onChange={(e) => { editUserSalaryFrom(e.target.value); }}
+                               onClick={() => { selectSalaryFromInput(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
+                               disabled={!editSalary}
+                               type="number" />
+                        <span className="betweenSalaryInputs">
                                -
                            </span>
-                   <input className="input--editProfile input--salary"
-                          value={values[1] ? values[1] : (values[1] === '' ? '' : 4000)}
-                          onChange={(e) => { editUserSalaryTo(e.target.value); }}
-                          onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
-                          onClick={() => { selectSalaryToInput(); }}
-                          disabled={!editSalary}
-                          type="number" />
-                    {/*{values[0] ? values[0] : 1000} - {values[1] ? values[1] : 3000}*/}
-                    {!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
+                        <input className="input--editProfile input--salary"
+                               value={values[1] ? values[1] : (values[1] === '' ? '' : 3000)}
+                               onChange={(e) => { editUserSalaryTo(e.target.value); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
+                               onClick={() => { selectSalaryToInput(); }}
+                               disabled={!editSalary}
+                               type="number" />
+                    </>}
+                    {!clubProp ? (!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
                         <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                     </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserSalary(); }}>
                         <img className="userInfoEdition__btn__img" src={check} alt="ok" />
-                    </button>}
+                    </button>) : ""}
                 </span>
             </label>
 

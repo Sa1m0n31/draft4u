@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import img3 from "../static/img/strefa-zawodnika-2.png";
-import submitBtn from '../static/img/buy-now.png'
-import nextBtn from "../static/img/dalej-btn.png";
+import submitBtn from '../static/img/wyslij-btn.svg'
 import {isMail} from "../helpers/validation";
 import {sendClubForm} from "../helpers/club";
 

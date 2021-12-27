@@ -2301,7 +2301,7 @@ ul {
 }
 
 .mapContent__clubs {
-    width: 230px;
+    width: 260px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2324,6 +2324,7 @@ ul {
 .noClubsHeader {
     color: var(--grey);
     text-align: center;
+    margin: auto;
 }
 
 .mapDot__btn__details__imgWrapper {
@@ -5491,8 +5492,20 @@ input::-webkit-inner-spin-button {
     width: 550px;
     margin-left: 0;
     margin-top: 0;
+    background: transparent;
 }
 
 .clubForm .registerForm--nextBtn img {
+    width: 100%;
     height: 100%;
+}
+
+.container--dark .mapContent__clubs {
+    background: #474747;
+    border: 1px solid #707070;
+    padding: 25px;
+}
+
+.mapContent__clubs--mobile > div > div > div {
+    padding-right: 10px;
 }
