@@ -9,7 +9,7 @@ const RegisterPage = () => {
         <div className="registerPage">
             <RegisterModal mobile={true} />
         </div>
-        <Footer theme="light" />
+        <Footer theme="light" border={true} />
     </div>
 }
 

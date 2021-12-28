@@ -12,18 +12,24 @@ const LandingPage = () => {
 
     const animationPlayer = () => {
         playerZone.current.style.transform = "scale(.95)";
+        document.querySelector('.container--homepage').classList.remove('container--homepage--animation--coach');
+        document.querySelector('.container--homepage').classList.add('container--homepage--animation');
     }
 
     const animationPlayerEnd = () => {
         playerZone.current.style.transform = "scale(.9)";
+        document.querySelector('.container--homepage').classList.remove('container--homepage--animation');
     }
 
     const animationCoach = () => {
         clubZone.current.style.transform = "scale(1.05)";
+        document.querySelector('.container--homepage').classList.remove('container--homepage--animation');
+        document.querySelector('.container--homepage').classList.add('container--homepage--animation--coach');
     }
 
     const animationCoachEnd = () => {
         clubZone.current.style.transform = "scale(1)";
+        document.querySelector('.container--homepage').classList.remove('container--homepage--animation--coach');
     }
 
     return <main className="landingPage">

@@ -74,19 +74,19 @@ const LoginBox = () => {
             Nie pamiętasz hasła?
         </a>
 
-        <span className="loginBox__or">
-            lub
-        </span>
+        {/*<span className="loginBox__or">*/}
+        {/*    lub*/}
+        {/*</span>*/}
 
-        <a className="button button--facebook" href={`${settings.API_URL}/auth/facebook`}>
-            <img className="button--facebook__img" src={facebookIcon} alt="facebook" />
-            Continue with Facebook
-        </a>
+        {/*<a className="button button--facebook" href={`${settings.API_URL}/auth/facebook`}>*/}
+        {/*    <img className="button--facebook__img" src={facebookIcon} alt="facebook" />*/}
+        {/*    Continue with Facebook*/}
+        {/*</a>*/}
 
-        <a className="button button--google" href={`${settings.API_URL}/auth/google`}>
-            <img className="button--google__img" src={googleIcon} alt="google" />
-            Continue with Google
-        </a>
+        {/*<a className="button button--google" href={`${settings.API_URL}/auth/google`}>*/}
+        {/*    <img className="button--google__img" src={googleIcon} alt="google" />*/}
+        {/*    Continue with Google*/}
+        {/*</a>*/}
         {/*<button className="button button--apple" onClick={() => { loginApple(); }}>*/}
         {/*    <img className="button--apple__img" src={appleBtn} alt="apple" />*/}
         {/*    Continue with Apple*/}

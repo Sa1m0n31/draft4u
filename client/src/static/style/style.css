@@ -556,6 +556,14 @@ ul {
     transform-origin: center;
 }
 
+.container--homepage--animation::after {
+    transform: skewX(-14.1deg) scaleX(.9);
+}
+
+.container--homepage--animation--coach::after {
+    transform: skewX(-14.1deg) scaleX(1.1);
+}
+
 /* Landing page */
 .landingPage {
     position: relative;
@@ -701,6 +709,7 @@ ul {
 
 .landingPage__link--left::after {
     content: "";
+    display: none;
     position: absolute;
     right: 4%;
     top: 0;
@@ -1519,6 +1528,10 @@ ul {
 .container--registerFromThirdParty,
 .registerPage {
     position: relative;
+}
+
+.registerPage {
+    margin-bottom: 50px;
 }
 
 .registerModal__inner--registerFromThirdParty,

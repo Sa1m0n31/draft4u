@@ -7,7 +7,7 @@ const LoginPage = () => {
     return <div className="container container--light">
         <Header menu="dark" />
         <LoginMobile />
-        <Footer theme="light" />
+        <Footer theme="light" border={true} />
     </div>
 }
 
