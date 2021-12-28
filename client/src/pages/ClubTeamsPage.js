@@ -10,6 +10,7 @@ import playerDraggable from "../static/img/player-draggable.svg";
 import settings from "../settings";
 import profilePicture from "../static/img/profile-picture.png";
 import closeIcon from '../static/img/close-grey.svg'
+import {unicodeToUTF8} from "../helpers/others";
 
 const ClubTeamsPage = ({club}) => {
     const [teams, setTeams] = useState([]);
@@ -33,7 +34,6 @@ const ClubTeamsPage = ({club}) => {
     }, [deleteResult]);
 
     const getSquad = (team) => {
-        console.log(players);
         return players.filter((item) => {
             return item.squad_id === team;
         });
@@ -169,10 +169,10 @@ const ClubTeamsPage = ({club}) => {
                             {item.created_at.substring(0, 10)}
                         </span>
                             <span className="clubTeams__item__col d-desktop">
-                                {formatBigNumber(calculateTeamMinSalary(item.squad_id))} PLN
+                                {formatBigNumber(calculateTeamMinSalary(item.squad_id)) ? (formatBigNumber(calculateTeamMinSalary(item.squad_id)) + " PLN") : "-"}
                             </span>
                             <span className="clubTeams__item__col d-desktop">
-                                {formatBigNumber(calculateTeamMaxSalary(item.squad_id))} PLN
+                                {formatBigNumber(calculateTeamMaxSalary(item.squad_id)) ? (formatBigNumber(calculateTeamMaxSalary(item.squad_id)) + " PLN") : "-"}
                             </span>
                             <span className="clubTeams__item__col d-desktop">
                             <button className="clubTeams__button clubTeams__button--trash" onClick={(e) => { openDeleteModal(e, item.squad_id); }}>
@@ -219,7 +219,7 @@ const ClubTeamsPage = ({club}) => {
                                             {item.first_name} {item.last_name}
                                         </h3>
                                         <h4 className="createSquad__squad__item__dragging__header__position">
-                                            {item.position}
+                                            {item?.position ? unicodeToUTF8(item.position) : ""}
                                         </h4>
                                     </section>
                                 </div>

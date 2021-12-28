@@ -40,13 +40,13 @@ const isElementInArray = (arr, el) => {
 
 const getPositionById = (id) => {
     switch(id) {
-        case 1:
-            return 'przyjmujący';
-        case 2:
-            return 'atakujący';
         case 3:
-            return 'środkowy';
+            return 'przyjmujący';
+        case 1:
+            return 'atakujący';
         case 4:
+            return 'środkowy';
+        case 2:
             return 'rozgrywający';
         case 5:
             return 'libero';
