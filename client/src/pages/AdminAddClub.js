@@ -20,7 +20,6 @@ const AdminAddClub = ({admin}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
-    const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
     const [x, setX] = useState(null);
@@ -42,7 +41,6 @@ const AdminAddClub = ({admin}) => {
     const [locationError, setLocationError] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [leagueError, setLeagueError] = useState("");
-    const [oldPasswordError, setOldPasswordError] = useState("");
     const [newPasswordError, setNewPasswordError] = useState("");
 
     const [addResult, setAddResult] = useState(-1);
@@ -237,12 +235,8 @@ const AdminAddClub = ({admin}) => {
             setNewPasswordError("Wpisz dwukrotnie nowe hasło");
             return 0;
         }
-        if(!oldPassword) {
-            setOldPasswordError("Wpisz stare hasło klubu");
-            return 0;
-        }
 
-        changeClubPasswordFromAdminPanel(clubId, oldPassword, newPassword)
+        changeClubPasswordFromAdminPanel(clubId, newPassword)
             .then((res) => {
                 setPasswordChangeStatus(res?.data?.result);
             });
@@ -271,8 +265,6 @@ const AdminAddClub = ({admin}) => {
                     {passwordChangeStatus !== -1 ?  <span className="admin__status">
                         {passwordChangeStatus === 1 ? <span className="admin__status__inner admin__status--success">
                             Hasło zostało zmienione
-                        </span> : passwordChangeStatus === -2 ? <span className="admin__status__inner admin__status--error">
-                            Niepoprawne stare hasło
                         </span> : <span className="admin__status__inner admin__status--error">
                             Coś poszło nie tak... Skontaktuj się z administratorem systemu
                         </span>}
@@ -396,19 +388,6 @@ const AdminAddClub = ({admin}) => {
                             <h3 className="updateMode__header">
                                 Zmień hasło klubu
                             </h3>
-                            <label className="admin__label" onClick={() => { setOldPasswordError(""); }}>
-                                Stare hasło
-                                <input className="admin__input admin__input--title"
-                                       name="oldPassword"
-                                       autoComplete="off"
-                                       type="password"
-                                       value={!oldPasswordError ? oldPassword : ""}
-                                       onChange={(e) => { setOldPassword(e.target.value); }}
-                                       placeholder={oldPasswordError ? "" : "Tu wpisz stare hasło klubu"} />
-                                {oldPasswordError !== "" ? <span className="loginBox__error">
-                                {oldPasswordError}
-                             </span> : ""}
-                            </label>
                             <label className="admin__label" onClick={() => { setNewPasswordError(""); }}>
                                 Nowe hasło
                                 <input className="admin__input admin__input--title"

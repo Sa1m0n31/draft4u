@@ -15,16 +15,14 @@ router.post("/add", upload.single("image"), (request, response) => {
         const values = [filename];
 
         db.query(query, values, (err, res) => {
-            console.log(err);
-           if(res) {
+            if(res) {
                if(res.rows) {
                    const imageId = res.rows[0].id;
                    const query = `INSERT INTO articles VALUES (nextval('articles_id'), $1, $2, NOW(), $3, $4)`;
                    const values = [title, content, imageId, excerpt];
 
                    db.query(query, values, (err, res) => {
-                      console.log(err);
-                       if(res) response.send({result: 1});
+                      if(res) response.send({result: 1});
                       else response.send({result: 0});
                    });
                }
@@ -42,7 +40,6 @@ router.post("/add", upload.single("image"), (request, response) => {
         const values = [title, content, excerpt];
 
         db.query(query, values, (err, res) => {
-            console.log(err);
             if(res) response.send({result: 1});
             else response.send({result: 0});
         });
@@ -187,15 +184,12 @@ const convertStringToURL = (str) => {
 
 router.get("/get-article-by-slug", (request, response) => {
     const slug = request.query.slug;
-    console.log(request.query);
     const query = 'SELECT a.id, a.title, a.created_at, a.excerpt, a.content, i.file_path FROM articles a LEFT OUTER JOIN images i ON a.image = i.id';
 
    db.query(query, [], (err, res) => {
        if(res) {
            if(res.rows) {
                res.rows.forEach((item, index, array) => {
-                   console.log(convertStringToURL(item.title));
-                   console.log(slug);
                    if(convertStringToURL(item.title) === slug) {
                        response.send({
                            result: res.rows[index]

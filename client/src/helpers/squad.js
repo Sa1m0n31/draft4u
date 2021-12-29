@@ -4,8 +4,6 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const addSquad = (name, players) => {
-    console.log(players);
-    console.log(name);
     return axios.post(`${API_URL}/squad/add`, {
         name, players
     }, {

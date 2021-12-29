@@ -34,8 +34,6 @@ const addSquad = (players, name, clubId, response) => {
 }
 
 const updateSquad = (id, name, players, response) => {
-    console.log("updateSquad");
-    console.log(id);
     const query = 'UPDATE squads SET name = $1 WHERE id = $2';
     const values = [name, id];
 
@@ -107,8 +105,6 @@ router.post("/add", (request, response) => {
 
 router.delete("/delete", (request, response) => {
    const id = request.query.id;
-
-   console.log(id);
 
    if(id) {
        const query = 'DELETE FROM selected_players WHERE squad_id = $1';

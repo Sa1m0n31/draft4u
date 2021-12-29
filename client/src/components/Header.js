@@ -133,8 +133,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
             getUserMessages()
                 .then((res) => {
-                   console.log(res?.data?.result);
-                    setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
+                   setMessages(getUniqueListBy(res?.data?.result, 'chat_id'));
                 });
         }
     }, [player]);
@@ -155,7 +154,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
     const getNumberOfNewMessages = () => {
         if(messages?.length) {
-            console.log(messages);
             return messages.filter((item) => {
                 return isMessageNew(item);
             }).length;

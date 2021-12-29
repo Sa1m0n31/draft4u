@@ -74,7 +74,9 @@ const MapContent = () => {
         getAllClubs()
             .then(res => {
                 if(res?.data?.result) {
-                    const allClubs = res.data.result;
+                    const allClubs = res.data.result.filter((item) => {
+                        return item?.active;
+                    });
                     setClubs(allClubs);
                     setFilteredClubs(allClubs.filter((item) => {
                         return item.sex;

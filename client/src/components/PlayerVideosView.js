@@ -20,7 +20,6 @@ const PlayerVideoView = ({id, club}) => {
     useEffect(() => {
         getUserVideos(id)
             .then(res => {
-                console.log(res.data.result);
                 setVideos(res.data.result);
             });
     }, []);

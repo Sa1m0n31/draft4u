@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import example from '../static/img/zzaksa.png'
-import placeholder from '../static/img/placeholder.png'
+import headerImg from '../static/img/header-klub.jpg'
 import ClubAccountStartFindPlayer from "../components/ClubAccountStartFindPlayer";
 import ClubAccountFavorites from "../components/ClubAccountFavorites";
 import ClubAccountBottom from "../components/ClubAccountBottom";
@@ -12,7 +11,7 @@ const ClubAccountStart = ({club, favorites, playersProp}) => {
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
         <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400">
-            <img className="btn__img clubAccountHeader__img" src={placeholder} alt="klub" />
+            <img className="btn__img clubAccountHeader__img" src={headerImg} alt="klub" />
         </header>
 
         <ClubAccountStartFindPlayer />

@@ -24,27 +24,27 @@ const io = new Server(server, {
 });
 
 /* Redirect http to https */
-// app.enable('trust proxy');
-//
-// function redirectWwwTraffic(req, res, next) {
-//     if (req.headers.host.slice(0, 4) === "www.") {
-//         var newHost = req.headers.host.slice(4);
-//         return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
-//     }
-//     next();
-// }
-//
-// app.use (function (req, res, next) {
-//     if (req.secure) {
-//         // request was via https, so do no special handling
-//         console.log('secure');
-//         next();
-//     } else {
-//         // request was via http, so redirect to https
-//         res.redirect('https://' + req.headers.host + req.url);
-//     }
-// });
-// app.use(redirectWwwTraffic);
+app.enable('trust proxy');
+
+function redirectWwwTraffic(req, res, next) {
+    if (req.headers.host.slice(0, 4) === "www.") {
+        var newHost = req.headers.host.slice(4);
+        return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
+    }
+    next();
+}
+
+app.use (function (req, res, next) {
+    if (req.secure) {
+        // request was via https, so do no special handling
+        console.log('secure');
+        next();
+    } else {
+        // request was via http, so redirect to https
+        res.redirect('https://' + req.headers.host + req.url);
+    }
+});
+app.use(redirectWwwTraffic);
 
 // create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
@@ -245,6 +245,16 @@ app.get("/return", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+app.get("/regulamin", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/polityka-prywatnosci", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/polityka-plikow-cookies", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
 /* Routers */
 const authRouter = require("./routers/auth");
 const imageRouter = require("./routers/image");
@@ -281,19 +291,5 @@ app.use("/league", basicAuth, leagueRouter);
 app.use("/admin", basicAuth, adminRouter);
 app.use("/payment", paymentRouter);
 app.use("/chat", basicAuth, chatRouter);
-
-// app.use(function (err, req, res, next) {
-//     // set locals, only providing error in development
-//     res.locals.message = err.message;
-//     res.locals.error = err;
-//
-//     // render the error page
-//     console.error(err);
-//     res.status(err.status || 500);
-//     res.render('error', {
-//         message: err.message,
-//         error: err
-//     });
-// });
 
 server.listen(5000);

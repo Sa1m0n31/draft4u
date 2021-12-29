@@ -8,14 +8,12 @@ const getPaymentMethods = () => {
 }
 
 const registerPayment = (amount, method, email, userId, type) => {
-    console.log(type);
     return axios.post(`${API_URL}/payment/register-payment`, {
         amount, method, email, userId, type
     });
 }
 
 const chargeCard = (token, cardNumber, cardDate, cvv, clientName) => {
-    console.log("charge card...");
     return axios.post(`${API_URL}/payment/charge-card`, {
         token, cardNumber, cardDate, cvv, clientName
     });

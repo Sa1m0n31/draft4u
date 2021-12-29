@@ -4,7 +4,6 @@ import settings from "../settings";
 const { API_URL } = settings;
 
 const isPlayerFavorite = (list, playerId) => {
-    console.log(list);
     if(!list) return false;
     return list?.findIndex((item) => {
         return item.id === playerId;
@@ -149,9 +148,9 @@ const changeClubPassword = (oldPassword, newPassword) => {
     });
 }
 
-const changeClubPasswordFromAdminPanel = (clubId, oldPassword, newPassword) => {
+const changeClubPasswordFromAdminPanel = (clubId,newPassword) => {
     return axios.post(`${API_URL}/club/change-club-password-from-admin-panel`, {
-        clubId, oldPassword, newPassword
+        clubId, newPassword
     });
 }
 

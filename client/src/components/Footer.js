@@ -39,23 +39,18 @@ const Footer = ({theme, border}) => {
                 </h4>
                 <ul className="footer__col__list">
                     <li className="footer__col__list__item">
-                        <a className="footer__col__list__item__link">
+                        <a className="footer__col__list__item__link" href="/regulamin">
                             Regulamin
                         </a>
                     </li>
                     <li className="footer__col__list__item">
-                        <a className="footer__col__list__item__link">
+                        <a className="footer__col__list__item__link" href="/polityka-prywatnosci">
                             Polityka prywatności
                         </a>
                     </li>
                     <li className="footer__col__list__item">
-                        <a className="footer__col__list__item__link">
-                            Regulalmin RODO
-                        </a>
-                    </li>
-                    <li className="footer__col__list__item">
-                        <a className="footer__col__list__item__link">
-                            Regulamin plików cookies
+                        <a className="footer__col__list__item__link" href="/polityka-plikow-cookies">
+                            Polityka plików cookies
                         </a>
                     </li>
                 </ul>

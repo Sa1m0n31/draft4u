@@ -15,15 +15,12 @@ router.get("/get", (request, response) => {
 router.post("/upload", upload.single('file'), (request, response) => {
     const { userId, play } = request.body;
 
-    console.log(request.headers);
-
     let progress = 0;
     let fileSize = request.headers['content-length'] ? parseInt(request.headers['content-length']) : 0;
     request.on('data', (chunk) => {
         progress += chunk.length;
-        console.log(progress);
         response.write((`${Math.floor((progress * 100) / fileSize)} `));
-        if (progress === fileSize) {
+        if(progress === fileSize) {
             console.log('Finished', progress, fileSize)
         }
     });
@@ -40,18 +37,13 @@ router.post("/upload", upload.single('file'), (request, response) => {
             const values = [userId, playId];
 
             db.query(query, values, (err, res) => {
-                console.log(err);
-                console.log(res);
                 if(res) {
                     if(res.rows.length) {
-                        console.log("update old video");
                         /* Update old video */
                         const query = `UPDATE videos SET file_path = $1, date = NOW() WHERE user_id = $2 AND video_category = $3`;
                         const values = [request.file.filename, userId, playId];
 
                         db.query(query, values, (err, res) => {
-                            console.log(err);
-                            console.log(res);
                             if(res) {
                                 response.send({
                                     result: 1
@@ -66,13 +58,10 @@ router.post("/upload", upload.single('file'), (request, response) => {
                     }
                     else {
                         /* Add new video */
-                        console.log("add new video");
                         const query = `INSERT INTO videos VALUES (nextval('videos_id_sequence'), $1, $2, $3, NOW())`;
                         const values = [request.file.filename, userId, playId];
 
                         db.query(query, values, (err, res) => {
-                            console.log(err);
-                            console.log(res);
                             if(res) {
                                 response.send({
                                     result: 1

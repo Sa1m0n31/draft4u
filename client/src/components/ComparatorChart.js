@@ -88,7 +88,6 @@ const ComparatorChart = ({datasets}) => {
     }
 
     useEffect(() => {
-        console.log(datasets);
         if(datasets?.length === 3) {
             setSeries([
                 {

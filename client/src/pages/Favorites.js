@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Header from "../components/Header";
-import placeholder from "../static/img/placeholder.png";
+import headerImg from '../static/img/header-ulubieni.jpg'
 import Footer from "../components/Footer";
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
@@ -280,7 +280,7 @@ const Favorites = ({club, favorites}) => {
 
         {/* DESKTOP HEADER */}
         <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
-            <img className="btn__img clubAccountHeader__img" src={placeholder} alt="klub" />
+            <img className="btn__img clubAccountHeader__img" src={headerImg} alt="klub" />
         </header>
 
         {/* MOBILE HEADER */}

@@ -27,14 +27,12 @@ const Map = () => {
                                 /* Logged as club */
                                 setIsClub(true);
                                 setClub(res?.data?.result);
-                                console.log(res?.data?.result);
                             }
                             else {
                                 /* Logged as player */
                                 setIsPlayer(true);
                                 getUserData()
                                     .then((res) => {
-                                        console.log(res?.data?.result);
                                         setUser(res?.data?.result);
                                     });
                             }

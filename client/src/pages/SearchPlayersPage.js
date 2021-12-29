@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Header from "../components/Header";
 import example from "../static/img/zzaksa.png";
-import placeholder from "../static/img/placeholder.png";
+import headerImg from "../static/img/header-wyszukiwarka.jpg";
 import Footer from "../components/Footer";
 import { Range, getTrackBackground } from 'react-range';
 import SingleFilter from "../components/SingleFilter";
@@ -60,7 +60,6 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
         /* Filter players */
         setFilteredPlayers(players?.filter((item) => {
-            if(item.first_name === 'Szymon') console.log(item);
             const playersAge = calculateAge(item.birthday);
             return (item.sex === gender)
                     &&(isPlayerInFilteredGroup(item.position))
@@ -141,7 +140,6 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     }
 
     const isPlayerInFilteredGroup = (position) => {
-        console.log("PLAYER POSITION: " + position);
         if(isElementInArray(positionFilters, 0)) return true;
         else {
             return positionFilters.findIndex((item) => {
@@ -285,7 +283,6 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     }
 
     const deleteFromComparator = (itemToDelete) => {
-        console.log(itemToDelete);
         setComparator(comparator.map((item) => {
             if(item.user_id !== itemToDelete.user_id) return item;
             else return 0;
@@ -315,7 +312,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
         {/* DESKTOP HEADER */}
         <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
-            <img className="btn__img clubAccountHeader__img" src={placeholder} alt="klub" />
+            <img className="btn__img clubAccountHeader__img" src={headerImg} alt="klub" />
         </header>
 
         {/* MOBILE HEADER */}

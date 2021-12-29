@@ -17,8 +17,6 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
     const [fileToLarge, setFileToLarge] = useState(false);
 
     const getUploadParams = ({file, meta}) => {
-        console.log(file);
-        console.log(meta);
         setLoading(true);
         const config = {
             onUploadProgress: (progressEvent) => {

@@ -90,7 +90,7 @@ router.get('/verification', (request, response) => {
 });
 
 router.get("/auth", (request, response) => {
-    console.log(request.user);
+
     if(request.user) {
         if(isNumeric(request.user.toString())) {
            /* Admin */
@@ -123,9 +123,7 @@ router.post("/login",
 );
 
 router.get('/failure', (request, response) => {
-    console.log('faulure');
     const errorMsg = request.flash().error[0];
-    console.log(errorMsg);
     response.send({
         result: 0,
         msg: errorMsg

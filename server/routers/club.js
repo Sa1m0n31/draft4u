@@ -44,7 +44,7 @@ router.post('/send-form', (request, response) => {
 })
 
 router.get("/get-all", (request, response) => {
-    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, l.sex, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id';
+    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, l.sex, i.file_path, id.active FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id JOIN identities id ON c.id = id.id';
     db.query(query, (err, res) => {
        if(res) {
             response.send({
@@ -60,7 +60,7 @@ router.get("/get-all", (request, response) => {
 });
 
 router.get("/get-locations", (request, response) => {
-    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id GROUP BY x, y`;
+    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN identities id ON c.id = id.id WHERE id.active =  true GROUP BY x, y`;
 
     db.query(query, [], (err, res) => {
         if(res) {
@@ -407,13 +407,12 @@ router.post("/change-password", (request, response) => {
 });
 
 router.post("/change-club-password-from-admin-panel", (request, response) => {
-    const { clubId, oldPassword, newPassword } = request.body;
+    const { clubId, newPassword } = request.body;
 
-    const hash = crypto.createHash('sha256').update(oldPassword).digest('hex');
     const newHash = crypto.createHash('sha256').update(newPassword).digest('hex');
 
-    const query = 'UPDATE clubs SET password = $1 WHERE password = $2 AND id = $3';
-    const values = [newHash, hash, clubId];
+    const query = 'UPDATE clubs SET password = $1 WHERE id = $2';
+    const values = [newHash, clubId];
 
     db.query(query, values, (err, res) => {
        if(res) {

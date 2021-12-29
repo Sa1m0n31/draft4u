@@ -10,7 +10,6 @@ const isLoggedIn = () => {
 }
 
 const loginUser = (email, password) => {
-    console.log('/auth/login');
     return axios.post(`${API_URL}/auth/login`, {
         username: email,
         password: password
@@ -37,25 +36,11 @@ const loginFacebook = () => {
             'Access-Control-Allow-Origin': '*'
         },
         withCredentials: true
-    })
-        .then(res => {
-            console.log(res.data.result);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    });
 }
 
 const loginGoogle = () => {
-    return axios.get(`${API_URL}/auth/google`)
-        .then(res => {
-            console.log("hi");
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-            console.log("err");
-        })
+    return axios.get(`${API_URL}/auth/google`);
 }
 
 const loginApple = () => {

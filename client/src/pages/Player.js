@@ -1,10 +1,9 @@
 import React from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import label from '../static/img/strefa-zawodnika-label.png'
 import registerBtn from '../static/img/register-btn.png'
 import buyNowBtn from '../static/img/buy-now.png'
-import playerHeader from '../static/img/strefa-zawodnika-header.png'
+import playerHeader from '../static/img/header-zawodnicy.jpg'
 import img1 from '../static/img/strefa-zawodnika-1.png'
 import img2 from '../static/img/strefa-zawodnika-2.png'
 import step1 from '../static/img/krok-1.svg'
@@ -122,9 +121,9 @@ const Player = () => {
                                 PLN
                             </span>
                         </h4>
-                        <a className="button button--hover button--buyNow" href="/">
+                        <button className="button button--hover button--buyNow" onClick={() => { openRegisterModal(); }}>
                             <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                        </a>
+                        </button>
                         <span className="player__option--bottom">
                             Pakiet ważny do 31.01.2023
                         </span>

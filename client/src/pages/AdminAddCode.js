@@ -25,11 +25,10 @@ const AdminAddCode = () => {
                     setUpdateMode(true);
                     const result = res?.data?.result[0];
                     if(result) {
-                        console.log(result);
                         setTitle(result.name);
                         setDiscount(result.value);
-                        setDateFrom(result.date_from.substring(0, 10));
-                        setDateTo(result.date_to.substring(0, 10));
+                        setDateFrom(result.date_from?.substring(0, 10));
+                        setDateTo(result.date_to?.substring(0, 10));
                         setLimit(result.use_limit);
                     }
                 });

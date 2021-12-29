@@ -17,29 +17,21 @@ import AboutUs from "./pages/AboutUs";
 import Player from "./pages/Player";
 import Club from "./pages/Club";
 import Map from "./pages/Map";
-import PlayerProfileEdition from "./pages/PlayerProfileEdition";
-import PlayerFAQ from "./components/PlayerFAQ";
-import Header from "./components/Header";
-import FAQPage from "./pages/FAQPage";
-import VideoUploadPage from "./pages/VideoUploadPage";
-import PaymentPage from "./pages/PaymentPage";
+import CookieConsent from "react-cookie-consent";
 import UserWrapper from "./wrappers/UserWrapper";
 import PaymentReturnPage from "./pages/PaymentReturnPage";
 import ClubWrapper from "./wrappers/ClubWrapper";
-import ComparatorPage from "./pages/ComparatorPage";
-import PlayerPage from "./pages/PlayerPage";
-import Favorites from "./pages/Favorites";
-import ChatPage from "./pages/ChatPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminWrapper from "./wrappers/AdminWrapper";
 import RegisterFromThirdParty from "./pages/RegisterFromThirdParty";
 import axios from "axios";
 import AUTH_HEADER from "./static/restrict/credentials";
+import ContentPage from "./pages/ContentPage";
 
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 
 function App() {
-  return <Router>
+  return <><Router>
     {/* Public routes */}
     <Route exact path="/">
         <Homepage />
@@ -76,6 +68,15 @@ function App() {
     </Route>
     <Route path="/zarejestruj-przez-google">
         <RegisterFromThirdParty thirdParty="gl" />
+    </Route>
+    <Route path="/regulamin">
+        <ContentPage type={1} />
+    </Route>
+    <Route path="/polityka-prywatnosci">
+        <ContentPage type={2} />
+    </Route>
+    <Route path="/polityka-plikow-cookies">
+        <ContentPage type={3} />
     </Route>
 
     {/* User routes */}
@@ -184,8 +185,8 @@ function App() {
       <Route path="/lista-mailingowa">
           <AdminWrapper page={12} />
       </Route>
-
   </Router>
+      </>
 }
 
 export default App;

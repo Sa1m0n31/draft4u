@@ -285,11 +285,11 @@ const RegisterModal = (props) => {
                            onChange={(e) => { setRepeatPassword(e.target.value); }}
                            placeholder={passwordError === "" ? "Powtórz hasło" : ""} />
                 </label>
-                <label className="label--checkBtn">
+                <label className="label--checkBtn label--marketingCheckbox">
                     <button className="registerForm__checkBtn" onClick={(e) => { handleCheckbox(e, 0); }}>
                         {checkboxObligatory ? <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" /> : ""}
                     </button>
-                    Tutaj miejsce na dobrowolną zgodę marketingową
+                    Wyrażam zgodę na przetwarzanie przez Draft4u Sp. z o.o moich danych osobowych w postaci adresu poczty elektronicznej w celu przesyłania mi informacji marketingowych dotyczących produktów i usług oferowanych przez Draft4u Sp z o.o za pomocą środków komunikacji elektronicznej, stosownie do treści przepisu art. 10 ust. 1 i 2 ustawy o świadczeniu usług drogą elektroniczną.
                 </label>
 
                 <button className="registerForm--nextBtn" onClick={(e) => { validateStep1(e); }}>
@@ -373,7 +373,7 @@ const RegisterModal = (props) => {
                     <button className={!checkboxError ? "registerForm__checkBtn" : "registerForm__checkBtn input--error"} onClick={(e) => { resetErrors(); handleCheckbox(e, 1); }}>
                         {checkboxCompulsory ? <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" /> : ""}
                     </button>
-                    Akceptuję Regulamin i Politykę prywatności i coś tam jeszcze lorem ipsum dolor sit amet ności i coś tam jeszczeności i coś tam jeszczeności i coś tam jeszcze
+                    Akceptuję <a href="/regulamin">Regulamin</a> i <a href="/polityka-prywatnosci">Politykę prywatności</a>.
                 </label>
 
                 <button className="registerForm--nextBtn" onClick={(e) => { validateStep2(e); }}>
