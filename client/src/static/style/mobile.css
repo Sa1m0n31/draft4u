@@ -1488,7 +1488,7 @@
     }
 
     .player__option__price {
-        font-size: 90px;
+        font-size: 120px;
     }
 
     .player__option__currency {
@@ -1717,6 +1717,7 @@
     .myAccountStart__bottom__content__lock {
         margin: 0 auto;
         transform: none;
+        max-width: 100%;
     }
 
     .player__flex__content .player__header, .myAccountStart__bottom__content__section .player__header {

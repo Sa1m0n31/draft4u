@@ -112,7 +112,10 @@ const init = (passport) => {
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
                 query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
-                values = [id.id?.substring(0, 10), id.name.givenName, id.name.familyName];
+                if(id.id) values = [id.id.substring(0, 10), id.name.givenName, id.name.familyName];
+                else {
+                    done(null, null);
+                }
                 db.query(query, values, (err, res) => {
                     if(res) {
                         /* Add new identity */

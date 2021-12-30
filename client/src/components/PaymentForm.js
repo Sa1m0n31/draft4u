@@ -1,10 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react'
 import przelewy24Icon from '../static/img/przelewy24.svg'
-import kartyIcon from '../static/img/karty-platnicze.png'
 import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
-import {chargeCard, registerPayment} from "../helpers/payment";
-import axios from "axios";
+import {registerPayment} from "../helpers/payment";
 
 const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [coupon, setCoupon] = useState("");
@@ -62,50 +60,14 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     }, [coupon]);
 
     const pay = () => {
-        // if(przelewy24Method !== -1) {
-        console.log(amount);
-        console.log(cost);
-        console.log(przelewy24Method);
-        console.log(email);
-        console.log(userId);
-            registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
-                .then((res) => {
-                    const paymentUri = "https://sandbox.przelewy24.pl/trnRequest/";
-                    const token = res.data.result;
-                    setP24Sign(res.data.sign);
-                    console.log(res);
-                    window.location = `${paymentUri}${token}`;
-                })
-        // }
-    }
-
-    const addCard = () => {
         registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
             .then((res) => {
+                const paymentUri = "https://secure.przelewy24.pl/trnRequest/";
                 const token = res.data.result;
+                setP24Sign(res.data.sign);
+                window.location = `${paymentUri}${token}`;
             });
     }
-
-    useEffect(() => {
-        /* Register payment for card method */
-        // registerPayment(amount ? amount : cost, 218, email, userId, type)
-        //     .then((res) => {
-        //         const token = res.data.result;
-        //         const sign = res.data.sign;
-        //
-        //         document.getElementById("P24FormContainer").setAttribute('data-sign', sign);
-        //
-        //         const script = document.createElement('script');
-        //
-        //         script.src = `https://sandbox.przelewy24.pl/inchtml/ajaxPayment/ajax.js?token=${token}`;
-        //         // script.src = 'https://platnosci.skylo-test1.pl/main.js'
-        //         script.async = true;
-        //
-        //         setTimeout(() => {
-        //             document.body.appendChild(script);
-        //         }, 5000);
-        //     });
-    }, []);
 
     return <main className="payment siteWidthSuperNarrow">
         <h2 className="payment__header">

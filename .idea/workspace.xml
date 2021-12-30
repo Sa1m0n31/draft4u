@@ -16,15 +16,12 @@
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/LoginBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/MyAccountStartBottom.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MyAccountStartBottom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/PaymentForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PaymentForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/PaymentPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/PaymentPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/wrappers/UserWrapper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/passport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routers/payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/payment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +195,8 @@
       <workItem from="1640726368677" duration="906000" />
       <workItem from="1640774188361" duration="69000" />
       <workItem from="1640799334166" duration="16756000" />
-      <workItem from="1640824103865" duration="8506000" />
+      <workItem from="1640824103865" duration="9147000" />
+      <workItem from="1640861745590" duration="3291000" />
     </task>
     <servers />
   </component>
@@ -258,11 +256,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1640816555706" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1640830070895">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1640864268963">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="498" y="178" width="672" height="538" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1639574970279" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1640830070895" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1640864268963" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

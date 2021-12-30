@@ -5,15 +5,11 @@ const got = require('got');
 const crypto = require("crypto");
 const { v4: uuidv4 } = require('uuid');
 
-const CLIENT_ID = '138354';
-const CRC = 'ef7a62121d72feb8';
-const API_KEY = '0f29ea02277d56caa4696ad7838fb87f'
-
 router.get("/get-payment-methods", (request, response) => {
-    got.get("https://sandbox.przelewy24.pl/api/v1/payment/methods/pl", {
+    got.get("https://secure.przelewy24.pl/api/v1/payment/methods/pl", {
         responseType: 'json',
         headers: {
-            'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
+            'Authorization': `Basic ${process.env.PRZELEWY_24_AUTH_HEADER}`
         }
     })
         .then((res) => {
@@ -25,6 +21,9 @@ router.get("/get-payment-methods", (request, response) => {
 
 router.post("/register-payment", (request, response) => {
     const { amount, method, email, userId } = request.body;
+
+    const CLIENT_ID = process.env.PRZELEWY_24_CLIENT_ID;
+    const CRC = process.env.PRZELEWY_24_CRC;
 
     let hash, data, gen_hash;
     const sessionId = uuidv4();
@@ -75,11 +74,11 @@ router.post("/register-payment", (request, response) => {
                 };
             }
 
-            got.post("https://sandbox.przelewy24.pl/api/v1/transaction/register", {
+            got.post("https://secure.przelewy24.pl/api/v1/transaction/register", {
                 json: postData,
                 responseType: 'json',
                 headers: {
-                    'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm'
+                    'Authorization': `Basic ${process.env.PRZELEWY_24_AUTH_HEADER}`
                 }
             })
                 .then((res) => {
@@ -105,23 +104,10 @@ router.post("/verify", (request, response) => {
     /* Calculate SHA384 checksum */
     let hash, data, gen_hash;
     hash = crypto.createHash('sha384');
-    data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${CRC}"}`, 'utf-8');
+    data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${process.env.PRZELEWY_24_CRC}"}`, 'utf-8');
     gen_hash= data.digest('hex');
 
-    // /* Get card refId */
-    // got.get(`https://sandbox.przelewy24.pl/api/v1/card/info/${orderId}`, {
-    //     headers: {
-    //         'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
-    //     }
-    // })
-    //     .then((res) => {
-    //        console.log(res.data);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //     })
-
-    got.put("https://sandbox.przelewy24.pl/api/v1/transaction/verify", {
+    got.put("https://secure.przelewy24.pl/api/v1/transaction/verify", {
         json: {
             merchantId,
             posId,
@@ -133,7 +119,7 @@ router.post("/verify", (request, response) => {
         },
         responseType: 'json',
         headers: {
-            'Authorization': 'Basic MTM4MzU0OjU0Nzg2ZGJiOWZmYTY2MzgwOGZmNGExNWRiMzI3MTNm' // tmp
+            'Authorization': `Basic ${process.env.PRZELEWY_24_AUTH_HEADER}`
         }
     })
         .then(res => {

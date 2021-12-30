@@ -2426,7 +2426,8 @@ ul {
 .myAccountStart__bottom__content__lock {
     max-width: 90%;
     margin-left: 100%;
-    transform: translateX(-100%);
+    transform: translateX(-100%) scale(1.1);
+    transform-origin: top right;
 }
 
 .myAccountStart__bottom__content__section {
@@ -2467,6 +2468,10 @@ ul {
 .myAccountStart__text {
     color: var(--grey);
     font-size: 18px;
+}
+
+.CircularProgressbar {
+    transform: scale(.9);
 }
 
 .CircularProgressbar .CircularProgressbar-path {

@@ -21,10 +21,8 @@ const MyAccountStartBottom = ({userId}) => {
                         const currentDate = new Date();
                         const expireDate = new Date(Date.parse(result.subscription));
 
-                        const daysToExpire = Math.floor((currentDate - expireDate) / 86400000);
-
-                        if(currentDate < expireDate) setDays(daysToExpire * (-1));
-                        else setDays(daysToExpire);
+                        const daysToExpire = Math.floor((expireDate - currentDate) / 86400000);
+                        setDays(daysToExpire);
                     }
                     else {
                         setDays(0);
