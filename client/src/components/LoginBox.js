@@ -74,9 +74,9 @@ const LoginBox = () => {
             Nie pamiętasz hasła?
         </a>
 
-        {/*<span className="loginBox__or">*/}
-        {/*    lub*/}
-        {/*</span>*/}
+        <span className="loginBox__or">
+            lub
+        </span>
 
         {/*<a className="button button--facebook" href={`${settings.API_URL}/auth/facebook`}>*/}
         {/*    <img className="button--facebook__img" src={facebookIcon} alt="facebook" />*/}

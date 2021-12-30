@@ -223,7 +223,6 @@ function isNumeric(str) {
 
 const getUserData = (request, response, userId) => {
     let facebook = false, google = false, hash = '', values;
-    console.log(userId);
     if(userId) {
         let query = '';
         if(facebook) {
@@ -232,7 +231,7 @@ const getUserData = (request, response, userId) => {
             values = [hash];
         }
         else if(!isNumeric(userId)) {
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1 OR identities.hash = $1`;
             values = [userId];
         }
         else {

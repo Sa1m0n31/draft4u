@@ -146,7 +146,7 @@ router.post("/admin",
 
 router.get("/facebook", cors(), passport.authenticate('facebook', {
     failureRedirect: '/auth/failure-third-party',
-    successRedirect: process.env.API_URL,
+    successRedirect: `${process.env.API_URL}/zarejestruj-przez-facebooka`,
     session: true,
     scope:['public_profile', 'email']
 }));
@@ -155,24 +155,30 @@ router.get("/facebook/callback",  passport.authenticate("facebook", {
     successRedirect: `${process.env.API_URL}/zarejestruj-przez-facebooka`,
     failureRedirect: "/auth/failure-third-party"
 }), (request, response) => {
-
+    console.log("FB CALLBACK");
 });
 
-router.get('/google',
+router.get('/google', cors(),
     passport.authenticate('google', {
         scope: ['https://www.googleapis.com/auth/plus.login'],
         failureRedirect: '/auth/failure',
-        successRedirect: process.env.API_URL,
+        successRedirect: `${process.env.API_URL}/zarejestruj-przez-google`,
         session: true
     }));
 
-router.get('/google/callback',
-    passport.authenticate('google',
-        { failureRedirect: '/',
-                successRedirect: process.env.API_URL }),
-    function(req, res) {
+// router.get('/google/callback', (request, response) => {
+//     response.send(200);
+// });
+
+router.get('/google/callback', passport.authenticate('google', {
+        failureRedirect: '/auth/failure-third-party',
+        successRedirect: `${process.env.API_URL}/zarejestruj-przez-google`,
+        scope: ['https://www.googleapis.com/auth/plus.login'],
+        session: true
+}), function(req, res) {
         // Successful authentication, redirect success.
-        res.redirect(`${process.env.API_URL}/zarejestruj-przez-google`);
+        // res.redirect(`${process.env.API_URL}/zarejestruj-przez-google`);
+    res.send(200);
     });
 
 router.post("/register-local", (request, response) => {

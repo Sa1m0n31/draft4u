@@ -25,7 +25,6 @@ router.get("/get-payment-methods", (request, response) => {
 
 router.post("/register-payment", (request, response) => {
     const { amount, method, email, userId } = request.body;
-    let paymentType;
 
     let hash, data, gen_hash;
     const sessionId = uuidv4();

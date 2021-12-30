@@ -63,11 +63,17 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
 
     const pay = () => {
         // if(przelewy24Method !== -1) {
+        console.log(amount);
+        console.log(cost);
+        console.log(przelewy24Method);
+        console.log(email);
+        console.log(userId);
             registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
                 .then((res) => {
                     const paymentUri = "https://sandbox.przelewy24.pl/trnRequest/";
                     const token = res.data.result;
                     setP24Sign(res.data.sign);
+                    console.log(res);
                     window.location = `${paymentUri}${token}`;
                 })
         // }

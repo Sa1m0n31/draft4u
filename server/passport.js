@@ -82,7 +82,7 @@ const init = (passport) => {
     passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_SECRET,
-        callbackURL: process.env.API_URL,
+        callbackURL: process.env.API_URL + '/auth/facebook/callback',
         profileFields: ['id', 'emails', 'name']
     }, function(accessToken, refreshToken, profile, done) {
         return done(null, profile);
@@ -91,12 +91,16 @@ const init = (passport) => {
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_APP_ID,
         clientSecret: GOOGLE_SECRET,
-        callbackURL: process.env.API_URL
+        callbackURL: process.env.API_URL  + '/auth/google/callback',
+        passReqToCallback: true
     }, googleAuth));
 
     passport.serializeUser((user, done) => {
-        if(user.name) done(null, user); /* Facebook or Google */
-        else done(null, user.id); /* Local */
+        if(user) {
+            if(user.name) done(null, user); /* Facebook or Google */
+            else done(null, user.id); /* Local */
+        }
+        else done(null, null);
     });
 
     passport.deserializeUser((id, done) => {
@@ -108,14 +112,14 @@ const init = (passport) => {
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
                 query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
-                values = [hash, id.name.givenName, id.name.familyName];
+                values = [id.id?.substring(0, 10), id.name.givenName, id.name.familyName];
                 db.query(query, values, (err, res) => {
                     if(res) {
                         /* Add new identity */
                         if(res.rows) {
                             const userId = res.rows[0].id;
                             query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                            values = [uuid, userId, 3, hash];
+                            values = [uuid, userId, 2, hash];
 
                             db.query(query, values, (err, res) => {
                                 if(res) {
