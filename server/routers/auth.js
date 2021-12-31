@@ -9,6 +9,9 @@ require('../passport')(passport);
 const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
 
+const apiAuth = require("../apiAuth");
+const basicAuth = new apiAuth().basicAuth;
+
 function isNumeric(str) {
     if (typeof str != "string") return false // we only process strings!
     return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
@@ -90,7 +93,6 @@ router.get('/verification', (request, response) => {
 });
 
 router.get("/auth", (request, response) => {
-
     if(request.user) {
         if(isNumeric(request.user.toString())) {
            /* Admin */
@@ -223,7 +225,7 @@ router.post("/register-local", (request, response) => {
    });
 });
 
-router.get("/get-user-subscription", (request, response) => {
+router.get("/get-user-subscription", basicAuth, (request, response) => {
    const userId = request.query.user;
    const query = 'SELECT subscription FROM identities WHERE user_id = $1';
    const values = [userId];

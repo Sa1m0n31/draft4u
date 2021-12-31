@@ -148,7 +148,7 @@ const changeClubPassword = (oldPassword, newPassword) => {
     });
 }
 
-const changeClubPasswordFromAdminPanel = (clubId,newPassword) => {
+const changeClubPasswordFromAdminPanel = (clubId, newPassword) => {
     return axios.post(`${API_URL}/club/change-club-password-from-admin-panel`, {
         clubId, newPassword
     });

@@ -9,7 +9,10 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const multer  = require('multer')
 const upload = multer({ dest: 'media/clubs' })
 
-router.post('/send-form', (request, response) => {
+const apiAuth = require("../apiAuth");
+const basicAuth = new apiAuth().basicAuth;
+
+router.post('/send-form', basicAuth, (request, response) => {
     const { name, mail, phone, msg } = request.body;
 
     let transporter = nodemailer.createTransport(smtpTransport ({
@@ -116,7 +119,7 @@ router.get("/get-club-by-id", (request, response) => {
     });
 });
 
-router.get("/get-all-players", (request, response) => {
+router.get("/get-all-players", basicAuth, (request, response) => {
    const query = `SELECT u.id as user_id, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range 
    FROM users u 
    JOIN identities id ON id.user_id = u.id
@@ -137,7 +140,7 @@ router.get("/get-all-players", (request, response) => {
    });
 });
 
-router.get("/get-three-newest", (request, response) => {
+router.get("/get-three-newest", basicAuth, (request, response) => {
    const club = request.user;
 
    const query = `SELECT u.id, u.first_name, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range 
@@ -164,7 +167,7 @@ router.get("/get-three-newest", (request, response) => {
    });
 });
 
-router.get("/get-favorites", (request, response) => {
+router.get("/get-favorites", basicAuth, (request, response) => {
     const club = request.user;
 
     const query = `SELECT * FROM favorites f JOIN users u ON f.user_id = u.id WHERE f.club_id = $1 ORDER BY f.created_at`;
@@ -184,7 +187,7 @@ router.get("/get-favorites", (request, response) => {
     });
 });
 
-router.get("/get-player-highlight", (request, response) => {
+router.get("/get-player-highlight", basicAuth, (request, response) => {
     const userId = request.query.player;
 
     const query = 'SELECT v.file_path, v.video_category FROM videos v JOIN users u ON v.user_id = u.id WHERE u.id = $1 ORDER BY array_position(array[4, 1, 2, 3, 5, 6, 7], v.video_category)';
@@ -204,7 +207,7 @@ router.get("/get-player-highlight", (request, response) => {
     });
 });
 
-router.post("/update", upload.single("image"), (request, response) => {
+router.post("/update", basicAuth, upload.single("image"), (request, response) => {
     const { clubId, name, login, league, x, y, nip, krs, city, email, imgUpdate } = request.body;
 
     let filename = null;
@@ -281,7 +284,7 @@ router.post("/update", upload.single("image"), (request, response) => {
     }
 });
 
-router.post("/add", upload.single("image"), (request, response) => {
+router.post("/add", basicAuth, upload.single("image"), (request, response) => {
     const {  name, login, password, league, x, y, nip, krs, city, email } = request.body;
 
     let filename = null;
@@ -370,7 +373,7 @@ router.post("/add", upload.single("image"), (request, response) => {
     }
 });
 
-router.post("/change-password", (request, response) => {
+router.post("/change-password", basicAuth, (request, response) => {
     const { oldPassword, newPassword } = request.body;
     const clubId = request.user;
 
@@ -405,7 +408,7 @@ router.post("/change-password", (request, response) => {
     })
 });
 
-router.post("/change-club-password-from-admin-panel", (request, response) => {
+router.post("/change-club-password-from-admin-panel", basicAuth, (request, response) => {
     const { clubId, newPassword } = request.body;
 
     const newHash = crypto.createHash('sha256').update(newPassword).digest('hex');
@@ -414,23 +417,27 @@ router.post("/change-club-password-from-admin-panel", (request, response) => {
     const values = [newHash, clubId];
 
     db.query(query, values, (err, res) => {
-       if(res) {
+        if(res) {
             if(res.rowCount) {
-                response.send({
-                    result: 1
+                const query = 'UPDATE identities SET hash = $1 WHERE id = $2';
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        response.send({result: 1});
+                    }
+                    else {
+                        response.send({result: 0});
+                    }
                 });
             }
             else {
-                response.send({
-                    result: -2
-                });
+                response.send({result: -2});
             }
-       }
-       else {
-           response.send({
-               result: 0
-           });
-       }
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
     });
 });
 

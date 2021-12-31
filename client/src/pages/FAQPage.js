@@ -9,7 +9,7 @@ const FAQPage = ({user, isLocal}) => {
         <main className="siteWidthSuperNarrow faqPage">
             <PlayerFAQ />
         </main>
-        <Footer theme="dark" />
+        <Footer theme="light" border={true} />
     </div>
 }
 

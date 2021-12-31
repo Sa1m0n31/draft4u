@@ -31,20 +31,20 @@ const RegisterFromThirdParty = () => {
             });
     }, []);
 
-    return <div className="container container--homepage container--registerFromThirdParty">
+    return <div className={mobile ? "container container--registerFromThirdParty" : "container container--homepage container--registerFromThirdParty"}>
         {loaded ? <>
             <Header menu="dark"
                     registerFromThirdParty={!mobile}
                     firstName={firstName}
                     lastName={lastName}
             />
-            {!mobile ? <LandingPage /> : <div className="registerPage">
+            {!mobile ? <LandingPage registerFromThirdParty={true} /> : <div className="registerPage">
                 <RegisterModal mobile={true}
                                firstName={firstName}
                                lastName={lastName}
                                registerFromThirdParty={true} />
             </div>}
-            <Footer theme="dark" />
+            <Footer theme={mobile ? "light" : "dark"} border={true} />
         </> : <LoadingPage />}
     </div>
 }

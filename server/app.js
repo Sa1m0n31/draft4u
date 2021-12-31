@@ -24,27 +24,27 @@ const io = new Server(server, {
 });
 
 /* Redirect http to https */
-// app.enable('trust proxy');
-//
-// function redirectWwwTraffic(req, res, next) {
-//     if (req.headers.host.slice(0, 4) === "www.") {
-//         var newHost = req.headers.host.slice(4);
-//         return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
-//     }
-//     next();
-// }
-//
-// app.use (function (req, res, next) {
-//     if (req.secure) {
-//         // request was via https, so do no special handling
-//         console.log('secure');
-//         next();
-//     } else {
-//         // request was via http, so redirect to https
-//         res.redirect('https://' + req.headers.host + req.url);
-//     }
-// });
-// app.use(redirectWwwTraffic);
+app.enable('trust proxy');
+
+function redirectWwwTraffic(req, res, next) {
+    if (req.headers.host.slice(0, 4) === "www.") {
+        var newHost = req.headers.host.slice(4);
+        return res.redirect(301, req.protocol + "://" + newHost + req.originalUrl);
+    }
+    next();
+}
+
+app.use (function (req, res, next) {
+    if (req.secure) {
+        // request was via https, so do no special handling
+        console.log('secure');
+        next();
+    } else {
+        // request was via http, so redirect to https
+        res.redirect('https://' + req.headers.host + req.url);
+    }
+});
+app.use(redirectWwwTraffic);
 
 // create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
@@ -275,8 +275,8 @@ const paymentRouter = require("./routers/payment");
 const chatRouter = require("./routers/chat");
 
 app.use("/auth", authRouter);
-app.use("/image", imageRouter);
-app.use("/video", videoRouter);
+app.use("/image", imageRouter); // only / not restricted (display image)
+app.use("/video", videoRouter); // only /get not restricted (display video)
 app.use("/custom-field", basicAuth, customFieldRouter);
 app.use("/notification", basicAuth, notificationRouter);
 app.use("/squad", basicAuth, squadRouter);

@@ -4,7 +4,10 @@ const path = require("path");
 const db = require("../database/db");
 
 const multer  = require('multer')
+const apiAuth = require("../apiAuth");
 const upload = multer({ dest: 'videos/' });
+
+const basicAuth = new apiAuth().basicAuth;
 
 router.get("/get", (request, response) => {
     const { url } = request.query;
@@ -12,7 +15,7 @@ router.get("/get", (request, response) => {
     response.sendFile(path.join(__dirname, '../', url));
 });
 
-router.post("/upload", upload.single('file'), (request, response) => {
+router.post("/upload", basicAuth, upload.single('file'), (request, response) => {
     const { userId, play } = request.body;
 
     let progress = 0;
@@ -90,7 +93,7 @@ router.post("/upload", upload.single('file'), (request, response) => {
     });
 });
 
-router.delete("/delete", (request, response) => {
+router.delete("/delete", basicAuth, (request, response) => {
    const { userId, play } = request.body;
 
     /* Get video category id */

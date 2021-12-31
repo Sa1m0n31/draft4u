@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {getUserFavorites, getUserVisited} from "../helpers/user";
+import headerImg from '../static/img/aktywnosci-klubu.jpg'
 import settings from "../settings";
 
 const ClubActivities = () => {
@@ -19,9 +20,9 @@ const ClubActivities = () => {
     }, []);
 
     return <section className="clubActivities siteWidthSuperNarrow">
-        <h2 className="clubActivities__header">
-            Aktywność klubów
-        </h2>
+        <figure className="clubActivities__imgHeader">
+            <img className="btn__img" src={headerImg} alt="aktywnosci-klubow" />
+        </figure>
         <h3 className="clubActivities__subheader">
             Twój profil odwiedzili
         </h3>

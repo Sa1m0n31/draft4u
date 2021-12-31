@@ -6,7 +6,7 @@ import belka from '../static/img/belka.png'
 import boisko from '../static/img/boisko-hero.svg'
 import pilka from '../static/img/tlo-zawodnikow.png'
 
-const LandingPage = () => {
+const LandingPage = ({registerFromThirdParty}) => {
     const playerZone = useRef(null);
     const clubZone = useRef(null);
 

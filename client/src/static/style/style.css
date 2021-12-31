@@ -5649,3 +5649,8 @@ input::-webkit-inner-spin-button {
 .container--dark .pageText * {
     color: #fff;
 }
+
+.clubActivities__imgHeader {
+    margin: 30px auto;
+    width: 100%;
+}

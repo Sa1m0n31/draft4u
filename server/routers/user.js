@@ -5,7 +5,9 @@ const db = require("../database/db");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const smtpTransport = require('nodemailer-smtp-transport');
-const got = require("got");
+
+const apiAuth = require("../apiAuth");
+const basicAuth = new apiAuth().basicAuth;
 
 const multer  = require('multer')
 const upload = multer({ dest: 'media/users' })
@@ -75,7 +77,7 @@ const sendPasswordRemindLink = (email, token, response) => {
     });
 }
 
-router.post("/password-remind", (request, response) => {
+router.post("/password-remind", basicAuth, (request, response) => {
     const { email } = request.body;
 
     const query = 'SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE LOWER(u.email) = LOWER($1)';
@@ -146,7 +148,7 @@ router.get("/check-remind-password-token", (request, response) => {
    }
 });
 
-router.post("/reset-password", (request, response) => {
+router.post("/reset-password", basicAuth, (request, response) => {
     const { email, password } = request.body;
 
     const newPasswordHash = crypto.createHash('sha256').update(password).digest('hex');
@@ -175,7 +177,7 @@ router.post("/reset-password", (request, response) => {
     });
 });
 
-router.post("/change-password", (request, response) => {
+router.post("/change-password", basicAuth, (request, response) => {
     const { oldPassword, newPassword } = request.body;
     const id = request.user;
 
@@ -238,17 +240,6 @@ const getUserData = (request, response, userId) => {
                     });
                 }
                 else {
-                    // got.get(`${process.env.API_URL}/club/get-club-data`, {
-                    //     searchParams: {
-                    //         userId: userId
-                    //     }
-                    // })
-                    //     .then((res) => {
-                    //         const result = res.body.result;
-                    //         response.send({
-                    //             result: result
-                    //         });
-                    //     });
                     response.send({
                         result: 0
                     })
@@ -295,7 +286,7 @@ const updateQuery = (query, values, response) => {
     });
 }
 
-router.put("/update-user-email", (request, response) => {
+router.put("/update-user-email", basicAuth, (request, response) => {
     const { email } = request.body;
     const userId = request.user;
 
@@ -305,7 +296,7 @@ router.put("/update-user-email", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-birthday", (request, response) => {
+router.put("/update-user-birthday", basicAuth, (request, response) => {
    const { birthday } = request.body;
    const userId = request.user;
 
@@ -315,7 +306,7 @@ router.put("/update-user-birthday", (request, response) => {
    updateQuery(query, values, response);
 });
 
-router.put("/update-user-license-number", (request, response) => {
+router.put("/update-user-license-number", basicAuth, (request, response) => {
    const { licenceNumber } = request.body;
    const userId = request.user;
 
@@ -325,7 +316,7 @@ router.put("/update-user-license-number", (request, response) => {
    updateQuery(query, values, response);
 });
 
-router.put("/update-user-club", (request, response) => {
+router.put("/update-user-club", basicAuth, (request, response) => {
     const { club } = request.body;
     const userId = request.user;
 
@@ -335,7 +326,7 @@ router.put("/update-user-club", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-phone-number", (request, response) => {
+router.put("/update-user-phone-number", basicAuth, (request, response) => {
     const { phoneNumber } = request.body;
     const userId = request.user;
 
@@ -345,7 +336,7 @@ router.put("/update-user-phone-number", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-salary", (request, response) => {
+router.put("/update-user-salary", basicAuth, (request, response) => {
     const { salaryFrom, salaryTo } = request.body;
     const userId = request.user;
 
@@ -355,7 +346,7 @@ router.put("/update-user-salary", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-attack-range", (request, response) => {
+router.put("/update-user-attack-range", basicAuth, (request, response) => {
     const { attackRange } = request.body;
     const userId = request.user;
 
@@ -365,7 +356,7 @@ router.put("/update-user-attack-range", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-vertical-range", (request, response) => {
+router.put("/update-user-vertical-range", basicAuth, (request, response) => {
     const { verticalRange } = request.body;
     const userId = request.user;
 
@@ -375,7 +366,7 @@ router.put("/update-user-vertical-range", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-block-range", (request, response) => {
+router.put("/update-user-block-range", basicAuth, (request, response) => {
     const { blockRange } = request.body;
     const userId = request.user;
 
@@ -385,7 +376,7 @@ router.put("/update-user-block-range", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-weight", (request, response) => {
+router.put("/update-user-weight", basicAuth, (request, response) => {
     const { weight } = request.body;
     const userId = request.user;
 
@@ -395,7 +386,7 @@ router.put("/update-user-weight", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-height", (request, response) => {
+router.put("/update-user-height", basicAuth, (request, response) => {
     const { height } = request.body;
     const userId = request.user;
 
@@ -405,7 +396,7 @@ router.put("/update-user-height", (request, response) => {
     updateQuery(query, values, response);
 });
 
-router.put("/update-user-position", (request, response) => {
+router.put("/update-user-position", basicAuth, (request, response) => {
     const { position } = request.body;
     const userId = request.user;
 
@@ -432,7 +423,7 @@ router.get("/get-all-positions", (request, response) => {
     });
 });
 
-router.post("/edit-profile-image", upload.single("image"), (request, response) => {
+router.post("/edit-profile-image", basicAuth, upload.single("image"), (request, response) => {
    const id = request.user;
 
    const query = `INSERT INTO images VALUES (nextval('images_id_sequence'), $1) RETURNING id`;
