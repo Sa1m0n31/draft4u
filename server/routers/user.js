@@ -93,7 +93,6 @@ router.post("/password-remind", (request, response) => {
                        sendPasswordRemindLink(email, token, response);
                    }
                    else {
-                       console.log(err);
                        response.send({
                            result: 0
                        });
@@ -101,14 +100,12 @@ router.post("/password-remind", (request, response) => {
                })
            }
            else {
-               console.log(err);
                response.send({
                    result: -1
                });
            }
        }
        else {
-           console.log(err);
            response.send({
                result: 0
            });
@@ -154,15 +151,10 @@ router.post("/reset-password", (request, response) => {
 
     const newPasswordHash = crypto.createHash('sha256').update(password).digest('hex');
 
-    console.log("RESET PASSWORD");
-    console.log(email);
-
     const query = 'UPDATE identities i SET hash = $1 FROM users u WHERE i.user_id = u.id AND LOWER(u.email) = LOWER($2)';
     const values = [newPasswordHash, email];
 
     db.query(query, values, (err, res) => {
-        console.log(res);
-        console.log(err);
         if(res) {
             if(res.rowCount) {
                 response.send({
@@ -194,7 +186,6 @@ router.post("/change-password", (request, response) => {
     const values = [newPasswordHash, oldPasswordHash, id];
 
     db.query(query, values, (err, res) => {
-        console.log(res);
         if(res) {
             if(res.rowCount) {
                 response.send({
@@ -240,7 +231,6 @@ const getUserData = (request, response, userId) => {
         }
 
         db.query(query, values, (err, res) => {
-            console.log('getting user data');
             if(res) {
                 if(res.rows.length) {
                     response.send({
@@ -372,8 +362,6 @@ router.put("/update-user-attack-range", (request, response) => {
     const query = 'UPDATE users u SET attack_range = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [attackRange, userId];
 
-    console.log(attackRange);
-
     updateQuery(query, values, response);
 });
 
@@ -420,8 +408,6 @@ router.put("/update-user-height", (request, response) => {
 router.put("/update-user-position", (request, response) => {
     const { position } = request.body;
     const userId = request.user;
-
-    console.log(position);
 
     const query = 'UPDATE users u SET position = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [position, userId];

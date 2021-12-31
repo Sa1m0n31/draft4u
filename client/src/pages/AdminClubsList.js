@@ -70,10 +70,6 @@ const AdminClubsList = ({admin}) => {
         setDeleteModalOpen(true);
     }
 
-    useEffect(() => {
-        console.log(candidateToDelete);
-    }, [candidateToDelete]);
-
     return <div className="container container--dark container--admin">
         <AdminTop />
 
@@ -111,7 +107,6 @@ const AdminClubsList = ({admin}) => {
                     Lista klubów
                 </h1>
                 {clubs?.reverse()?.map((item, index) => {
-                    console.log(item);
                     return <section className="admin__main__notification__item" key={index}>
                         <section className="admin__main__notification__item__col col-1">
                             {item.file_path ? <figure className="admin__main__notification__item__imgWrapper">

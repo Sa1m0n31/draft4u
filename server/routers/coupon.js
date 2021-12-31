@@ -9,7 +9,6 @@ router.post("/add", (request, response) => {
     const values = [title, discount, from, to, limit];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
         if(res) {
             response.send({
                 result: 1
@@ -30,7 +29,6 @@ router.post("/update", (request, response) => {
    const values = [title, discount, from, to, limit, id];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
         if(res) {
             response.send({
                 result: 1
@@ -51,7 +49,6 @@ router.delete("/delete", (request, response) => {
     const values = [id];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
         if(res) {
             response.send({
                 result: 1

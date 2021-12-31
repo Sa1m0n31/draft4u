@@ -160,25 +160,20 @@ router.get("/facebook/callback",  passport.authenticate("facebook", {
 
 router.get('/google', cors(),
     passport.authenticate('google', {
-        scope: ['https://www.googleapis.com/auth/plus.login'],
+        scope: ['https://www.googleapis.com/auth/userinfo.email'],
         failureRedirect: '/auth/failure',
         successRedirect: `${process.env.API_URL}/zarejestruj-przez-google`,
         session: true
     }));
 
-// router.get('/google/callback', (request, response) => {
-//     response.send(200);
-// });
 
 router.get('/google/callback', passport.authenticate('google', {
         failureRedirect: '/auth/failure-third-party',
         successRedirect: `${process.env.API_URL}/zarejestruj-przez-google`,
-        scope: ['https://www.googleapis.com/auth/plus.login'],
+        scope: ['https://www.googleapis.com/auth/userinfo.email'],
         session: true
 }), function(req, res) {
         // Successful authentication, redirect success.
-        // res.redirect(`${process.env.API_URL}/zarejestruj-przez-google`);
-    res.send(200);
     });
 
 router.post("/register-local", (request, response) => {
@@ -248,12 +243,19 @@ router.get("/get-user-subscription", (request, response) => {
 });
 
 router.post("/register-from-third-party", (request, response) => {
-   const { firstName, lastName, sex, birthday, phoneNumber } = request.body;
+   const { firstName, lastName, email, sex, birthday, phoneNumber } = request.body;
    const id = request.user;
    const gender = sex === 1;
+   let query, values;
 
-   const query = `UPDATE users AS u SET first_name = $1, last_name = $2, sex = $3, birthday = TO_DATE($4, 'YYYY-MM-DD') + INTERVAL '1 DAY', phone_number = $5 FROM identities AS i WHERE i.user_id = u.id AND i.id = $6 RETURNING u.id`;
-   const values = [firstName, lastName, gender, birthday, phoneNumber, id];
+   if(!email) {
+       query = `UPDATE users AS u SET first_name = $1, last_name = $2, sex = $3, birthday = TO_DATE($4, 'YYYY-MM-DD') + INTERVAL '1 DAY', phone_number = $5 FROM identities AS i WHERE i.user_id = u.id AND i.id = $6 RETURNING u.id`;
+       values = [firstName, lastName, gender, birthday, phoneNumber, id];
+   }
+   else {
+       query = `UPDATE users AS u SET first_name = $1, last_name = $2, email = $3, sex = $4, birthday = TO_DATE($5, 'YYYY-MM-DD') + INTERVAL '1 DAY', phone_number = $6 FROM identities AS i WHERE i.user_id = u.id AND i.id = $7 RETURNING u.id`;
+       values = [firstName, lastName, email, gender, birthday, phoneNumber, id];
+   }
 
    db.query(query, values, (err, res) => {
        if(res) {

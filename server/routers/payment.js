@@ -98,6 +98,98 @@ router.post("/register-payment", (request, response) => {
     });
 });
 
+const sendInvoiceToClient = (email, todayString, response) => {
+    got.get(`https://draft4u.fakturownia.pl/invoices.json?api_token=${process.env.FAKTUROWNIA_API_TOKEN}`)
+        .then((res) => {
+            if(res) {
+                const invoices = JSON.parse(res.body);
+                if(invoices.length) {
+                    const currentInvoiceIndex = invoices.findIndex((item) => {
+                        return item.buyer_email === email && item.sell_date === todayString;
+                    });
+                    if(currentInvoiceIndex !== -1) {
+                        got.post(`https://draft4u.fakturownia.pl/invoices/${invoices[currentInvoiceIndex].id}/send_by_email.json?api_token=${process.env.FAKTUROWNIA_API_TOKEN}`, {
+                            json: {
+                                api_token: process.env.FAKTUROWNIA_API_TOKEN
+                            }
+                        })
+                            .then((res) => {
+                                if(response) {
+                                    response.send({
+                                        status: "OK"
+                                    });
+                                }
+                                else return 0;
+                            });
+                    }
+                    else {
+                        if(response) {
+                            response.send({
+                                status: "OK"
+                            });
+                        }
+                        else return 0;
+                    }
+                }
+                else {
+                    if(response) {
+                        response.send({
+                            status: "OK"
+                        });
+                    }
+                    else return 0;
+                }
+            }
+            else {
+                response.send({
+                    status: "OK"
+                });
+            }
+        });
+}
+
+const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth()+1;
+    const day = today.getDate();
+    const todayString = `${year}-${month}-${day}`;
+
+    got.post('https://draft4u.fakturownia.pl/invoices.json', {
+        json: {
+            api_token: process.env.FAKTUROWNIA_API_TOKEN,
+            invoice: {
+                kind:"vat",
+                number: null,
+                sell_date: todayString,
+                issue_date: todayString,
+                paid_date: todayString,
+                status: 'paid',
+                seller_name: "Draft4U Sp.z.o.o.",
+                seller_tax_no: "5472224382",
+                seller_tax_no_kind: "NIP",
+                seller_bank_account: "33105010701000009081238652",
+                seller_post_code: "40-246",
+                seller_city: "Katowice",
+                seller_street : "ul. Porcelanowa 23",
+                buyer_email: buyerEmail,
+                buyer_name: buyerName,
+                positions:[
+                    {name:"Opłata abonementowa serwisu draft4u.com.pl", "tax": 23, "total_price_gross": amount, "quantity": 1}
+                ]
+            }
+        },
+        responseType: 'json',
+        headers: {
+            'Accept': `application/json`,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((res) => {
+            sendInvoiceToClient(buyerEmail, todayString, response);
+        });
+}
+
 router.post("/verify", (request, response) => {
     let { merchantId, posId, sessionId, amount, currency, orderId } = request.body;
 
@@ -124,20 +216,18 @@ router.post("/verify", (request, response) => {
     })
         .then(res => {
             if(res.body.data.status === 'success') {
-                const query = 'SELECT user_id FROM payments WHERE session_id = $1';
+                const query = 'SELECT p.user_id, u.first_name, u.last_name, u.email FROM payments p JOIN users u ON u.id = p.user_id WHERE p.session_id = $1';
                 const values = [sessionId];
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        const { user_id } = res.rows[0];
+                        const { user_id, first_name, last_name, email } = res.rows[0];
                         const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
                         const values = [user_id];
 
                         db.query(query, values, (err, res) => {
                             if(res) {
-                                response.send({
-                                    status: "OK"
-                                });
+                                addInvoice(`${first_name} ${last_name}`, email, amount, response);
                             }
                             else {
                                 response.send({

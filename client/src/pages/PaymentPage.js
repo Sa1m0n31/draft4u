@@ -11,10 +11,6 @@ const PaymentPage = ({user, isLocal}) => {
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
-        console.log(user);
-    }, [user]);
-
-    useEffect(() => {
         getPaymentMethods()
             .then((res) => {
                 setPaymentMethods(res?.data?.result?.filter((item) => {

@@ -120,67 +120,68 @@ const AdminPlayersList = () => {
                     </h1>
                 </header>
                 {players?.map((item, index) => {
-                    console.log(item);
-                    return <section className="admin__main__notification__item" key={index}>
-                        <section className="admin__main__notification__item__col col-2">
-                            <h3 className="admin__main__notification__item__key">
-                                Id
-                            </h3>
-                            <h4 className="admin__main__notification__item__value">
-                                {item.user_id}
-                            </h4>
-                        </section>
-                        <section className="admin__main__notification__item__col col-3">
-                            <h3 className="admin__main__notification__item__key">
-                                Imię i nazwisko
-                            </h3>
-                            <h4 className="admin__main__notification__item__value">
-                                {item.first_name} {item.last_name}
-                            </h4>
-                        </section>
-                        <section className="admin__main__notification__item__col col-2">
-                            <h3 className="admin__main__notification__item__key">
-                                Subskrypcja
-                            </h3>
-                            <h4 className="admin__main__notification__item__value">
-                                {new Date(item.subscription) > new Date() ? <>
-                                    <p className="green">{item.subscription.substring(0, 10)}</p>
-                                </> : <p className="red">
-                                    Nieaktywna
-                                </p>}
-                            </h4>
-                        </section>
-                        <section className="admin__main__notification__item__col col-3">
-                            <h3 className="admin__main__notification__item__key">
-                                Aktywny
-                            </h3>
-                            <h4 className="admin__main__notification__item__value">
-                                {item.active ? <span className="green">Tak</span> : <span className="red">
+                    if(item.first_name && item.last_name) {
+                        return <section className="admin__main__notification__item" key={index}>
+                            <section className="admin__main__notification__item__col col-2">
+                                <h3 className="admin__main__notification__item__key">
+                                    Id
+                                </h3>
+                                <h4 className="admin__main__notification__item__value">
+                                    {item.user_id}
+                                </h4>
+                            </section>
+                            <section className="admin__main__notification__item__col col-3">
+                                <h3 className="admin__main__notification__item__key">
+                                    Imię i nazwisko
+                                </h3>
+                                <h4 className="admin__main__notification__item__value">
+                                    {item.first_name} {item.last_name}
+                                </h4>
+                            </section>
+                            <section className="admin__main__notification__item__col col-2">
+                                <h3 className="admin__main__notification__item__key">
+                                    Subskrypcja
+                                </h3>
+                                <h4 className="admin__main__notification__item__value">
+                                    {new Date(item.subscription) > new Date() ? <>
+                                        <p className="green">{item.subscription.substring(0, 10)}</p>
+                                    </> : <p className="red">
+                                        Nieaktywna
+                                    </p>}
+                                </h4>
+                            </section>
+                            <section className="admin__main__notification__item__col col-3">
+                                <h3 className="admin__main__notification__item__key">
+                                    Aktywny
+                                </h3>
+                                <h4 className="admin__main__notification__item__value">
+                                    {item.active ? <span className="green">Tak</span> : <span className="red">
                                     {item.active === null ? "Zablokowany" : "Niezweryfikowany"}
                                 </span>}
-                            </h4>
-                        </section>
-                        <section className="admin__main__notification__item__col col-4">
-                            <h3 className="admin__main__notification__item__key">
-                                Zalogowany przez
-                            </h3>
-                            <h4 className="admin__main__notification__item__value">
-                                {item.adapter === 1 ? 'Konto w serwisie' : (item.adapter === 2 ? 'Facebook' : 'Google')}
-                            </h4>
-                        </section>
-                        <section className="admin__main__notification__item__col col-4">
-                            <h3 className="admin__main__notification__item__key">
-                                Akcje
-                            </h3>
-                            <section className="admin__main__notification__item__buttons">
-                                {!item.active && item.active !== null ? <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active, true); }}>
-                                    <img className="btn__img btn__img--invert" src={deleteIcon} alt="zablokuj" />
-                                </button> : <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active); }}>
-                                    {item.active !== null ? <img className="btn__img" src={trashIcon} alt="zablokuj" /> : <img className="btn__img" src={unlockIcon} alt="odblokuj" />}
-                                </button>}
+                                </h4>
+                            </section>
+                            <section className="admin__main__notification__item__col col-4">
+                                <h3 className="admin__main__notification__item__key">
+                                    Zalogowany przez
+                                </h3>
+                                <h4 className="admin__main__notification__item__value">
+                                    {item.adapter === 1 ? 'Konto w serwisie' : (item.adapter === 2 ? 'Facebook' : 'Google')}
+                                </h4>
+                            </section>
+                            <section className="admin__main__notification__item__col col-4">
+                                <h3 className="admin__main__notification__item__key">
+                                    Akcje
+                                </h3>
+                                <section className="admin__main__notification__item__buttons">
+                                    {!item.active && item.active !== null ? <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active, true); }}>
+                                        <img className="btn__img btn__img--invert" src={deleteIcon} alt="zablokuj" />
+                                    </button> : <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active); }}>
+                                        {item.active !== null ? <img className="btn__img" src={trashIcon} alt="zablokuj" /> : <img className="btn__img" src={unlockIcon} alt="odblokuj" />}
+                                    </button>}
+                                </section>
                             </section>
                         </section>
-                    </section>
+                    }
                 })}
             </main>
         </main>

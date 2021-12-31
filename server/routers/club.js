@@ -191,7 +191,6 @@ router.get("/get-player-highlight", (request, response) => {
     const values = [userId];
 
     db.query(query, values, (err, res) => {
-        console.log(err);
        if(res) {
            response.send({
                result: res.rows

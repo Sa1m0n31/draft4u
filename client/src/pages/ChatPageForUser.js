@@ -63,10 +63,7 @@ const ChatPageForUser = ({user, isLocal}) => {
                                     setCurrentChat(res.data.result);
                                     setLoaded(true);
                                 }
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                            })
+                            });
                     }
                     else {
                         setLoaded(true);
@@ -150,7 +147,6 @@ const ChatPageForUser = ({user, isLocal}) => {
     useEffect(() => {
         if(messages.length) {
             if(!listenSocket) {
-                console.log(messages);
                 setListenSocket(io(`${settings.API_URL}?room=${messages[0].chat_id.split(";")[1]}&receiver=true`));
             }
         }
@@ -159,12 +155,10 @@ const ChatPageForUser = ({user, isLocal}) => {
             getChatContent(currentChat[0] ? currentChat[0].chat_id : `${clubIdParam};${userId}`)
                 .then((res) => {
                     if(res?.data?.result) {
-                        console.log(res.data.result);
                         setCurrentChat(res.data.result);
                     }
                 });
         }
-        console.log(messages);
     }, [messages]);
 
     /* Socket effects */
@@ -206,7 +200,6 @@ const ChatPageForUser = ({user, isLocal}) => {
         getChatContent(chatId)
             .then((res) => {
                 setMobileCurrentChat(res?.data?.result);
-                console.log(res?.data?.result);
                 setCurrentChat(res?.data?.result);
             });
     }

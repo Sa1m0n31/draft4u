@@ -216,7 +216,6 @@ router.get("/get-user-notifications", (request, response) => {
    const values = [id];
 
    db.query(query, values, (err, res) => {
-       console.log(err);
       if(res) {
           response.send({
               result: res.rows
@@ -238,7 +237,6 @@ router.post("/read-all", (request, response) => {
 
     db.query(query, values,(err, res) => {
         if(res) {
-            console.log(res.rowCount);
             response.send({
                 result: 1
             });

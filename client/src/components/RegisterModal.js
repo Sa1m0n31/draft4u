@@ -321,7 +321,6 @@ const RegisterModal = (props) => {
                                placeholder={lastNameError === "" ? "Nazwisko" : ""} />
                 </label>
                 </span>
-
                 <label>
                     {sexError !== "" ? <span onClick={(e) => { resetErrors(e); }} className="loginBox__error">
                         {sexError}

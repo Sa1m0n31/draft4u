@@ -105,10 +105,6 @@ const ClubTeamsPage = ({club}) => {
         setDeleteModal(true);
     }
 
-    useEffect(() => {
-        console.log(teams[currentTeam]);
-    }, [currentTeam]);
-
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 

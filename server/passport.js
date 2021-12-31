@@ -91,13 +91,12 @@ const init = (passport) => {
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_APP_ID,
         clientSecret: GOOGLE_SECRET,
-        callbackURL: process.env.API_URL  + '/auth/google/callback',
-        passReqToCallback: true
+        callbackURL: process.env.API_URL  + '/auth/google/callback'
     }, googleAuth));
 
     passport.serializeUser((user, done) => {
         if(user) {
-            if(user.name) done(null, user); /* Facebook or Google */
+            if(user.name || user.provider) done(null, user); /* Facebook or Google */
             else done(null, user.id); /* Local */
         }
         else done(null, null);
@@ -107,14 +106,79 @@ const init = (passport) => {
         let query, values, hash;
 
         if(id) {
-            if(id.name) {
-                /* Facebook or Google */
+            if(id.provider === 'google') {
+                /* Google */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1 || '@facebookauth.com', $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
-                if(id.id) values = [id.id.substring(0, 10), id.name.givenName, id.name.familyName];
+                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                if(id.emails) {
+                    if(id.emails.length) {
+                        values = [id.emails[0].value];
+                    }
+                    else {
+                        values = [id.id + '@facebookauth'];
+                    }
+                }
                 else {
-                    done(null, null);
+                    values = [id.id + '@facebookauth'];
+                }
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        /* Add new identity */
+                        if(res.rows) {
+                            const userId = res.rows[0].id;
+                            query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
+                            values = [uuid, userId, 3, hash];
+
+                            db.query(query, values, (err, res) => {
+                                if(res) {
+                                    done(null, uuid);
+                                }
+                                else {
+                                    done(null, null);
+                                }
+                            });
+                        }
+                        else {
+                            done(null, null);
+                        }
+                    }
+                    else {
+                        /* Error - user with the same email address already exists */
+                        if(parseInt(err.code) === 23505) {
+                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                            const values = [hash];
+
+                            db.query(query, values, (err, res) => {
+                                if(res) {
+                                    done(null, res.rows[0].id);
+                                }
+                                else {
+                                    done(null, null);
+                                }
+                            });
+                        }
+                        else {
+                            done(null, null);
+                        }
+                    }
+                });
+            }
+            else if(id.provider === 'facebook') {
+                /* Facebook */
+                const uuid = uuidv4();
+                hash = crypto.createHash('sha256').update(id.id).digest('hex');
+                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                if(id.emails) {
+                    if(id.emails.length) {
+                        values = [id.emails[0].value, id.name.givenName, id.name.familyName];
+                    }
+                    else {
+                        values = [id.id + '@facebookauth', id.name.givenName, id.name.familyName];
+                    }
+                }
+                else {
+                    values = [id.id + '@facebookauth', id.name.givenName, id.name.familyName];
                 }
                 db.query(query, values, (err, res) => {
                     if(res) {
@@ -138,9 +202,9 @@ const init = (passport) => {
                         }
                     }
                     else {
-                        /* Error - user from Facebook already exists */
+                        /* Error - user with the same email already exists */
                         if(parseInt(err.code) === 23505) {
-                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1`;
+                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
                             const values = [hash];
 
                             db.query(query, values, (err, res) => {
@@ -170,7 +234,7 @@ const init = (passport) => {
                 });
             }
             else {
-                /* User or club */
+                /* User or club - local */
                 query = 'SELECT i.id FROM identities i LEFT OUTER JOIN users u ON i.user_id = u.id LEFT OUTER JOIN clubs c ON i.id = c.id WHERE i.id = $1';
                 values = [id];
 

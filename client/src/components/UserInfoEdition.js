@@ -39,6 +39,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const phoneNumberRef = useRef(null);
     const clubRef = useRef(null);
     const licenseRef = useRef(null);
+    const emailRef = useRef(null);
 
     const STEP = 1;
     const MIN = 1000;
@@ -116,6 +117,13 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     }
 
     useEffect(() => {
+        if(editEmail) {
+            emailRef.current.focus();
+            emailRef.current.select();
+        }
+    }, [editEmail]);
+
+    useEffect(() => {
         if(editPhoneNumber) {
             phoneNumberRef.current.focus();
         }
@@ -172,6 +180,14 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         }
     }, [values]);
 
+    useEffect(() => {
+        if(email?.split('@')?.length > 1) {
+            if(email?.split('@')[1] === 'facebookauth') {
+                setEmail('-');
+            }
+        }
+    }, [email]);
+
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
             <UserProfileImage user={player} club={clubProp} />
@@ -209,14 +225,27 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 </span>
             </label>
             {!(theme === 'dark') ? <>
-                {player.adapter === 1 ? <label className="userInfoEdition__form__field userInfoEdition__form__field--mail">
+               <label className="userInfoEdition__form__field">
                     <span className="userInfoEdition__key">
                         Mail
                     </span>
-                    <span className="userInfoEdition__value">
-                        {email}
-                    </span>
-                </label> : ""}
+                   <span className="userInfoEdition__value">
+                    <label className={editEmail ? "label--edit" : ""}>
+                        <input value={email?.split('@')[1] === 'facebookauth' ? '-' : email}
+                               ref={emailRef}
+                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserEmail(); }}
+                               onChange={(e) => { setEmail(e.target.value); }}
+                               disabled={!editEmail}
+                               className="input--editProfile"
+                               name="email" />
+                        {!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
+                </span>
+                </label>
                 <label className="userInfoEdition__form__field">
                     <span className="userInfoEdition__key">
                         Telefon
