@@ -53,4 +53,10 @@ const deleteUser = (id) => {
     });
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser }
+const changeUserName = (firstName, lastName, id) => {
+    return axios.post(`${API_URL}/admin/edit-user-name`, {
+        firstName, lastName, id
+    });
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName }

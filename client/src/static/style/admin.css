@@ -168,6 +168,7 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .panelMenu__submenu {
@@ -237,6 +238,10 @@ html, body {
     font-size: 13px;
     text-transform: uppercase;
     margin: 20px 0;
+}
+
+.admin__label--admin {
+    text-transform: none;
 }
 
 .admin__input {
@@ -726,4 +731,8 @@ html, body {
     .admin__map {
         width: 400px;
     }
+}
+
+.admin__main__form--secondColumn {
+    margin-left: 10%;
 }

@@ -195,4 +195,24 @@ router.delete("/delete-user", (request, response) => {
     });
 });
 
+router.post("/edit-user-name", (request, response) => {
+    const { firstName, lastName, id } = request.body;
+
+    const query = 'UPDATE users SET first_name = $1, last_name = $2 WHERE id = $3';
+    const values = [firstName, lastName, id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    })
+})
+
 module.exports = router;

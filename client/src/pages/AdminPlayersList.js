@@ -6,6 +6,7 @@ import trashIcon from "../static/img/block.svg";
 import deleteIcon from '../static/img/trash-black.svg'
 import unlockIcon from "../static/img/unlock.svg";
 import {banUser, deleteUser, getUsers, unlockUser} from "../helpers/admin";
+import penIcon from "../static/img/pen-white.png";
 
 const AdminPlayersList = () => {
     const [players, setPlayers] = useState([]);
@@ -178,6 +179,9 @@ const AdminPlayersList = () => {
                                     </button> : <button className="admin__main__notification__item__btn admin__main__notification__item__btn--block" onClick={() => { openDeleteModal(item.id, item.active); }}>
                                         {item.active !== null ? <img className="btn__img" src={trashIcon} alt="zablokuj" /> : <img className="btn__img" src={unlockIcon} alt="odblokuj" />}
                                     </button>}
+                                    <a className="admin__main__notification__item__btn" href={`/edytuj-zawodnika?id=${item.id}`}>
+                                        <img className="btn__img" src={penIcon} alt="edytuj" />
+                                    </a>
                                 </section>
                             </section>
                         </section>

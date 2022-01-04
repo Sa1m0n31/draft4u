@@ -2383,7 +2383,7 @@ ul {
 .blogSection__title {
     text-transform: uppercase;
     color: var(--gold);
-    font-size: 40px;
+    font-size: 46px;
 }
 
 .blogSection__imgWrapper {
@@ -2398,6 +2398,7 @@ ul {
 
 .blogSection__extract {
     font-size: 18px;
+    font-weight: 700;
     color: #707070;
 }
 
@@ -2405,6 +2406,7 @@ ul {
     display: block;
     background: transparent;
     font-size: 18px;
+    color: #313131;
     font-weight: 700;
     margin-top: 15px;
     text-transform: uppercase;
@@ -5653,4 +5655,9 @@ input::-webkit-inner-spin-button {
 .clubActivities__imgHeader {
     margin: 30px auto;
     width: 100%;
+}
+
+.admin__profileImgWrapper {
+    width: 200px;
+    margin-bottom: 30px;
 }

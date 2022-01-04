@@ -240,6 +240,9 @@ app.get("/dodaj-kod", (req, res) => {
 app.get("/lista-kodow", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+app.get("/edytuj-zawodnika", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 app.get("/return", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

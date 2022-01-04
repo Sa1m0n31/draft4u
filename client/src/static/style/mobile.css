@@ -172,7 +172,7 @@
     }
 
     .player__option__price {
-        font-size: 75px;
+        font-size: 120px;
     }
 
     .faq__btn, .faq__question__header__h {
@@ -216,7 +216,7 @@
 
 @media(max-width: 1400px) {
     .clubCarousel__item__img {
-        height: 70px;
+        height: 60px;
         width: auto;
         max-width: 90px;
     }
@@ -755,7 +755,7 @@
     }
 
     .clubCarousel__item__img {
-        max-width: 60px;
+        max-width: none;
     }
 
     .clubCarousel {
@@ -2365,6 +2365,14 @@
 @media(max-width: 576px) {
     .container--homepage .clubCarousel::after {
         display: none;
+    }
+
+    .mapDot__btn__details__data span {
+        white-space: normal;
+    }
+
+    .mapDot__btn__details__singleClub {
+        width: 60vw;
     }
 
     .pageText {

@@ -185,6 +185,9 @@ function App() {
       <Route path="/lista-mailingowa">
           <AdminWrapper page={12} />
       </Route>
+      <Route path="/edytuj-zawodnika">
+          <AdminWrapper page={13} />
+      </Route>
   </Router>
       </>
 }

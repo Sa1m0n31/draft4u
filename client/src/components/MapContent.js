@@ -30,14 +30,14 @@ const MapContent = () => {
     const setMaleDots = () => {
         setFilteredDots(dots.filter((item) => {
             return item.leagues.split(';').findIndex((item) => {
-                return parseInt(item.toString()) < 4;
+                return parseInt(item.toString()) < 5;
             }) !== -1;
         }));
     }
     const setFemaleDots = () => {
         setFilteredDots(dots.filter((item) => {
             return item.leagues.split(';').findIndex((item) => {
-                return parseInt(item.toString()) > 3;
+                return parseInt(item.toString()) > 4;
             }) !== -1;
         }));
     }
@@ -66,7 +66,7 @@ const MapContent = () => {
                 setDots(allDots);
                 setFilteredDots(allDots.filter((item) => {
                     return item.leagues.split(';').findIndex((item) => {
-                        return parseInt(item.toString()) < 4;
+                        return parseInt(item.toString()) < 5;
                     }) !== -1;
                 }));
             });
@@ -299,7 +299,7 @@ const MapContent = () => {
                     />
                     <aside className="mapContent__header__item__labels">
                         <span>Wszystkie</span>
-                        <span>Plus Liga</span>
+                        <span>{sex[0] ? "Tauron Liga" : "Plus Liga"}</span>
                         <span>1. Liga</span>
                         <span>2. Liga</span>
                         <span>3. Liga</span>

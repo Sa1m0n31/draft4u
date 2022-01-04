@@ -144,14 +144,18 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     }, [editLicence]);
 
     const editUserSalaryFrom = (salaryFrom) => {
+        const salaryTo = values[1];
         if(salaryFrom <= 30000 && salaryFrom >= 0) {
-            setValues([salaryFrom, values[1]]);
+            if((salaryTo - salaryFrom > 3000) && (salaryFrom.toString().length >= 4)) setValues([parseInt(salaryFrom), (parseInt(salaryFrom)+3000)]);
+            else setValues([parseInt(salaryFrom), parseInt(salaryTo)]);
         }
     }
 
     const editUserSalaryTo = (salaryTo) => {
+        const salaryFrom = values[0];
         if(salaryTo <= 30000 && salaryTo >= 0) {
-                setValues([values[0], salaryTo]);
+            if(salaryTo - salaryFrom > 3000) setValues([parseInt(salaryTo)-3000, parseInt(salaryTo)]);
+            else setValues([parseInt(salaryFrom), parseInt(salaryTo)]);
         }
     }
 
@@ -386,6 +390,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                             /* User move higher bound */
                             if(newValues[1] > prevValues[1]) {
                                 /* User increase higher bound */
+                                console.log(newValues)
                                 if(newValues[0]+3000 < newValues[1]) {
                                     setValues([newValues[1]-3000, newValues[1]]);
                                 }
