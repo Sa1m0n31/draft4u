@@ -128,6 +128,14 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                     {player?.club ? player.club : "-"}
                 </span>
             </section>
+            <section className="comparedPlayer__section__item comparedPlayer__section__item--club">
+                <span className="comparedPlayer__section__key">
+                    Dośw. ligowe
+                </span>
+                <span className="comparedPlayer__section__value">
+                    {player?.experience ? player.experience : "-"}
+                </span>
+            </section>
         </section>
 
         <section className="comparedPlayer__section">

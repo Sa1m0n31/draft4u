@@ -27,6 +27,7 @@
     .input--editProfile, .select--editProfile,
     .userInfoEdition__value label,
     .playerInfoEdition .input--editProfile,
+    .experienceSection *,
     .userInfoEdition__key {
         font-size: 16px;
     }
@@ -1052,9 +1053,18 @@
         display: block !important;
     }
 
+    .splide__arrows,
     .playerCard__balanceBtn,
     .d-desktop {
         display: none !important;
+    }
+
+    .experienceSection {
+        padding: 15px 5px 10px;
+    }
+
+    .experienceSection * {
+        font-size: 12px;
     }
 
     .clubForm .player__flex__content {
@@ -1072,7 +1082,7 @@
     }
 
     .input--editProfile {
-        max-width: 100px;
+        max-width: 145px;
     }
 
     .playerInfoEdition .input--editProfile {

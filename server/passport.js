@@ -110,7 +110,7 @@ const init = (passport) => {
                 /* Google */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
                 if(id.emails) {
                     if(id.emails.length) {
                         values = [id.emails[0].value];
@@ -168,7 +168,7 @@ const init = (passport) => {
                 /* Facebook */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
                 if(id.emails) {
                     if(id.emails.length) {
                         values = [id.emails[0].value, id.name.givenName, id.name.familyName];

@@ -3643,7 +3643,7 @@ input::-webkit-inner-spin-button {
     margin-left: -7vw;
 }
 
-.splide__pagination, .splide__arrows {
+.splide__pagination {
     display: none !important;
 }
 
@@ -5660,4 +5660,88 @@ input::-webkit-inner-spin-button {
 .admin__profileImgWrapper {
     width: 200px;
     margin-bottom: 30px;
+}
+
+.playerVideoView .splide__arrow {
+    width: 50px;
+    height: 400px;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(28,28,28);
+    background: linear-gradient(270deg, rgba(28,28,28,1) 0%, rgba(40,40,40,0.7) 47%, rgba(27,28,28,0.2) 100%);
+    transform: none !important;
+    border-radius: 0;
+}
+
+.playerVideoView .splide__arrow svg {
+    filter: brightness(0) invert(1);
+    transform: scale(1.2);
+}
+
+.playerVideoView .splide__arrow--prev svg {
+    transform: scale(1.2) rotateY(180deg);
+}
+
+.playerVideoView .splide__arrow--next {
+    right: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.playerVideoView .splide__arrow--prev {
+    left: 0;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background: linear-gradient(90deg, rgba(28,28,28,1) 0%, rgba(40,40,40,0.7) 47%, rgba(27,28,28,0.2) 100%);
+}
+
+.userInfoEdition__form__field--experience {
+    border: 1px solid #707070;
+    flex-wrap: wrap;
+}
+
+.userInfoEdition__form__field--experience .userInfoEdition__key {
+    padding-left: 10px;
+}
+
+.userInfoEdition__value--experience label input {
+    white-space: normal;
+}
+
+.experienceSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10px 20px;
+    width: 100%;
+}
+
+.experienceSection * {
+    background: transparent;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Oxanium', cursive;
+    transition: .2s all;
+}
+
+.experienceSection__btn--selected,
+.experienceSection__btn:hover {
+    color: var(--gold);
+}
+
+.input--editProfile--experience {
+    white-space: normal;
+    display: block;
+    max-width: 200px;
+    text-align: right !important;
+}
+
+.userInfoEdition__value--experience > label {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

@@ -151,34 +151,46 @@ const PlayerInfoEdition = ({player, theme}) => {
         }
     ]
 
-    const changeUserAttackRange = () => {
+    const changeUserAttackRange = (tab) => {
         setEditAttackRange(false);
         updateUserAttackRange(attackRange);
+
+        if(tab) setEditVerticalRange(true);
     }
 
-    const changeUserVerticalRange = () => {
+    const changeUserVerticalRange = (tab) => {
         setEditVerticalRange(false);
         updateUserVerticalRange(verticalRange);
+
+        if(tab) setEditBlockRange(true);
     }
 
-    const changeUserBlockRange = () => {
+    const changeUserBlockRange = (tab) => {
         setEditBlockRange(false);
         updateUserBlockRange(blockRange);
+
+        if(tab) setEditHeight(true);
     }
 
-    const changeUserWeight = () => {
-        setEditWeight(false);
-        updateUserWeight(weight);
-    }
-
-    const changeUserHeight = () => {
+    const changeUserHeight = (tab) => {
         setEditHeight(false);
         updateUserHeight(height);
+
+        if(tab) setEditWeight(true);
     }
 
-    const changeUserPosition = () => {
+    const changeUserWeight = (tab) => {
+        setEditWeight(false);
+        updateUserWeight(weight);
+
+        if(tab) setEditPosition(true);
+    }
+
+    const changeUserPosition = (tab) => {
         setEditPosition(false);
         updateUserPosition(position);
+
+        if(tab) setEditAttackRange(true);
     }
 
     useEffect(() => {
@@ -227,7 +239,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                         <input value={attackRange ? attackRange : (attackRange !== '' ? 0 : '')}
                                type="number"
                                ref={attackRangeRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserAttackRange(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserAttackRange(e.keyCode === 9); }}
                                onChange={(e) => { setAttackRange(prevState => {
                                    if(e.target.value?.toString()?.length > 3) return prevState;
                                    else return e.target.value;
@@ -253,7 +265,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                         <input value={verticalRange ? verticalRange : (verticalRange === '' ? '' : 0)}
                                type="number"
                                ref={verticalRangeRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserVerticalRange(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserVerticalRange(e.keyCode === 9); }}
                                onChange={(e) => { setVerticalRange(prevState => {
                                    if(e.target.value?.toString()?.length > 3) return prevState;
                                    else return e.target.value;
@@ -279,7 +291,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                         <input value={blockRange ? blockRange : (blockRange === '' ? '' : 0)}
                                type="number"
                                ref={blockRangeRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserBlockRange(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserBlockRange(e.keyCode === 9); }}
                                onChange={(e) => { setBlockRange(prevState => {
                                    if(e.target.value?.toString()?.length > 3) return prevState;
                                    else return e.target.value;
@@ -305,7 +317,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                         <input value={height ? height : (height === '' ? '' : 0)}
                                type="number"
                                ref={heightRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserHeight(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserHeight(e.keyCode === 9); }}
                                onChange={(e) => { setHeight(prevState => {
                                    if(e.target.value?.toString()?.length > 3) return prevState;
                                    else return e.target.value;
@@ -331,7 +343,7 @@ const PlayerInfoEdition = ({player, theme}) => {
                         <input value={weight ? weight : (weight === '' ? '' : 0)}
                                type="number"
                                ref={weightRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserWeight(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserWeight(e.keyCode === 9); }}
                                onChange={(e) => { setWeight(prevState => {
                                    if(e.target.value?.toString()?.length > 3) return prevState;
                                    else return e.target.value;
@@ -353,7 +365,9 @@ const PlayerInfoEdition = ({player, theme}) => {
                     Pozycja na boisku
                 </span>
                 <span className="userInfoEdition__value">
-                    <label className={editPosition ? "label--edit" : ""}>
+                    <label className={editPosition ? "label--edit" : ""}
+                            onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserPosition(e.keyCode === 9); }}
+                    >
                         {editPosition ? <select className="select--editProfile"
                                                 disabled={!editPosition}
                                                 value={position}

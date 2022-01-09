@@ -5,7 +5,7 @@ import check from '../static/img/save-parameter.svg'
 import { Range, getTrackBackground } from 'react-range';
 import {
     updateUserBirthday,
-    updateUserClub, updateUserEmail, updateUserLicenceNumber,
+    updateUserClub, updateUserEmail, updateUserExperience, updateUserLicenceNumber,
     updateUserPhoneNumber,
     updateUserSalary
 } from "../helpers/user";
@@ -18,7 +18,6 @@ import {isMail} from "../helpers/validation";
 
 const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
-    const [prevValues, setPrevValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
     const [fullName, setFullName] = useState("");
     const [age, setAge] = useState("");
@@ -26,6 +25,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [club, setClub] = useState("-");
     const [email, setEmail] = useState(player.email);
     const [licence, setLicence] = useState("");
+    const [experience, setExperience] = useState("");
+    const [leagues, setLeagues] = useState([]);
 
     const [editEmail, setEditEmail] = useState(false);
     const [editAge, setEditAge] = useState(false);
@@ -33,6 +34,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [editClub, setEditClub] = useState(false);
     const [editSalary, setEditSalary] = useState(false);
     const [editLicence, setEditLicence] = useState(false);
+    const [editExperience, setEditExperience] = useState(false);
 
     const [favoritePlayer, setFavoritePlayer] = useState(false);
 
@@ -40,8 +42,9 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const clubRef = useRef(null);
     const licenseRef = useRef(null);
     const emailRef = useRef(null);
+    const experienceRef = useRef(null);
 
-    const STEP = 1;
+    const STEP = 100;
     const MIN = 1000;
     const MAX = 30000;
 
@@ -62,24 +65,44 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         setAge(player.birthday?.substr(0, 10));
         setClub(player.club);
         setLicence(player.licence_number);
+        setLeagues(setLeaguesByExperience(player.experience));
         setValues([player.salary_from, player.salary_to]);
     }, [player]);
 
-    const changeUserPhoneNumber = () => {
+    const setLeaguesByExperience = (experience) => {
+        if(experience) {
+            return experience.split(',').map((item) => {
+                const name = item.trim();
+                if(name === 'Plus Liga' || name === 'Tauron Liga') return 0;
+                else if(name === '1. Liga') return 1;
+                else if(name === '2. Liga') return 2;
+                else if(name === '3. Liga') return 3;
+            });
+        }
+        else {
+            return [];
+        }
+    }
+
+    const changeUserPhoneNumber = (tab) => {
         setEditPhoneNumber(false);
         if(phoneNumber?.length < 15) {
             updateUserPhoneNumber(phoneNumber);
         }
+
+        if(tab) setEditClub(true);
     }
 
-    const changeUserEmail = () => {
+    const changeUserEmail = (tab) => {
         if(isMail(email)) {
             setEditEmail(false);
             updateUserEmail(email);
         }
+
+        if(tab) setEditPhoneNumber(true);
     }
 
-    const changeUserSalary = () => {
+    const changeUserSalary = (tab) => {
         setEditSalary(false);
         const valueFrom = parseInt(values[0]);
         const valueTo = parseInt(values[1]);
@@ -87,23 +110,77 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         if(diff >= 0 && diff <= 3000 && valueFrom >= 1000 && valueFrom <= 30000 && valueTo >= 1000 && valueFrom <= 30000) {
             updateUserSalary(values[0], values[1]);
         }
+
+        if(tab) setEditAge(true);
     }
 
-    const changeUserClub = () => {
+    const changeUserClub = (tab) => {
         setEditClub(false);
         updateUserClub(club);
+
+        if(tab) setEditLicence(true);
     }
 
-    const changeUserAge = () => {
+    const changeUserAge = (tab) => {
         setEditAge(false);
         if(calculateAge(age) > 16) {
             updateUserBirthday(age);
         }
+
+        if(tab) setEditEmail(true);
     }
 
-    const changeUserLicence = () => {
+    const changeUserLicence = (tab) => {
         setEditLicence(false);
         updateUserLicenceNumber(licence);
+
+        if(tab) setEditExperience(true);
+    }
+
+    const changeUserExperience = (tab) => {
+        setEditExperience(false);
+        updateUserExperience(experience);
+
+        if(tab) setEditSalary(true);
+    }
+
+    const getLeaguesFromLeaguesIndexes = () => {
+        return leagues.sort().map((item) => {
+            switch(item) {
+                case 0:
+                    if(player?.sex) return 'Plus Liga';
+                    else return 'Tauron Liga';
+                case 1:
+                    return '1. Liga';
+                case 2:
+                    return '2. Liga';
+                default:
+                    return '3. Liga';
+            }
+        });
+    }
+
+    useEffect(() => {
+        if(leagues?.length) setExperience(getLeaguesFromLeaguesIndexes().join(', '));
+    }, [leagues]);
+
+    const isLeagueSelected = (n) => {
+        return leagues.findIndex((item) => {
+            return item === n;
+        }) !== -1;
+    }
+
+    const chooseLeague = (n) => {
+        if(!isLeagueSelected(n)) {
+            setLeagues([...leagues, n]);
+        }
+        else {
+            setLeagues((prevState) => {
+                return prevState.filter((item) => {
+                    return item !== n;
+                });
+            });
+        }
     }
 
     const addPlayerToFavorites = () => {
@@ -216,6 +293,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                         <input value={theme === "dark" ? calculateAge(age) : age}
                                type={theme === "dark" ? "number" : "date"}
                                onChange={(e) => { setAge(e.target.value); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserAge(e.keyCode === 9); }}
                                disabled={!editAge}
                                required={true}
                                className="input--editProfile"
@@ -237,7 +315,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     <label className={editEmail ? "label--edit" : ""}>
                         <input value={email?.split('@')[1] === 'facebookauth' ? '-' : email}
                                ref={emailRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserEmail(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserEmail(e.keyCode === 9); }}
                                onChange={(e) => { setEmail(e.target.value); }}
                                disabled={!editEmail}
                                className="input--editProfile"
@@ -258,7 +336,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                             <label className={editPhoneNumber ? "label--edit" : ""}>
                                 <input value={phoneNumber}
                                        ref={phoneNumberRef}
-                                       onKeyDown={(e) => { if(e.keyCode === 13) changeUserPhoneNumber(); }}
+                                       onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserPhoneNumber(e.keyCode === 9); }}
                                        onChange={(e) => { setPhoneNumber(e.target.value); }}
                                        disabled={!editPhoneNumber}
                                        className="input--editProfile"
@@ -280,7 +358,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     <label className={editClub ? "label--edit" : ""}>
                         <input value={club}
                                ref={clubRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserClub(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserClub(e.keyCode === 9); }}
                                onChange={(e) => { setClub(e.target.value); }}
                                disabled={!editClub}
                                className="input--editProfile"
@@ -301,7 +379,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     <label className={editLicence ? "label--edit" : ""}>
                         <input value={licence ? licence : "-"}
                                ref={licenseRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserLicence(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserLicence(e.keyCode === 9); }}
                                onChange={(e) => { setLicence(e.target.value); }}
                                disabled={!editLicence}
                                className="input--editProfile"
@@ -314,7 +392,45 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     </label>
                 </span>
             </label>
-            <label className="userInfoEdition__form__field">
+            <div className={editExperience ? "userInfoEdition__form__field userInfoEdition__form__field--experience" : "userInfoEdition__form__field"}
+                 onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserExperience(e.keyCode === 9); }}
+            >
+                <span className="userInfoEdition__key">
+                    Dośw. ligowe
+                </span>
+                <span className="userInfoEdition__value userInfoEdition__value--experience">
+                    <label>
+                        <span className="input--editProfile input--editProfile--experience">
+                            {editExperience ? "" : (!experience ? "-" : experience)}
+                        </span>
+                        {!editExperience ? <button className="userInfoEdition__btn" onClick={() => { setEditExperience(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button type="button" className="userInfoEdition__btn" onClick={() => { changeUserExperience(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
+                </span>
+                {editExperience ? <div className="experienceSection">
+                        <span>
+                            Liga:
+                        </span>
+                    <button className={isLeagueSelected(0) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(0); }}>
+                        {player?.sex ? "Plus Liga" : "Tauron Liga"}
+                    </button>
+                    <button className={isLeagueSelected(1) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(1); }}>
+                        1. Liga
+                    </button>
+                    <button className={isLeagueSelected(2) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(2); }}>
+                        2. Liga
+                    </button>
+                    <button className={isLeagueSelected(3) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(3); }}>
+                        3. Liga
+                    </button>
+                </div> : ""}
+            </div>
+            <label className="userInfoEdition__form__field"
+                    onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserSalary(e.keyCode === 9); }}
+            >
                 <span className="userInfoEdition__key">
                     Wynagrodzenie (netto)
                 </span>
@@ -326,7 +442,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                                value={values[0] ? values[0] : (values[0] === '' ? '' : 1000)}
                                onChange={(e) => { editUserSalaryFrom(e.target.value); }}
                                onClick={() => { selectSalaryFromInput(); }}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserSalary(); }}
                                disabled={!editSalary}
                                type="number" />
                         <span className="betweenSalaryInputs">
@@ -335,7 +451,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                         <input className="input--editProfile input--salary"
                                value={values[1] ? values[1] : (values[1] === '' ? '' : 3000)}
                                onChange={(e) => { editUserSalaryTo(e.target.value); }}
-                               onKeyDown={(e) => { if(e.keyCode === 13) changeUserSalary(); }}
+                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserSalary(); }}
                                onClick={() => { selectSalaryToInput(); }}
                                disabled={!editSalary}
                                type="number" />
@@ -390,7 +506,6 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                             /* User move higher bound */
                             if(newValues[1] > prevValues[1]) {
                                 /* User increase higher bound */
-                                console.log(newValues)
                                 if(newValues[0]+3000 < newValues[1]) {
                                     setValues([newValues[1]-3000, newValues[1]]);
                                 }

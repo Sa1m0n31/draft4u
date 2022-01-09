@@ -66,6 +66,14 @@ const updateUserLicenceNumber = (licenceNumber) => {
     });
 }
 
+const updateUserExperience = (experience) => {
+    return axios.put(`${API_URL}/user/update-user-experience`, {
+        experience
+    }, {
+        withCredentials: true
+    });
+}
+
 const updateUserPhoneNumber = (phoneNumber) => {
     return axios.put(`${API_URL}/user/update-user-phone-number`, {
         phoneNumber
@@ -254,7 +262,7 @@ const getIdentityById = (id) => {
 }
 
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
-    updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail,
+    updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail, updateUserExperience,
     updateUserClub, updateUserSalary, updateUserBirthday,
     updateUserAttackRange, updateUserVerticalRange, updateUserBlockRange,
     updateUserHeight, updateUserWeight, updateUserPosition,

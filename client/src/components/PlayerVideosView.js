@@ -2,13 +2,14 @@ import React, {useState, useEffect, useRef} from 'react'
 import addVideosBtn from '../static/img/wgraj-filmik.png'
 import playBtn from '../static/img/play-button.svg'
 import {getUserVideos} from "../helpers/video";
-import { Player, BigPlayButton } from 'video-react'
+import { Player } from 'video-react'
 import settings from "../settings";
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import writeMsgBtn from '../static/img/napisz-wiadomosc.png'
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import {getIdentityById} from "../helpers/user";
+import arrowIcon from '../static/img/white-arrow.svg'
 
 const PlayerVideoView = ({id, club}) => {
     const [videos, setVideos] = useState([]);
@@ -16,6 +17,7 @@ const PlayerVideoView = ({id, club}) => {
     const [identity, setIdentity] = useState("");
 
     let player = useRef(null);
+    let carousel = useRef(null);
 
     useEffect(() => {
         getUserVideos(id)
@@ -46,7 +48,9 @@ const PlayerVideoView = ({id, club}) => {
         {playVideo !== -1 ? <ModalVideoPlayer closeModal={closeModalVideoPlayer} source={`${settings.API_URL}/video/get?url=/videos/${videos[playVideo].file_path}`} /> : ""}
 
         {club || videos?.length ? <main className={club ? "playerVideoView__carousel playerVideoView__carousel--empty" : "playerVideoView__carousel"}>
-            {videos?.length || !club ? <Splide options={options}>
+            {videos?.length || !club ? <Splide options={options}
+                                               ref={carousel}
+            >
                 {videos?.map((item, index) => {
                     return <SplideSlide key={index}>
                         <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); setPlayVideo(index); }}>
