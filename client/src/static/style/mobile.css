@@ -4,9 +4,23 @@
     }
 }
 
+@media(min-width: 1600px) {
+    .club__section--beforeChat {
+        margin-bottom: 0;
+    }
+
+    .player__flex--section--chat {
+        padding-top: 0;
+    }
+}
+
 @media(min-width: 996px) {
     .player__flex__text--marginRight {
         margin-right: 5%;
+    }
+
+    .player__flex__imgWrapper--chat {
+        margin-bottom: -3px !important;
     }
 }
 
@@ -1057,6 +1071,16 @@
     .playerCard__balanceBtn,
     .d-desktop {
         display: none !important;
+    }
+
+    .player__flex__imgWrapper--chat {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .container--player .player__flex__imgWrapper--chat {
+        width: 100%;
+        justify-content: center;
     }
 
     .experienceSection {

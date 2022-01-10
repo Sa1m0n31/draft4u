@@ -6,6 +6,7 @@ import img1 from '../static/img/strefa-zawodnika-1.png'
 import img2 from '../static/img/strefa-klubowa-2.png'
 import img3 from '../static/img/strefa-zawodnika-2.png'
 import img4 from '../static/img/klub-porownywarka.png'
+import img5 from '../static/img/czat.png'
 import PlayerFAQ from "../components/PlayerFAQ";
 import ClubForm from "../components/ClubForm";
 
@@ -47,7 +48,7 @@ const Club = () => {
                 </figure>
             </section>
 
-            <section className="player__section player__flex player__flex--section player__section--1 club__section">
+            <section className="player__section player__flex player__flex--section player__section--1 club__section club__section--beforeChat">
                 <figure className="player__flex__imgWrapper">
                     <img className="player__flex__img player__flex__imgWrapper--clubImg3" src={img3} alt="widok" />
                 </figure>
@@ -62,7 +63,26 @@ const Club = () => {
                 </article>
             </section>
 
+            <section className="player__section player__flex player__flex--section player__section--1 club__section player__flex--section--chat">
+                <article className="player__flex__content player__flex__content--chat">
+                    <h2 className="player__header">
+                        Kontakt za pomocą czatu
+                    </h2>
+                    <p className="player__flex__text">
+                        Kontaktuj się z zawodnikami za pomocą naszego czatu i omawiaj warunki umowy w jednym miejscu! Nie martw się o spam lub niechciane wiadomości. W naszym serwisie tylko klub może nawiązać kontakt z zawodnikiem. Po rozpoczęciu rozmowy czat zostanie automatycznie zapisany na Twojej liście, a Ty będziesz mógł do niego wrócić w dowolnym momencie.
+                    </p>
+                </article>
+
+                <figure className="player__flex__imgWrapper player__flex__imgWrapper--chat">
+                    <img className="player__flex__img player__flex__imgWrapper--clubImg3" src={img5} alt="widok" />
+                </figure>
+            </section>
+
             <section className="player__section player__flex player__flex--section player__section--1 club__section">
+                <figure className="player__flex__imgWrapper">
+                    <img className="player__flex__img player__flex__imgWrapper--clubImg2" src={img2} alt="widok" />
+                </figure>
+
                 <article className="player__flex__content">
                     <h2 className="player__header">
                         Stwórz swoją drużynę
@@ -71,10 +91,6 @@ const Club = () => {
                         Zobacz jak wybrany kandydat prezentuje się w Twoim składzie! Stwórz swoją drużynę – dodaj zawodników i zobacz jak będzie wyglądać Twój zespół z nowym graczem. Możesz stworzyć nieograniczoną liczbę składów, a także w łatwy sposób zmieniać zawodników na poszczególnych pozycjach. W prawym górnym rogu zobaczysz szacowany koszt drużyny. Każdy wariant możesz zapisać osobno, aż znajdziesz najlepsze rozwiązanie.
                     </p>
                 </article>
-
-                <figure className="player__flex__imgWrapper">
-                    <img className="player__flex__img player__flex__imgWrapper--clubImg2" src={img2} alt="widok" />
-                </figure>
             </section>
 
             <ClubForm />

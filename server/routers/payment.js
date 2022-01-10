@@ -154,6 +154,7 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
     const month = today.getMonth()+1;
     const day = today.getDate();
     const todayString = `${year}-${month}-${day}`;
+    const sum = parseFloat(amount) / 100.00;
 
     got.post('https://draft4u.fakturownia.pl/invoices.json', {
         json: {
@@ -175,7 +176,7 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
                 buyer_email: buyerEmail,
                 buyer_name: buyerName,
                 positions:[
-                    {name:"Opłata abonementowa serwisu draft4u.com.pl", "tax": 23, "total_price_gross": amount, "quantity": 1}
+                    {name:"Opłata abonementowa serwisu draft4u.com.pl", "tax": 23, "total_price_gross": sum, "quantity": 1}
                 ]
             }
         },

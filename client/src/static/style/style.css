@@ -5745,3 +5745,32 @@ input::-webkit-inner-spin-button {
     justify-content: flex-end;
     align-items: center;
 }
+
+.player__flex--section--chat {
+    padding-bottom: 0;
+}
+
+.player__flex__imgWrapper--chat {
+    width: 55%;
+    align-self: flex-end;
+    margin-bottom: 0;
+}
+
+.player__flex__content--chat {
+    width: 45%;
+}
+
+.player__flex__content--chat {
+    padding-bottom: 40px;
+}
+
+.container--player .player__flex__imgWrapper--chat {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 50%;
+}
+
+.container--player .player__flex__imgWrapper--chat img {
+    width: 90%;
+}

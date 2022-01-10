@@ -6,6 +6,7 @@ import buyNowBtn from '../static/img/buy-now.png'
 import playerHeader from '../static/img/header-zawodnicy.jpg'
 import img1 from '../static/img/strefa-zawodnika-1.png'
 import img2 from '../static/img/strefa-zawodnika-2.png'
+import img3 from '../static/img/czat.png'
 import step1 from '../static/img/krok-1.svg'
 import step2 from '../static/img/krok-2.svg'
 import step3 from '../static/img/krok-3.svg'
@@ -47,6 +48,20 @@ const Player = () => {
                         Szukasz nowego klubu, ale brakuje Ci czasu lub nie chcesz współpracować z menedżerami? Nasz unikalny na polskim rynku serwis powstał po to, aby ułatwić kontakt klubów z zawodnikami. Wystarczy tylko kilka chwil: przygotuj swój profil na naszej stronie i gotowe! Od teraz przedstawiciele klubów, z którymi współpracujemy, mogą kontaktować się z Tobą szybko i bez pośredników.
                     </p>
                 </article>
+            </section>
+            <section className="player__section player__flex player__flex--section player__section--1 player__flex--section--chat">
+                <article className="player__flex__content player__flex__content--chat">
+                    <h2 className="player__header">
+                        Kontakt za pomocą czatu
+                    </h2>
+                    <p className="player__flex__text">
+                        Przedstawiciel klubu może skontaktować się z Tobą za pośrednictwem czatu na naszej stronie. Omawiaj warunki umowy bez pośredników w jednym miejscu! Po rozpoczęciu rozmowy czat zostanie automatycznie zapisany na Twojej liście, a Ty będziesz mógł do niego wrócić w dowolnym momencie. Nie musisz martwić się o niechciane wiadomości lub próby oszustwa - rejestracja w strefie klubu jest możliwa tylko za pomocą administratorów strony. Dzięki temu masz gwarancję, że konto przedstawiciela klubu jest zweryfikowane i wiarygodne.
+                    </p>
+                </article>
+
+                <figure className="player__flex__imgWrapper player__flex__imgWrapper--chat">
+                    <img className="player__flex__img" src={img3} alt="widok" />
+                </figure>
             </section>
 
             <section className="player__section">
@@ -139,7 +154,7 @@ const Player = () => {
             </section>
         </main>
         <ClubSlider />
-        <Footer theme="dark" />
+        <Footer theme="light" border={true} />
     </div>
 }
 
