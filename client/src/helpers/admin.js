@@ -59,4 +59,16 @@ const changeUserName = (firstName, lastName, id) => {
     });
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName }
+const getUsersVideosNumber = () => {
+    return axios.get(`${API_URL}/admin/get-users-videos-number`);
+}
+
+const getUsersParametersCompleted = () => {
+    return axios.get(`${API_URL}/admin/get-users-parameters-completed`);
+}
+
+const getAdvancedUsersInfo = () => {
+    return axios.get(`${API_URL}/admin/get-advanced-users-info`);
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo }

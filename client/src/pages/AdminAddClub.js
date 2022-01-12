@@ -289,7 +289,7 @@ const AdminAddClub = ({admin}) => {
                                 {leagueError}
                              </span> : ""}
                             {leagues.map((item, index) => {
-                                return <label className="admin__notificationChecklist__item" key={index}>
+                                return <label className="admin__notificationChecklist__item admin__notificationChecklist__item--league" key={index}>
                                     <button className={league === item.id ? "admin__notificationChecklist__btn admin__notificationChecklist__btn--selected" : "admin__notificationChecklist__btn"} onClick={() => { setLeague(item.id); }}>
                                     </button>
                                     {item.name} {item.sex ? " mężczyzn" : "kobiet"}

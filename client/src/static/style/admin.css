@@ -311,9 +311,21 @@ html, body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 15px 0;
+    margin: 25px 0;
     color: #fff;
     cursor: pointer;
+    flex-wrap: wrap;
+}
+
+.admin__notificationChecklist__item--league {
+    margin: 15px 0;
+}
+
+.admin__notificationChecklist__advanced {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
 }
 
 .admin__notificationChecklist__btn {
@@ -324,11 +336,38 @@ html, body {
     margin-right: 15px;
 }
 
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
 .admin__notificationChecklist__scroll {
     height: 500px;
     overflow-y: scroll;
-    padding-right: 100px;
+    padding-right: 30px;
     margin: 30px 0;
+}
+
+.admin__notificationChecklist__subscriptionInfo:last-of-type {
+    font-size: 12px;
+    width: 120px;
+}
+
+.invert {
+    filter: brightness(0) invert(.7);
+}
+
+.admin__notificationChecklist__video__img {
+    width: 15px;
+    margin-right: 10px;
+}
+
+.admin__notificationChecklist__advanced >span {
+    display: block;
+    width: 70px;
 }
 
 .admin__notificationChecklist__btn--selected {
@@ -465,13 +504,17 @@ html, body {
     margin-top: 15px;
 }
 
+.admin__main__notification__item__value--small {
+    font-size: 13px;
+}
+
 .admin__main__notification__item .col-1 {
     flex-basis: 15%;
     width: 20%;
 }
 
 .admin__main__notification__item .col-2 {
-    flex-basis: 20%;
+    flex-basis: 25%;
 }
 
 .admin__main__notification__item .col-3 {

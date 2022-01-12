@@ -17,6 +17,13 @@ function isNumeric(str) {
         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }
 
+const sendInfoAboutLogin = (id) => {
+    const query = 'INSERT INTO login_info VALUES ($1, NOW())';
+    const values = [id];
+
+    db.query(query, values);
+}
+
 const init = (passport) => {
     const userAuth = (username, password, done) => {
         const hash = crypto.createHash('sha256').update(password).digest('hex');
@@ -39,6 +46,7 @@ const init = (passport) => {
                     return done(null, false, { message: 'Zweryfikuj swój adres email aby się zalogować' });
                 }
                 else {
+                    sendInfoAboutLogin(user.id);
                     return done(null, user);
                 }
             }

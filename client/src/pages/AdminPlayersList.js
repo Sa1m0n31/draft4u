@@ -125,10 +125,13 @@ const AdminPlayersList = () => {
                         return <section className="admin__main__notification__item" key={index}>
                             <section className="admin__main__notification__item__col col-2">
                                 <h3 className="admin__main__notification__item__key">
-                                    Id
+                                    Ostatnie logowanie
                                 </h3>
-                                <h4 className="admin__main__notification__item__value">
-                                    {item.user_id}
+                                <h4 className="admin__main__notification__item__value admin__main__notification__item__value--small">
+                                    {item.login_time ? <span>
+                                        {item.login_time.substring(0, 10)}<br/>
+                                        {item.login_time.substring(11, 19)}
+                                    </span>: 'Brak danych'}
                                 </h4>
                             </section>
                             <section className="admin__main__notification__item__col col-3">
@@ -151,7 +154,7 @@ const AdminPlayersList = () => {
                                     </p>}
                                 </h4>
                             </section>
-                            <section className="admin__main__notification__item__col col-3">
+                            <section className="admin__main__notification__item__col col-2">
                                 <h3 className="admin__main__notification__item__key">
                                     Aktywny
                                 </h3>

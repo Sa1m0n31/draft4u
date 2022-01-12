@@ -51,7 +51,7 @@ router.get("/get-admin-data", (request, response) => {
 });
 
 router.get("/get-clubs", (request, response) => {
-   const query = 'SELECT c.name, c.login, id.active, id.id, i.file_path FROM clubs c JOIN identities id USING(id) LEFT OUTER JOIN images i ON i.id = c.logo';
+   const query = 'SELECT c.name, c.login, id.active, id.id, i.file_path, li.login_time FROM clubs c JOIN identities id USING(id) LEFT OUTER JOIN images i ON i.id = c.logo LEFT OUTER JOIN login_info li ON li.id = c.id';
 
    db.query(query, [], (err, res) => {
        if(res) {
@@ -68,7 +68,10 @@ router.get("/get-clubs", (request, response) => {
 });
 
 router.get("/get-users", (request, response) => {
-    const query = `SELECT i.id, i.user_id, i.adapter, i.active, i.subscription + INTERVAL '1 DAY' as subscription, i.newsletter, u.first_name, u.last_name, u.email FROM users u JOIN identities i ON u.id = i.user_id ORDER BY i.user_id DESC`;
+    const query = `SELECT i.id, i.user_id, i.adapter, i.active, i.subscription + INTERVAL '1 DAY' as subscription, i.newsletter, u.first_name, u.last_name, u.email, li.login_time 
+                    FROM users u JOIN identities i ON u.id = i.user_id 
+                    LEFT OUTER JOIN login_info li ON i.id = li.id
+                    ORDER BY i.user_id DESC`;
 
     db.query(query, [], (err, res) => {
         if(res) {
@@ -213,6 +216,82 @@ router.post("/edit-user-name", (request, response) => {
             });
         }
     })
-})
+});
+
+router.get('/get-advanced-users-info', (request, response) => {
+   const query = `SELECT * FROM
+                    (SELECT u.id, COUNT(v.id) as videos
+                    FROM users u
+                    LEFT OUTER JOIN videos v ON u.id = v.user_id 
+                    GROUP BY(u.id)
+                    ) as t1
+                    JOIN (SELECT id,
+                    CASE WHEN attack_range IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN vertical_range IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN block_range IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN height IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN weight IS NOT NULL THEN 1 ELSE 0 END as parameters
+                    FROM users) as t2 ON t1.id = t2.id
+                    JOIN (SELECT i.id, i.user_id, i.adapter, i.active, i.subscription + INTERVAL '1 DAY' as subscription, i.newsletter, u.first_name, u.last_name, u.email
+                    FROM users u 
+                    JOIN identities i ON u.id = i.user_id) as t3
+                    ON t2.id = t3.user_id ORDER BY t1.videos + t2.parameters DESC`;
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.get('/get-users-videos-number', (request, response) => {
+    const query = `SELECT u.id, COUNT(v.id) 
+                    FROM users u
+                    LEFT OUTER JOIN videos v ON u.id = v.user_id 
+                    GROUP BY(u.id)`;
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.get('/get-users-parameters-completed', (request, response) => {
+   const query = `SELECT id,
+                    CASE WHEN attack_range IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN vertical_range IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN block_range IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN height IS NOT NULL THEN 1 ELSE 0 END +
+                    CASE WHEN weight IS NOT NULL THEN 1 ELSE 0 END as parameters
+                    FROM users`;
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
 
 module.exports = router;

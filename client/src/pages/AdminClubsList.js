@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react'
 import AdminTop from "../components/AdminTop";
-import {getAllClubs} from "../helpers/club";
 import closeIcon from "../static/img/close-grey.svg";
 import PanelMenu from "../components/PanelMenu";
 import settings from "../settings";
@@ -108,6 +107,17 @@ const AdminClubsList = ({admin}) => {
                 </h1>
                 {clubs?.reverse()?.map((item, index) => {
                     return <section className="admin__main__notification__item" key={index}>
+                        <section className="admin__main__notification__item__col col-2">
+                            <h3 className="admin__main__notification__item__key">
+                                Ostatnie logowanie
+                            </h3>
+                            <h4 className="admin__main__notification__item__value">
+                                {item.login_time ? <span>
+                                        {item.login_time.substring(0, 10)}<br/>
+                                    {item.login_time.substring(11, 19)}
+                                    </span>: 'Brak danych'}
+                            </h4>
+                        </section>
                         <section className="admin__main__notification__item__col col-1">
                             {item.file_path ? <figure className="admin__main__notification__item__imgWrapper">
                                 <img className="admin__main__notification__item__img btn__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.title} />

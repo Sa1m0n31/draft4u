@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import AdminTop from "../components/AdminTop";
 import PanelMenu from "../components/PanelMenu";
-import {getClubs, getUsers} from "../helpers/admin";
+import {getAdvancedUsersInfo, getClubs, getUsers} from "../helpers/admin";
 import {isElementInArray} from "../helpers/others";
 import Dropzone from "react-dropzone-uploader";
 import trashIcon from '../static/img/trash-black.svg'
 import {addNotification, getNotification, updateNotification} from "../helpers/notification";
 import settings from "../settings";
+import videoIcon from '../static/img/play-button.svg'
+import playerIcon from '../static/img/admin-players.svg'
+import dollarIcon from '../static/img/dollar-symbol.svg'
 
 const AdminAddNotification = () => {
     const [title, setTitle] = useState("");
@@ -30,7 +33,7 @@ const AdminAddNotification = () => {
                 setClubs(res?.data?.result);
             });
 
-        getUsers()
+        getAdvancedUsersInfo()
             .then((res) => {
                 setUsers(res?.data?.result);
             });
@@ -276,7 +279,25 @@ const AdminAddNotification = () => {
                                     <button className={isElementInArray(sendList, item.id) ? "admin__notificationChecklist__btn admin__notificationChecklist__btn--selected" : "admin__notificationChecklist__btn"} onClick={() => { addToSendList(item.id, false); }}>
 
                                     </button>
-                                    {item.first_name} {item.last_name} ({item.email.split('@')[1] !== 'facebookauth.com' ? item.email : 'Zarejestrowany przez Facebooka/Google'})
+                                    <div>
+                                        <span className="admin__notificationChecklist__info">
+                                        {item.first_name} {item.last_name} ({item.email.split('@')[1] !== 'facebookauth.com' ? item.email : 'Zarejestrowany przez Facebooka/Google'})
+                                    </span>
+                                        <div className="admin__notificationChecklist__advanced">
+                                            <span className='admin__notificationChecklist__parametersInfo'>
+                                                <img className="admin__notificationChecklist__video__img" src={playerIcon} alt="video" />
+                                                {item.parameters}
+                                             </span>
+                                            <span className='admin__notificationChecklist__videosInfo'>
+                                                <img className="admin__notificationChecklist__video__img" src={videoIcon} alt="video" />
+                                                {item.videos}
+                                            </span>
+                                            <span className={new Date(item.subscription.substring(0, 10)) >= new Date() ? 'admin__notificationChecklist__subscriptionInfo green' : 'admin__notificationChecklist__subscriptionInfo red'}>
+                                                <img className="admin__notificationChecklist__video__img invert" src={dollarIcon} alt="video" />
+                                                {item.subscription.substring(0, 10)}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </label>
                             })}
                         </section>
