@@ -21,7 +21,9 @@ const AdminPlayersList = () => {
     useEffect(() => {
         getUsers()
             .then((res) => {
-                setPlayers(res?.data?.result);
+                if(res?.data?.result) {
+                    setPlayers(res?.data?.result);
+                }
             });
 
         if(deleteStatus !== -1) {

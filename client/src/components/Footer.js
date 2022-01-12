@@ -2,7 +2,6 @@ import React from 'react'
 
 import fbIcon from '../static/img/facebook.svg'
 import instaIcon from '../static/img/instagram.svg'
-import ytIcon from '../static/img/youtube.svg'
 
 const Footer = ({theme, border}) => {
     return <footer id={border ? "footerBorder" : ""} className={theme === "dark" ? "footer footer--dark" : (theme === "light" ? "footer footer--light" : "footer footer--dark footer--light--mobile")}>

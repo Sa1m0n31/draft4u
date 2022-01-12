@@ -5774,3 +5774,157 @@ input::-webkit-inner-spin-button {
 .container--player .player__flex__imgWrapper--chat img {
     width: 90%;
 }
+
+.contact {
+    position: fixed;
+    right: -3px;
+    top: 0;
+    /*width: 30%;*/
+    /*min-width: 350px;*/
+    max-width: 400px;
+    z-index: 5;
+    width: 0;
+    min-width: 0;
+}
+
+.contact__btn {
+    background: transparent;
+    color: #fff;
+    position: absolute;
+    right: 0;
+    transform: translateX(3px);
+    top: 30%;
+    transition: .3s all;
+}
+
+.contact__btn span {
+    position: absolute;
+    font-size: 24px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.contact__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #474747;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    transform: scaleX(0);
+    transform-origin: top right;
+    transition: .3s all;
+}
+
+.contact__main .clubForm__inner {
+    width: 100%;
+}
+
+.contact__main__header {
+    color: var(--gold);
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Oxanium', cursive;
+}
+
+.contact__main .clubForm__inner label {
+    width: 70%;
+    margin: auto;
+}
+
+.contact__main .loginBox__error {
+    font-size: 13px;
+}
+
+.contact__main .textarea,
+.contact__main .input {
+    background: #fff;
+    width: 100%;
+    margin: 25px auto;
+    height: 42px;
+    border: 1px solid #707070;
+    border-radius: 3px;
+    display: block;
+    font-size: 20px;
+    outline: none;
+    color: #313131;
+    padding: 6px 15px;
+}
+
+.contact__main .textarea::placeholder,
+.contact__main .input::placeholder {
+    color: rgba(70, 70, 70, .4);
+}
+
+.contact__main .textarea:focus,
+.contact__main .input:focus {
+    border: 3px solid var(--gold);
+}
+
+.contact__main .textarea {
+    resize: none;
+    height: 200px;
+}
+
+.contact__main .registerForm--nextBtn {
+    width: 70%;
+    max-height: 30px;
+}
+
+.contact__main__bottom {
+    width: 80%;
+    margin: 30px auto;
+    padding-top: 40px;
+    border-top: 2px solid var(--gold);
+}
+
+.contact__main__bottom {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.contact__main__bottom__header {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.contact__main__bottom__item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 25px auto;
+    padding-left: 10%;
+}
+
+.contact__main__bottom__icon {
+    width: 14px;
+    margin-right: 15px;
+}
+
+.contact__main__bottom__item:last-of-type .contact__main__bottom__icon:last-of-type {
+    width: 20px;
+}
+
+.contact__main > * {
+    opacity: 0;
+    transition: .3s all;
+}
+
+.contact__btn--mobile .contact__btn__img {
+    width: 20px;
+    margin-bottom: 8px;
+}
+
+.contact__main .clubForm__confirmMsg {
+    width: 75%;
+    margin: 10px auto;
+    font-weight: 300;
+}

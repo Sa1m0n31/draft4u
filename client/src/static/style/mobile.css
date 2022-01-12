@@ -1073,6 +1073,58 @@
         display: none !important;
     }
 
+    .contact__main,
+    .contact {
+        right: 0;
+        max-width: none;
+    }
+
+    .contact__main .modal--close {
+        top: 20px;
+        right: 20px;
+    }
+
+    .contact__main .clubForm__inner button,
+    .contact__main .clubForm__inner label {
+        width: 80%;
+    }
+
+    .contact .contact__btn--mobile {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: #474747;
+        box-shadow: -3px 3px 6px #00000040;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        text-align: center;
+        font-size: 10px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .contact__main .clubForm__inner {
+        margin-top: 5px;
+    }
+
+    .contact__main__header {
+        margin-bottom: 15px;
+    }
+
+    .contact__main .input,
+    .contact__main .textarea {
+        margin: 10px auto;
+        font-size: 15px;
+    }
+
+    .contact__main .textarea {
+        height: 150px;
+    }
+
     .player__flex__imgWrapper--chat {
         margin-bottom: 0 !important;
         margin-top: 0 !important;

@@ -68,7 +68,7 @@ router.get("/get-clubs", (request, response) => {
 });
 
 router.get("/get-users", (request, response) => {
-    const query = `SELECT i.id, i.user_id, i.adapter, i.active, i.subscription + INTERVAL '1 DAY' as subscription, i.newsletter, u.first_name, u.last_name, u.email, li.login_time 
+    const query = `SELECT i.id, i.user_id as user_id, i.adapter, i.active, i.subscription + INTERVAL '1 DAY' as subscription, i.newsletter, u.first_name, u.last_name, u.email, li.login_time + INTERVAL '2 HOUR' as login_time
                     FROM users u JOIN identities i ON u.id = i.user_id 
                     LEFT OUTER JOIN login_info li ON i.id = li.id
                     ORDER BY i.user_id DESC`;

@@ -31,6 +31,7 @@ import {
     readNotification
 } from "../helpers/notification";
 import {getIdentityById, getUserById, getUserData} from "../helpers/user";
+import ContactInfo from "./ContactInfo";
 
 const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
@@ -265,6 +266,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     }
 
     return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
+        <ContactInfo />
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>

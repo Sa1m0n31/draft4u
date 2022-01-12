@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="280" height="54" viewBox="0 0 280 54">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f3d48b"/>
+      <stop offset="1" stop-color="#cb9150"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_3327" data-name="Group 3327" transform="translate(-1588 -627)">
+    <g id="Rectangle_36" data-name="Rectangle 36" transform="translate(1588 627)" stroke="#707070" stroke-width="1" fill="url(#linear-gradient)">
+      <rect width="280" height="54" rx="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="279" height="53" rx="0.5" fill="none"/>
+    </g>
+    <text id="Wyślij" transform="translate(1697 664)" font-size="33" font-family="BaucherGotURWExt-Med, Baucher Gothic URW Extd"><tspan x="0" y="0">WYŚLIJ</tspan></text>
+  </g>
+</svg>

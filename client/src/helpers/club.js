@@ -155,6 +155,7 @@ const changeClubPasswordFromAdminPanel = (clubId, newPassword) => {
 }
 
 const sendClubForm = (name, mail, phone, msg) => {
+    if(!phone) phone = 'Brak';
     return axios.post(`${API_URL}/club/send-form`, {
         name, mail, phone, msg
     });

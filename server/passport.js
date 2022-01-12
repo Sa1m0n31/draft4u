@@ -18,7 +18,7 @@ function isNumeric(str) {
 }
 
 const sendInfoAboutLogin = (id) => {
-    const query = 'INSERT INTO login_info VALUES ($1, NOW())';
+    const query = 'INSERT INTO login_info VALUES ($1, NOW()) ON CONFLICT(id) DO UPDATE SET login_time = NOW()';
     const values = [id];
 
     db.query(query, values);
