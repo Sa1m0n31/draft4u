@@ -82,7 +82,7 @@ router.get("/get-locations", (request, response) => {
 router.get("/get-club-data", (request, response) => {
    const clubId = request.user;
 
-   const query = 'SELECT c.id, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
+   const query = 'SELECT c.id, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, c.league, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
    const values = [clubId];
 
    db.query(query, values, (err, res) => {

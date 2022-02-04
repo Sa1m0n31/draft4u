@@ -19,4 +19,10 @@ const chargeCard = (token, cardNumber, cardDate, cvv, clientName) => {
     });
 }
 
-export { getPaymentMethods, registerPayment, chargeCard }
+const addPayPalPayment = (userId, amount) => {
+    return axios.post(`${API_URL}/payment/add-paypal-payment`, {
+        userId, amount
+    });
+}
+
+export { getPaymentMethods, registerPayment, chargeCard, addPayPalPayment }

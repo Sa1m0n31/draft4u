@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Header from "../components/Header";
-import example from "../static/img/zzaksa.png";
 import headerImg from "../static/img/header-wyszukiwarka.jpg";
 import Footer from "../components/Footer";
-import { Range, getTrackBackground } from 'react-range';
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import PlayerCard from "../components/PlayerCard";
-import {addToFavorites, deleteFromFavorites, getAllPlayers, getFavoritesByClub} from "../helpers/club";
+import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {calculateAge, isElementInArray} from "../helpers/others";
 import compareBtn from '../static/img/compare-btn.png'
 import settings from "../settings";
-import man from '../static/img/profile-picture.png'
 import filterIcon from '../static/img/filter.svg'
 import rightArrow from '../static/img/right-arrow.svg'
 import pokazWynikiBtn from '../static/img/pokaz-wyniki-btn.png'
@@ -45,6 +42,13 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     useEffect(() => {
         setFavoritesState(favorites);
     }, [favorites]);
+
+    useEffect(() => {
+        if(club) {
+            if(club?.league <= 4) setSex([0]);
+            else setSex([1]);
+        }
+    }, [club]);
 
     const filterPlayers = () => {
         const gender = sex[0] === 0; // TRUE - man, FALSE - woman

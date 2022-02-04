@@ -2,7 +2,11 @@ import React, {useEffect, useRef, useState} from 'react'
 import przelewy24Icon from '../static/img/przelewy24.svg'
 import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
-import {registerPayment} from "../helpers/payment";
+import {addPayPalPayment, registerPayment} from "../helpers/payment";
+import {
+    PayPalButtons,
+} from "@paypal/react-paypal-js";
+import payPalIcon from '../static/img/paypal.png'
 
 const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [coupon, setCoupon] = useState("");
@@ -12,12 +16,6 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [amount, setAmount] = useState(cost);
 
     const [p24Sign, setP24Sign] = useState("");
-
-    const [cardNumber, setCardNumber] = useState("");
-    const [cardDate, setCardDate] = useState("");
-    const [cvv, setCvv] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
 
     const arrow1 = useRef(null);
     const arrow2 = useRef(null);
@@ -69,6 +67,13 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
             });
     }
 
+    const payWithPayPal = () => {
+        addPayPalPayment(userId, amount)
+            .then((res) => {
+                window.location = '/subskrypcja-przedluzona'
+            });
+    }
+
     return <main className="payment siteWidthSuperNarrow">
         <h2 className="payment__header">
             Skonfiguruj płatność
@@ -108,30 +113,37 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
             </section>
         </section>
 
-{/*        <section className="paymentItemWrapper">*/}
-{/*            <button className="payment__item" onClick={() => { changePaymentItem(2); }}>*/}
-{/*                <h3 className="payment__item__header">*/}
-{/*                    Płać kartą kredytową lub debetową*/}
-{/*                </h3>*/}
-{/*                <img className="payment__item__icon" src={kartyIcon} alt="karty-kredytowe" />*/}
+        <section className="paymentItemWrapper">
+            <button className="payment__item" onClick={() => { changePaymentItem(2); }}>
+                <h3 className="payment__item__header">
+                    Płać z PayPal
+                </h3>
+                <img className="payment__item__icon" src={payPalIcon} alt="paypal" />
 
-{/*                <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />*/}
-{/*            </button>*/}
+                <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
+            </button>
 
-{/*            <div*/}
-{/*                id="P24FormContainer"*/}
-{/*                data-sign=""*/}
-{/*                data-successCallback="finishCardPayment"*/}
-{/*                data-failureCallback="paymentCardError"*/}
-{/*                data-dictionary='{*/}
-{/*        "cardHolderLabel": "string",*/}
-{/*        "cardNumberLabel": "0",*/}
-{/*        "cvvLabel": "0",*/}
-{/*        "expDateLabel": "string",*/}
-{/*        "payButtonCaption": "string"*/}
-{/*}'>*/}
-{/*            </div>*/}
-{/*        </section>*/}
+            <section className={paymentItem === 2 ? "paymentMethod paymentMethod--2" : "hidden"}>
+                <PayPalButtons
+                    createOrder={(data, actions) => {
+                        return actions.order.create({
+                            purchase_units: [
+                                {
+                                    amount: {
+                                        value: amount,
+                                    },
+                                },
+                            ],
+                        });
+                    }}
+                    onApprove={(data, actions) => {
+                        return actions.order.capture().then((details) => {
+                            payWithPayPal();
+                        });
+                    }}
+                />
+            </section>
+        </section>
 
         <section className="payment__couponCode">
             <label>

@@ -5,6 +5,7 @@ import {getAllClubs} from "../helpers/club";
 
 const ClubSlider = () => {
     const [logos, setLogos] = useState([]);
+    const [randomized, setRandomized] = useState(false);
 
     let slider = useRef(null);
 
@@ -14,21 +15,15 @@ const ClubSlider = () => {
             .then((res) => {
                 const result = res?.data?.result;
                 if(result) {
-                    if(result.length > 3) {
-                        for(let i=0; i<10; i++) {
-                            setLogos(prevState => {
-                                return prevState.concat(result.filter((item) => {
-                                    return item.active;
-                                }).map((item) => {
-                                    return item.file_path;
-                                }));
-                            })
-                        }
-                    }
-                    else {
-                        setLogos(result.map((item) => {
-                            return item.file_path;
-                        }));
+                    const arrToConcat = shuffleArray(result.filter((item) => {
+                        return item.active;
+                    }).map((item) => {
+                        return item.file_path;
+                    }));
+                    for(let i=0; i<10; i++) {
+                        setLogos(prevState => {
+                            return prevState.concat(arrToConcat);
+                        });
                     }
                 }
             });
@@ -43,6 +38,15 @@ const ClubSlider = () => {
                 slider.next();
             }
         }, 4000);
+    }
+
+    const shuffleArray = (arr) => {
+        let array = arr;
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     return <section className="clubCarousel">

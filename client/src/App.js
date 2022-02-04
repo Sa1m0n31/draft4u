@@ -7,7 +7,7 @@ import './static/style/admin.css'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Homepage from "./pages/Homepage";
-import MyAccountStart from "./pages/MyAccountStart";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import AccountVerification from "./pages/AccountVerification";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -29,6 +29,11 @@ import AUTH_HEADER from "./static/restrict/credentials";
 import ContentPage from "./pages/ContentPage";
 
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
+
+const payPalOptions = {
+    "client-id": "ASMhJrR4oVB4QW7qgQsRHKcHbuMBDZxRoywpBz2dwTRJjUr50lFwesteeaSmEcn8nYMCRmckD3kWFFF7",
+    currency: "PLN"
+}
 
 function App() {
   return <><Router>
@@ -92,9 +97,11 @@ function App() {
       <Route path="/dodaj-video">
           <UserWrapper page={4} />
       </Route>
-      <Route path="/zaplac">
-          <UserWrapper page={5} />
-      </Route>
+      <PayPalScriptProvider options={payPalOptions}>
+          <Route path="/zaplac">
+              <UserWrapper page={5} />
+          </Route>
+      </PayPalScriptProvider>
       <Route path="/subskrypcja-przedluzona">
           <UserWrapper page={6} />
       </Route>

@@ -199,7 +199,7 @@ const AdminAddArticle = () => {
                                 onChangeStatus={(status) => { handleChangeStatus(status); }}
                                 accept="image/*"
                                 maxFiles={1} />
-                    </span>
+                        </span>
                     </label>
 
                     <label className="admin__label admin__flex admin__label--imageForLink">
