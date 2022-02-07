@@ -209,7 +209,7 @@ router.post('/add-paypal-payment', (request, response) => {
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        addInvoice(`${first_name} ${last_name}`, email, amount, response);
+                        addInvoice(`${first_name} ${last_name}`, email, amount * 100, response);
                     }
                     else {
                         response.send({

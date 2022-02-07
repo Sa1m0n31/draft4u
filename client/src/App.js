@@ -31,7 +31,7 @@ import ContentPage from "./pages/ContentPage";
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 
 const payPalOptions = {
-    "client-id": "ASMhJrR4oVB4QW7qgQsRHKcHbuMBDZxRoywpBz2dwTRJjUr50lFwesteeaSmEcn8nYMCRmckD3kWFFF7",
+    "client-id": "ATnTmlSayXx-XfGbfNQp53705bF0H511cIphRpyCLiHxFZIvjvOgB8ceLv9WrN_OITn_rD_9Qd5CPz45",
     currency: "PLN"
 }
 

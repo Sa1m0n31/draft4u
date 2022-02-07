@@ -4,11 +4,14 @@ import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
 import {addPayPalPayment, registerPayment} from "../helpers/payment";
 import {
-    PayPalButtons,
+    usePayPalScriptReducer,
+    PayPalButtons
 } from "@paypal/react-paypal-js";
 import payPalIcon from '../static/img/paypal.png'
 
 const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+
     const [coupon, setCoupon] = useState("");
     const [paymentItem, setPaymentItem] = useState(-1);
     const [przelewy24Method, setPrzelewy24Method] = useState(-1);
@@ -23,6 +26,18 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     useEffect(() => {
         setAmount(cost);
     }, []);
+
+    useEffect(() => {
+        if(amount) {
+            dispatch({
+                type: "resetOptions",
+                value: {
+                    ...options,
+                    currency: 'PLN'
+                },
+            });
+        }
+    }, [amount]);
 
     const changePaymentItem = (n) => {
         if(n === 1) {
