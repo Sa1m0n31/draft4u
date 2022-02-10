@@ -14,6 +14,7 @@ import AdminCodesList from "../pages/AdminCodesList";
 import AdminPlayersList from "../pages/AdminPlayersList";
 import AdminMailingList from "../pages/AdminMailingList";
 import AdminPlayerInfo from "../pages/AdminPlayerInfo";
+import AdminContent from "../pages/AdminContent";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -65,6 +66,12 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 13:
                             setRenderSwitch(<AdminPlayerInfo admin={result} />);
+                            break;
+                        case 14:
+                            setRenderSwitch(<AdminContent admin={result} lang="pl" />);
+                            break;
+                        case 15:
+                            setRenderSwitch(<AdminContent admin={result} lang="en" />);
                             break;
                         default:
                             break;

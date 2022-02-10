@@ -71,4 +71,16 @@ const getAdvancedUsersInfo = () => {
     return axios.get(`${API_URL}/admin/get-advanced-users-info`);
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo }
+const getCustomFields = (lang) => {
+    return axios.get(`${API_URL}/custom-field/get-all`, {
+        params: {
+            lang
+        }
+    });
+}
+
+const updateCustomFields = (data) => {
+    return axios.post(`${API_URL}/custom-field/update`, data);
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo, getCustomFields, updateCustomFields }

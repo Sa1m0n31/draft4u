@@ -41,10 +41,10 @@ function App() {
     <Route exact path="/">
         <Homepage />
     </Route>
-    <Route path="/weryfikacja">
+    <Route path={["/weryfikacja", "/verification"]}>
         <AccountVerification />
     </Route>
-    <Route path="/logowanie">
+    <Route path={["/logowanie", "/log-in"]}>
         <LoginPage />
     </Route>
     <Route path="/zaloz-konto">
@@ -194,6 +194,12 @@ function App() {
       </Route>
       <Route path="/edytuj-zawodnika">
           <AdminWrapper page={13} />
+      </Route>
+      <Route path="/polski">
+          <AdminWrapper page={14} />
+      </Route>
+      <Route path="/angielski">
+          <AdminWrapper page={15} />
       </Route>
   </Router>
       </>

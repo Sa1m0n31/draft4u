@@ -5,6 +5,7 @@ import notifications from '../static/img/admin-notifications.svg'
 import articles from '../static/img/admin-articles.svg'
 import settings from '../static/img/admin-settings.svg'
 import mail from '../static/img/letter-icon.svg'
+import pen from '../static/img/pen-white.png'
 
 const PanelMenu = ({menuOpen, menuSelected}) => {
     const [submenu, setSubmenu] = useState(-1);
@@ -15,7 +16,8 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         { name: 'Powiadomienia', icon: notifications },
         { name: 'Artykuły', icon: articles },
         { name: 'Kody rabatowe', icon: settings },
-        { name: 'Newsletter', icon: mail }
+        { name: 'Newsletter', icon: mail },
+        { name: 'Treści', icon: pen }
     ]
 
     const submenus = [
@@ -40,6 +42,10 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         ],
         [
             { name: 'Lista mailingowa', link: '/lista-mailingowa' }
+        ],
+        [
+            { name: "Wersja polska", link: '/polski' },
+            { name: "Wersja angielska", link: '/angielski' }
         ]
     ]
 

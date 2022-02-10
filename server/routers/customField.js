@@ -4,12 +4,22 @@ const db = require("../database/db");
 const sendResposne = require("../helpers/sendResponse");
 
 router.get("/get-all", (request, response) => {
-   const query = 'SELECT * FROM custom_fields';
-   db.query(query, [], (err, res) => {
+   const { lang } = request.query;
+   const query = 'SELECT * FROM content WHERE language = $1';
+   const values = [lang];
+   db.query(query, values, (err, res) => {
       if(res) sendResposne(response, res.rows);
       else sendResposne(response, 0);
    });
 });
+
+router.post('/update', (request, response) => {
+    const values = Object.entries(request.body).flat();
+
+    console.log(values);
+
+
+})
 
 router.get("/get-single-field", (request, response) => {
     const key = request.query.key;
