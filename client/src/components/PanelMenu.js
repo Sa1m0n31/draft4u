@@ -6,6 +6,7 @@ import articles from '../static/img/admin-articles.svg'
 import settings from '../static/img/admin-settings.svg'
 import mail from '../static/img/letter-icon.svg'
 import pen from '../static/img/pen-white.png'
+import camera from '../static/img/camera.svg'
 
 const PanelMenu = ({menuOpen, menuSelected}) => {
     const [submenu, setSubmenu] = useState(-1);
@@ -17,7 +18,9 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         { name: 'Artykuły', icon: articles },
         { name: 'Kody rabatowe', icon: settings },
         { name: 'Newsletter', icon: mail },
-        { name: 'Treści', icon: pen }
+        { name: 'Treści', icon: pen },
+        { name: 'Grafiki', icon: camera },
+        { name: 'Regulaminy', icon: articles }
     ]
 
     const submenus = [
@@ -46,6 +49,14 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         [
             { name: "Wersja polska", link: '/polski' },
             { name: "Wersja angielska", link: '/angielski' }
+        ],
+        [
+            { name: "Wersja polska", link: '/grafiki-polski' },
+            { name: "Wersja angielska", link: '/grafiki-angielski' }
+        ],
+        [
+            { name: "Wersja polska", link: '/regulaminy-polski' },
+            { name: "Wersja angielska", link: '/regulaminy-angielski' }
         ]
     ]
 

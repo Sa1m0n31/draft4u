@@ -201,6 +201,12 @@ function App() {
       <Route path="/angielski">
           <AdminWrapper page={15} />
       </Route>
+      <Route path="/grafiki-polski">
+          <AdminWrapper page={16} />
+      </Route>
+      <Route path="/grafiki-angielski">
+          <AdminWrapper page={17} />
+      </Route>
   </Router>
       </>
 }
