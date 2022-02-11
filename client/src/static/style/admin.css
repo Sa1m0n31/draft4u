@@ -806,3 +806,8 @@ html, body {
 .admin--customImages .dzu-dropzone::after {
     display: none;
 }
+
+.admin__label--terms > div {
+    color: #000 !important;
+    text-transform: none;
+}

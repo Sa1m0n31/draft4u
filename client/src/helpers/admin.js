@@ -96,10 +96,26 @@ const updateCustomImages = (data, lang) => {
     return axios.post(`${API_URL}/custom-field/update-images`, formData, config);
 }
 
+const getCustomImages = (lang) => {
+    return axios.get(`${API_URL}/custom-field/get-images`, {
+        params: {
+            lang
+        }
+    });
+}
+
+const getTerms = (lang) => {
+    return axios.get(`${API_URL}/custom-field/get-terms`, {
+        params: {
+            lang
+        }
+    });
+}
+
 const updateTerms = (terms, policy, cookies, language) => {
     return axios.post(`${API_URL}/custom-field/update-terms`, {
         terms,policy, cookies, language
     });
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo, getCustomFields, updateCustomFields, updateCustomImages, updateTerms }
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo, getCustomFields, updateCustomFields, updateCustomImages, getCustomImages, updateTerms, getTerms }

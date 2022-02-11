@@ -331,35 +331,35 @@ router.post('/update-images', upload.fields([
 
     const lang = request.body.lang;
 
-    const query = `UPDATE custom_fields SET img1 = COALESCE($1, img1),
+    const query = `UPDATE content SET img1 = COALESCE($1, img1),
                     img2 = COALESCE($2, img2), 
-                    img3 = COALESCE($2, img3), 
-                    img4 = COALESCE($2, img4), 
-                    img5 = COALESCE($2, img5), 
-                    img6 = COALESCE($2, img6), 
-                    img7 = COALESCE($2, img7), 
-                    img8 = COALESCE($2, img8), 
-                    img9 = COALESCE($2, img9), 
-                    img10 = COALESCE($2, img10), 
-                    img11 = COALESCE($2, img11), 
-                    img12 = COALESCE($2, img12), 
-                    img13 = COALESCE($2, img13), 
-                    img14 = COALESCE($2, img14), 
-                    img15 = COALESCE($2, img15), 
-                    img16 = COALESCE($2, img16), 
-                    img17 = COALESCE($2, img17), 
-                    img18 = COALESCE($2, img18), 
-                    img19 = COALESCE($2, img19), 
-                    img20 = COALESCE($2, img20), 
-                    img21 = COALESCE($2, img21), 
-                    img22 = COALESCE($2, img22), 
-                    img23 = COALESCE($2, img23), 
-                    img24 = COALESCE($2, img24), 
-                    img25 = COALESCE($2, img25), 
-                    img26 = COALESCE($2, img26), 
-                    img27 = COALESCE($2, img27), 
-                    img28 = COALESCE($2, img28), 
-                    img29 = COALESCE($2, img29)
+                    img3 = COALESCE($3, img3), 
+                    img4 = COALESCE($4, img4), 
+                    img5 = COALESCE($5, img5), 
+                    img6 = COALESCE($6, img6), 
+                    img7 = COALESCE($7, img7), 
+                    img8 = COALESCE($8, img8), 
+                    img9 = COALESCE($9, img9), 
+                    img10 = COALESCE($10, img10), 
+                    img11 = COALESCE($11, img11), 
+                    img12 = COALESCE($12, img12), 
+                    img13 = COALESCE($13, img13), 
+                    img14 = COALESCE($14, img14), 
+                    img15 = COALESCE($15, img15), 
+                    img16 = COALESCE($16, img16), 
+                    img17 = COALESCE($17, img17), 
+                    img18 = COALESCE($18, img18), 
+                    img19 = COALESCE($19, img19), 
+                    img20 = COALESCE($20, img20), 
+                    img21 = COALESCE($21, img21), 
+                    img22 = COALESCE($22, img22), 
+                    img23 = COALESCE($23, img23), 
+                    img24 = COALESCE($24, img24), 
+                    img25 = COALESCE($25, img25), 
+                    img26 = COALESCE($26, img26), 
+                    img27 = COALESCE($27, img27), 
+                    img28 = COALESCE($28, img28), 
+                    img29 = COALESCE($29, img29)
                     WHERE language = $30`
     const values = [img1, img2, img3, img4, img5,
                     img6, img7, img8, img9, img10,
@@ -386,8 +386,10 @@ router.post('/update-images', upload.fields([
 router.post('/update-terms', (request, response) => {
     const { terms, policy, cookies, language } = request.body;
 
-    const query = 'UPDATE custom_fields SET terms_of_service = $1, privacy_policy = $2, cookies_policy = $3 WHERE language = $4';
+    const query = 'UPDATE content SET terms_of_service = $1, privacy_policy = $2, cookies_policy = $3 WHERE language = $4';
     const values = [terms, policy, cookies, language];
+
+    console.log(values);
 
     db.query(query, values, (err, res) => {
         console.log(err);
@@ -402,6 +404,31 @@ router.post('/update-terms', (request, response) => {
             });
         }
     });
+});
+
+router.get('/get-terms', (request, response) => {
+    const query = 'SELECT terms_of_service, privacy_policy, cookies_policy FROM content WHERE language = $1';
+    const values = [request.query.lang];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            if(res.rows) {
+                response.send({
+                    result: res.rows[0]
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    })
 });
 
 router.get("/get-single-field", (request, response) => {

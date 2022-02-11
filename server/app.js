@@ -58,8 +58,19 @@ app.use(cors({
     // origin: "*"
     origin: ['http://localhost:3000', 'https://draft4u.com.pl', 'https://drafcik.skylo-test1.pl', 'https://drafcik-test.skylo-test1.pl', `${process.env.API_URL}:3000`, `${process.env.API_URL}:5000`]
 }));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser({
+    limit: "50mb"
+}));
+app.use(bodyParser.json({
+    limit: "50mb"
+}));
+app.use(bodyParser.raw({
+    limit: "50mb"
+}));
+app.use(bodyParser.text({
+    limit: "50mb"
+}));
 app.use(
     session({
         secret: "secretcode",

@@ -207,6 +207,12 @@ function App() {
       <Route path="/grafiki-angielski">
           <AdminWrapper page={17} />
       </Route>
+      <Route path="/regulaminy-polski">
+          <AdminWrapper page={18} />
+      </Route>
+      <Route path="/regulaminy-angielski">
+          <AdminWrapper page={19} />
+      </Route>
   </Router>
       </>
 }
