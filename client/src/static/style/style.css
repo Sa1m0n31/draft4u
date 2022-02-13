@@ -5933,3 +5933,33 @@ input::-webkit-inner-spin-button {
    display: none !important;
    height: 300px !important;
 }
+
+.languageBtn {
+    width: 70px;
+    height: 70px;
+    margin-left: 15px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 10px;
+    color: #707070;
+    background: #fff;
+    border-radius: 4px;
+    transition: .2s all;
+}
+
+.flag {
+    width: 30px;
+    margin-bottom: 5px;
+}
+
+.languageBtn:hover {
+    opacity: .9;
+}
+
+.languageBtn--dark {
+    background: #3D3D3D;
+    color: white;
+}

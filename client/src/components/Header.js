@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import logo from '../static/img/logo.svg'
 import logoDark from '../static/img/logo-dark.png'
 import pen from '../static/img/pen-dropdown-menu.svg'
@@ -20,7 +20,7 @@ import {logoutUser} from "../helpers/auth";
 import settings from "../settings";
 import arrowRightGold from '../static/img/arrow-right-gold.svg'
 import {getClubMessages, getUserMessages} from "../helpers/chat";
-import {getMessagePreview, getUniqueListBy} from "../helpers/others";
+import {convertStringToURL, getMessagePreview, getUniqueListBy} from "../helpers/others";
 import example from "../static/img/profile-picture.png";
 import { io } from "socket.io-client";
 import {getClubData} from "../helpers/club";
@@ -32,11 +32,14 @@ import {
 } from "../helpers/notification";
 import {getIdentityById, getUserById, getUserData} from "../helpers/user";
 import ContactInfo from "./ContactInfo";
+import { ContentContext } from "../App";
+import polandIcon from '../static/img/poland-flag.svg'
+import ukIcon from '../static/img/united-kingdom.svg'
 
 const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
-
+    const [render, setRender] = useState(false);
     const [currentMenuVisible, setCurrentMenuVisible] = useState(-1);
 
     const [newMessages, setNewMessages] = useState(0);
@@ -47,6 +50,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
     const [notifications, setNotifications] = useState([]);
     const [messages, setMessages] = useState([]);
+
+    const [menuBeforeLogin, setMenuBeforeLogin] = useState([]);
+    const [menuPlayer, setMenuPlayer] = useState([]);
+    const [menuClub, setMenuClub] = useState([]);
+    const [dropdownPlayer, setDropdownPlayer] = useState([]);
+    const [dropdownClub, setDropdownClub] = useState([]);
 
     let loginBoxWrapper = useRef(null);
     let registerModal = useRef(null);
@@ -59,12 +68,25 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
     const mobileMenuChildren = [mobileMenuCloseBtn, mobileMenuHeader, mobileMenuList, mobileMenuBottom];
 
+    const { content, language, setLanguage } = useContext(ContentContext);
+
     document.addEventListener("click", (e) => {
         e.stopPropagation();
         if(currentMenuVisible !== -1) {
             setCurrentMenuVisible(-1);
         }
     });
+
+    useEffect(() => {
+        if(content) {
+            setMenuBeforeLogin(content.menu_before_login?.split(';'));
+            setMenuPlayer(content.menu_player?.split(';'));
+            setMenuClub(content.menu_club?.split(';'));
+            setDropdownPlayer(content.dropdown_menu_player?.split(';'));
+            setDropdownClub(content?.dropdown_menu_club?.split(';'));
+            setRender(true);
+        }
+    }, [content]);
 
     useEffect(() => {
         if(profileImage) {
@@ -280,20 +302,13 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             {/* Homepage menu */}
             {!club && !player ? <ul className="mobileMenu__list" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/">Home</a>
+                    <a className="mobileMenu__list__link" href="/">{menuBeforeLogin[0]}</a>
                 </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/o-nas">O nas</a>
-                </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/zawodnik">Zawodnik</a>
-                </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/klub">Klub</a>
-                </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">Mapa</a>
-                </li>
+                {menuBeforeLogin?.slice(1)?.map((item, index) => {
+                    return <li className="mobileMenu__list__item">
+                        <a className="mobileMenu__list__link" href={`/${convertStringToURL(item)}`}>{item}</a>
+                    </li>
+                })}
             </ul> : ""}
 
             {!player && !club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
@@ -314,13 +329,13 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             {/* Player menu */}
             {player ? <ul className="mobileMenu__list" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/">Home</a>
+                    <a className="mobileMenu__list__link" href="/">{menuPlayer[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/edycja-profilu">Profil</a>
+                    <a className="mobileMenu__list__link" href="/edycja-profilu">{menuPlayer[1]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">Mapa</a>
+                    <a className="mobileMenu__list__link" href="/mapa">{menuPlayer[2]}</a>
                 </li>
             </ul> : ""}
 
@@ -328,19 +343,19 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zmien-haslo-zawodnika">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
-                        Zmiana hasła
+                        {dropdownPlayer[0]}
                     </a>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/faq">
                         <img className="mobileMenu__bottom__img" src={question} alt="zmien-haslo" />
-                        Pomoc online
+                        {dropdownPlayer[1]}
                     </a>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <button className="mobileMenu__bottom__link" onClick={() => { logout(); }}>
                         <img className="mobileMenu__bottom__img" src={logoutIcon} alt="zmien-haslo" />
-                        Wyloguj się
+                        {dropdownPlayer[2]}
                     </button>
                 </li>
                 </ul> : ""}
@@ -348,22 +363,22 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             {/* Club menu */}
             {club ? <ul className="mobileMenu__list mobileMenu__list--club" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/">Home</a>
+                    <a className="mobileMenu__list__link" href="/">{menuClub[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/szukaj">Szukaj</a>
+                    <a className="mobileMenu__list__link" href="/szukaj">{menuClub[1]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/ulubieni">Ulubieni</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni">{menuClub[2]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/sklady">Składy</a>
+                    <a className="mobileMenu__list__link" href="/sklady">{menuClub[3]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">Zapisane drużyny</a>
+                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">{menuClub[4]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">Mapa</a>
+                    <a className="mobileMenu__list__link" href="/mapa">{menuClub[5]}</a>
                 </li>
             </ul> : ""}
 
@@ -371,13 +386,13 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zmien-haslo-klubu">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
-                        Zmiana hasła
+                        {dropdownClub[0]}
                     </a>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <button className="mobileMenu__bottom__link" onClick={() => { logout(); }}>
                         <img className="mobileMenu__bottom__img" src={logoutIcon} alt="zmien-haslo" />
-                        Wyloguj się
+                        {dropdownClub[1]}
                     </button>
                 </li>
             </ul> : ""}
@@ -401,27 +416,27 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 {!player && !club ? <ul className="siteHeader__menu__list">
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/">
-                            Home
+                            {menuBeforeLogin[0]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/o-nas">
-                            O nas
+                            {menuBeforeLogin[1]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/zawodnik">
-                            Zawodnik
+                            {menuBeforeLogin[2]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/klub">
-                            Klub
+                            {menuBeforeLogin[3]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/mapa">
-                            Mapa
+                            {menuBeforeLogin[4]}
                         </a>
                     </li>
                 </ul> : ""}
@@ -430,17 +445,17 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 {player ? <ul className="siteHeader__menu__list">
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/">
-                            Home
+                            {menuPlayer[0]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/edycja-profilu">
-                            Profil
+                            {menuPlayer[1]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/mapa">
-                            Mapa
+                            {menuPlayer[2]}
                         </a>
                     </li>
                 </ul> : ""}
@@ -449,32 +464,32 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 {club ? <ul className="siteHeader__menu__list">
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/">
-                            Home
+                            {menuClub[0]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/szukaj">
-                            Szukaj
+                            {menuClub[1]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/ulubieni">
-                            Ulubieni
+                            {menuClub[2]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/sklady">
-                            Składy
+                            {menuClub[3]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/zapisane-druzyny">
-                            Zapisane drużyny
+                            {menuClub[4]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item d-over-1200">
                         <a className="siteHeader__menu__link" href="/mapa">
-                            Mapa
+                            {menuClub[5]}
                         </a>
                     </li>
                 </ul> : ""}
@@ -547,12 +562,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                             else return "";
                         }) : <aside className="profileMenu__noMessages">
                             <h3 className={club ? "emptyMenu emptyMenu--white" : "emptyMenu"}>
-                                Nie posiadasz jeszcze żadnych wiadomości
+                                {content?.player_profile_no_messages}
                             </h3>
                         </aside>}
                     </ul>
                     {messages.length ? <a className={club ? "messageMenu__bottom" : "messageMenu__bottom messageMenu__bottom--player"} href={club ? '/wiadomosci' : '/czat'}>
-                        Zobacz wszystkie wiadomości
+                        {content?.player_profile_all_messages}
                         <img className="messageMenu__bottom__img" src={arrowRightGold} alt="dalej" />
                     </a> : ""}
                 </menu> : ""}
@@ -569,20 +584,20 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                             {!club ? <>
                                 <a className="profileMenu__list__link" href="/faq">
                                     <img className="profileMenu__list__img" src={question} alt="faq" />
-                                    Pomoc online
+                                    {dropdownPlayer[0]}
                                 </a>
                                 <a className="profileMenu__list__link" href="/edycja-profilu">
                                     <img className="profileMenu__list__img" src={pen} alt="faq" />
-                                    Edytuj profil
+                                    {dropdownPlayer[1]}
                                 </a>
                             </> : ""}
                             {club || isLocal ?  <a className="profileMenu__list__link" href={club ? "/zmien-haslo-klubu" : "/zmien-haslo-zawodnika"}>
                                 <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
-                                Zmiana hasła
+                                {dropdownClub[0]}
                             </a> : ""}
                             <button className="profileMenu__list__link" onClick={() => { logout(); }}>
                                 <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />
-                                Wyloguj się
+                                {dropdownClub[1]}
                             </button>
                         </li>
                     </ul>
@@ -600,6 +615,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 <LoginBox />
                 </section>
                 </section></span>}
+
+            <button className={theme === 'dark' ? "languageBtn languageBtn--dark" : "languageBtn"} onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+                <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
+                {language === 'pl' ? 'English' : 'Polski'}
+            </button>
 
             {/* Mobile menu */}
             <button className="mobileMenu__btn d-mobile" onClick={() => { openMobileMenu(); }}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import przelewy24Icon from '../static/img/przelewy24.svg'
 import arrowDown from '../static/img/triangle-down-black.svg'
 import payBtn from '../static/img/zaplac.png'
@@ -8,9 +8,13 @@ import {
     PayPalButtons
 } from "@paypal/react-paypal-js";
 import payPalIcon from '../static/img/paypal.png'
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+
+    const { content } = useContext(ContentContext);
 
     const [coupon, setCoupon] = useState("");
     const [paymentItem, setPaymentItem] = useState(-1);
@@ -91,19 +95,19 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
 
     return <main className="payment siteWidthSuperNarrow">
         <h2 className="payment__header">
-            Skonfiguruj płatność
+            {content.payment_header}
         </h2>
         <p className="payment__text">
-            Członkostwo rozpocznie się po skonfigurowaniu płatności.
+            {content.payment_text}
         </p>
         <p className="payment__text payment__text--marginBottom">
-            Opłacasz swoje członkostwo do dnia 31 stycznia 2023 w kwocie <b>{amount ? amount : cost} PLN</b>
+            {content.payment_text} <b>{amount ? amount : cost} PLN</b>
         </p>
 
         <section className="paymentItemWrapper">
             <button className="payment__item" onClick={() => { changePaymentItem(1); }}>
                 <h3 className="payment__item__header">
-                    Płać z Przelewy24
+                    {content.pay_with}
                 </h3>
                 <img className="payment__item__icon" src={przelewy24Icon} alt="przelewy-24" />
 
@@ -123,7 +127,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
                 </main>
 
                 <button className="button button--hover button--payment" onClick={() => { pay(); }}>
-                    <img className="btn__img" src={payBtn} alt="zaplac" />
+                    <img className="btn__img" src={getImageUrl(content.img19)} alt="zaplac" />
                 </button>
             </section>
         </section>
@@ -131,7 +135,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
         <section className="paymentItemWrapper">
             <button className="payment__item" onClick={() => { changePaymentItem(2); }}>
                 <h3 className="payment__item__header">
-                    Płać z PayPal
+                    {content.pay_with2}
                 </h3>
                 <img className="payment__item__icon" src={payPalIcon} alt="paypal" />
 
@@ -162,21 +166,21 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
 
         <section className="payment__couponCode">
             <label>
-                Masz kod rabatowy?
+                {content.discount_code}
 
                 <input className="input input--couponCode"
                        name="coupon"
-                       placeholder="Wpisz kod"
+                       placeholder={content.discount_code_input}
                        disabled={discount !== 0}
                        value={coupon}
                        onChange={(e) => { setCoupon(e.target.value) }} />
             </label>
 
             {discount !== 0 ? <section className="payment__couponCode__result">
-                <span><b>Kod:</b> {coupon}</span>
-                <span><b>Zniżka:</b> -{discount}%</span>
+                <span><b>{content.payment_code}:</b> {coupon}</span>
+                <span><b>{content.payment_discount}:</b> -{discount}%</span>
             </section> : (coupon ? <h3 className="payment__couponCode__error">
-                Podany kod rabatowy nie istnieje
+                {content.payment_code_not_exists}
             </h3> : "")}
         </section>
     </main>

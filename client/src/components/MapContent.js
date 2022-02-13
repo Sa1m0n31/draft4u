@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useContext} from 'react'
 
 import poland from '../static/img/poland.svg'
 import {getAllClubs, getClubLocations} from '../helpers/club'
@@ -7,8 +7,11 @@ import manIcon from '../static/img/woman.svg'
 import womanIcon from '../static/img/man.svg'
 import settings from "../settings";
 import ReactSiema from 'react-siema'
+import {ContentContext} from "../App";
 
 const MapContent = () => {
+    const { content } = useContext(ContentContext);
+
     const [clubs, setClubs] = useState([]);
     const [filteredClubs, setFilteredClubs] = useState([]);
     const [dots, setDots] = useState([]);
@@ -183,13 +186,13 @@ const MapContent = () => {
     return <main className="mapContent">
         <header className="mapContent__header">
             <h2 className="player__header">
-                Nasze drużyny
+                {content.map_header}
             </h2>
 
             <section className="mapContent__filters">
                 <section className="mapContent__header__item">
                     <h3 className="mapContent__header__item__header">
-                        Płeć
+                        {content.map_gender}
                     </h3>
                     <Range
                         step={1}
@@ -237,7 +240,7 @@ const MapContent = () => {
 
                 <section className="mapContent__header__item">
                     <h3 className="mapContent__header__item__header">
-                        Liga
+                        {content.map_leagues}
                     </h3>
                     <Range
                         step={1}
@@ -298,11 +301,11 @@ const MapContent = () => {
                         )}
                     />
                     <aside className="mapContent__header__item__labels">
-                        <span>Wszystkie</span>
+                        <span>{content.all}</span>
                         <span>{sex[0] ? "Tauron Liga" : "Plus Liga"}</span>
-                        <span>1. Liga</span>
-                        <span>2. Liga</span>
-                        <span>3. Liga</span>
+                        <span>{content.map_league1}</span>
+                        <span>{content.map_league2}</span>
+                        <span>{content.map_league3}</span>
                     </aside>
                 </section>
             </section>
@@ -325,7 +328,7 @@ const MapContent = () => {
                                         </figure>
                                         <section className="mapDot__btn__details__data">
                                             {item.city ? <span>
-                                                <b>Siedziba:</b> {item.city}
+                                                <b>{content.map_location}:</b> {item.city}
                                             </span> : ""}
                                             {item.nip ? <span>
                                                 <b>NIP:</b> {item.nip}
@@ -349,7 +352,7 @@ const MapContent = () => {
                         <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
                     </figure>
                 }) : <h3 className="noClubsHeader">
-                    Brak klubów
+                    {content.no_clubs}
                 </h3>}
             </section>
 
@@ -365,7 +368,7 @@ const MapContent = () => {
                             <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
                         </div>
                     }) : <h2 className="noClubsHeader">
-                        Brak klubów
+                        {content.no_clubs}
                     </h2>}
                 </ReactSiema>
             </div>

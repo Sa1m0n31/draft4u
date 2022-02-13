@@ -91,7 +91,7 @@ const updateCustomImages = (data, lang) => {
         formData.append(`img${index+1}`, item.imageUpdated ? (item.img ? item.img.file : 'delete') : null);
     });
 
-    data.append('lang', lang);
+    formData.append('lang', lang);
 
     return axios.post(`${API_URL}/custom-field/update-images`, formData, config);
 }

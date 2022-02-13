@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useContext} from 'react'
 import pen from "../static/img/pen.svg";
 
 import check from "../static/img/save-parameter.svg";
@@ -13,8 +13,11 @@ import {
 
 import Chart from "react-apexcharts";
 import {unicodeToUTF8} from "../helpers/others";
+import {ContentContext} from "../App";
 
 const PlayerInfoEdition = ({player, theme}) => {
+    const { content } = useContext(ContentContext);
+
     const [editAttackRange, setEditAttackRange] = useState(false);
     const [editVerticalRange, setEditVerticalRange] = useState(false);
     const [editBlockRange, setEditBlockRange] = useState(false);
@@ -106,7 +109,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             }
         ],
         xaxis: {
-            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Wyskok dosiężny", "Zasięg w bloku"],
+            categories: [content.player_parameter_11, content.player_parameter_12, content.player_parameter_8, content.player_parameter_9, content.player_parameter_10],
             labels: {
                 show: true,
                 style: {
@@ -146,7 +149,7 @@ const PlayerInfoEdition = ({player, theme}) => {
 
     const series = [
         {
-            name: theme === 'dark' ? 'Wynik' : "Twój wynik",
+            name: theme === 'dark' ? content.result : content.your_result,
             data: [height, weight * 2.1, attackRange, verticalRange * 2.5, blockRange]
         }
     ]
@@ -232,7 +235,7 @@ const PlayerInfoEdition = ({player, theme}) => {
         <section className={theme === 'dark' ? "userInfoEdition__form userInfoEdition__form--dark" : "userInfoEdition__form"}>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Zasięg w ataku
+                    {content.player_parameter_8}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editAttackRange ? "label--edit" : ""}>
@@ -258,7 +261,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Wyskok dosiężny
+                    {content.player_parameter_9}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editVerticalRange ? "label--edit" : ""}>
@@ -284,7 +287,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Zasięg w bloku
+                    {content.player_parameter_10}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editBlockRange ? "label--edit" : ""}>
@@ -310,7 +313,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Wzrost
+                    {content.player_parameter_11}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editHeight ? "label--edit" : 0}>
@@ -336,7 +339,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Waga
+                    {content.player_parameter_12}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editWeight ? "label--edit" : 0}>
@@ -362,7 +365,7 @@ const PlayerInfoEdition = ({player, theme}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Pozycja na boisku
+                    {content.player_parameter_13}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editPosition ? "label--edit" : ""}

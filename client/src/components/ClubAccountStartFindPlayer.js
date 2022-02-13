@@ -1,11 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, {useEffect, useState, useRef, useContext} from 'react'
 import przegladajBtn from '../static/img/przegladaj-btn.png'
 import PlayerCard from "./PlayerCard";
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import {getThreeNewest} from "../helpers/club";
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const ClubAccountStartFindPlayer = () => {
     const [players, setPlayers] = useState([]);
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         getThreeNewest()
@@ -21,7 +24,7 @@ const ClubAccountStartFindPlayer = () => {
 
     return <section className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 findNewPlayerWrapper findNewPlayerWrapper--clubAccountStart">
         <h2 className="player__header player__header--findNewPlayer">
-            Znajdź nowego zawodnika
+            {content.find_new_player}
         </h2>
 
         {/* MOBILE */}
@@ -49,7 +52,7 @@ const ClubAccountStartFindPlayer = () => {
         </main>
 
         <a className="button button--hover button--showPlayersPage" href="/szukaj">
-            <img className="btn__img" src={przegladajBtn} alt="przegladaj" />
+            <img className="btn__img" src={getImageUrl(content.img20)} alt="przegladaj" />
         </a>
     </section>
 }

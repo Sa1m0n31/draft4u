@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useContext} from 'react'
 import pen from '../static/img/pen.svg'
 import check from '../static/img/save-parameter.svg'
 
@@ -15,8 +15,10 @@ import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {isMail} from "../helpers/validation";
+import {ContentContext} from "../App";
 
 const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
+    const { content } = useContext(ContentContext);
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
     const [fullName, setFullName] = useState("");
@@ -74,9 +76,9 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
             return experience.split(',').map((item) => {
                 const name = item.trim();
                 if(name === 'Plus Liga' || name === 'Tauron Liga') return 0;
-                else if(name === '1. Liga') return 1;
-                else if(name === '2. Liga') return 2;
-                else if(name === '3. Liga') return 3;
+                else if(name === content.map_league1) return 1;
+                else if(name === content.map_league2) return 2;
+                else if(name === content.map_league3) return 3;
             });
         }
         else {
@@ -151,11 +153,11 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     if(player?.sex) return 'Plus Liga';
                     else return 'Tauron Liga';
                 case 1:
-                    return '1. Liga';
+                    return content.map_league1;
                 case 2:
-                    return '2. Liga';
+                    return content.map_league1;
                 default:
-                    return '3. Liga';
+                    return content.map_league1;
             }
         });
     }
@@ -286,7 +288,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
 
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    {theme === "dark" ? "Wiek" : "Data urodzenia"}
+                    {theme === "dark" ? content.age : content.player_parameter_1}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editAge ? "label--edit" : "label--marginRightMinus"}>
@@ -309,7 +311,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
             {!(theme === 'dark') ? <>
                <label className="userInfoEdition__form__field">
                     <span className="userInfoEdition__key">
-                        Mail
+                        {content.player_parameter_2}
                     </span>
                    <span className="userInfoEdition__value">
                     <label className={editEmail ? "label--edit" : ""}>
@@ -330,7 +332,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 </label>
                 <label className="userInfoEdition__form__field">
                     <span className="userInfoEdition__key">
-                        Telefon
+                        {content.player_parameter_3}
                     </span>
                         <span className="userInfoEdition__value">
                             <label className={editPhoneNumber ? "label--edit" : ""}>
@@ -352,7 +354,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
             </> : ""}
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Aktualny klub
+                    {content.player_parameter_4}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editClub ? "label--edit" : ""}>
@@ -373,7 +375,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
             </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Nr licencji PZPS
+                    {content.player_parameter_5}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editLicence ? "label--edit" : ""}>
@@ -396,7 +398,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                  onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserExperience(e.keyCode === 9); }}
             >
                 <span className="userInfoEdition__key">
-                    Dośw. ligowe
+                    {content.player_parameter_6}
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--experience">
                     <label>
@@ -412,19 +414,19 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 </span>
                 {editExperience ? <div className="experienceSection">
                         <span>
-                            Liga:
+                            {content.map_leagues}:
                         </span>
                     <button className={isLeagueSelected(0) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(0); }}>
                         {player?.sex ? "Plus Liga" : "Tauron Liga"}
                     </button>
                     <button className={isLeagueSelected(1) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(1); }}>
-                        1. Liga
+                        {content.map_league1}
                     </button>
                     <button className={isLeagueSelected(2) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(2); }}>
-                        2. Liga
+                        {content.map_league2}
                     </button>
                     <button className={isLeagueSelected(3) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(3); }}>
-                        3. Liga
+                        {content.map_league3}
                     </button>
                 </div> : ""}
             </div>
@@ -432,7 +434,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserSalary(e.keyCode === 9); }}
             >
                 <span className="userInfoEdition__key">
-                    Wynagrodzenie (netto)
+                    {content.player_parameter_7}
                 </span>
                 <span className="userInfoEdition__value userInfoEdition__value--salary">
                     {clubProp ? <span>

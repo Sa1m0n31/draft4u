@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {getClubNotifications, getUserNotifications, readNotification} from "../helpers/notification";
 import LoadingPage from "./LoadingPage";
 import settings from "../settings";
 import example from "../static/img/profile-picture.png";
+import {ContentContext} from "../App";
 
 const Notifications = ({club, user, isLocal}) => {
     const [loaded, setLoaded] = useState(false);
     const [updateNotifications, setUpdateNotifications] = useState(false);
     const [notifications, setNotifications] = useState([]);
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         if(window.innerWidth > 768) window.location = "/";
@@ -45,7 +48,7 @@ const Notifications = ({club, user, isLocal}) => {
 
             <main className="notifications">
                 <h2 className="notifications__header">
-                    Powiadomienia
+                    {content.notifications}
                 </h2>
                 <menu className={club ? "profileMenu profileMenu--club profileMenu--messages profileMenu--notifications" : "profileMenu profileMenu--messages profileMenu--notifications"}>
                     <ul className="profileMenu__list">

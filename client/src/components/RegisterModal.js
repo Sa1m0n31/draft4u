@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, {useRef, useState, useEffect, useContext} from 'react'
 import closeIcon from '../static/img/close-grey.svg'
 import playerImg from '../static/img/zawodnik-rejestracja.png'
 import nextBtn from '../static/img/dalej-btn.png'
@@ -10,8 +10,12 @@ import {isMail, isPasswordStrength} from "../helpers/validation";
 import {isEmailAvailable} from "../helpers/user";
 import {registerFromThirdParty, registerUser} from "../helpers/auth";
 import DraftLoader from "./Loader";
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const RegisterModal = (props) => {
+    const { content } = useContext(ContentContext);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -78,8 +82,8 @@ const RegisterModal = (props) => {
         setSexError("");
         setCheckboxError(false);
 
-        if(sex === -1) sexFieldPlaceholder.current.textContent = "Płeć";
-        if(!birthday.length) birthdayOverlay.current.textContent = "Data urodzenia";
+        if(sex === -1) sexFieldPlaceholder.current.textContent = content.register_input6;
+        if(!birthday.length) birthdayOverlay.current.textContent = content.register_input7;
     }
 
     const closeModal = () => {
@@ -116,27 +120,27 @@ const RegisterModal = (props) => {
         let error = false;
 
         if(password !== repeatPassword) {
-            setPasswordError("Podane hasła nie są identyczne");
+            setPasswordError(content.identical_password_error);
             setPassword("");
             setRepeatPassword("");
             error = true;
         }
         if(!isPasswordStrength(password)) {
-            setPasswordError("Hasło musi zawierać co najmniej 8 znaków, jedną wielką literę i jedną cyfrę");
+            setPasswordError(content.weak_password_error);
             setPassword("");
             setRepeatPassword("");
             error = true;
         }
 
         if(!isMail(email)) {
-            setEmailError("Podaj poprawny adres email");
+            setEmailError(content.email_error);
             setEmail("");
         }
         else {
             isEmailAvailable(email)
                 .then(res => {
                     if(res?.data?.result !== 1) {
-                        setEmailError("Podany adres email jest już zajęty");
+                        setEmailError(content.email_already_in_use);
                         setEmail("");
                     }
                     else if(!error) {
@@ -159,25 +163,25 @@ const RegisterModal = (props) => {
         let error = false;
 
         if(!firstName?.length) {
-            setFirstNameError("Wpisz swoje imię");
+            setFirstNameError(content.first_name_error);
             error = true;
         }
         if(!lastName?.length) {
-            setLastNameError("Wpisz swoje nazwisko");
+            setLastNameError(content.last_name_error);
             error = true;
         }
         if(sex === -1) {
-            setSexError("Wybierz płeć");
+            setSexError(content.sex_error);
             sexFieldPlaceholder.current.textContent = "";
             error = true;
         }
         if(!birthday?.length) {
-            setBirthdayError("Wybierz datę urodzenia");
+            setBirthdayError(content.date_of_birth_error);
             birthdayOverlay.current.textContent = "";
             error = true;
         }
-        else if(calculateAge(birthday) < 16) {
-            setBirthdayError("Minimalny wiek zawodnika to 16 lat");
+        else if(calculateAge(birthday) < 14) {
+            setBirthdayError(content.minimal_age_error);
             birthdayOverlay.current.textContent = "";
             birthdayOverlay.current.style.display = "block";
             error = true;
@@ -191,12 +195,12 @@ const RegisterModal = (props) => {
         if(!phoneNumber?.length) {
             error = true;
             setPhoneNumber("");
-            setPhoneNumberError("Wpisz swój numer telefonu")
+            setPhoneNumberError(content.phone_number_error)
         }
         else if((phoneNumber.length < 9)||(phoneNumber.length > 14)) {
             error = true;
             setPhoneNumber("");
-            setPhoneNumberError("Podaj poprawny numer telefonu");
+            setPhoneNumberError(content.wrong_phone_number);
         }
 
         if(!error) {
@@ -245,10 +249,10 @@ const RegisterModal = (props) => {
         <img className={props.mobile ? "d-none" : "registerModal__img"} src={playerImg} alt="siatkarz" />
 
         <h3 className="registerModal__header">
-            {props.registerFromThirdParty ? "Dokończ rejestrację" : "Rejestracja"}
+            {props.registerFromThirdParty ? content.register_header_2 : content.register_header}
         </h3>
         {userRegistered === -1 ? <h4 className="registerModal__step">
-            {props.registerFromThirdParty ? "Uzupełnij brakujące dane" : `Krok ${currentStep} z 2`}
+            {props.registerFromThirdParty ? content.register_header_3 : `${content.register_step.split(' ')[0]} ${currentStep} ${content.register_step.split(' ').slice(1).join(' ')} 2`}
         </h4> : ""}
 
         {loading ? <div className="loaderWrapper--register">
@@ -264,7 +268,7 @@ const RegisterModal = (props) => {
                            onClick={() => { resetErrors(); }}
                            value={email}
                            onChange={(e) => { setEmail(e.target.value); }}
-                           placeholder={emailError === "" ? "E-mail" : ""} />
+                           placeholder={emailError === "" ? content.register_input1 : ""} />
                 </label>
                 <label>
                     <input className={passwordError === "" ? "input" : "input input--error"}
@@ -272,7 +276,7 @@ const RegisterModal = (props) => {
                            type="password"
                            value={password}
                            onChange={(e) => { setPassword(e.target.value); }}
-                           placeholder="Hasło" />
+                           placeholder={content.register_input2} />
                 </label>
                 <label>
                     {passwordError !== "" ? <span className="loginBox__error">
@@ -283,17 +287,17 @@ const RegisterModal = (props) => {
                            type="password"
                            value={repeatPassword}
                            onChange={(e) => { setRepeatPassword(e.target.value); }}
-                           placeholder={passwordError === "" ? "Powtórz hasło" : ""} />
+                           placeholder={passwordError === "" ? content.register_input3 : ""} />
                 </label>
                 <label className="label--checkBtn label--marketingCheckbox">
                     <button className="registerForm__checkBtn" onClick={(e) => { handleCheckbox(e, 0); }}>
                         {checkboxObligatory ? <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" /> : ""}
                     </button>
-                    Wyrażam zgodę na przetwarzanie przez Draft4u Sp. z o.o moich danych osobowych w postaci adresu poczty elektronicznej w celu przesyłania mi informacji marketingowych dotyczących produktów i usług oferowanych przez Draft4u Sp z o.o za pomocą środków komunikacji elektronicznej, stosownie do treści przepisu art. 10 ust. 1 i 2 ustawy o świadczeniu usług drogą elektroniczną.
+                    {content.marketing_consent}
                 </label>
 
                 <button className="registerForm--nextBtn" onClick={(e) => { validateStep1(e); }}>
-                    <img className="registerForm--nextBtn__img" src={nextBtn} alt="dalej" />
+                    <img className="registerForm--nextBtn__img" src={getImageUrl(content.img12)} alt="dalej" />
                 </button>
             </section>
 
@@ -308,7 +312,7 @@ const RegisterModal = (props) => {
                                onClick={() => { resetErrors(); }}
                                value={firstName}
                                onChange={(e) => { setFirstName(e.target.value); }}
-                               placeholder={firstNameError === "" ? "Imię" : ""} />
+                               placeholder={firstNameError === "" ? content.register_input4 : ""} />
                 </label>
                     <label>
                     {lastNameError !== "" ? <span className="loginBox__error">
@@ -318,7 +322,7 @@ const RegisterModal = (props) => {
                                onClick={() => { resetErrors(); }}
                                value={lastName}
                                onChange={(e) => { setLastName(e.target.value); }}
-                               placeholder={lastNameError === "" ? "Nazwisko" : ""} />
+                               placeholder={lastNameError === "" ? content.register_input5 : ""} />
                 </label>
                 </span>
                 <label>
@@ -329,15 +333,15 @@ const RegisterModal = (props) => {
                             ref={sexField}
                             onClick={(e) => { showSexes(e); }}>
                         <span className="sexFieldPlaceholder" ref={sexFieldPlaceholder}>
-                            {sex === -1 ? "Płeć" : (sex === 1 ? <span>Mężczyzna</span> : <span>Kobieta</span>)}
+                            {sex === -1 ? content.register_input6 : (sex === 1 ? <span>{content.male}</span> : <span>{content.famale}</span>)}
                         </span>
                         <img className="triangleDownImg" src={triangleDown} alt="rozwin" />
                         {sexesVisible ? <section className="registerForm__select__options">
                             <button className="registerForm__select registerForm__select__option" onClick={() => { setSex(0); }}>
-                                Kobieta
+                                {content.famale}
                             </button>
                             <button className="registerForm__select registerForm__select__option" onClick={() => { setSex(1); }}>
-                                Mężczyzna
+                                {content.male}
                             </button>
                         </section> : ""}
                     </button>
@@ -348,14 +352,14 @@ const RegisterModal = (props) => {
                         {birthdayError}
                 </span> : ""}
                     <span className="input--date__overlay" ref={birthdayOverlay}>
-                    Data urodzenia
+                        {content.register_input7}
                 </span>
                     <input className={birthdayError === "" ? "input input--date" : "input input--date input--error"}
                            type="date"
                            onClick={() => { hideBirthdayOverlay(); resetErrors(); }}
                            value={birthday}
                            onChange={(e) => { hideBirthdayOverlay(); setBirthday(e.target.value); }}
-                           placeholder={birthdayError === "" ? "Data urodzenia" : ""} />
+                           placeholder={birthdayError === "" ? content.register_input7 : ""} />
                 </label>
                 <label>
                     {phoneNumberError !== "" ? <span className="loginBox__error">
@@ -365,30 +369,30 @@ const RegisterModal = (props) => {
                            onClick={() => { resetErrors(); }}
                            value={phoneNumber}
                            onChange={(e) => { setPhoneNumber(e.target.value); }}
-                           placeholder={phoneNumberError === "" ? "Numer telefonu" : ""} />
+                           placeholder={phoneNumberError === "" ? content.register_input8 : ""} />
                 </label>
 
                 <label className="label--checkBtn">
                     <button className={!checkboxError ? "registerForm__checkBtn" : "registerForm__checkBtn input--error"} onClick={(e) => { resetErrors(); handleCheckbox(e, 1); }}>
                         {checkboxCompulsory ? <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" /> : ""}
                     </button>
-                    Akceptuję <a href="/regulamin">Regulamin</a> i <a href="/polityka-prywatnosci">Politykę prywatności</a>.
+                    {content.register_consent1.split(';')[0]} <a href="/regulamin">{content.register_consent1.split(';')[1]}</a> {content.register_consent1.split(';')[2]} <a href="/polityka-prywatnosci">{content.register_consent1.split(';')[3]}</a>.
                 </label>
 
                 <button className="registerForm--nextBtn" onClick={(e) => { validateStep2(e); }}>
-                    <img className="registerForm--nextBtn__img" src={registerBtnIcon} alt="zarejestruj" />
+                    <img className="registerForm--nextBtn__img" src={getImageUrl(content.img8)} alt="zarejestruj" />
                 </button>
             </section>
         </form> : <section className="registerResult">
             <img className="registerResult__img" src={userRegistered === 1 ? successIcon : successIcon} alt="sukces" />
             <h4 className="registerResult__header">
-                {userRegistered === 1 ? <span>Udało się<br/>{props.registerFromThirdParty ? "Twoje konto zostało pomyślnie zarejestrowane" : "Na podany adres email wysłaliśmy link weryfikacyjny"}</span> : <span>Coś poszło nie tak<br/>Prosimy spróbować później</span>}
+                {userRegistered === 1 ? <span>{content.after_register_text_1}<br/>{props.registerFromThirdParty ? content.after_register_text_3 : content.after_register_text_2}</span> : <span>{content.error}</span>}
             </h4>
 
             {userRegistered === 1 ? (props.mobile ? <a className="registerForm--nextBtn registerForm--nextBtn--login" href="/logowanie">
-                <img className="registerForm--nextBtn__img" src={loginBtn} alt="zaloguj-sie" />
+                <img className="registerForm--nextBtn__img" src={getImageUrl(content.img8)} alt="zaloguj-sie" />
             </a> : <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { goToLogin(); }}>
-                <img className="registerForm--nextBtn__img" src={loginBtn} alt="zaloguj-sie" />
+                <img className="registerForm--nextBtn__img" src={getImageUrl(content.img8)} alt="zaloguj-sie" />
             </button>) : ""}
         </section>) }
 

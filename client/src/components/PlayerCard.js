@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import man from "../static/img/profile-picture.png";
 import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
@@ -6,10 +6,13 @@ import balanceIcon from '../static/img/balance.svg'
 import {calculateAge} from "../helpers/others";
 import settings from "../settings";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
+import {ContentContext} from "../App";
 
 const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerToComparator, inComparator, addPlayerToFavorites}) => {
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         setComparator(inComparator);
@@ -54,8 +57,8 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                             <span className="playerCard__stats__item__value">
                                 {calculateAge(player.birthday)}
                             </span>
-                <span className="playerCard__stats__item__label">
-                                Wiek
+                            <span className="playerCard__stats__item__label">
+                                {content.age}
                             </span>
             </section>
             <section className="playerCard__stats__item playerCard__stats__item--borderRight">
@@ -63,7 +66,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                                 {player.weight ? player.weight : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Waga
+                    {content.player_parameter_12}
                             </span>
             </section>
             <section className="playerCard__stats__item">
@@ -71,7 +74,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                                 {player.height ? player.height : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Wzrost
+                    {content.player_parameter_11}
                             </span>
             </section>
 
@@ -80,7 +83,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                                 {player.block_range ? player.block_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Zasięg bloku
+                               {content.player_parameter_10}
                             </span>
             </section>
             <section className="playerCard__stats__item playerCard__stats__item--borderRight">
@@ -88,7 +91,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                                 {player.vertical_range ? player.vertical_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Wyskok dosiężny
+                                {content.player_parameter_9}
                             </span>
             </section>
             <section className="playerCard__stats__item">
@@ -96,12 +99,12 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                                 {player.attack_range ? player.attack_range : "-"}
                             </span>
                 <span className="playerCard__stats__item__label">
-                                Zasięg w ataku
+                                {content.player_parameter_8}
                             </span>
             </section>
         </main>
         <a className="playerCard__moreBtn" href={`/profil-zawodnika?id=${player.user_id ? player.user_id : player.id}`}>
-            Więcej
+            {content.more_about_player}
         </a>
     </section>
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import header from '../static/img/header-klub.jpg'
@@ -9,13 +9,17 @@ import img4 from '../static/img/klub-porownywarka.png'
 import img5 from '../static/img/czat.png'
 import PlayerFAQ from "../components/PlayerFAQ";
 import ClubForm from "../components/ClubForm";
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const Club = () => {
+    const { content } = useContext(ContentContext);
+
     return <div className="container container--dark container--club">
         <Header theme="dark" menu="light" clubPage={true} />
         <main className="club">
             <figure className="player__firstImgWrapper">
-                <img className="player__firstImgWrapper__img" src={header} alt="draft4u" />
+                <img className="player__firstImgWrapper__img" src={getImageUrl(content.img3)} alt="draft4u" />
             </figure>
 
             <section className="player__section player__flex player__flex--section player__section--1 club__section">
@@ -25,10 +29,10 @@ const Club = () => {
 
                 <article className="player__flex__content">
                     <h2 className="player__header">
-                        Ułatwiamy kontakt
+                        {content.club_zone_header1}
                     </h2>
                     <p className="player__flex__text">
-                        Szukasz nowego zawodnika? Jesteśmy unikalnym serwisem na polskim rynku, który wspiera kluby w nawiązywaniu kontaktu z zawodnikami. Szeroka lista profili pomaga zaoszczędzić czas i środki, które trzeba poświęcić na znalezienie nowego sportowca. Na naszej stronie znajdziesz zarówno początkujących graczy jak i doświadczonych zawodników. W każdej chwili możesz skontaktować się ze sportowcem, którym jesteś zainteresowany - bez wyjazdów i bez pośredników.
+                        {content.club_zone_text1}
                     </p>
                 </article>
             </section>
@@ -36,10 +40,10 @@ const Club = () => {
             <section className="player__section player__flex player__flex--section player__section--1 club__section">
                 <article className="player__flex__content">
                     <h2 className="player__header">
-                        Porównanie profili
+                        {content.club_zone_header2}
                     </h2>
                     <p className="player__flex__text player__flex__text--marginRight">
-                        Każdy zawodnik przedstawia w swoim profilu statystyki - nie tylko swój wiek lub doświadczenie, ale również zasięg ataku, wzrost i inne cechy. Dzięki wykorzystaniu odpowiednich filtrów możesz szybko zawęzić pulę kandydatów. Na dodatek za pomocą kilku kliknięć możesz porównać wybranych kandydatów i określić, który najlepiej pasuje do Twojego klubu, a także dodać profil wybranego zawodnika do ulubionych.
+                        {content.club_zone_text2}
                     </p>
                 </article>
 
@@ -55,10 +59,10 @@ const Club = () => {
 
                 <article className="player__flex__content">
                     <h2 className="player__header">
-                        Niezbędne informacje
+                        {content.club_zone_header3}
                     </h2>
                     <p className="player__flex__text">
-                        Na profilu zawodników znajdziesz filmiki przygotowane przez sportowców, które pokazują ich najlepsze zagrania. Jeszcze przed kontaktem możesz ocenić ich technikę oraz jakość. Zawodnicy przedstawiają także warunki umowy, co jest niezbędnym aspektem podczas negocjacji kontraktu.
+                        {content.club_zone_text3}
                     </p>
                 </article>
             </section>
@@ -66,10 +70,10 @@ const Club = () => {
             <section className="player__section player__flex player__flex--section player__section--1 club__section player__flex--section--chat">
                 <article className="player__flex__content player__flex__content--chat">
                     <h2 className="player__header">
-                        Kontakt za pomocą czatu
+                        {content.club_zone_header4}
                     </h2>
                     <p className="player__flex__text">
-                        Kontaktuj się z zawodnikami za pomocą naszego czatu i omawiaj warunki umowy w jednym miejscu! Nie martw się o spam lub niechciane wiadomości. W naszym serwisie tylko klub może nawiązać kontakt z zawodnikiem. Po rozpoczęciu rozmowy czat zostanie automatycznie zapisany na Twojej liście, a Ty będziesz mógł do niego wrócić w dowolnym momencie.
+                        {content.club_zone_text4}
                     </p>
                 </article>
 
@@ -85,10 +89,10 @@ const Club = () => {
 
                 <article className="player__flex__content">
                     <h2 className="player__header">
-                        Stwórz swoją drużynę
+                        {content.club_zone_header5}
                     </h2>
                     <p className="player__flex__text">
-                        Zobacz jak wybrany kandydat prezentuje się w Twoim składzie! Stwórz swoją drużynę – dodaj zawodników i zobacz jak będzie wyglądać Twój zespół z nowym graczem. Możesz stworzyć nieograniczoną liczbę składów, a także w łatwy sposób zmieniać zawodników na poszczególnych pozycjach. W prawym górnym rogu zobaczysz szacowany koszt drużyny. Każdy wariant możesz zapisać osobno, aż znajdziesz najlepsze rozwiązanie.
+                        {content.club_zone_text5}
                     </p>
                 </article>
             </section>

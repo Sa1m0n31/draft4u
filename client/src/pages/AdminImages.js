@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Dropzone from "react-dropzone-uploader";
 import settings from "../settings";
 import trashIcon from "../static/img/trash-black.svg";
-import {updateCustomImages} from "../helpers/admin";
+import {getCustomFields, updateCustomImages} from "../helpers/admin";
 
 const AdminImages = ({lang}) => {
     const [status, setStatus] = useState(-1);
@@ -17,7 +17,6 @@ const AdminImages = ({lang}) => {
         { img: null, updateImage: false, imageUpdated: false, label: 'Aktywność klubów' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Wyszukiwarka zawodników' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Ulubieni zawodnicy' },
-        { img: null, updateImage: false, imageUpdated: false, label: 'Ulubieni' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Button 1' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Button 2' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Button 3' },
@@ -47,7 +46,21 @@ const AdminImages = ({lang}) => {
     const [imageUpdated, setImageUpdated] = useState(false);
 
     useEffect(() => {
-
+        getCustomFields(lang)
+            .then((res) => {
+                const keyValuePairs = Object.entries(res?.data?.result[0]);
+                const imagesKeyValue = keyValuePairs.filter((item) => {
+                    return item[0].substring(0, 3) === 'img';
+                });
+                setImages(images?.map((item, index) => {
+                    return {
+                        img: item.img,
+                        updateImage: imagesKeyValue[index][1],
+                        imageUpdated: imagesKeyValue[index][1] !== null,
+                        label: item.label
+                    }
+                }));
+            });
     }, []);
 
     useEffect(() => {

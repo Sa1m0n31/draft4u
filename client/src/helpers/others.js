@@ -1,3 +1,7 @@
+import settings from "../settings";
+
+const { API_URL } = settings;
+
 const removePolishChars = (str) => {
     return str
         .toLowerCase()
@@ -73,4 +77,8 @@ const convertStringToURL = (str) => {
     return removePolishChars(str.replace(/ /g, "-"));
 }
 
-export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber, convertStringToURL }
+const getImageUrl = (path) => {
+    return `${API_URL}/image?url=/media/fields/${path}`;
+}
+
+export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber, convertStringToURL, getImageUrl }

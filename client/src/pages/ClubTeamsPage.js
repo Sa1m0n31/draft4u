@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState, useRef, useContext} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {deleteSquad, getClubSquads} from "../helpers/squad";
@@ -11,6 +11,7 @@ import settings from "../settings";
 import profilePicture from "../static/img/profile-picture.png";
 import closeIcon from '../static/img/close-grey.svg'
 import {unicodeToUTF8} from "../helpers/others";
+import {ContentContext} from "../App";
 
 const ClubTeamsPage = ({club}) => {
     const [teams, setTeams] = useState([]);
@@ -20,6 +21,8 @@ const ClubTeamsPage = ({club}) => {
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteResult, setDeleteResult] = useState(-1);
     const [loaded, setLoaded] = useState(false);
+
+    const { content } = useContext(ContentContext);
 
     const deleteModalRef = useRef(null);
 
@@ -116,43 +119,43 @@ const ClubTeamsPage = ({club}) => {
 
                 {deleteResult === -1 ? <>
                     <h3 className="modal__header">
-                        Czy na pewno chcesz usunąć ten skład?
+                        {content.delete_team}
                     </h3>
 
                     <div className="modal__buttons">
                         <button className="modal__btn" onClick={() => { deleteTeam(teamToDelete); }}>
-                            Usuń skład
+                            {content.delete_team_yes}
                         </button>
                         <button className="modal__btn" onClick={() => { setDeleteModal(false); }}>
-                            Wróć do składów
+                            {content.delete_team_no}
                         </button>
                     </div>
                 </> : <h3 className="modal__header">
-                    {deleteResult === 1 ? "Skład został usunięty" : "Coś poszło nie tak... Prosimy spróbować później"}
+                    {deleteResult === 1 ? content.team_deleted : content.error}
                 </h3>}
             </div>
         </div>
 
         <main className="clubTeams siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="clubTeams__header">
-                Zapisane składy
+                {content.saved_teams}
             </h1>
 
             {teams.length ? <header className="clubTeams__tableHeader">
                 <h4 className="clubTeams__tableHeader__header">
-                    Nazwa
+                    {content.name}
                 </h4>
                 <h4 className="clubTeams__tableHeader__header">
-                    Data utworzenia
+                    {content.teams_col1}
                 </h4>
                 <h4 className="clubTeams__tableHeader__header d-desktop">
-                    Koszt minimalny
+                    {content.teams_col2}
                 </h4>
                 <h4 className="clubTeams__tableHeader__header d-desktop">
-                    Koszt maksymalny
+                    {content.teams_col3}
                 </h4>
                 <h4 className="clubTeams__tableHeader__header d-desktop">
-                    Działania
+                    {content.teams_col4}
                 </h4>
             </header> : ""}
             {teams.length ? teams.map((item, index) => {
@@ -235,7 +238,7 @@ const ClubTeamsPage = ({club}) => {
                 </section>
             }) : <section className="noTeams">
                 {loaded ? <h3 className="noTeams__header">
-                    Póki co nie masz jeszcze żadnej zapisanej drużyny
+                    {content.no_teams_found}
                 </h3> : ""}
             </section> }
         </main>

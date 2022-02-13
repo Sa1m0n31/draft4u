@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 
 import googleIcon from '../static/img/google.png'
 import facebookIcon from '../static/img/facebook.svg'
-import loginBtn from '../static/img/zaloguj-btn.png'
-import appleBtn from '../static/img/button-apple.png'
-import {loginApple, loginUser} from "../helpers/auth";
+import {loginUser} from "../helpers/auth";
 import settings from "../settings";
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const LoginBox = () => {
+    const { content } = useContext(ContentContext);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -16,7 +18,7 @@ const LoginBox = () => {
         e.preventDefault();
 
         if(!email || !password) {
-            setError("Wpisz swoje dane logowania");
+            setError(content.login_error);
         }
         else {
             loginUser(email, password)
@@ -33,7 +35,7 @@ const LoginBox = () => {
                     /* Login failure */
                     setEmail("");
                     setPassword("");
-                    setError("Niepoprawne dane logowania");
+                    setError(content.login_error);
                 });
         }
     }
@@ -46,7 +48,7 @@ const LoginBox = () => {
         <form className="loginBox__form" onSubmit={(e) => { handleSubmit(e); }}>
             <label>
                 <input className="input"
-                       placeholder="E-mail"
+                       placeholder={content.login_input1}
                        type="text"
                        value={email}
                        onChange={(e) => { setEmail(e.target.value); }}
@@ -58,7 +60,7 @@ const LoginBox = () => {
                         {error}
                 </span> : ""}
                 <input className={!error ? "input" : "input input--error"}
-                       placeholder={!error ? "Hasło" : ""}
+                       placeholder={!error ? content.login_input2 : ""}
                        type="password"
                        value={password}
                        onChange={(e) => { setPassword(e.target.value); }}
@@ -66,16 +68,16 @@ const LoginBox = () => {
             </label>
 
             <button className="button button--submit">
-                <img className="button--submit__img" src={loginBtn} alt="zaloguj-sie" />
+                <img className="button--submit__img" src={getImageUrl(content.img14)} alt="zaloguj-sie" />
             </button>
         </form>
 
         <a className="loginBox__passwordRemindLink" href="/odzyskiwanie-hasla">
-            Nie pamiętasz hasła?
+            {content.login_box1}
         </a>
 
         <span className="loginBox__or">
-            lub
+            {content.login_box2}
         </span>
 
         <a className="button button--facebook" href={`${settings.API_URL}/auth/facebook`}>
@@ -87,10 +89,6 @@ const LoginBox = () => {
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
         </a>
-        {/*<button className="button button--apple" onClick={() => { loginApple(); }}>*/}
-        {/*    <img className="button--apple__img" src={appleBtn} alt="apple" />*/}
-        {/*    Continue with Apple*/}
-        {/*</button>*/}
     </section>
 }
 

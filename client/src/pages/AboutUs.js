@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useContext} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import rightArrow from '../static/img/right-arrow.svg'
@@ -6,10 +6,16 @@ import michalCaption from '../static/img/michal-napis.svg'
 import michalImg from '../static/img/michal.png'
 import bartekCaption from '../static/img/bartek-napis.png'
 import bartekImg from '../static/img/bartek.png'
+import {ContentContext} from "../App";
 
 const AboutUs = () => {
     let xDown = null;
     let yDown = null;
+
+    const [player1, setPlayer1] = useState({});
+    const [player2, setPlayer2] = useState({});
+
+    const { content } = useContext(ContentContext);
 
     function getTouches(evt) {
         return evt.touches || evt.originalEvent.touches;
@@ -42,26 +48,35 @@ const AboutUs = () => {
         yDown = null;
     }
 
-    const player1 = {
-        id: 1,
-        caption: michalCaption,
-        img: michalImg,
-        subheader: "W życiu kieruję się mottem:",
-        quote: `„Najpierw naucz się zasad gry, a potem graj lepiej, niż wszyscy inni”`,
-        desc: "Od 12 lat profesjonalnie gram w siatkówkę. Zaczynałem swoją przygodę na plaży - reprezentowałem Polskę na arenie krajowej i międzynarodowej. Obecnie gram na parkietach ligowych - doskonale wiem jak wygląda praca zawodnika od podszewki."
-    }
+    useEffect(() => {
+        if(content) {
+            setPlayer1({
+                id: 1,
+                caption: michalCaption,
+                img: michalImg,
+                subheader: content.about_us_michal_1,
+                quote: content.about_us_michal_2,
+                desc: content.about_us_michal_3
+            });
+            setPlayer2({
+                id: 2,
+                caption: bartekCaption,
+                img: bartekImg,
+                subheader: content.about_us_bartosz_2,
+                quote: content.about_us_bartosz_1,
+                desc: content.about_us_bartosz_3
+            });
+            // if(animationCounter) nextPlayer();
+        }
+    }, [content]);
 
-    const player2 = {
-        id: 2,
-        caption: bartekCaption,
-        img: bartekImg,
-        subheader: "- trzy słowa, które określają mnie jako zawodnika.",
-        quote: `„Wiara, ambicja, walka”`,
-        desc: "Pierwsze siatkarskie kroki stawiałem 15 lat temu - w małym łódzkim klubie. Swój zapal oraz chęć ciągłego doskonalenia się zawdzięczam siatkówce. To ona ukształtowała mój charakter oraz to jakim człowiekiem jestem. Siatkówka to moja pasja - realizuję się zawodowo i robię w życiu to, co kocham."
-    }
+    useEffect(() => {
+        setForegroundPlayer(player1);
+        setBackgroundPlayer(player2);
+    }, [player1, player2]);
 
-    const [foregroundPlayer, setForegroundPlayer] = useState(player1);
-    const [backgroundPlayer, setBackgroundPlayer] = useState(player2);
+    const [foregroundPlayer, setForegroundPlayer] = useState({});
+    const [backgroundPlayer, setBackgroundPlayer] = useState({});
     const [animationCounter, setAnimationCounter] = useState(true);
 
     const michalForeground = useRef(null);
@@ -116,14 +131,14 @@ const AboutUs = () => {
         <section className="aboutUs">
             <main className="aboutUs__main">
                 <h2 className="aboutUs__header aboutUs__header--mobile d-mobile">
-                    Kto stoi za projektem
+                    {content.about_us_header}
                 </h2>
                 <section className="aboutUs__content"
                          onTouchStart={(e) => { handleTouchStart(e); }}
                          onTouchMove={(e) => { handleTouchMove(e); }}
                 >
                     <h2 className="aboutUs__header d-desktop">
-                        Kto stoi za projektem
+                        {content.about_us_header}
                     </h2>
                     <figure className="aboutUs__captionWrapper">
                         <img className="aboutUs__caption" src={foregroundPlayer.caption} alt="nazwisko-zawodnika" />

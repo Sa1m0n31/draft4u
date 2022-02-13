@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, {useEffect, useState, useRef, useContext} from 'react'
 import ReactSiema from 'react-siema'
 import settings from "../settings";
 import {getAllClubs} from "../helpers/club";
+import {ContentContext} from "../App";
 
 const ClubSlider = () => {
     const [logos, setLogos] = useState([]);
     const [randomized, setRandomized] = useState(false);
 
     let slider = useRef(null);
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         /* Get club's logos */
@@ -52,7 +55,7 @@ const ClubSlider = () => {
     return <section className="clubCarousel">
         <main className="clubCarousel__inner">
             <h3 className="clubCarousel__header">
-                Kluby
+                {content.carousel_title}
             </h3>
             <ReactSiema perPage={{
                 100: 3,

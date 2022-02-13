@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import PlayerCard from "./PlayerCard";
 import przegladajBtn from "../static/img/zobacz-btn.png";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const ClubAccountFavorites = ({favoritesProp}) => {
     const [players, setPlayers] = useState([]);
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         setPlayers(favoritesProp);
@@ -17,7 +20,7 @@ const ClubAccountFavorites = ({favoritesProp}) => {
 
     return <section className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 findNewPlayerWrapper findNewPlayerWrapper--clubAccountStart">
         <h2 className="player__header player__header--findNewPlayer">
-            Ulubieni zawodnicy
+            {content.favorite_players}
         </h2>
 
         {players?.length ? <>
@@ -43,11 +46,11 @@ const ClubAccountFavorites = ({favoritesProp}) => {
                 })}
             </main>
         </> : <h3 className="playersWall__playersNotFoundHeader">
-            Brak ulubionych zawodników
+            {content.no_favorite_players}
         </h3>}
 
         <a className="button button--hover button--showPlayersPage" href="/ulubieni">
-            <img className="btn__img" src={przegladajBtn} alt="przegladaj" />
+            <img className="btn__img" src={getImageUrl(content.img20)} alt="przegladaj" />
         </a>
     </section>
 }

@@ -1,30 +1,33 @@
-import React from 'react'
+import React, {useContext} from 'react'
 
 import fbIcon from '../static/img/facebook.svg'
 import instaIcon from '../static/img/instagram.svg'
+import {ContentContext} from "../App";
 
 const Footer = ({theme, border}) => {
+    const { content } = useContext(ContentContext);
+
     return <footer id={border ? "footerBorder" : ""} className={theme === "dark" ? "footer footer--dark" : (theme === "light" ? "footer footer--light" : "footer footer--dark footer--light--mobile")}>
         <div className="footer__inner">
             <section className="footer__col">
                 <h4 className="footer__col__header">
-                    Kontakt
+                    {content.footer_header1}
                 </h4>
                 <ul className="footer__col__list footer__col__list--contact">
                     <li className="footer__col__list__item footer__contactItem">
-                        <span>Tel</span>
+                        <span>{content.phone}</span>
                         <a className="footer__col__list__item__link" href="tel:+48790731997">
                             790 731 997
                         </a>
                     </li>
                     <li className="footer__col__list__item footer__contactItem">
-                        <span>Tel</span>
+                        <span>{content.phone}</span>
                         <a className="footer__col__list__item__link" href="tel:+48 535480814">
                             535 480 814
                         </a>
                     </li>
                     <li className="footer__col__list__item footer__contactItem">
-                        <span>Mail</span>
+                        <span>{content.email}</span>
                         <a className="footer__col__list__item__link" href="mailto:biuro@draft4u.com.pl">
                             biuro@draft4u.com.pl
                         </a>
@@ -34,22 +37,22 @@ const Footer = ({theme, border}) => {
 
             <section className="footer__col">
                 <h4 className="footer__col__header">
-                    Informacje dodatkowe
+                    {content.footer_header2}
                 </h4>
                 <ul className="footer__col__list">
                     <li className="footer__col__list__item">
                         <a className="footer__col__list__item__link" href="/regulamin">
-                            Regulamin
+                            {content.footer_col2_1}
                         </a>
                     </li>
                     <li className="footer__col__list__item">
                         <a className="footer__col__list__item__link" href="/polityka-prywatnosci">
-                            Polityka prywatności
+                            {content.footer_col2_2}
                         </a>
                     </li>
                     <li className="footer__col__list__item">
                         <a className="footer__col__list__item__link" href="/polityka-plikow-cookies">
-                            Polityka plików cookies
+                            {content.footer_col2_3}
                         </a>
                     </li>
                 </ul>
@@ -57,7 +60,7 @@ const Footer = ({theme, border}) => {
 
             <section className="footer__col">
                 <h4 className="footer__col__header">
-                    Dołącz do nas
+                    {content.footer_header3}
                 </h4>
                 <ul className="footer__col__list--socialMedia">
                     <li className="footer__col__list__item">

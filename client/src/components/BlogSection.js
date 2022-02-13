@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {getLastArticle} from "../helpers/blog";
 import settings from "../settings";
 import {convertStringToURL} from "../helpers/others";
+import {ContentContext} from "../App";
 
 const BlogSection = () => {
     const [article, setArticle] = useState(null);
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         getLastArticle()
@@ -27,7 +30,7 @@ const BlogSection = () => {
                 {article.excerpt}
             </p>
             <a className="button button--readMore" href={`/wpis/${article?.title ? convertStringToURL(article.title) : ""}`}>
-                Czytaj więcej <span className="gold bold"> > </span>
+                {content.read_more} <span className="gold bold"> > </span>
             </a>
         </section> : "")
 }

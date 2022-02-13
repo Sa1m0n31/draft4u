@@ -1,14 +1,18 @@
-import React, {useRef} from 'react'
+import React, {useContext, useRef} from 'react'
 import ClubSlider from "./ClubSlider";
 import trener from '../static/img/trener.png'
 import zawodnicy from '../static/img/zawodnicy.png'
 import belka from '../static/img/belka.png'
 import boisko from '../static/img/boisko-hero.svg'
 import pilka from '../static/img/tlo-zawodnikow.png'
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const LandingPage = ({registerFromThirdParty}) => {
     const playerZone = useRef(null);
     const clubZone = useRef(null);
+
+    const { content } = useContext(ContentContext);
 
     const animationPlayer = () => {
         playerZone.current.style.transform = "scale(.95)";
@@ -54,7 +58,7 @@ const LandingPage = ({registerFromThirdParty}) => {
 
             <img className="landingPage__img"
                  id="belka"
-                 src={belka} alt="belka" />
+                 src={getImageUrl(content.img1)} alt="belka" />
             <img className="landingPage__img"
                  id="trener"
                  ref={clubZone}

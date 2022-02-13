@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import img3 from "../static/img/strefa-zawodnika-2.png";
 import submitBtn from '../static/img/wyslij-btn.svg'
 import {isMail} from "../helpers/validation";
 import {sendClubForm} from "../helpers/club";
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const ClubForm = () => {
+    const { content } = useContext(ContentContext);
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -58,7 +62,7 @@ const ClubForm = () => {
 
         <article className="player__flex__content">
             <h3 className="player__header">
-                Skontaktuj się z nami
+                {content.club_zone_contact_form_header}
             </h3>
             <form className="clubForm__inner">
                 <label>
@@ -70,7 +74,7 @@ const ClubForm = () => {
                            value={name}
                            onChange={(e) => { setName(e.target.value); }}
                            onClick={() => { setNameError(""); }}
-                           placeholder={!nameError ? "Imię i nazwisko / Nazwa klubu" : ""} />
+                           placeholder={!nameError ? content.club_zone_contact_form_input1 : ""} />
                 </label>
                 <label>
                     {emailError !== "" ? <span className="loginBox__error">
@@ -81,7 +85,7 @@ const ClubForm = () => {
                            value={email}
                            onChange={(e) => { setEmail(e.target.value); }}
                            onClick={() => { setEmailError(""); }}
-                           placeholder={!emailError ? "Adres e-mail" : ""} />
+                           placeholder={!emailError ? content.club_zone_contact_form_input2 : ""} />
                 </label>
                 <label>
                     {phoneError !== "" ? <span className="loginBox__error">
@@ -92,19 +96,19 @@ const ClubForm = () => {
                            value={phone}
                            onChange={(e) => { setPhone(e.target.value); }}
                            onClick={() => { setPhoneError(""); }}
-                           placeholder={!phoneError ? "Nr telefonu" : ""} />
+                           placeholder={!phoneError ? content.club_zone_contact_form_input3 : ""} />
                 </label>
                 <label>
                 <textarea className="textarea"
                           value={msg}
                           onChange={(e) => { setMsg(e.target.value); }}
-                          placeholder="Wiadomość (opcjonalnie)" />
+                          placeholder={content.club_zone_contact_form_input4} />
                 </label>
 
                 {confirmMsg ? <h4 className="clubForm__confirmMsg">
                     {confirmMsg}
                 </h4> : <button className="registerForm--nextBtn" onClick={(e) => { handleSubmit(e); }}>
-                    <img className="registerForm--nextBtn__img" src={submitBtn} alt="dalej" />
+                    <img className="registerForm--nextBtn__img" src={getImageUrl(content.img10)} alt="dalej" />
                 </button>}
             </form>
         </article>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import buyNowBtn from "../static/img/buy-now.png";
 import lockRed from '../static/img/lock-red.svg'
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -6,10 +6,13 @@ import 'react-circular-progressbar/dist/styles.css';
 import {getUserSubscription} from "../helpers/user";
 import discountImg from "../static/img/discount.png";
 import DraftLoader from "./Loader";
+import {ContentContext} from "../App";
 
 const MyAccountStartBottom = ({userId}) => {
     const [days, setDays] = useState(0);
     const [loaded, setLoaded] = useState(false);
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         getUserSubscription(userId)
@@ -35,31 +38,31 @@ const MyAccountStartBottom = ({userId}) => {
         {loaded ? <main className="myAccountStart__bottom__content">
             <section className="myAccountStart__bottom__content__section">
                 <h3 className="player__header">
-                    Twoja subskrypcja
+                    {content.your_subscription}
                 </h3>
                 <span className="d-below-1200">
                     {days >= 1 ? <>
                         <CircularProgressbar value={days / 30 * 100}
-                                             text={<span>14dni<br/>{days}</span>} />
+                                             text={<span>14{content.your_subscription_days}<br/>{days}</span>} />
 
                         <span className="myAccountStart__bottom__content__days">
                         <span className="myAccountStart__bottom__content__days--big">
                             {days}
                         </span>
                         <span>
-                            dni
+                              {content.your_subscription_days}
                         </span>
                     </span>
                     </> : <img className="myAccountStart__bottom__content__lock" src={lockRed} alt="konto-wygaslo" />}
                 </span>
 
                 <h4 className="myAccountStart__subheader">
-                    {days <= 0 ? "Twoje konto straciło ważność" : (`Pozostało ${days} ${days > 1 ? "dni" : "dzień"} do końca Twojego pakietu`)}
+                    {days <= 0 ? content.your_subscription_text_expire : content.your_subscription_text_ok.replace('x', days)}
                 </h4>
                 {days < 30 ? <section className="player__option">
                     <img className="player__option__discount" src={discountImg} alt="promocja" />
                     <h3 className="player__option__name">
-                        Tylko
+                        {content.player_zone_buy_frame1}
                     </h3>
                     <h4 className="player__option__price">
                         99
@@ -71,7 +74,7 @@ const MyAccountStartBottom = ({userId}) => {
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
                     </a>
                 </section> : <p className="player__flex__text">
-                    Dziękujemy, że jesteś z nami.
+                    {content.ty_page_text}
                 </p>}
             </section>
 
@@ -86,7 +89,7 @@ const MyAccountStartBottom = ({userId}) => {
                             {days}
                         </span>
                         <span>
-                            dni
+                            {content.your_subscription_days}
                         </span>
                     </span>
                     </> : <img className="myAccountStart__bottom__content__lock" src={lockRed} alt="konto-wygaslo" />}

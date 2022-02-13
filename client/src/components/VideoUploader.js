@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, {useRef, useEffect, useState, useContext} from 'react'
 import closeIcon from "../static/img/close-grey.svg";
 import uploadIcon from '../static/img/upload.svg'
 import wybierzPlikBtn from '../static/img/wybierz-plik.png'
@@ -8,13 +8,16 @@ import successIcon from '../static/img/success.svg'
 import failureIcon from '../static/img/failure.svg'
 import axios from "axios";
 import settings from "../settings";
-import {removePolishChars} from "../helpers/others";
+import {getImageUrl, removePolishChars} from "../helpers/others";
+import {ContentContext} from "../App";
 
 const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play}) => {
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(-1);
     const [progress, setProgress] = useState(0);
     const [fileToLarge, setFileToLarge] = useState(false);
+
+    const { content } = useContext(ContentContext);
 
     const getUploadParams = ({file, meta}) => {
         setLoading(true);
@@ -46,7 +49,7 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
             </button>
 
             <h2 className="player__header player__header--videoUploader">
-                Prześlij filmik
+                {content.add_video_header}
             </h2>
 
             {!loading && response === -1 ? <>
@@ -66,16 +69,16 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
                 </figure>
                 {!fileToLarge ? <>
                     <h3 className="videoUploader__text">
-                        Przeciągnij i upuść pliki wideo, które chcesz przesłać
+                        {content.add_video_text}
                     </h3>
                     <h4 className="videoUploader__smallText">
-                        Akceptowane są pliki z rozszerzeniem .mp4, .webm oraz .mov. Postaraj się, aby Twój plik nie ważył więcej niż 100 MB. Pliki powyżej 500 MB nie będą akceptowane.
+                        {content.add_video_text2}
                     </h4>
                     <button className="button button--hover button--videoUploader">
-                        <img className="btn__img" src={wybierzPlikBtn} alt="wybierz-plik" />
+                        <img className="btn__img" src={getImageUrl(content.img17)} alt="wybierz-plik" />
                     </button>
                 </> : <h4 className="videoUploader__text">
-                    Wysłane video jest za duże. Skompresuj swój plik do maksymalnie 500MB i ponów próbę.
+                    {content.video_to_large}
                 </h4>}
             </> : (loading ? <div className="videoLoadingWrapper">
                 <DraftLoader />
@@ -92,12 +95,12 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
             </div> : (response === 1 ? <>
                 <img className="videoUploader__responseImg" src={successIcon} alt="sukces" />
                 <h2 className="videoUploader__responseHeader">
-                    Filmik został dodany
+                    {content.video_added}
                 </h2>
             </> : <>
                 <img className="videoUploader__responseImg" src={failureIcon} alt="cos-poszlo-nie-tak" />
                 <h2 className="videoUploader__responseHeader">
-                    Coś poszło nie tak... Prosimy spróbować później
+                    {content.error}
                 </h2>
             </>))}
         </main>

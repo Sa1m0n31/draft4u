@@ -1,8 +1,102 @@
-import React, { useEffect, useState, useRef } from 'react'
-import faq from "../data/faq";
+import React, {useEffect, useState, useRef, useContext} from 'react'
+import {ContentContext} from "../App";
 
 const PlayerFAQ = () => {
     const [category, setCategory] = useState(0);
+    const [faq, setFaq] = useState([]);
+
+    const { content } = useContext(ContentContext);
+
+    useEffect(() => {
+        if(content) {
+            setFaq([
+                {
+                    header: content.faq_header_1,
+                    questions: [
+                        {
+                            q: content.faq_question_1,
+                            a: content.faq_answer_1
+                        },
+                        {
+                            q: content.faq_question_2,
+                            a: content.faq_answer_2
+                        },
+                        {
+                            q: content.faq_question_3,
+                            a: content.faq_answer_3
+                        }
+                    ]
+                },
+                {
+                    header: content.faq_header_2,
+                    questions: [
+                        {
+                            q: content.faq_question_4,
+                            a: content.faq_answer_4
+                        },
+                        {
+                            q: content.faq_question_5,
+                            a: content.faq_answer_5
+                        },
+                        {
+                            q: content.faq_question_6,
+                            a: content.faq_answer_6
+                        },
+                        {
+                            q: content.faq_question_7,
+                            a: content.faq_answer_7
+                        }
+                    ]
+                },
+                {
+                    header: content.faq_header_3,
+                    questions: [
+                        {
+                            q: content.faq_question_8,
+                            a: content.faq_answer_8
+                        },
+                        {
+                            q: content.faq_question_9,
+                            a: content.faq_answer_9
+                        },
+                        {
+                            q: content.faq_question_10,
+                            a: content.faq_answer_10
+                        },
+                        {
+                            q: content.faq_question_11,
+                            a: content.faq_answer_11
+                        },
+                        {
+                            q: content.faq_question_12,
+                            a: content.faq_answer_12
+                        }
+                    ]
+                },
+                {
+                    header: content.faq_header_4,
+                    questions: [
+                        {
+                            q: content.faq_question_13,
+                            a: content.faq_answer_13
+                        },
+                        {
+                            q: content.faq_question_14,
+                            a: content.faq_answer_14
+                        },
+                        {
+                            q: content.faq_question_15,
+                            a: content.faq_answer_15
+                        },
+                        {
+                            q: content.faq_question_16,
+                            a: content.faq_answer_16
+                        }
+                    ]
+                }
+            ])
+        }
+    }, [content]);
 
     const toggleQuestion = (index) => {
         const currentQuestion = document.getElementById(`faq__question-${category}-${index}`);

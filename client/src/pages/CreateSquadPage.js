@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import floor from '../static/img/boisko.svg'
@@ -17,6 +17,7 @@ import trash from '../static/img/trash-black.svg'
 import {addSquad, getSquadById} from "../helpers/squad";
 import {isObject} from "chart.js/helpers";
 import arrowDownGrey from '../static/img/arrow-down-grey.svg'
+import {ContentContext} from "../App";
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -40,6 +41,8 @@ const CreateSquadPage = ({club}) => {
     const [filtersVisible, setFiltersVisible] = useState(false);
     const [availablePlaces, setAvailablePlaces] = useState([0, 0, 0, 0, 0, 0, 0]);
     const [teamsJoined, setTeamsJoined] = useState(false);
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -519,17 +522,17 @@ const CreateSquadPage = ({club}) => {
 
     const saveTeam = () => {
         if(!name.length) {
-            setTeamSaved("Wpisz nazwę swojego składu");
+            setTeamSaved(content.team_error1);
         }
         else if(!team.length) {
-            setTeamSaved("Wybierz co najmniej jednego zawodnika do swojego składu");
+            setTeamSaved(content.team_error2);
         }
         else {
             addSquad(name, team)
                 .then((res) => {
-                    if(res?.data?.result === 2) setTeamSaved("Drużyna została zaktualizowana");
-                    else if(res?.data?.result === 1) setTeamSaved("Drużyna została dodana");
-                    else setTeamSaved("Coś poszło nie tak... Prosimy spróbować później");
+                    if(res?.data?.result === 2) setTeamSaved(content.team_updated);
+                    else if(res?.data?.result === 1) setTeamSaved(content.team_added);
+                    else setTeamSaved(content.error);
                 });
         }
     }
@@ -560,7 +563,7 @@ const CreateSquadPage = ({club}) => {
                     <span className="userInfoEdition__value">
                     <label className={editName ? "label--edit" : ""}>
                         <input value={name}
-                               placeholder="Nazwa"
+                               placeholder={content.team_name}
                                onChange={(e) => { setName(e.target.value); }}
                                disabled={!editName}
                                className="input--editProfile"
@@ -593,13 +596,10 @@ const CreateSquadPage = ({club}) => {
                     <button className="createSquad__btn" onClick={() => { saveTeam(); }}>
                         <img className="btn__img" src={saveIcon} alt="zapisz-druzyne" />
                     </button>
-                    {/*<button className="createSquad__btn" onClick={() => { exportTeam(); }}>*/}
-                    {/*    <img className="btn__img" src={downloadIcon} alt="eksportuj-do-pdf" />*/}
-                    {/*</button>*/}
                 </section>
 
                 <h3 className="createSquad__teamCostHeader d-desktop">
-                    Koszt drużyny:
+                    {content.cost_of_the_team}:
                 </h3>
                 <h4 className="createSquad__teamCostHeader__value d-desktop">
                     {!minCost && !maxCost ? 0 : minCost + " - " + maxCost} PLN
@@ -609,7 +609,7 @@ const CreateSquadPage = ({club}) => {
         <section className="createSquad__players">
             <section className="searchFilters__position searchFilters__position--mobile siteWidthSuperNarrow siteWidthSuperNarrow--1400">
                 <span className="searchFilters__position__header">
-                    Pozycja:
+                    {content.position}:
                 </span>
 
                 <section className="searchFilters__positionList d-mobile">
@@ -622,7 +622,7 @@ const CreateSquadPage = ({club}) => {
                             }
                             else {
                                 return <span>
-                                    Wszyscy
+                                    {content.all}
                                 </span>
                             }
                         }
@@ -635,43 +635,43 @@ const CreateSquadPage = ({club}) => {
 
                 {filtersVisible ? <span className="searchFilters__position__positions searchFilters__position__positions--mobile d-mobile">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
-                    Wszyscy
+                    {content.all}
                     </button>
                     <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
-                        Przyjmujący
+                        {content.position3}
                     </button>
                     <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
-                        Atakujący
+                          {content.position1}
                     </button>
                     <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
-                        Środkowy
+                          {content.position4}
                     </button>
                     <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
-                        Rozgrywający
+                          {content.position2}
                     </button>
                     <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
-                        Libero
+                          {content.position5}
                     </button>
                 </span> : ""}
 
                 <span className="searchFilters__position__positions d-desktop">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
-                    Wszyscy
+                     {content.all}
                     </button>
                     <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
-                        Przyjmujący
+                          {content.position3}
                     </button>
                     <button className={isPositionActive(1) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(1); }}>
-                        Atakujący
+                          {content.position1}
                     </button>
                     <button className={isPositionActive(4) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(4); }}>
-                        Środkowy
+                          {content.position4}
                     </button>
                     <button className={isPositionActive(2) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(2); }}>
-                        Rozgrywający
+                          {content.position2}
                     </button>
                     <button className={isPositionActive(5) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(5); }}>
-                        Libero
+                          {content.position5}
                     </button>
                 </span>
             </section>
@@ -732,13 +732,13 @@ const CreateSquadPage = ({club}) => {
                                                 </h4>
                                                 <section className="createSquad__squad__item__data__section">
                                                     <h4 className="createSquad__squad__item__data__key">
-                                                        Wzrost
+                                                        {content.player_parameter_11}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__value">
                                                         {item.height ? item.height + " cm" : "-"}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__key">
-                                                        Waga
+                                                        {content.player_parameter_12}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__value">
                                                         {item.weight ? item.weight + " kg" : "-"}
@@ -746,7 +746,7 @@ const CreateSquadPage = ({club}) => {
                                                 </section>
                                                 <section className="createSquad__squad__item__data__section">
                                                     <h4 className="createSquad__squad__item__data__key">
-                                                        Wynagrodzenie
+                                                        {content.player_parameter_7}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__value">
                                                         {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}
@@ -803,13 +803,13 @@ const CreateSquadPage = ({club}) => {
                                                 </h4>
                                                 <section className="createSquad__squad__item__data__section">
                                                     <h4 className="createSquad__squad__item__data__key">
-                                                        Wzrost
+                                                        {content.player_parameter_11}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__value">
                                                         {item.height ? item.height + " cm" : "-"}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__key">
-                                                        Waga
+                                                        {content.player_parameter_12}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__value">
                                                         {item.weight ? item.weight + " kg" : "-"}
@@ -817,7 +817,7 @@ const CreateSquadPage = ({club}) => {
                                                 </section>
                                                 <section className="createSquad__squad__item__data__section">
                                                     <h4 className="createSquad__squad__item__data__key">
-                                                        Wynagrodzenie
+                                                        {content.player_parameter_7}
                                                     </h4>
                                                     <h4 className="createSquad__squad__item__data__value">
                                                         {item.salary_from ? item.salary_from + " - " + item.salary_to + " PLN" : "-"}

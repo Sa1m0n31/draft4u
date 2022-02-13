@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Chart from "react-apexcharts";
+import {ContentContext} from "../App";
 
 const ComparatorChart = ({datasets}) => {
     const [series, setSeries] = useState([]);
+    const { content } = useContext(ContentContext);
 
     const options = {
         chart: {
@@ -49,7 +51,7 @@ const ComparatorChart = ({datasets}) => {
             }
         ],
         xaxis: {
-            categories: [`Wzrost`, "Waga", "Zasięg w ataku", "Wyskok dosiężny", "Zasięg w bloku"],
+            categories: [content.player_parameter_11, content.player_parameter_12, content.player_parameter_8, content.player_parameter_9, content.player_parameter_10],
             labels: {
                 show: true,
                 style: {

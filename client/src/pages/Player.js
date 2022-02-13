@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import registerBtn from '../static/img/register-btn.png'
@@ -14,6 +14,8 @@ import PlayerFAQ from "../components/PlayerFAQ";
 import ClubSlider from "../components/ClubSlider";
 import discountImg from '../static/img/discount.png'
 import phone from '../static/img/ekran-glowny.png'
+import {ContentContext} from "../App";
+import {getImageUrl} from "../helpers/others";
 
 const Player = () => {
     const openRegisterModal = () => {
@@ -26,12 +28,13 @@ const Player = () => {
         }
     }
 
+    const { content } = useContext(ContentContext);
+
     return <div className="container container--light container--player">
         <Header menu="dark" />
         <main className="player">
             <figure className="player__firstImgWrapper">
-                {/*<img className="player__label" src={label} alt="strefa-zawodnika" />*/}
-                <img className="player__firstImgWrapper__img" src={playerHeader} alt="draft4u" />
+                <img className="player__firstImgWrapper__img" src={getImageUrl(content.img2)} alt="draft4u" />
             </figure>
 
             <section className="player__section player__flex player__flex--section player__section--1">
@@ -42,20 +45,20 @@ const Player = () => {
 
                 <article className="player__flex__content">
                     <h2 className="player__header">
-                        Ułatwiamy kontakt
+                        {content.player_zone_header1}
                     </h2>
                     <p className="player__flex__text">
-                        Szukasz nowego klubu, ale brakuje Ci czasu lub nie chcesz współpracować z menedżerami? Nasz unikalny na polskim rynku serwis powstał po to, aby ułatwić kontakt klubów z zawodnikami. Wystarczy tylko kilka chwil: przygotuj swój profil na naszej stronie i gotowe! Od teraz przedstawiciele klubów, z którymi współpracujemy, mogą kontaktować się z Tobą szybko i bez pośredników.
+                        {content.player_zone_text1}
                     </p>
                 </article>
             </section>
             <section className="player__section player__flex player__flex--section player__section--1 player__flex--section--chat">
                 <article className="player__flex__content player__flex__content--chat">
                     <h2 className="player__header">
-                        Kontakt za pomocą czatu
+                        {content.player_zone_header2}
                     </h2>
                     <p className="player__flex__text">
-                        Przedstawiciel klubu może skontaktować się z Tobą za pośrednictwem czatu na naszej stronie. Omawiaj warunki umowy bez pośredników w jednym miejscu! Po rozpoczęciu rozmowy czat zostanie automatycznie zapisany na Twojej liście, a Ty będziesz mógł do niego wrócić w dowolnym momencie. Nie musisz martwić się o niechciane wiadomości lub próby oszustwa - rejestracja w strefie klubu jest możliwa tylko za pomocą administratorów strony. Dzięki temu masz gwarancję, że konto przedstawiciela klubu jest zweryfikowane i wiarygodne.
+                        {content.player_zone_text2}
                     </p>
                 </article>
 
@@ -66,48 +69,48 @@ const Player = () => {
 
             <section className="player__section">
                 <h2 className="player__header">
-                    Trzy proste kroki
+                    {content.player_zone_header3}
                 </h2>
                 <p className="player__flex__text">
-                    Od kolejnego etapu Twojej kariery dzielą Cię tylko trzy proste kroki:
+                    {content.player_zone_text3}
                 </p>
 
                 <section className="player__flex player__flex--margin">
                     <section className="player__step">
                         <img className="player__step__img" src={step2} alt="krok1" />
                         <h3 className="player__step__header">
-                            Wpisz dane
+                            {content.player_zone_circle1}
                         </h3>
                     </section>
                     <section className="player__step">
                         <img className="player__step__img" src={step1} alt="krok2" />
                         <h3 className="player__step__header">
-                            Wgraj wideo
+                            {content.player_zone_circle2}
                         </h3>
                     </section>
                     <section className="player__step">
                         <img className="player__step__img" src={step3} alt="krok3" />
                         <h3 className="player__step__header">
-                            Podaj warunki umowy
+                            {content.player_zone_circle3}
                         </h3>
                     </section>
                 </section>
 
                 <p className="player__flex__text player__flex__text--afterSteps">
-                    To wszystko! Resztę pracy wykonają nasze algorytmy, które zaprezentują klubom listę zawodników dopasowanych do ich wymagań. Dzięki temu możesz być łatwiej dostrzeżony i szybciej znajdziesz nowy klub.
+                    {content.player_zone_text4}
                 </p>
             </section>
 
             <section className="player__section player__flex player__flex--section">
                 <article className="player__flex__content player__flex__content--first14">
                     <h2 className="player__header">
-                        Pierwsze 14 dni za darmo
+                        {content.player_zone_header5}
                     </h2>
                     <p className="player__flex__text">
-                        Przez pierwsze 14 dni nie ponosisz żadnych opłat! To okazja, aby wypróbować wszystkie możliwości serwisu. Po uzupełnieniu danych twój profil pojawi się w wynikach wyszukiwania.
+                        {content.player_zone_text5}
                     </p>
                     <button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>
-                        <img className="btn__img" src={registerBtn} alt="zarejestruj-sie" />
+                        <img className="btn__img" src={getImageUrl(content.img8)} alt="zarejestruj-sie" />
                     </button>
                 </article>
                 <figure className="player__flex__imgWrapper tmpWrapper d-desktop">
@@ -118,17 +121,17 @@ const Player = () => {
             <section className="player__section player__flex player__flex--section">
                 <article className="player__flex__content player__flex__content--first14">
                     <h2 className="player__header">
-                        Tylko 99 PLN za pierwszy rok
+                        {content.player_zone_header5}
                     </h2>
                     <p className="player__flex__text">
-                        Wypróbuj w promocyjnej cenie: za pierwszy rok dostępu zapłacisz tylko 99 PLN! Twój profil będzie aktywny do 31.01.2023 r., a Ty nie poniesiesz żadnych dodatkowych opłat. Pamiętaj - im szybciej dołączysz, tym więcej dni dostępu zyskasz w promocyjnej cenie.
+                        {content.player_zone_text6}
                     </p>
                 </article>
                 <div className="player__flex__imgWrapper tmpWrapper">
                     <section className="player__option">
                         <img className="player__option__discount" src={discountImg} alt="promocja" />
                         <h3 className="player__option__name">
-                            Tylko
+                            {content.player_zone_buy_frame1}
                         </h3>
                         <h4 className="player__option__price">
                             99
@@ -137,10 +140,10 @@ const Player = () => {
                             </span>
                         </h4>
                         <button className="button button--hover button--buyNow" onClick={() => { openRegisterModal(); }}>
-                            <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
+                            <img className="btn__img" src={getImageUrl(content.img9)} alt="kup-teraz" />
                         </button>
                         <span className="player__option--bottom">
-                            Pakiet ważny do 31.01.2023
+                            {content.player_zone_buy_frame2}
                         </span>
                     </section>
                 </div>
@@ -148,7 +151,7 @@ const Player = () => {
 
             <section className="player__section player__section--faq">
                 <h2 className="player__header">
-                    FAQ
+                    {content.player_zone_header6}
                 </h2>
                 <PlayerFAQ />
             </section>

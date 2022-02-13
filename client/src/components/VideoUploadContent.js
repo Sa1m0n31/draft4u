@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import uploadIcon from '../static/img/upload.svg'
 import trashIcon from '../static/img/trash-black.svg'
 import uploadBlackIcon from '../static/img/upload-black.svg'
@@ -11,6 +11,7 @@ import ModalVideoPlayer from "./ModalVideoPlayer";
 import DeleteVideoModal from "./DeleteVideoModal";
 import threeDotsMenu from '../static/img/threeDotsMenu.svg'
 import {removePolishChars, unicodeToUTF8} from "../helpers/others";
+import {ContentContext} from "../App";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
@@ -25,21 +26,25 @@ const VideoUploadContent = () => {
     const [mobileMenuVisible, setMobileMenuVisible] = useState(-1);
     const [loader, setLoader] = useState(true);
 
+    const { content } = useContext(ContentContext);
+
     useEffect(() => {
-        getUserData()
-            .then(res => {
-                const position = res.data.result.name;
-                if(position) {
-                    setVideoNames(getPlayElementsByPosition(unicodeToUTF8(position)));
-                }
-                setUserId(res.data.result.id);
-                getUserVideos(res.data.result.id)
-                    .then((res) => {
-                        setVideos(res.data.result);
-                        setLoader(false);
-                    });
-            });
-    }, []);
+        if(content) {
+            getUserData()
+                .then(res => {
+                    const position = res.data.result.name;
+                    if(position) {
+                        setVideoNames(getPlayElementsByPosition(unicodeToUTF8(position)));
+                    }
+                    setUserId(res.data.result.id);
+                    getUserVideos(res.data.result.id)
+                        .then((res) => {
+                            setVideos(res.data.result);
+                            setLoader(false);
+                        });
+                });
+        }
+    }, [content]);
 
     useEffect(() => {
         if(videoUpload) {
@@ -50,6 +55,25 @@ const VideoUploadContent = () => {
                 });
         }
     }, [videoUpload]);
+
+    const getPlayElementsByPosition = (position) => {
+        const { play_1, play_2, play_3, play_4, play_5, play_6, play_7, play_8 } = content;
+        switch(position) {
+            case 'atakujący':
+                return [play_1, play_2, play_3, play_4, play_5];
+            case 'przyjmujący':
+                return [play_1, play_8, play_3, play_2, play_4];
+            case 'rozgrywający':
+                return [play_6, play_2, play_3, play_1, play_7, play_4, play_5];
+            case 'libero':
+                return [play_8, play_7, play_6, play_4, play_5];
+            case 'środkowy':
+                return [play_2, play_1, play_3, play_4, play_5];
+            default:
+                break;
+        }
+    }
+
 
     const openUploader = (play) => {
         setVideoName(play);
@@ -82,21 +106,21 @@ const VideoUploadContent = () => {
         {deleteModal ? <DeleteVideoModal setVideoUpload={setVideoUpload} videoUpload={videoUpload} userId={userId} play={playToDelete} setModalClose={setDeleteModal} /> : ""}
 
         <h2 className="player__header">
-            Dodaj akcje
+            {content.add_video_header}
         </h2>
         <a className="videoUpload__backBtn" href="/edycja-profilu">
-            wróć do profilu
+            {content.back_to_profile}
         </a>
         {videoNames?.length ? <header className="videoTable__header">
             <h3 className="videoTable__header__h videoTable__header__h--first">
-                Film
+                {content.video}
             </h3>
             <h3 className="videoTable__header__h videoTable__header__h--second">
-                Element gry
+                {content.play}
             </h3>
 
             <h3 className="videoTable__header__h videoTable__header__h--third">
-                Data dodania
+                {content.add_date}
             </h3>
         </header> : ""}
 
@@ -146,7 +170,7 @@ const VideoUploadContent = () => {
                 </section>
             </section>
         }) : (!loader ? <h2 className="videoTable__error">
-            Aby dodawać filmiki, wybierz swoją pozycję na boisku
+            {content.choose_position}
         </h2> : "")}
     </main>
 }

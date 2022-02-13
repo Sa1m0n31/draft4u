@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import example from '../static/img/profile-picture.png'
@@ -24,8 +24,11 @@ import {editProfileImage, getUserById, getUserData} from "../helpers/user";
 import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 import Dropzone from "react-dropzone-uploader";
 import closeIcon from '../static/img/close-grey.svg'
+import {ContentContext} from "../App";
 
 const ChatPage = ({club, user, isLocal}) => {
+    const { content } = useContext(ContentContext);
+
     const [image, setImage] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [scrollbarList, setScrollbarList] = useState([1]);
@@ -586,7 +589,7 @@ const ChatPage = ({club, user, isLocal}) => {
 
         {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             <h1 className="chat__header__h">
-                Wiadomości
+                {content.messages}
             </h1>
 
             <header className="chat__header__user d-desktop">
@@ -642,7 +645,7 @@ const ChatPage = ({club, user, isLocal}) => {
                             </section>
                         </button>
                     }) : <h3 className="noMessages">
-                        Brak wiadomości
+                        {content.no_messages}
                     </h3>}
                 </main>
                 <Range
@@ -728,35 +731,35 @@ const ChatPage = ({club, user, isLocal}) => {
                             </section>
                         }) : (club ? (currentReceiver ? <section className="chat__main__noMessages">
                             <h3 className="chat__main__noMessages__header">
-                                Rozpocznij konwersacje
+                                {content.messages_header1}
                             </h3>
                             <p className="chat__main__noMessages__text">
-                                Nie masz jeszcze wiadomości z tym zawodnikiem. Odezwij się jako pierwszy!
+                                {content.messages_header2}
                             </p>
                         </section> : <section className="chat__main__noMessages">
                             <h3 className="chat__main__noMessages__header">
-                                Nie posiadasz póki co żadnych wiadomości
+                                {content.messages_header3}
                             </h3>
                             <p className="chat__main__noMessages__text">
-                                Wyszukaj odpowiadających Ci zawodników i skontaktuj się z nimi!
+                                {content.messages_header4}
                             </p>
                         </section>) : (currentReceiver ? <section className="chat__main__noMessages">
                             <h3 className="chat__main__noMessages__header">
-                                Nie możesz prowadzić konwersacji z tym klubem
+                                {content.messages_header5}
                             </h3>
                             <p className="chat__main__noMessages__text">
-                                Ten klub nie odezwał się jeszcze do Ciebie.
+                                {content.messages_header6}
                             </p>
                         </section> : <section className="chat__main__noMessages">
                             <h3 className="chat__main__noMessages__header">
-                                Nie posiadasz póki co żadnych wiadomości
+                                {content.messages_header7}
                             </h3>
                             <p className="chat__main__noMessages__text">
-                                Tutaj pojawią się Twoje wiadomości od klubów
+                                {content.messages_header8}
                             </p>
                         </section>))}
                         {chatRead ? <span className="messageReadInfo">
-                            Odczytano: {chatRead.getDate() + '.' + (parseInt(chatRead.getMonth())+1) + '.' + chatRead.getFullYear()}
+                            {content.messages_read}: {chatRead.getDate() + '.' + (parseInt(chatRead.getMonth())+1) + '.' + chatRead.getFullYear()}
                             {' ' + (parseInt(chatRead.getHours()) < 10 ? '0' + chatRead.getHours() : chatRead.getHours()) + ':' + (parseInt(chatRead.getMinutes()) < 10 ? '0' + chatRead.getMinutes() : chatRead.getMinutes()) + '.' + (parseInt(chatRead.getSeconds()) < 10 ? '0' + chatRead.getSeconds() : chatRead.getSeconds())}
                             <figure className="chat__list__item__imgWrapper">
                                 <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
