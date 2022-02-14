@@ -144,6 +144,7 @@
         font-size: 15px;
     }
 
+    .languageBtn,
     .siteHeader__menu {
         height: 60px;
     }
@@ -1335,12 +1336,12 @@
         font-weight: 500;
         font-size: 30px;
         color: #fff;
-        margin-top: 10vh;
+        margin-top: 6vh;
     }
 
     .mobileMenu__list {
         width: 80%;
-        margin: 30px auto;
+        margin: 20px auto;
     }
 
     .mobileMenu__list__item {
@@ -1356,7 +1357,7 @@
 
     .mobileMenu__bottom {
         position: absolute;
-        bottom: 10vh;
+        bottom: 3vh;
         left: 10%;
         width: 100%;
     }

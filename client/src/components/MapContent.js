@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useContext} from 'react'
 
 import poland from '../static/img/poland.svg'
 import {getAllClubs, getClubLocations} from '../helpers/club'
-import { Range, getTrackBackground } from 'react-range';
+import { Range } from 'react-range';
 import manIcon from '../static/img/woman.svg'
 import womanIcon from '../static/img/man.svg'
 import settings from "../settings";
@@ -10,7 +10,7 @@ import ReactSiema from 'react-siema'
 import {ContentContext} from "../App";
 
 const MapContent = () => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     const [clubs, setClubs] = useState([]);
     const [filteredClubs, setFilteredClubs] = useState([]);
@@ -301,7 +301,7 @@ const MapContent = () => {
                         )}
                     />
                     <aside className="mapContent__header__item__labels">
-                        <span>{content.all}</span>
+                        <span>{language === 'pl' ? 'Wszystko' : 'All clubs'}</span>
                         <span>{sex[0] ? "Tauron Liga" : "Plus Liga"}</span>
                         <span>{content.map_league1}</span>
                         <span>{content.map_league2}</span>

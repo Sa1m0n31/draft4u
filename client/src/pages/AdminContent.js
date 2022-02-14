@@ -203,7 +203,84 @@ const AdminContent = ({lang}) => {
     const [position4, setPosition4] = useState("");
     const [position5, setPosition5] = useState("");
 
-    const [nameError, setNameError] = useState("");
+    const [register, setRegister] = useState("");
+    const [login, setLogin] = useState("");
+    const [sign_in, setSignIn] = useState("");
+    const [contact_header2, setContactHeader2] = useState("");
+    const [name_error, setNameError] = useState("");
+    const [email_error, setEmailError] = useState("");
+    const [confirm_msg, setConfirmMsg] = useState("");
+    const [all_text, setAllText] = useState("");
+    const [no_clubs, setNoClubs] = useState("");
+    const [register_header_2, setRegisterHeader2] = useState("");
+    const [register_header_3, setRegisterHeader3] = useState("");
+    const [register_input1, setRegisterInput1] = useState("");
+    const [identical_password_error, setIdenticalPasswordError] = useState("");
+    const [weak_password_error, setWeakPasswordError] = useState("");
+    const [email_already_in_use, setEmailAlreadyInUse] = useState("");
+    const [first_name_error, setFirstNameError] = useState("");
+    const [last_name_error, setLastNameError] = useState("");
+    const [sex_error, setSexError] = useState("");
+    const [date_of_birth_error, setDateOfBirthError] = useState("");
+    const [minimal_age_error, setMinimalAgeError] = useState("");
+    const [phone_number_error, setPhoneNumberError] = useState("");
+    const [wrong_phone_number, setWrongPhoneNumber] = useState("");
+    const [error, setError] = useState("");
+    const [after_register_text_3, setAfterRegisterText3] = useState("");
+    const [login_error, setLogin_error] = useState("");
+    const [element_7, setElement7] = useState("");
+    const [element_8, setElement8] = useState("");
+    const [choose_position, setChoosePosition] = useState("");
+    const [video_to_large, setVideoToLarge] = useState("");
+    const [payment_text2, setPaymentText2] = useState("");
+    const [payment_code, setPaymentCode] = useState("");
+    const [payment_discount, setPaymentDiscount] = useState("");
+    const [payment_code_not_exists, setPaymentCodeNotExists] = useState("");
+    const [pay_with2, setPayWith2] = useState("");
+    const [no_messages, setNoMessages] = useState("");
+    const [notifications, setNotifications] = useState("");
+    const [your_result, setYourResult] = useState("");
+    const [result_text, setResultText] = useState("");
+    const [back_text, setBackText] = useState("");
+    const [filters, setFilters] = useState("");
+    const [players, setPlayers] = useState("");
+    const [change_password1, setChangePassword1] = useState("");
+    const [change_password2, setChangePassword2] = useState("");
+    const [change_password3, setChangePassword3] = useState("");
+    const [change_password4, setChangePassword4] = useState("");
+    const [change_password5, setChangePassword5] = useState("");
+    const [change_password_input1, setChangePassword6] = useState("");
+    const [change_password_input2, setChangePassword7] = useState("");
+    const [team_updated, setTeamUpdated] = useState("");
+    const [team_added, setTeamAdded] = useState("");
+    const [team_error1, setTeamError1] = useState("");
+    const [team_error2, setTeamError2] = useState("");
+    const [saved_teams, setTeamsSaved] = useState("");
+    const [teams_col1, setTeamsCol1] = useState("");
+    const [teams_col2, setTeamsCol2] = useState("");
+    const [teams_col3, setTeamsCol3] = useState("");
+    const [teams_col4, setTeamsCol4] = useState("");
+    const [delete_team, setDeleteTeam] = useState("");
+    const [delete_team_yes, setDeleteTeamYes] = useState("");
+    const [delete_team_no, setDeleteTeamNo] = useState("");
+    const [team_deleted, setTeamDeleted] = useState("");
+    const [reset_password1, setResetPassword1] = useState("");
+    const [reset_password2, setResetPassword2] = useState("");
+    const [reset_password3, setResetPassword3] = useState("");
+    const [reset_password4, setResetPassword4] = useState("");
+    const [reset_password5, setResetPassword5] = useState("");
+    const [reset_password6, setResetPassword6] = useState("");
+    const [reset_password7, setResetPassword7] = useState("");
+    const [messages_header1, setMessageHeader1] = useState("");
+    const [messages_header2, setMessageHeader2] = useState("");
+    const [messages_header3, setMessageHeader3] = useState("");
+    const [messages_header4, setMessageHeader4] = useState("");
+    const [messages_header5, setMessageHeader5] = useState("");
+    const [messages_header6, setMessageHeader6] = useState("");
+    const [messages_header7, setMessageHeader7] = useState("");
+    const [messages_header8, setMessageHeader8] = useState("");
+    const [messages_read, setMessageRead] = useState("");
+
     const [addResult, setAddResult] = useState(-1);
     const [render, setRender] = useState(false);
 
@@ -409,6 +486,83 @@ const AdminContent = ({lang}) => {
                     setPosition4(r.position4);
                     setPosition5(r.position5);
 
+                    setRegister(r.register);
+                    setLogin(r.login);
+                    setSignIn(r.sign_in);
+                    setContactHeader2(r.contact_header2);
+                    setNameError(r.name_error);
+                    setEmailError(r.email_error);
+                    setConfirmMsg(r.confirm_msg);
+                    setAllText(r.all_text);
+                    setNoClubs(r.no_clubs);
+                    setRegisterHeader2(r.register_header_2);
+                    setRegisterHeader3(r.register_header_3);
+                    setRegisterInput1(r.register_input1);
+                    setIdenticalPasswordError(r.identical_password_error);
+                    setWeakPasswordError(r.weak_password_error);
+                    setEmailAlreadyInUse(r.email_already_in_use);
+                    setFirstNameError(r.first_name_error);
+                    setLastNameError(r.last_name_error);
+                    setSexError(r.sex_error);
+                    setDateOfBirthError(r.date_of_birth_error);
+                    setMinimalAgeError(r.minimal_age_error);
+                    setPhoneNumberError(r.phone_number_error);
+                    setWrongPhoneNumber(r.wrong_phone_number);
+                    setError(r.error);
+                    setAfterRegisterText3(r.after_register_text_3);
+                    setLogin_error(r.login_error);
+                    setElement7(r.element_7);
+                    setElement8(r.element_8);
+                    setChoosePosition(r.choose_position);
+                    setVideoToLarge(r.video_to_large);
+                    setPaymentText2(r.payment_text2);
+                    setPaymentCode(r.payment_code);
+                    setPaymentDiscount(r.payment_discount);
+                    setPaymentCodeNotExists(r.payment_code_not_exists);
+                    setPayWith2(r.pay_with2);
+                    setNoMessages(r.no_messages);
+                    setNotifications(r.notifications);
+                    setYourResult(r.your_result);
+                    setResultText(r.result_text);
+                    setBackText(r.back_text);
+                    setFilters(r.filters);
+                    setPlayers(r.players);
+                    setChangePassword1(r.change_password1);
+                    setChangePassword2(r.change_password2);
+                    setChangePassword3(r.change_password3);
+                    setChangePassword4(r.change_password4);
+                    setChangePassword5(r.change_password5);
+                    setChangePassword6(r.change_password_input1);
+                    setChangePassword7(r.change_password_input2);
+                    setTeamUpdated(r.team_updated);
+                    setTeamAdded(r.team_added);
+                    setTeamError1(r.team_error1);
+                    setTeamError2(r.team_error2);
+                    setTeamsSaved(r.saved_teams);
+                    setTeamsCol1(r.teams_col1);
+                    setTeamsCol2(r.teams_col2);
+                    setTeamsCol3(r.teams_col3);
+                    setTeamsCol4(r.teams_col4);
+                    setDeleteTeam(r.delete_team);
+                    setDeleteTeamYes(r.delete_team_yes);
+                    setDeleteTeamNo(r.delete_team_no);
+                    setTeamDeleted(r.team_deleted);
+                    setResetPassword1(r.reset_password1);
+                    setResetPassword2(r.reset_password2);
+                    setResetPassword3(r.reset_password3);
+                    setResetPassword4(r.reset_password4);
+                    setResetPassword5(r.reset_password5);
+                    setResetPassword6(r.reset_password6);
+                    setResetPassword7(r.reset_password7);
+                    setMessageHeader1(r.messages_header1)
+                    setMessageHeader2(r.messages_header2)
+                    setMessageHeader3(r.messages_header3)
+                    setMessageHeader4(r.messages_header4)
+                    setMessageHeader5(r.messages_header5)
+                    setMessageHeader6(r.messages_header6)
+                    setMessageHeader7(r.messages_header7)
+                    setMessageHeader8(r.messages_header8)
+                    setMessageRead(r.messages_read);
                     setRender(true);
                 }
             });
@@ -456,7 +610,21 @@ const AdminContent = ({lang}) => {
             more_about_player, create_your_team, continue_text, first_and_last_name, find_new_player,
             favorite_players, no_favorite_players, no_players_found, no_teams_found, error_text_1, error_text_2,
             messages, no_videos_yet, all_players, team_name, cost_of_the_team, position,
-            position1, position2, position3, position4, position5
+            position1, position2, position3, position4, position5, register, login, sign_in,
+            contact_header2, name_error, email_error, confirm_msg, all_text, no_clubs,
+            register_header_2, register_header_3, identical_password_error,
+            weak_password_error, email_already_in_use, first_name_error, last_name_error,
+            sex_error, date_of_birth_error, minimal_age_error, phone_number_error, wrong_phone_number,
+            error, after_register_text_3, login_error, element_7, element_8, choose_position,
+            video_to_large, payment_text2, payment_code, payment_discount, payment_code_not_exists,
+            pay_with2, no_messages, notifications, your_result, result_text, back_text,
+            filters, players, change_password1, change_password2, change_password3, change_password4,
+            change_password5, change_password_input1, change_password_input2, team_updated, team_added,
+            team_error1, team_error2, saved_teams, teams_col1, teams_col2, teams_col3, teams_col4,
+            delete_team, delete_team_yes, delete_team_no, team_deleted, reset_password1,
+            reset_password2, reset_password3, reset_password4, reset_password5, reset_password6, reset_password7, register_input1,
+            messages_header1, messages_header2, messages_header3, messages_header4, messages_header5, messages_header6,
+            messages_header7, messages_header8, messages_read
         })
             .then((res) => {
                 if(res?.data?.result) {
@@ -524,7 +692,7 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="O nas - Bartek 3" value={about_us_bartosz_3} func={setAboutUsBartosz3} name="about_us_bartosz_3" />
                         <ChangeContentLabel label="Rejestracja - nagłówek" value={register_header} func={setRegisterHeader} name="register_header" />
                         <ChangeContentLabel label="Rejestracja - krok" value={register_step} func={setRegisterStep} name="register_step" />
-                        <ChangeContentLabel label="Rejestracja - input 1" value={1} func={setRegisterInput2} name="register_input_1" />
+                        <ChangeContentLabel label="Rejestracja - input 1" value={register_input1} func={setRegisterInput1} name="register_input_1" />
                         <ChangeContentLabel label="Rejestracja - input 2" value={register_input2} func={setRegisterInput2} name="register_input2" />
                         <ChangeContentLabel label="Rejestracja - input 3" value={register_input3} func={setRegisterInput3} name="register_input3" />
                         <ChangeContentLabel label="Rejestracja - input 4" value={register_input4} func={setRegisterInput4} name="register_input4" />
@@ -539,7 +707,6 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="Rejestracja - zgoda 2" value={register_consent2} func={setRegisterConsent2} name="register_consent2" />
                         <ChangeContentLabel label="Login - input 1" value={login_input1} func={setLoginInput1} name="login_input1" />
                         <ChangeContentLabel label="Login - input 2" value={login_input2} func={setLoginInput2} name="login_input2" />
-                        <ChangeContentLabel label="Login - input 3" value={login_input3} func={setLoginInput3} name="login_input3" />
                         <ChangeContentLabel label="Login box - 1" value={login_box1} func={setLoginBox1} name="login_box1" />
                         <ChangeContentLabel label="Login box - 2" value={login_box2} func={setLoginBox2} name="login_box2" />
                         <ChangeContentLabel label="Strefa zawodnika - nagłówek 1" value={player_zone_header1} func={setPlayerZoneHeader1} name="player_zone_header1" />
@@ -682,8 +849,6 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="Brak ulubionych zawodników" value={no_favorite_players} func={setNoFavoritePlayers} name="no_favorite_players" />
                         <ChangeContentLabel label="Nie znaleziono zawodników" value={no_players_found} func={setNoPlayersFound} name="no_players_found" />
                         <ChangeContentLabel label="Nie znaleziono drużyn" value={no_teams_found} func={setNoTeamsFound} name="no_teams_found" />
-                        <ChangeContentLabel label="Error 1" value={error_text_1} func={setErrorText1} name="error_text_1" />
-                        <ChangeContentLabel label="Error 2" value={error_text_2} func={setErrorText2} name="error_text_2" />
                         <ChangeContentLabel label="Wiadomości" value={messages} func={setMessages} name="messages" />
                         <ChangeContentLabel label="Brak filmików" value={no_videos_yet} func={setNoVideosYet} name="no_videos_yet" />
                         <ChangeContentLabel label="Wszyscy zawodnicy" value={all_players} func={setAllPlayers} name="all_players" />
@@ -695,6 +860,85 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="Pozycja 3" value={position3} func={setPosition3} name="position3" />
                         <ChangeContentLabel label="Pozycja 4" value={position4} func={setPosition4} name="position4" />
                         <ChangeContentLabel label="Pozycja 5" value={position5} func={setPosition5} name="position5" />
+
+
+                        <ChangeContentLabel label="Zarejestruj się" value={register} func={setRegister} name="register" />
+                        <ChangeContentLabel label="Zaloguj się 1" value={login} func={setLogin} name="login1" />
+                        <ChangeContentLabel label="Zaloguj się 2" value={sign_in} func={setSignIn} name="login2" />
+                        <ChangeContentLabel label="Kontakt - nagłówek" value={contact_header2} func={setContactHeader2} name="contact_header" />
+                        <ChangeContentLabel label="Błąd - nazwa" value={name_error} func={setNameError} name="name_error" />
+                        <ChangeContentLabel label="Błąd - email" value={email_error} func={setEmailError} name="email_error" />
+                        <ChangeContentLabel label="Potwierdzenie" value={confirm_msg} func={setConfirmMsg} name="confirm_msg" />
+                        <ChangeContentLabel label="Wszystko" value={all_text} func={setAllText} name="all_text" />
+                        <ChangeContentLabel label="Brak klubów" value={no_clubs} func={setNoClubs} name="no_clubs" />
+                        <ChangeContentLabel label="Rejestracja - nagłówek 2" value={register_header_2} func={setRegisterHeader2} name="register_header_2" />
+                        <ChangeContentLabel label="Rejestracja - nagłówek 3" value={register_header_3} func={setRegisterHeader3} name="register_header_3" />
+                        <ChangeContentLabel label="Takie same hasła" value={identical_password_error} func={setIdenticalPasswordError} name="identical_password_error" />
+                        <ChangeContentLabel label="Słabe hasło" value={weak_password_error} func={setWeakPasswordError} name="weak_password_error" />
+                        <ChangeContentLabel label="Email zajęty" value={email_already_in_use} func={setEmailAlreadyInUse} name="email_already_in_use" />
+                        <ChangeContentLabel label="Błąd - imię" value={first_name_error} func={setFirstNameError} name="first_name_error" />
+                        <ChangeContentLabel label="Błąd - nazwisko" value={last_name_error} func={setLastNameError} name="last_name_error" />
+                        <ChangeContentLabel label="Błąd - płeć" value={sex_error} func={setSexError} name="sex_error" />
+                        <ChangeContentLabel label="Błąd - data urodzenia" value={date_of_birth_error} func={setDateOfBirthError} name="date_of_birth_error" />
+                        <ChangeContentLabel label="Błąd - wiek" value={minimal_age_error} func={setMinimalAgeError} name="minimal_age_error" />
+                        <ChangeContentLabel label="Błąd - numer telefonu" value={phone_number_error} func={setPhoneNumberError} name="phone_number_error" />
+                        <ChangeContentLabel label="Błąd - zły numer telefonu" value={wrong_phone_number} func={setWrongPhoneNumber} name="wrong_phone_number" />
+                        <ChangeContentLabel label="Błąd" value={error} func={setError} name="error" />
+                        <ChangeContentLabel label="Po rejestracji - 3" value={after_register_text_3} func={setAfterRegisterText3} name="after_register_text_3" />
+                        <ChangeContentLabel label="Login - error" value={login_error} func={setLogin_error} name="login_error" />
+                        <ChangeContentLabel label="Element 7" value={element_7} func={setElement7} name="element_7" />
+                        <ChangeContentLabel label="Element 8" value={element_8} func={setElement8} name="element_8" />
+                        <ChangeContentLabel label="Wybierz pozycję" value={choose_position} func={setChoosePosition} name="choose_position" />
+                        <ChangeContentLabel label="Video za duże" value={video_to_large} func={setVideoToLarge} name="video_to_large" />
+                        <ChangeContentLabel label="Płatność - 2" value={payment_text2} func={setPaymentText2} name="payment_text2" />
+                        <ChangeContentLabel label="Kod rabatowy" value={payment_code} func={setPaymentCode} name="payment_code" />
+                        <ChangeContentLabel label="Płatność - zniżka" value={payment_discount} func={setPaymentDiscount} name="payment_discount" />
+                        <ChangeContentLabel label="Kod nie istnieje" value={payment_code_not_exists} func={setPaymentCodeNotExists} name="payment_code_not_exists" />
+                        <ChangeContentLabel label="Płać z PayPal" value={pay_with2} func={setPayWith2} name="pay_with2" />
+                        <ChangeContentLabel label="Brak wiadomości" value={no_messages} func={setNoMessages} name="no_messages" />
+                        <ChangeContentLabel label="Powiadomienia" value={notifications} func={setNotifications} name="notifications" />
+                        <ChangeContentLabel label="Twój wynik" value={your_result} func={setYourResult} name="your_result" />
+                        <ChangeContentLabel label="Wynik" value={result_text} func={setResultText} name="result_text" />
+                        <ChangeContentLabel label="Wróć" value={back_text} func={setBackText} name="back_text" />
+                        <ChangeContentLabel label="Filtry" value={filters} func={setFilters} name="filters" />
+                        <ChangeContentLabel label="Zawodnicy" value={players} func={setPlayers} name="players" />
+                        <ChangeContentLabel label="Zmień hasło - 1" value={change_password1} func={setChangePassword1} name="change_password1" />
+                        <ChangeContentLabel label="Zmień hasło - 2" value={change_password2} func={setChangePassword2} name="change_password2" />
+                        <ChangeContentLabel label="Zmień hasło - 3" value={change_password3} func={setChangePassword3} name="change_password3" />
+                        <ChangeContentLabel label="Zmień hasło - 4" value={change_password4} func={setChangePassword4} name="change_password4" />
+                        <ChangeContentLabel label="Zmień hasło - 5" value={change_password5} func={setChangePassword5} name="change_password5" />
+                        <ChangeContentLabel label="Zmień hasło - 6" value={change_password_input1} func={setChangePassword6} name="change_password6" />
+                        <ChangeContentLabel label="Zmień hasło - 7" value={change_password_input2} func={setChangePassword7} name="change_password7" />
+                        <ChangeContentLabel label="Skład zaktualizowany" value={team_updated} func={setTeamUpdated} name="team_updated" />
+                        <ChangeContentLabel label="Skład dodany" value={team_added} func={setTeamAdded} name="team_added" />
+                        <ChangeContentLabel label="Składy - błąd 1" value={team_error1} func={setTeamError1} name="team_error1" />
+                        <ChangeContentLabel label="Składy - błąd 2" value={team_error2} func={setTeamError2} name="team_error2" />
+                        <ChangeContentLabel label="Zapisane składy" value={saved_teams} func={setTeamsSaved} name="teams_saved" />
+                        <ChangeContentLabel label="Drużyny - kolumna 1" value={teams_col1} func={setTeamsCol1} name="teams_col1" />
+                        <ChangeContentLabel label="Drużyny - kolumna 2" value={teams_col2} func={setTeamsCol2} name="teams_col2" />
+                        <ChangeContentLabel label="Drużyny - kolumna 3" value={teams_col3} func={setTeamsCol3} name="teams_col3" />
+                        <ChangeContentLabel label="Drużyny - kolumna 4" value={teams_col4} func={setTeamsCol4} name="teams_col4" />
+                        <ChangeContentLabel label="Usuń drużynę" value={delete_team} func={setDeleteTeam} name="delete_team" />
+                        <ChangeContentLabel label="Usuń drużynę - tak" value={delete_team_yes} func={setDeleteTeamYes} name="delete_team_yes" />
+                        <ChangeContentLabel label="Usuń drużynę - nie" value={delete_team_no} func={setDeleteTeamNo} name="delete_team_no" />
+                        <ChangeContentLabel label="Drużyna usunięta" value={team_deleted} func={setTeamDeleted} name="team_deleted" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 1" value={reset_password1} func={setResetPassword1} name="reset_password1" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 2" value={reset_password2} func={setResetPassword2} name="reset_password2" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 3" value={reset_password3} func={setResetPassword3} name="reset_password3" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 4" value={reset_password4} func={setResetPassword4} name="reset_password4" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 5" value={reset_password5} func={setResetPassword5} name="reset_password5" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 6" value={reset_password6} func={setResetPassword6} name="reset_password6" />
+                        <ChangeContentLabel label="Odzyskaj hasło - 7" value={reset_password7} func={setResetPassword7} name="reset_password7" />
+
+                        <ChangeContentLabel label="Wiadomości - 1" value={messages_header1} func={setMessageHeader1} name="messages_header1" />
+                        <ChangeContentLabel label="Wiadomości - 2" value={messages_header2} func={setMessageHeader2} name="messages_header2" />
+                        <ChangeContentLabel label="Wiadomości - 3" value={messages_header3} func={setMessageHeader3} name="messages_header3" />
+                        <ChangeContentLabel label="Wiadomości - 4" value={messages_header4} func={setMessageHeader4} name="messages_header4" />
+                        <ChangeContentLabel label="Wiadomości - 5" value={messages_header5} func={setMessageHeader5} name="messages_header5" />
+                        <ChangeContentLabel label="Wiadomości - 6" value={messages_header6} func={setMessageHeader6} name="messages_header6" />
+                        <ChangeContentLabel label="Wiadomości - 7" value={messages_header7} func={setMessageHeader7} name="messages_header7" />
+                        <ChangeContentLabel label="Wiadomości - 8" value={messages_header8} func={setMessageHeader8} name="messages_header8" />
+                        <ChangeContentLabel label="Wiadomości - 9" value={messages_read} func={setMessageRead} name="message_read" />
 
                         <button className="admin__btn admin__btn--addNotification admin__btn--cms"
                                 onClick={() => { handleSubmit(); }}>

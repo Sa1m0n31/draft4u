@@ -24,17 +24,17 @@ const ClubForm = () => {
         let error = true;
 
         if(!name) {
-            setNameError("Uzupełnij to pole");
+            setNameError(content.name_error);
         }
         else if(!email) {
-            setEmailError("Wpisz swój adres e-mail");
+            setEmailError(content.email_error);
         }
         else if(!isMail(email)) {
-            setEmailError("Wpisz poprawny adres e-mail");
+            setEmailError(content.email_error);
             setEmail("");
         }
         else if(!phone) {
-            setPhoneError("Wpisz swój numer telefonu");
+            setPhoneError(content.phone_number_error);
         }
         else {
             error = false;
@@ -43,7 +43,7 @@ const ClubForm = () => {
         if(!error) {
             sendClubForm(name, email, phone, msg)
                 .then((res) => {
-                     setConfirmMsg("Wiadomość została wysłana. Skontaktujemy się z Tobą najszybciej, jak to możliwe!");
+                     setConfirmMsg(content.confirm_msg);
                 });
         }
     }
@@ -107,9 +107,11 @@ const ClubForm = () => {
 
                 {confirmMsg ? <h4 className="clubForm__confirmMsg">
                     {confirmMsg}
-                </h4> : <button className="registerForm--nextBtn" onClick={(e) => { handleSubmit(e); }}>
-                    <img className="registerForm--nextBtn__img" src={getImageUrl(content.img10)} alt="dalej" />
-                </button>}
+                </h4> : <div className="registerForm__btnWrapper">
+                    <button className="registerForm--nextBtn" onClick={(e) => { handleSubmit(e); }}>
+                        <img className="registerForm--nextBtn__img" src={getImageUrl(content.img10)} alt="dalej" />
+                    </button>
+                </div> }
             </form>
         </article>
     </section>

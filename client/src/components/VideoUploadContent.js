@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import uploadIcon from '../static/img/upload.svg'
 import trashIcon from '../static/img/trash-black.svg'
 import uploadBlackIcon from '../static/img/upload-black.svg'
-import {getPlayElementsByPosition, getUserData} from "../helpers/user";
+import {getUserData} from "../helpers/user";
 import VideoUploader from "./VideoUploader";
 import {deletePlayerVideo, getUserVideos} from "../helpers/video";
 import settings from "../settings";
@@ -57,18 +57,19 @@ const VideoUploadContent = () => {
     }, [videoUpload]);
 
     const getPlayElementsByPosition = (position) => {
-        const { play_1, play_2, play_3, play_4, play_5, play_6, play_7, play_8 } = content;
+        console.log(content);
+        const { element1, element2, element3, element4, element5, element6, element_7, element_8 } = content;
         switch(position) {
             case 'atakujący':
-                return [play_1, play_2, play_3, play_4, play_5];
+                return [element1, element2, element3, element4, element5];
             case 'przyjmujący':
-                return [play_1, play_8, play_3, play_2, play_4];
+                return [element1, element_8, element3, element2, element4];
             case 'rozgrywający':
-                return [play_6, play_2, play_3, play_1, play_7, play_4, play_5];
+                return [element6, element2, element3, element1, element_7, element4, element5];
             case 'libero':
-                return [play_8, play_7, play_6, play_4, play_5];
+                return [element_8, element_7, element6, element4, element5];
             case 'środkowy':
-                return [play_2, play_1, play_3, play_4, play_5];
+                return [element2, element1, element3, element4, element5];
             default:
                 break;
         }
@@ -89,8 +90,10 @@ const VideoUploadContent = () => {
     }
 
     const getVideoIndexByPlay = (play) => {
+        console.log(play);
         return videos.findIndex((item) => {
-            return item.name === removePolishChars(play);
+            if(play) return item.name === removePolishChars(play);
+            else return '';
         });
     }
 

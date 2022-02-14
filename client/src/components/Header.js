@@ -79,6 +79,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
     useEffect(() => {
         if(content) {
+            console.log(content);
             setMenuBeforeLogin(content.menu_before_login?.split(';'));
             setMenuPlayer(content.menu_player?.split(';'));
             setMenuClub(content.menu_club?.split(';'));
@@ -313,15 +314,21 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
 
             {!player && !club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
                 <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+                        <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
+                        {language === 'pl' ? 'English' : 'Polski'}
+                    </button>
+                </li>
+                <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/logowanie">
                         <img className="mobileMenu__bottom__img" src={loginIcon} alt="logowanie" />
-                        Zaloguj się
+                        {content.login}
                     </a>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zaloz-konto">
                         <img className="mobileMenu__bottom__img" src={registerIcon} alt="rejestracja" />
-                        Załóż konto
+                        {content.register}
                     </a>
                 </li>
             </ul> : ""}
@@ -343,14 +350,20 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zmien-haslo-zawodnika">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
-                        {dropdownPlayer[0]}
+                        {dropdownClub[0]}
                     </a>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/faq">
                         <img className="mobileMenu__bottom__img" src={question} alt="zmien-haslo" />
-                        {dropdownPlayer[1]}
+                        {dropdownPlayer[0]}
                     </a>
+                </li>
+                <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+                        <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
+                        {language === 'pl' ? 'English' : 'Polski'}
+                    </button>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <button className="mobileMenu__bottom__link" onClick={() => { logout(); }}>
@@ -388,6 +401,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
                         {dropdownClub[0]}
                     </a>
+                </li>
+                <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+                        <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
+                        {language === 'pl' ? 'English' : 'Polski'}
+                    </button>
                 </li>
                 <li className="mobileMenu__bottom__item">
                     <button className="mobileMenu__bottom__link" onClick={() => { logout(); }}>
@@ -595,6 +614,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                                 <img className="profileMenu__list__img" src={padlock} alt="zmien-haslo" />
                                 {dropdownClub[0]}
                             </a> : ""}
+                            <a className="profileMenu__list__link">
+                                <button className="profileMenu__list__link__language" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+                                    <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
+                                    {language === 'pl' ? 'English' : 'Polski'}
+                                </button>
+                            </a>
                             <button className="profileMenu__list__link" onClick={() => { logout(); }}>
                                 <img className="profileMenu__list__img" src={logoutIcon} alt="wyloguj-sie" />
                                 {dropdownClub[1]}
@@ -604,11 +629,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 </menu> : ""}
             </section> : "") : <span className="d-desktop-flex">
                 {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
-                    Załóż konto
+                    {content.register}
                 </button> : ""}
                 <section className={!clubPage ? "loginBtnWrapper" : "loginBtnWrapper loginBtnWrapper--clubPage"}>
                 <button className={theme === "dark" ? "siteHeader__btn siteHeader__btn--login siteHeader__btn--login--dark" : "siteHeader__btn siteHeader__btn--login"} onClick={() => { toggleLogin(); }}>
-                Logowanie
+                    {content.login}
                 </button>
 
                 <section className="loginBoxWrapper" ref={loginBoxWrapper}>
@@ -616,10 +641,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 </section>
                 </section></span>}
 
-            <button className={theme === 'dark' ? "languageBtn languageBtn--dark" : "languageBtn"} onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+            {!club && !player ? <button className={theme === 'dark' ? "languageBtn languageBtn--dark d-desktop" : "languageBtn d-desktop"} onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
                 <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
                 {language === 'pl' ? 'English' : 'Polski'}
-            </button>
+            </button> : ""}
 
             {/* Mobile menu */}
             <button className="mobileMenu__btn d-mobile" onClick={() => { openMobileMenu(); }}>

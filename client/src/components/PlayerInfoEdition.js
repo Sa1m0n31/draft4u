@@ -149,7 +149,7 @@ const PlayerInfoEdition = ({player, theme}) => {
 
     const series = [
         {
-            name: theme === 'dark' ? content.result : content.your_result,
+            name: theme === 'dark' ? content.result_text : content.your_result,
             data: [height, weight * 2.1, attackRange, verticalRange * 2.5, blockRange]
         }
     ]

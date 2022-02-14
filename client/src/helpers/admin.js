@@ -80,6 +80,7 @@ const getCustomFields = (lang) => {
 }
 
 const updateCustomFields = (data) => {
+    console.log(Object.values(data));
     return axios.post(`${API_URL}/custom-field/update`, data);
 }
 

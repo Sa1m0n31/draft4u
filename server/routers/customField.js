@@ -22,8 +22,6 @@ router.post('/update', (request, response) => {
     const lang = allValues[0];
     values.push(lang);
 
-    console.log(values.length);
-
     const query = `UPDATE content SET 
         menu_before_login = $1,
         menu_player = $2,
@@ -220,8 +218,85 @@ router.post('/update', (request, response) => {
         position2 = $193,
         position3 = $194,
         position4 = $195,
-        position5 = $196
-        WHERE language = $197`;
+        position5 = $196,
+        register = $197,
+        login = $198,
+        sign_in = $199,
+        contact_header2 = $200,
+        name_error = $201,
+        email_error = $202,
+        confirm_msg = $203,
+        all_text = $204,
+        no_clubs = $205,
+        register_header_2 = $206,
+        register_header_3 = $207,
+        identical_password_error = $208,
+        weak_password_error = $209,
+        email_already_in_use = $210,
+        first_name_error = $211,
+        last_name_error = $212,
+        sex_error = $213,
+        date_of_birth_error = $214,
+        minimal_age_error = $215,
+        phone_number_error = $216,
+        wrong_phone_number = $217,
+        error = $218,
+        after_register_text_3 = $219,
+        login_error = $220,
+        element_7 = $221,
+        element_8 = $222,
+        choose_position = $223,
+        video_to_large = $224,
+        payment_text2 = $225,
+        payment_code = $226,
+        payment_discount = $227,
+        payment_code_not_exists = $228,
+        pay_with2 = $229,
+        no_messages = $230,
+        notifications = $231,
+        your_result = $232,
+        result_text = $233,
+        back_text = $234,
+        filters = $235,
+        players = $236,
+        change_password1 = $237,
+        change_password2 = $238,
+        change_password3 = $239,
+        change_password4 = $240,
+        change_password5 = $241,
+        change_password_input1 = $242,
+        change_password_input2 = $243,
+        team_updated = $244,
+        team_added = $245,
+        team_error1 = $246,
+        team_error2 = $247,
+        saved_teams = $248,
+        teams_col1 = $249,
+        teams_col2 = $250,
+        teams_col3 = $251,
+        teams_col4 = $252,
+        delete_team = $253,
+        delete_team_yes = $254,
+        delete_team_no = $255,
+        team_deleted = $256,
+        reset_password1 = $257,
+        reset_password2 = $258,
+        reset_password3 = $259,
+        reset_password4 = $260,
+        reset_password5 = $261,
+        reset_password6 = $262,
+        reset_password7 = $263,
+        register_input1 = $264,
+        messages_header1 = $265,
+        messages_header2 = $266,
+        messages_header3 = $267,
+        messages_header4 = $268,
+        messages_header5 = $269,
+        messages_header6 = $270,
+        messages_header7 = $271,
+        messages_header8 = $272,
+        messages_read = $273
+        WHERE language = $274`;
 
     db.query(query, values, (err, res) => {
         console.log(err);
@@ -266,8 +341,7 @@ router.post('/update-images', upload.fields([
     { name: 'img25', maxCount: 1 },
     { name: 'img26', maxCount: 1 },
     { name: 'img27', maxCount: 1 },
-    { name: 'img28', maxCount: 1 },
-    { name: 'img29', maxCount: 1 }
+    { name: 'img28', maxCount: 1 }
 ]), (request, response) => {
     const files = request.files;
     let img1 = null,
@@ -297,8 +371,7 @@ router.post('/update-images', upload.fields([
         img25 = null,
         img26 = null,
         img27 = null,
-        img28 = null,
-        img29 = null;
+        img28 = null;
     if(files.img1) img1 = files.img1[0].filename;
     if(files.img2) img2 = files.img2[0].filename;
     if(files.img3) img3 = files.img3[0].filename;
@@ -327,7 +400,6 @@ router.post('/update-images', upload.fields([
     if(files.img26) img26 = files.img26[0].filename;
     if(files.img27) img27 = files.img27[0].filename;
     if(files.img28) img28 = files.img28[0].filename;
-    if(files.img29) img29 = files.img29[0].filename;
 
     const lang = request.body.lang;
 
@@ -358,18 +430,18 @@ router.post('/update-images', upload.fields([
                     img25 = COALESCE($25, img25), 
                     img26 = COALESCE($26, img26), 
                     img27 = COALESCE($27, img27), 
-                    img28 = COALESCE($28, img28), 
-                    img29 = COALESCE($29, img29)
-                    WHERE language = $30`
+                    img28 = COALESCE($28, img28)
+                    WHERE language = $29`
     const values = [img1, img2, img3, img4, img5,
                     img6, img7, img8, img9, img10,
                     img11, img12, img13, img14, img15,
                     img16, img17, img18, img19, img20,
                     img21, img22, img23, img24, img25,
-                    img26, img27, img28, img29, lang];
+                    img26, img27, img28, lang];
 
     db.query(query, values, (err, res) => {
         console.log(err);
+        console.log(res);
         if(res) {
             response.send({
                 result: 1

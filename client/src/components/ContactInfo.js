@@ -31,13 +31,13 @@ const ContactInfo = () => {
         let error = true;
 
         if(!name) {
-            setNameError("Uzupełnij to pole");
+            setNameError(content.name_error);
         }
         else if(!email) {
-            setEmailError("Wpisz swój adres e-mail");
+            setEmailError(content.email_error);
         }
         else if(!isMail(email)) {
-            setEmailError("Wpisz poprawny adres e-mail");
+            setEmailError(content.email_error);
             setEmail("");
         }
         else {
@@ -47,7 +47,7 @@ const ContactInfo = () => {
         if(!error) {
             sendClubForm(name, email, null, msg)
                 .then((res) => {
-                    setConfirmMsg("Wiadomość została wysłana. Skontaktujemy się z Tobą najszybciej, jak to możliwe!");
+                    setConfirmMsg(content.confirm_msg);
                 });
         }
     }

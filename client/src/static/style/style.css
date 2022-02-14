@@ -2274,6 +2274,10 @@ ul {
     margin-top: 10px;
 }
 
+.mapContent__header__item__labels span {
+    font-size: 14px !important;
+}
+
 .mapContent__header__item__labels__img {
     width: 15px;
     height: auto;
@@ -4217,6 +4221,7 @@ input::-webkit-inner-spin-button {
     justify-content: center;
     align-items: center;
     margin-bottom: 40px;
+    padding: 15px;
 }
 
 .noVideo span {
@@ -5509,10 +5514,16 @@ input::-webkit-inner-spin-button {
     max-width: 550px;
 }
 
-.clubForm .registerForm--nextBtn {
+.registerForm__btnWrapper {
     width: 550px;
-    margin-left: 0;
-    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clubForm .registerForm--nextBtn {
+    width: 250px;
+    margin: 0;
     background: transparent;
 }
 
@@ -5962,4 +5973,27 @@ input::-webkit-inner-spin-button {
 .languageBtn--dark {
     background: #3D3D3D;
     color: white;
+}
+
+.mobileMenu__bottom__link .flag {
+    margin-right: 25px;
+    width: 35px;
+}
+
+
+.profileMenu__list__link__language {
+    width: 100%;
+    background: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+}
+
+.profileMenu__list__link__language .flag {
+    margin-right: 25px;
+}
+
+.siteHeader--dark .profileMenu__list__link__language {
+    color: #fff;
 }

@@ -360,7 +360,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
                 <span className="searchFilters__position__positions">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
-                        {content.all}
+                        {content.all_text}
                 </button>
                 <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                     {content.position3}
@@ -404,7 +404,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
                 <span className="searchFilters__position__positions">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
-                        {content.all}
+                        {content.all_text}
                 </button>
                 <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                     {content.position3}

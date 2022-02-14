@@ -101,7 +101,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
             {content.payment_text}
         </p>
         <p className="payment__text payment__text--marginBottom">
-            {content.payment_text} <b>{amount ? amount : cost} PLN</b>
+            {content.payment_text2} <b>{amount ? amount : cost} PLN</b>
         </p>
 
         <section className="paymentItemWrapper">

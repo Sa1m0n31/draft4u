@@ -622,7 +622,7 @@ const CreateSquadPage = ({club}) => {
                             }
                             else {
                                 return <span>
-                                    {content.all}
+                                    {content.all_text}
                                 </span>
                             }
                         }
@@ -635,7 +635,7 @@ const CreateSquadPage = ({club}) => {
 
                 {filtersVisible ? <span className="searchFilters__position__positions searchFilters__position__positions--mobile d-mobile">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
-                    {content.all}
+                    {content.all_text}
                     </button>
                     <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                         {content.position3}
@@ -656,7 +656,7 @@ const CreateSquadPage = ({club}) => {
 
                 <span className="searchFilters__position__positions d-desktop">
                     <button className={isPositionActive(0) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(0); }}>
-                     {content.all}
+                     {content.all_text}
                     </button>
                     <button className={isPositionActive(3) ? "searchFilters__position__button gold" : "searchFilters__position__button"} onClick={() => { filterPosition(3); }}>
                           {content.position3}

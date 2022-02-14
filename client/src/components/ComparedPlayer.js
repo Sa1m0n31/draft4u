@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import profile from '../static/img/profile-picture.png'
 import { Player, BigPlayButton } from 'video-react'
 import heart from '../static/img/heart.svg'
@@ -7,17 +7,20 @@ import heartFilled from '../static/img/heart-filled.svg'
 import balance from '../static/img/balance.svg'
 import writeMsgBtn from '../static/img/napisz-wiadomosc.png'
 import {getIdentityById, getUserById, getUserData} from "../helpers/user";
-import {calculateAge, getPositionById} from "../helpers/others";
+import {calculateAge, getImageUrl, getPositionById} from "../helpers/others";
 import settings from "../settings";
 import {Player as VideoPlayer} from "video-react";
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import playBtn from "../static/img/play-button.svg";
 import {addToFavorites, deleteFromFavorites, getFavoritesByClub, isPlayerFavorite} from "../helpers/club";
+import {ContentContext} from "../App";
 
 const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
     const [playVideo, setPlayVideo] = useState(false);
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [playerIdentity, setPlayerIdentity] = useState("");
+
+    const { content } = useContext(ContentContext);
 
     useEffect(() => {
         getFavoritesByClub()
@@ -79,6 +82,23 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         }
     }, []);
 
+    const getPositionById = (id) => {
+        switch(id) {
+            case 3:
+                return content.position3;
+            case 1:
+                return content.position1;
+            case 4:
+                return content.position4;
+            case 2:
+                return content.position2;
+            case 5:
+                return content.position5;
+            default:
+                return null;
+        }
+    }
+
     return <section className="comparedPlayer">
         {playVideo ? <ModalVideoPlayer closeModal={() => { setPlayVideo(false); }} source={`${settings.API_URL}/video/get?url=/videos/${video.file_path}`} /> : ""}
 
@@ -106,7 +126,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         <section className="comparedPlayer__section">
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Wiek
+                    {content.age}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {calculateAge(player.birthday)}
@@ -114,7 +134,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item comparedPlayer__section__item--salary">
                 <span className="comparedPlayer__section__key">
-                    Wynagrodzenie
+                    {content.player_parameter_7}
                 </span>
                 <span className="comparedPlayer__section__value comparedPlayer__section__value--salary">
                     {player.salary_from ? player.salary_from + " - " + player.salary_to : "-"}
@@ -122,7 +142,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item comparedPlayer__section__item--club">
                 <span className="comparedPlayer__section__key">
-                    Aktualny klub
+                    {content.player_parameter_4}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player?.club ? player.club : "-"}
@@ -130,7 +150,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item comparedPlayer__section__item--club">
                 <span className="comparedPlayer__section__key">
-                    Dośw. ligowe
+                    {content.player_parameter_6}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player?.experience ? player.experience : "-"}
@@ -141,7 +161,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         <section className="comparedPlayer__section">
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Zasięg w ataku
+                       {content.player_parameter_8}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.attack_range ? player.attack_range : "-"}
@@ -149,7 +169,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Wyskok dosiężny
+                       {content.player_parameter_9}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.vertical_range ? player.vertical_range : "-"}
@@ -157,7 +177,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Zasięg w bloku
+                       {content.player_parameter_10}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.block_range ? player.block_range : "-"}
@@ -165,7 +185,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Waga
+                       {content.player_parameter_12}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.weight ? player.weight + " kg" : "-"}
@@ -173,7 +193,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Wzrost
+                       {content.player_parameter_11}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.height ? player.height + " cm" : "-"}
@@ -181,7 +201,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
             </section>
             <section className="comparedPlayer__section__item">
                 <span className="comparedPlayer__section__key">
-                    Pozycja
+                    {content.position}
                 </span>
                 <span className="comparedPlayer__section__value">
                     {player.position ? getPositionById(player.position) : "-"}
@@ -199,13 +219,13 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                     <VideoPlayer ref={(pl) => { playerRef = pl }} src={`${settings.API_URL}/video/get?url=/videos/${video.file_path}`} />
                 </div> : <div className="noVideo">
                     <span>
-                        Brak video
+                        {content.no_videos_yet}
                     </span>
                 </div> }
         </section>
 
         <a className="button button--hover button--comparedPlayer" href={`/wiadomosci?new=${playerIdentity}`}>
-            <img className="btn__img" src={writeMsgBtn} alt="napisz-wiadomosc" />
+            <img className="btn__img" src={getImageUrl(content.img10)} alt="napisz-wiadomosc" />
         </a>
     </section>
 }
