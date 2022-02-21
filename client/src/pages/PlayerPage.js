@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import UserInfoEdition from "../components/UserInfoEdition";
 import PlayerInfoEdition from "../components/PlayerInfoEdition";
 import PlayerVideoView from "../components/PlayerVideosView";
-import ClubSlider from "../components/ClubSlider";
 import Footer from "../components/Footer";
 import {getUserById} from "../helpers/user";
 import LoadingPage from "./LoadingPage";

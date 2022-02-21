@@ -16,14 +16,22 @@ router.get("/get-payment-methods", (request, response) => {
             response.send({
                 result: res.body.data
             });
-        })
+        });
 });
 
 router.post("/register-payment", (request, response) => {
-    const { amount, method, email, userId } = request.body;
+    const { amount, method, email, userId, code } = request.body;
 
     const CLIENT_ID = process.env.PRZELEWY_24_CLIENT_ID;
     const CRC = process.env.PRZELEWY_24_CRC;
+
+    console.log(code);
+    const queryDiscountCode = 'UPDATE coupons SET use_limit = use_limit - 1, used = used + 1 WHERE name = $1';
+    const valuesDiscountCode = [code];
+
+    db.query(queryDiscountCode, valuesDiscountCode, (err, res) => {
+        console.log(err);
+    });
 
     let hash, data, gen_hash;
     const sessionId = uuidv4();
@@ -192,10 +200,15 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
 }
 
 router.post('/add-paypal-payment', (request, response) => {
-    const { userId, amount } = request.body;
+    const { userId, amount, code } = request.body;
     const sessionId = uuidv4();
     const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
     const values = [userId, sessionId, amount];
+
+    const queryDiscountCode = 'UPDATE coupons SET use_limit = use_limit - 1, used = used + 1 WHERE name = $1';
+    const valuesDiscountCode = [code];
+
+    db.query(queryDiscountCode, valuesDiscountCode);
 
     db.query(query, values, (err, res) => {
         const query = 'SELECT first_name, last_name, email FROM users WHERE id = $1';

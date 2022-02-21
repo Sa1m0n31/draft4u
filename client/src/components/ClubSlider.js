@@ -16,7 +16,9 @@ const ClubSlider = () => {
         /* Get club's logos */
         getAllClubs()
             .then((res) => {
-                const result = res?.data?.result;
+                const result = res?.data?.result?.filter((item) => {
+                    return item.file_path;
+                });
                 if(result) {
                     const arrToConcat = shuffleArray(result.filter((item) => {
                         return item.active;
@@ -61,8 +63,8 @@ const ClubSlider = () => {
                 100: 3,
                 1400: 4
             }}
-                        ref={(siema) => { slider = siema }}
-                        loop={true}>
+            ref={(siema) => { slider = siema }}
+            loop={true}>
                 {logos?.map((item, index) => {
                     return <figure className="clubCarousel__item" key={index}>
                         <img className="clubCarousel__item__img" src={`${settings.API_URL}/image?url=/media/clubs/${item}`} alt="logo" />

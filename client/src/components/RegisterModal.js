@@ -376,7 +376,18 @@ const RegisterModal = (props) => {
                     <button className={!checkboxError ? "registerForm__checkBtn" : "registerForm__checkBtn input--error"} onClick={(e) => { resetErrors(); handleCheckbox(e, 1); }}>
                         {checkboxCompulsory ? <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" /> : ""}
                     </button>
-                    {content.register_consent1.split(';')[0]} <a href="/regulamin">{content.register_consent1.split(';')[1]}</a> {content.register_consent1.split(';')[2]} <a href="/polityka-prywatnosci">{content.register_consent1.split(';')[3]}</a>.
+                    <span>
+                        {content.register_consent1.split(';')[0]}
+                    </span>
+                    <a href="/regulamin">
+                        {content.register_consent1.split(';')[1]}
+                    </a>
+                    <span>
+                        {content.register_consent1.split(';')[2]}
+                    </span>
+                    <a href="/polityka-prywatnosci">
+                        {content.register_consent1.split(';')[3]}
+                    </a>.
                 </label>
 
                 <button className="registerForm--nextBtn" onClick={(e) => { validateStep2(e); }}>
@@ -390,9 +401,9 @@ const RegisterModal = (props) => {
             </h4>
 
             {userRegistered === 1 ? (props.mobile ? <a className="registerForm--nextBtn registerForm--nextBtn--login" href="/logowanie">
-                <img className="registerForm--nextBtn__img" src={getImageUrl(content.img8)} alt="zaloguj-sie" />
+                <img className="registerForm--nextBtn__img" src={getImageUrl(content.img14)} alt="zaloguj-sie" />
             </a> : <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { goToLogin(); }}>
-                <img className="registerForm--nextBtn__img" src={getImageUrl(content.img8)} alt="zaloguj-sie" />
+                <img className="registerForm--nextBtn__img" src={getImageUrl(content.img14)} alt="zaloguj-sie" />
             </button>) : ""}
         </section>) }
 

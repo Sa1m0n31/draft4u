@@ -121,7 +121,7 @@ const AdminClubsList = ({admin}) => {
                         <section className="admin__main__notification__item__col col-1">
                             {item.file_path ? <figure className="admin__main__notification__item__imgWrapper">
                                 <img className="admin__main__notification__item__img btn__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.title} />
-                            </figure> : "-"}
+                            </figure> : ''}
                         </section>
                         <section className="admin__main__notification__item__col col-2">
                             <h3 className="admin__main__notification__item__key">
@@ -144,7 +144,7 @@ const AdminClubsList = ({admin}) => {
                                 Aktywny
                             </h3>
                             <h4 className="admin__main__notification__item__value">
-                                {item.active ? <span className="green">Tak</span> : <span className="red">Zablokowany</span> }
+                                {!item.file_path ? 'Konto testowe' : item.active ? <span className="green">Tak</span> : <span className="red">Zablokowany</span>}
                             </h4>
                         </section>
                         <section className="admin__main__notification__item__col col-4">

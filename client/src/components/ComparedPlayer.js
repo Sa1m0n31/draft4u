@@ -14,6 +14,7 @@ import ModalVideoPlayer from "./ModalVideoPlayer";
 import playBtn from "../static/img/play-button.svg";
 import {addToFavorites, deleteFromFavorites, getFavoritesByClub, isPlayerFavorite} from "../helpers/club";
 import {ContentContext} from "../App";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
     const [playVideo, setPlayVideo] = useState(false);
@@ -21,6 +22,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
     const [playerIdentity, setPlayerIdentity] = useState("");
 
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
 
     useEffect(() => {
         getFavoritesByClub()
@@ -113,7 +115,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         <h2 className="comparedPlayer__fullName" style={{
             minHeight: nameMinHeight + 'px'
         }}>
-            {player.first_name} {player.last_name}
+            {player.first_name} {testClub ? '******' : player.last_name}
         </h2>
         <section className="comparedPlayer__icons">
             <button className="comparedPlayer__icons__item" onClick={() => { addPlayerToFavorites(); }}>
@@ -224,7 +226,7 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
                 </div> }
         </section>
 
-        <a className="button button--hover button--comparedPlayer" href={`/wiadomosci?new=${playerIdentity}`}>
+        <a className="button button--hover button--comparedPlayer" href={testClub ? '/' : `/wiadomosci?new=${playerIdentity}`}>
             <img className="btn__img" src={getImageUrl(content.img10)} alt="napisz-wiadomosc" />
         </a>
     </section>

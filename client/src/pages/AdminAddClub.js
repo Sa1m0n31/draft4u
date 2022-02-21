@@ -116,10 +116,6 @@ const AdminAddClub = ({admin}) => {
             setUsernameError("Wpisz login klubu");
             return 0;
         }
-        if(!locationSelected) {
-            setLocationError("Wybierz lokalizację klubu");
-            return 0;
-        }
 
         if(!updateMode) {
             if(!password || !repeatPassword) {
@@ -131,14 +127,14 @@ const AdminAddClub = ({admin}) => {
                 return 0;
             }
 
-            addClub(name, league, username, password, x, y, img?.file, nip, krs, city, email)
+            addClub(name, league, username, password, x ? x : 0, y ? y : 0, img?.file, nip, krs, city, email)
                 .then((res) => {
                     setAddResult(res?.data?.result);
                     window.scrollTo(0, 0);
                 });
         }
         else {
-            updateClub(clubId, name, league, username, x, y, imageUpdated ? (img ? img.file : 'delete') : null, nip, krs, city, email)
+            updateClub(clubId, name, league, username, x ? x : 0, y ? y : 0, imageUpdated ? (img ? img.file : 'delete') : null, nip, krs, city, email)
                 .then((res) => {
                     setAddResult(res?.data?.result);
                     window.scrollTo(0, 0);

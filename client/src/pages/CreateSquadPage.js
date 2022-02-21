@@ -18,6 +18,7 @@ import {addSquad, getSquadById} from "../helpers/squad";
 import {isObject} from "chart.js/helpers";
 import arrowDownGrey from '../static/img/arrow-down-grey.svg'
 import {ContentContext} from "../App";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const CreateSquadPage = ({club}) => {
     const [editName, setEditName] = useState(false);
@@ -43,6 +44,7 @@ const CreateSquadPage = ({club}) => {
     const [teamsJoined, setTeamsJoined] = useState(false);
 
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -711,7 +713,7 @@ const CreateSquadPage = ({club}) => {
 
                                             <section className="createSquad__squad__item__dragging__header">
                                                 <h3 className="createSquad__squad__item__dragging__header__name">
-                                                    {item.first_name} {item.last_name}
+                                                    {item.first_name} {testClub ? '******' : item.last_name}
                                                 </h3>
                                                 <h4 className="createSquad__squad__item__dragging__header__position">
                                                     {getPositionById(item.position)}
@@ -725,7 +727,7 @@ const CreateSquadPage = ({club}) => {
                                             </figure>
                                             <section className="createSquad__squad__item__data">
                                                 <h3 className="createSquad__squad__item__name">
-                                                    {item.first_name} {item.last_name}
+                                                    {item.first_name} {testClub ? '******' : item.last_name}
                                                 </h3>
                                                 <h4 className="createSquad__squad__item__position">
                                                     {getPositionById(item.position)}
@@ -782,7 +784,7 @@ const CreateSquadPage = ({club}) => {
 
                                             <section className="createSquad__squad__item__dragging__header">
                                                 <h3 className="createSquad__squad__item__dragging__header__name">
-                                                    {item.first_name} {item.last_name}
+                                                    {item.first_name} {testClub ? '******' : item.last_name}
                                                 </h3>
                                                 <h4 className="createSquad__squad__item__dragging__header__position">
                                                     {getPositionById(item.position)}
@@ -796,7 +798,7 @@ const CreateSquadPage = ({club}) => {
                                             </figure>
                                             <section className="createSquad__squad__item__data">
                                                 <h3 className="createSquad__squad__item__name">
-                                                    {item.first_name} {item.last_name}
+                                                    {item.first_name} {testClub ? '******' : item.last_name}
                                                 </h3>
                                                 <h4 className="createSquad__squad__item__position">
                                                     {getPositionById(item.position)}

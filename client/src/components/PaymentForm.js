@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import przelewy24Icon from '../static/img/przelewy24.svg'
 import arrowDown from '../static/img/triangle-down-black.svg'
-import payBtn from '../static/img/zaplac.png'
 import {addPayPalPayment, registerPayment} from "../helpers/payment";
 import {
     usePayPalScriptReducer,
@@ -77,7 +76,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     }, [coupon]);
 
     const pay = () => {
-        registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type)
+        registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type, coupon)
             .then((res) => {
                 const paymentUri = "https://secure.przelewy24.pl/trnRequest/";
                 const token = res.data.result;
@@ -87,7 +86,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     }
 
     const payWithPayPal = () => {
-        addPayPalPayment(userId, amount)
+        addPayPalPayment(userId, amount, coupon)
             .then((res) => {
                 window.location = '/subskrypcja-przedluzona'
             });

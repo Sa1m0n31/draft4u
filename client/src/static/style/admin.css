@@ -812,3 +812,10 @@ html, body {
     color: #000 !important;
     text-transform: none;
 }
+
+.testAccount {
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    margin-left: 10px;
+}

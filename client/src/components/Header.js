@@ -78,8 +78,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     });
 
     useEffect(() => {
+        console.log(club);
+    }, [profileImage]);
+
+    useEffect(() => {
         if(content) {
-            console.log(content);
             setMenuBeforeLogin(content.menu_before_login?.split(';'));
             setMenuPlayer(content.menu_player?.split(';'));
             setMenuClub(content.menu_club?.split(';'));
@@ -305,11 +308,18 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/">{menuBeforeLogin[0]}</a>
                 </li>
-                {menuBeforeLogin?.slice(1)?.map((item, index) => {
-                    return <li className="mobileMenu__list__item">
-                        <a className="mobileMenu__list__link" href={`/${convertStringToURL(item)}`}>{item}</a>
-                    </li>
-                })}
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/o-nas">{menuBeforeLogin[1]}</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/zawodnik">{menuBeforeLogin[2]}</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/klub">{menuBeforeLogin[3]}</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[4]}</a>
+                </li>
             </ul> : ""}
 
             {!player && !club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>

@@ -1166,6 +1166,16 @@
         max-width: 120px;
     }
 
+    .label--edit--email .input--editProfile {
+        max-width: 220px;
+    }
+
+    .label--edit--email {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
     .playerVideoView {
         margin-top: -60px;
     }

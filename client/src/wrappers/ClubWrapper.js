@@ -14,11 +14,12 @@ import ChatPage from "../pages/ChatPage";
 import Notifications from "../pages/Notifications";
 import ChangePassword from "../pages/ChangePassword";
 
-const ClubContext = React.createContext(5);
+const TestClubContext = React.createContext(true);
 
 const ClubWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
     const [renderSwitch, setRenderSwitch] = useState(null);
+    const [testClub, setTestClub] = useState(true);
 
     useEffect(() => {
         isLoggedIn()
@@ -30,6 +31,7 @@ const ClubWrapper = ({page}) => {
                             setLoaded(true);
 
                             const club = res?.data?.result;
+                            if(club?.file_path) setTestClub(false);
 
                             getAllPlayers()
                                 .then((res) => {
@@ -96,9 +98,11 @@ const ClubWrapper = ({page}) => {
     }, []);
 
     return <>
-        {loaded ? renderSwitch : <LoadingPage dark={true} />}
+        {loaded ? <TestClubContext.Provider value={{testClub}}>
+            {renderSwitch}
+        </TestClubContext.Provider> : <LoadingPage dark={true} />}
     </>
 }
 
 export default ClubWrapper;
-export { ClubContext };
+export { TestClubContext };

@@ -12,6 +12,7 @@ import {getIdentityById} from "../helpers/user";
 import arrowIcon from '../static/img/white-arrow.svg'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const PlayerVideoView = ({id, club}) => {
     const [videos, setVideos] = useState([]);
@@ -19,6 +20,7 @@ const PlayerVideoView = ({id, club}) => {
     const [identity, setIdentity] = useState("");
 
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
 
     let player = useRef(null);
     let carousel = useRef(null);
@@ -72,7 +74,7 @@ const PlayerVideoView = ({id, club}) => {
             </Splide> : <h3 className="noVideosHeader">
                 {content.no_videos_yet}
             </h3>}
-            {club ? <a href={`/wiadomosci?new=${identity}`} className={videos.length ? "button button--hover playerVideoView__btn playerVideoView__btn--club" : "button button--hover playerVideoView__btn playerVideoView__btn--club--center"}>
+            {club && !testClub ? <a href={`/wiadomosci?new=${identity}`} className={videos.length ? "button button--hover playerVideoView__btn playerVideoView__btn--club" : "button button--hover playerVideoView__btn playerVideoView__btn--club--center"}>
                 <img className="btn__img" src={getImageUrl(content.img10)} alt="napisz-wiadomosc" />
             </a> : ""}
         </main> : ""}

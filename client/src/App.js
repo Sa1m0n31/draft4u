@@ -29,6 +29,7 @@ import AUTH_HEADER from "./static/restrict/credentials";
 import ContentPage from "./pages/ContentPage";
 import {getCustomFields} from "./helpers/admin";
 import DraftLoader from "./components/Loader";
+import LoadingPage from "./pages/LoadingPage";
 
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 
@@ -81,16 +82,16 @@ function App() {
           <Route path="/resetowanie-hasla">
               <ResetPassword />
           </Route>
-          <Route path="/o-nas">
+          <Route path={["/o-nas", '/about-us']}>
               <AboutUs />
           </Route>
-          <Route path="/zawodnik">
+          <Route path={["/zawodnik", '/player']}>
               <Player />
           </Route>
-          <Route path="/klub">
+          <Route path={["/klub", '/club']}>
               <Club />
           </Route>
-          <Route path="/mapa">
+          <Route path={["/mapa", "/map"]}>
               <Map />
           </Route>
           <Route path="/zarejestruj-przez-facebooka">
@@ -239,7 +240,7 @@ function App() {
               <AdminWrapper page={19} />
           </Route>
       </Router>
-      </ContentContext.Provider> : <DraftLoader />
+      </ContentContext.Provider> : <LoadingPage />
 }
 
 export default App;

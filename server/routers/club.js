@@ -63,7 +63,7 @@ router.get("/get-all", (request, response) => {
 });
 
 router.get("/get-locations", (request, response) => {
-    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN identities id ON c.id = id.id WHERE id.active =  true GROUP BY x, y`;
+    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c JOIN images i ON c.logo = i.id JOIN identities id ON c.id = id.id WHERE id.active = true GROUP BY x, y`;
 
     db.query(query, [], (err, res) => {
         if(res) {
@@ -300,6 +300,7 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         const values = [filename];
 
         db.query(query, values, (err, res) => {
+            console.log(err);
             if(res) {
                 if(res.rows) {
                     const imageId = res.rows[0].id;
@@ -307,11 +308,13 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
                     const values = [id, name, league, login, hash, imageId, x, y, nip, krs, city, email];
 
                     db.query(query, values, (err, res) => {
+                        console.log(err);
                         if(res) {
                             const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, true, NULL)';
                             const values = [id, hash];
 
                             db.query(query, values, (err, res) => {
+                                console.log(err);
                                 if(res) {
                                     response.send({
                                         result: 1
@@ -346,11 +349,13 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         const values = [id, name, league, login, hash, x, y, nip, krs, city, email];
 
         db.query(query, values, (err, res) => {
+            console.log(err);
             if(res) {
                 const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, true, NULL)';
                 const values = [id, hash];
 
                 db.query(query, values, (err, res) => {
+                    console.log(err);
                     if(res) {
                         response.send({
                             result: 1

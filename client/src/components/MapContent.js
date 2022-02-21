@@ -65,7 +65,9 @@ const MapContent = () => {
     useEffect(() => {
         getClubLocations()
             .then((res) => {
-                const allDots = res?.data?.result;
+                const allDots = res?.data?.result?.filter((item) => {
+                    return item.x !== 0 && item.y !== 0;
+                });
                 setDots(allDots);
                 setFilteredDots(allDots.filter((item) => {
                     return item.leagues.split(';').findIndex((item) => {
@@ -78,7 +80,7 @@ const MapContent = () => {
             .then(res => {
                 if(res?.data?.result) {
                     const allClubs = res.data.result.filter((item) => {
-                        return item?.active;
+                        return item?.active && item?.file_path;
                     });
                     setClubs(allClubs);
                     setFilteredClubs(allClubs.filter((item) => {

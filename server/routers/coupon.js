@@ -5,7 +5,7 @@ const db = require("../database/db");
 router.post("/add", (request, response) => {
     const { title, discount, from, to, limit } = request.body;
 
-    const query = `INSERT INTO coupons VALUES (nextval('coupons_id'), $1, $2, $3, $4, $5)`;
+    const query = `INSERT INTO coupons VALUES (nextval('coupons_id'), $1, $2, $3, $4, $5, 0)`;
     const values = [title, discount, from, to, limit];
 
     db.query(query, values, (err, res) => {

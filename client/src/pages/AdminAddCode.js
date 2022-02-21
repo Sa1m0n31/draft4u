@@ -13,6 +13,7 @@ const AdminAddCode = () => {
     const [updateMode, setUpdateMode] = useState(false);
     const [status, setStatus] = useState(-1);
     const [codeId, setCodeId] = useState(null);
+    const [used, setUsed] = useState(0);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -30,6 +31,7 @@ const AdminAddCode = () => {
                         setDateFrom(result.date_from?.substring(0, 10));
                         setDateTo(result.date_to?.substring(0, 10));
                         setLimit(result.use_limit);
+                        setUsed(result.used);
                     }
                 });
         }
@@ -119,6 +121,9 @@ const AdminAddCode = () => {
                                onChange={(e) => { setLimit(e.target.value); }}
                                placeholder="Tu wpisz maksymalną liczbę możliwych użyć kodu" />
                     </label>
+                    {used || used === 0 ? <label className="admin__label admin__label--100">
+                        Kod rabatowy został użyty: {used === 1 ? '1 raz' : used + ' razy'}
+                    </label> : ''}
                 </section>
                 <button className="admin__btn admin__btn--addArticle" onClick={() => { handleSubmit() }}>
                     {updateMode ? "Aktualizuj kod" : "Dodaj kod"}

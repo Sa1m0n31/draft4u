@@ -12,6 +12,7 @@ import profilePicture from "../static/img/profile-picture.png";
 import closeIcon from '../static/img/close-grey.svg'
 import {unicodeToUTF8} from "../helpers/others";
 import {ContentContext} from "../App";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const ClubTeamsPage = ({club}) => {
     const [teams, setTeams] = useState([]);
@@ -23,6 +24,7 @@ const ClubTeamsPage = ({club}) => {
     const [loaded, setLoaded] = useState(false);
 
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
 
     const deleteModalRef = useRef(null);
 
@@ -215,7 +217,7 @@ const ClubTeamsPage = ({club}) => {
 
                                     <section className="createSquad__squad__item__dragging__header">
                                         <h3 className="createSquad__squad__item__dragging__header__name">
-                                            {item.first_name} {item.last_name}
+                                            {item.first_name} {testClub ? '******' : item.last_name}
                                         </h3>
                                         <h4 className="createSquad__squad__item__dragging__header__position">
                                             {item?.position ? unicodeToUTF8(item.position) : ""}

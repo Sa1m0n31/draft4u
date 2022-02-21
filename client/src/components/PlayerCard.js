@@ -7,12 +7,14 @@ import {calculateAge} from "../helpers/others";
 import settings from "../settings";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {ContentContext} from "../App";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerToComparator, inComparator, addPlayerToFavorites}) => {
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
 
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
 
     useEffect(() => {
         setComparator(inComparator);
@@ -28,7 +30,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
     }, [favorite]);
 
     const addPlayerToFavoritesFallback = () => {
-        if(!favorite) {
+        if(!favorite && !testClub) {
             addToFavorites(player.id ? player.id : player.user_id);
         }
         else {
@@ -46,7 +48,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
         </figure>
         <header className={favoriteView ? "playerCard__header playerCard__header--favorite" : "playerCard__header"}>
             <h3 className="playerCard__header__h">
-                {player.first_name} {player.last_name}
+                {player.first_name} {testClub ? '******' : player.last_name}
             </h3>
             <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites ? addPlayerToFavorites(player.user_id) : addPlayerToFavoritesFallback(); }}>
                 {!favoritePlayer ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}

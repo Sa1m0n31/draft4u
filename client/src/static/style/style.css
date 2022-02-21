@@ -1244,8 +1244,8 @@ ul {
 }
 
 .registerForm--nextBtn {
-    width: 320px;
-    height: 60px;
+    width: 350px;
+    height: auto;
     display: block;
     margin: 30px auto 15px;
     opacity: .9;
@@ -2462,7 +2462,7 @@ ul {
 }
 
 .myAccountStart__bottom__content__days--big {
-    font-size: 160px;
+    font-size: 140px;
 }
 
 .myAccountStart__subheader {
@@ -5980,7 +5980,6 @@ input::-webkit-inner-spin-button {
     width: 35px;
 }
 
-
 .profileMenu__list__link__language {
     width: 100%;
     background: transparent;
@@ -5996,4 +5995,14 @@ input::-webkit-inner-spin-button {
 
 .siteHeader--dark .profileMenu__list__link__language {
     color: #fff;
+}
+
+.label--edit--email {
+    min-width: 300px;
+    display: block;
+    padding: 0 !important;
+}
+
+.label--edit--email input {
+    width: 100%;
 }

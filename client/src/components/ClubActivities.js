@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {getUserFavorites, getUserVisited} from "../helpers/user";
-import headerImg from '../static/img/aktywnosci-klubu.jpg'
 import settings from "../settings";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
@@ -32,7 +31,7 @@ const ClubActivities = () => {
         </h3>
         <section className="clubActivities__list">
             {visitors.length ? visitors.map((item, index) => {
-                return <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
+                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
             }) : <h3 className="clubActivities__empty">
                 {content.club_activities_text1}
             </h3>}
@@ -43,7 +42,7 @@ const ClubActivities = () => {
         </h3>
         <section className="clubActivities__list">
             {favorites.length ? favorites.map((item, index) => {
-                return <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
+                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
             }) : <h3 className="clubActivities__empty">
                 {content.club_activities_text2}
             </h3> }

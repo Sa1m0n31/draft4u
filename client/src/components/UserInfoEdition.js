@@ -16,9 +16,12 @@ import heartFilled from "../static/img/heart-filled.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {isMail} from "../helpers/validation";
 import {ContentContext} from "../App";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
+
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
     const [fullName, setFullName] = useState("");
@@ -155,9 +158,9 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                 case 1:
                     return content.map_league1;
                 case 2:
-                    return content.map_league1;
+                    return content.map_league2;
                 default:
-                    return content.map_league1;
+                    return content.map_league3;
             }
         });
     }
@@ -278,7 +281,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
 
         <section className={theme === 'dark' ? "userInfoEdition__form userInfoEdition__form--dark" : "userInfoEdition__form"}>
             <h2 className="userInfoEdition__fullName">
-                {fullName}
+                {player?.first_name} {!testClub ? player?.last_name : '******'}
                 {theme === 'dark' ? <section className="comparedPlayer__icons">
                     <button className="comparedPlayer__icons__item" onClick={() => { addPlayerToFavorites(); }}>
                         <img className="btn__img" src={!favoritePlayer ? heart : heartFilled} alt="dodaj-do-ulubionych" />
@@ -308,50 +311,48 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     </label>
                 </span>
             </label>
-            {!(theme === 'dark') ? <>
-               <label className="userInfoEdition__form__field">
-                    <span className="userInfoEdition__key">
-                        {content.player_parameter_2}
-                    </span>
-                   <span className="userInfoEdition__value">
-                    <label className={editEmail ? "label--edit" : ""}>
-                        <input value={email?.split('@')[1] === 'facebookauth' ? '-' : email}
-                               ref={emailRef}
-                               onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserEmail(e.keyCode === 9); }}
-                               onChange={(e) => { setEmail(e.target.value); }}
-                               disabled={!editEmail}
-                               className="input--editProfile"
-                               name="email" />
-                        {!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>
-                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
-                        </button>}
-                    </label>
+           <label className="userInfoEdition__form__field">
+                <span className="userInfoEdition__key">
+                    {content.player_parameter_2}
                 </span>
+               <span className="userInfoEdition__value">
+                <label className={editEmail ? "label--edit" : "label--edit--email"}>
+                    <input value={email?.split('@')[1] === 'facebookauth' ? '-' : (testClub ? '******' : email)}
+                           ref={emailRef}
+                           onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserEmail(e.keyCode === 9); }}
+                           onChange={(e) => { setEmail(e.target.value); }}
+                           disabled={!editEmail}
+                           className="input--editProfile"
+                           name="email" />
+                    {!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>
+                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                    </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>
+                        <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                    </button>}
                 </label>
-                <label className="userInfoEdition__form__field">
-                    <span className="userInfoEdition__key">
-                        {content.player_parameter_3}
-                    </span>
-                        <span className="userInfoEdition__value">
-                            <label className={editPhoneNumber ? "label--edit" : ""}>
-                                <input value={phoneNumber}
-                                       ref={phoneNumberRef}
-                                       onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserPhoneNumber(e.keyCode === 9); }}
-                                       onChange={(e) => { setPhoneNumber(e.target.value); }}
-                                       disabled={!editPhoneNumber}
-                                       className="input--editProfile"
-                                       name="phoneNumber" />
-                                {!editPhoneNumber ? <button className="userInfoEdition__btn" onClick={() => { setEditPhoneNumber(true); }}>
-                                    <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                                </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPhoneNumber(); }}>
-                                    <img className="userInfoEdition__btn__img" src={check} alt="ok" />
-                                </button>}
-                            </label>
-                    </span>
-                </label>
-            </> : ""}
+            </span>
+            </label>
+            <label className="userInfoEdition__form__field">
+                <span className="userInfoEdition__key">
+                    {content.player_parameter_3}
+                </span>
+                    <span className="userInfoEdition__value">
+                        <label className={editPhoneNumber ? "label--edit" : ""}>
+                            <input value={testClub ? '******' : phoneNumber}
+                                   ref={phoneNumberRef}
+                                   onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserPhoneNumber(e.keyCode === 9); }}
+                                   onChange={(e) => { setPhoneNumber(e.target.value); }}
+                                   disabled={!editPhoneNumber}
+                                   className="input--editProfile"
+                                   name="phoneNumber" />
+                            {!editPhoneNumber ? <button className="userInfoEdition__btn" onClick={() => { setEditPhoneNumber(true); }}>
+                                <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                            </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPhoneNumber(); }}>
+                                <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                            </button>}
+                        </label>
+                </span>
+            </label>
             <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     {content.player_parameter_4}
