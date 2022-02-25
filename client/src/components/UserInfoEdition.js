@@ -15,12 +15,13 @@ import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {isMail} from "../helpers/validation";
-import {ContentContext} from "../App";
+import {ContentContext, StuffContext} from "../App";
 import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const { content } = useContext(ContentContext);
     const { testClub } = useContext(TestClubContext);
+    const { isStuff } = useContext(StuffContext);
 
     const [values, setValues] = useState([player?.salary_from ? player?.salary_from : 1000, player?.salary_to ? player?.salary_to : 4000]);
 
@@ -324,11 +325,11 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                            disabled={!editEmail}
                            className="input--editProfile"
                            name="email" />
-                    {!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>
-                        <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>
-                        <img className="userInfoEdition__btn__img" src={check} alt="ok" />
-                    </button>}
+                    {/*{!editEmail ? <button className="userInfoEdition__btn" onClick={() => { setEditEmail(true); }}>*/}
+                    {/*    <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />*/}
+                    {/*</button> : <button className="userInfoEdition__btn" onClick={() => { changeUserEmail(); }}>*/}
+                    {/*    <img className="userInfoEdition__btn__img" src={check} alt="ok" />*/}
+                    {/*</button>}*/}
                 </label>
             </span>
             </label>
@@ -374,11 +375,12 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     </label>
                 </span>
             </label>
-            <label className="userInfoEdition__form__field">
+            {isStuff ? '' : <>
+                <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
                     {content.player_parameter_5}
                 </span>
-                <span className="userInfoEdition__value">
+                    <span className="userInfoEdition__value">
                     <label className={editLicence ? "label--edit" : ""}>
                         <input value={licence ? licence : "-"}
                                ref={licenseRef}
@@ -394,14 +396,14 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                         </button>}
                     </label>
                 </span>
-            </label>
-            <div className={editExperience ? "userInfoEdition__form__field userInfoEdition__form__field--experience" : "userInfoEdition__form__field"}
-                 onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserExperience(e.keyCode === 9); }}
-            >
+                </label>
+                <div className={editExperience ? "userInfoEdition__form__field userInfoEdition__form__field--experience" : "userInfoEdition__form__field"}
+                     onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserExperience(e.keyCode === 9); }}
+                >
                 <span className="userInfoEdition__key">
                     {content.player_parameter_6}
                 </span>
-                <span className="userInfoEdition__value userInfoEdition__value--experience">
+                    <span className="userInfoEdition__value userInfoEdition__value--experience">
                     <label>
                         <span className="input--editProfile input--editProfile--experience">
                             {editExperience ? "" : (!experience ? "-" : experience)}
@@ -413,24 +415,25 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                         </button>}
                     </label>
                 </span>
-                {editExperience ? <div className="experienceSection">
+                    {editExperience ? <div className="experienceSection">
                         <span>
                             {content.map_leagues}:
                         </span>
-                    <button className={isLeagueSelected(0) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(0); }}>
-                        {player?.sex ? "Plus Liga" : "Tauron Liga"}
-                    </button>
-                    <button className={isLeagueSelected(1) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(1); }}>
-                        {content.map_league1}
-                    </button>
-                    <button className={isLeagueSelected(2) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(2); }}>
-                        {content.map_league2}
-                    </button>
-                    <button className={isLeagueSelected(3) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(3); }}>
-                        {content.map_league3}
-                    </button>
-                </div> : ""}
-            </div>
+                        <button className={isLeagueSelected(0) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(0); }}>
+                            {player?.sex ? "Plus Liga" : "Tauron Liga"}
+                        </button>
+                        <button className={isLeagueSelected(1) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(1); }}>
+                            {content.map_league1}
+                        </button>
+                        <button className={isLeagueSelected(2) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(2); }}>
+                            {content.map_league2}
+                        </button>
+                        <button className={isLeagueSelected(3) ? "experienceSection__btn experienceSection__btn--selected" : "experienceSection__btn"} onClick={() => { chooseLeague(3); }}>
+                            {content.map_league3}
+                        </button>
+                    </div> : ""}
+                </div>
+            </>}
             <label className="userInfoEdition__form__field"
                     onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserSalary(e.keyCode === 9); }}
             >

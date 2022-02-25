@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import LoadingPage from "../pages/LoadingPage";
 import {isLoggedIn, logoutUser} from "../helpers/auth";
 import {getUserData} from "../helpers/user";
@@ -17,12 +17,15 @@ import {getAdminData} from "../helpers/admin";
 import SingleArticle from "../pages/SingleArticle";
 import ChangePassword from "../pages/ChangePassword";
 import ChatPage from "../pages/ChatPage";
+import {StuffContext} from "../App";
 
 const UserContext = React.createContext(5);
 
 const UserWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
     const [renderSwitch, setRenderSwitch] = useState(null);
+
+    const { isStuff, setIsStuff } = useContext(StuffContext);
 
     useEffect(() => {
         isLoggedIn()
@@ -39,6 +42,12 @@ const UserWrapper = ({page}) => {
                             const isLocal = !user?.adapter || user?.adapter === 1;
 
                             if(user) {
+                                const identitySplited = user.identity.split('-');
+
+                                if(identitySplited[identitySplited.length-1] === 'stuff') {
+                                    setIsStuff(true);
+                                }
+
                                 if(user.active) {
                                     switch(page) {
                                         case 1:

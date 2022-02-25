@@ -47,9 +47,9 @@ const loginApple = () => {
     return axios.get(`${API_URL}/auth/apple`);
 }
 
-const registerUser = (email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory) => {
+const registerUser = (email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory, stuff) => {
     return axios.post(`${API_URL}/auth/register-local`, {
-        email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory
+        email, password, firstName, lastName, sex, birthday, phoneNumber, checkboxObligatory, stuff
     });
 }
 

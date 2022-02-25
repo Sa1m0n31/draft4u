@@ -534,4 +534,87 @@ router.get("/get-identity-by-id", (request, response) => {
    });
 });
 
+router.post('/add-cv', (request, response) => {
+   const { type, title, from, to, description } = request.body;
+   const userId = request.user;
+
+   const id = uuidv4();
+   const query = 'INSERT INTO cvs VALUES ($1, $2, $3, $4, $5, NOW(), $6)';
+   const values = [id, type, title, from, to, description, userId];
+
+   db.query(query, values, (err, res) => {
+       if(res) {
+           response.send({
+               result: 1
+           });
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
+   });
+});
+
+router.post('/update-cv', (request, response) => {
+    const { id, title, from, to, description } = request.body;
+
+    const query = 'UPDATE cvs SET title = $1, from = $2, to = $3, description = $4 WHERE id = $4';
+    const values = [title, from, to, description, id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.delete('/delete-cv', (request, response) => {
+    const id = request.query.id;
+
+    const query = 'DELETE FROM cvs WHERE id = $1';
+    const values = [id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.get('/get-player-cvs', (request, response) => {
+    const id = request.query.id;
+    const userId = request.user;
+
+    const query = 'SELECT * FROM cvs WHERE user = $1 OR user = $2';
+    const values = [id, userId];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: res
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
 module.exports = router;

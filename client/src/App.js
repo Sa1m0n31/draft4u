@@ -44,11 +44,13 @@ const LanguageContext = React.createContext({
 });
 
 const ContentContext = React.createContext(null);
+const StuffContext = React.createContext(null);
 
 function App() {
     const [language, setLanguage] = useState(localStorage.getItem('lang') || 'pl');
     const [content, setContent] = useState(null);
     const [render, setRender] = useState(false);
+    const [isStuff, setIsStuff] = useState(false);
 
     useEffect(() => {
       localStorage.setItem('lang', language);
@@ -111,38 +113,40 @@ function App() {
           </Route>
 
           {/* User routes */}
-          <Route path="/rozpocznij">
-              <UserWrapper page={1} />
-          </Route>
-          <Route path="/edycja-profilu">
-              <UserWrapper page={2} />
-          </Route>
-          <Route path="/faq">
-              <UserWrapper page={3} />
-          </Route>
-          <Route path="/dodaj-video">
-              <UserWrapper page={4} />
-          </Route>
-          <PayPalScriptProvider options={payPalOptions}>
-              <Route path="/zaplac">
-                  <UserWrapper page={5} />
-              </Route>
-          </PayPalScriptProvider>
-          <Route path="/subskrypcja-przedluzona">
-              <UserWrapper page={6} />
-          </Route>
-          <Route path="/czat">
-              <UserWrapper page={7} />
-          </Route>
-          <Route path="/notyfikacje">
-              <UserWrapper page={8} />
-          </Route>
-          <Route path="/wpis">
-              <UserWrapper page={9} />
-          </Route>
-          <Route path="/zmien-haslo-zawodnika">
-              <UserWrapper page={10} />
-          </Route>
+            <StuffContext.Provider value={{isStuff, setIsStuff}}>
+                <Route path="/rozpocznij">
+                    <UserWrapper page={1} />
+                </Route>
+                <Route path="/edycja-profilu">
+                    <UserWrapper page={2} />
+                </Route>
+                <Route path="/faq">
+                    <UserWrapper page={3} />
+                </Route>
+                <Route path="/dodaj-video">
+                    <UserWrapper page={4} />
+                </Route>
+                <PayPalScriptProvider options={payPalOptions}>
+                    <Route path="/zaplac">
+                        <UserWrapper page={5} />
+                    </Route>
+                </PayPalScriptProvider>
+                <Route path="/subskrypcja-przedluzona">
+                    <UserWrapper page={6} />
+                </Route>
+                <Route path="/czat">
+                    <UserWrapper page={7} />
+                </Route>
+                <Route path="/notyfikacje">
+                    <UserWrapper page={8} />
+                </Route>
+                <Route path="/wpis">
+                    <UserWrapper page={9} />
+                </Route>
+                <Route path="/zmien-haslo-zawodnika">
+                    <UserWrapper page={10} />
+                </Route>
+            </StuffContext.Provider>
 
           {/* Club routes */}
           <Route path="/konto-klubu">
@@ -244,4 +248,4 @@ function App() {
 }
 
 export default App;
-export { LanguageContext, ContentContext }
+export { LanguageContext, ContentContext, StuffContext }

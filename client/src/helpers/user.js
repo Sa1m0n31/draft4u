@@ -261,6 +261,34 @@ const getIdentityById = (id) => {
     });
 }
 
+const addCv = (type, title, from, to, description) => {
+    return axios.post(`${API_URL}/user/add-cv`, {
+        type, title, from, to, description
+    });
+}
+
+const updateCv = (id, title, from, to, description) => {
+    return axios.post(`${API_URL}/user/update-cv`, {
+        id, title, from, to, description
+    });
+}
+
+const deleteCv = (id) => {
+    return axios.delete(`${API_URL}/user/delete-cv`, {
+        params: {
+            id
+        }
+    });
+}
+
+const getCvs = (id) => {
+    return axios.get(`${API_URL}/user/get-player-cvs`, {
+        params: {
+            id
+        }
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail, updateUserExperience,
     updateUserClub, updateUserSalary, updateUserBirthday,
@@ -268,5 +296,6 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     updateUserHeight, updateUserWeight, updateUserPosition,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
     getUserById, getUserFavorites, getUserVisited,
-    getIdentityById, resetPassword
+    getIdentityById, resetPassword,
+    addCv, updateCv, deleteCv, getCvs
 }
