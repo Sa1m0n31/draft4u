@@ -173,8 +173,45 @@ const updateUserPosition = (position) => {
     });
 }
 
+const updateUserStuffPosition = (position) => {
+    let positionId;
+    switch(position.toLowerCase()) {
+        case 'trener':
+            positionId = 1;
+            break;
+        case 'asystent':
+            positionId = 2;
+            break;
+        case 'fizjoterapeuta':
+            positionId = 3;
+            break;
+        case 'trener przygotowania':
+            positionId = 4;
+            break;
+        default:
+            positionId = 5;
+            break;
+    }
+
+    return axios.put(`${API_URL}/user/update-user-stuff-position`, {
+        position: positionId
+    }, {
+        withCredentials: true
+    });
+}
+
 const getAllPositions = () => {
     return axios.get(`${API_URL}/user/get-all-positions`);
+}
+
+// INSERT INTO stuff_positions VALUES (1, 'Trener');
+// INSERT INTO stuff_positions VALUES (2, 'Asystent');
+// INSERT INTO stuff_positions VALUES (3, 'Fizjoterapeuta');
+// INSERT INTO stuff_positions VALUES (4, 'Trener przygotowania');
+// INSERT INTO stuff_positions VALUES (5, 'Statystyk');
+
+const getAllStuffPositions = () => {
+    return axios.get(`${API_URL}/user/get-all-stuff-positions`);
 }
 
 /*
@@ -264,12 +301,16 @@ const getIdentityById = (id) => {
 const addCv = (type, title, from, to, description) => {
     return axios.post(`${API_URL}/user/add-cv`, {
         type, title, from, to, description
+    }, {
+        withCredentials: true
     });
 }
 
 const updateCv = (id, title, from, to, description) => {
     return axios.post(`${API_URL}/user/update-cv`, {
         id, title, from, to, description
+    }, {
+        withCredentials: true
     });
 }
 
@@ -285,7 +326,8 @@ const getCvs = (id) => {
     return axios.get(`${API_URL}/user/get-player-cvs`, {
         params: {
             id
-        }
+        },
+        withCredentials: true
     });
 }
 
@@ -297,5 +339,5 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
     getUserById, getUserFavorites, getUserVisited,
     getIdentityById, resetPassword,
-    addCv, updateCv, deleteCv, getCvs
+    addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition
 }

@@ -281,6 +281,46 @@ const AdminContent = ({lang}) => {
     const [messages_header8, setMessageHeader8] = useState("");
     const [messages_read, setMessageRead] = useState("");
 
+    const [stuff_zone_header1, setStuffZoneHeader1] = useState("");
+    const [stuff_zone_header2, setStuffZoneHeader2] = useState("");
+    const [stuff_zone_header3, setStuffZoneHeader3] = useState("");
+    const [stuff_zone_header4, setStuffZoneHeader4] = useState("");
+    const [stuff_zone_header5, setStuffZoneHeader5] = useState("");
+    const [stuff_zone_header6, setStuffZoneHeader6] = useState("");
+    const [stuff_zone_text1, setStuffZoneText1] = useState("");
+    const [stuff_zone_text2, setStuffZoneText2] = useState("");
+    const [stuff_zone_text3, setStuffZoneText3] = useState("");
+    const [stuff_zone_text4, setStuffZoneText4] = useState("");
+    const [stuff_zone_text5, setStuffZoneText5] = useState("");
+    const [stuff_zone_text6, setStuffZoneText6] = useState("");
+    const [stuff_zone_circle1, setStuffZoneCircle1] = useState("");
+    const [stuff_zone_circle2, setStuffZoneCircle2] = useState("");
+    const [stuff_zone_circle3, setStuffZoneCircle3] = useState("");
+    const [post, setPost] = useState("");
+    const [post1, setPost1] = useState("");
+    const [post2, setPost2] = useState("");
+    const [post3, setPost3] = useState("");
+    const [post4, setPost4] = useState("");
+    const [post5, setPost5] = useState("");
+    const [cv_type1, setCvType1] = useState("");
+    const [cv_type2, setCvType2] = useState("");
+    const [cv_type3, setCvType3] = useState("");
+    const [add_new, setAddNew] = useState("");
+    const [find_new_stuff, setFindNewStuff] = useState("");
+    const [see_cv, setSeeCv] = useState("");
+    const [cv_input1, setCvInput1] = useState("");
+    const [cv_input2, setCvInput2] = useState("");
+    const [cv_input3, setCvInput3] = useState("");
+    const [club_search_dropdown1, setClubSearchDropdown1] = useState("");
+    const [club_search_dropdown2, setClubSearchDropdown2] = useState("");
+    const [delete_cv_text, setDeleteCvText] = useState("");
+    const [cv_deleted, setCvDeleted] = useState("");
+    const [cv_added, setCvAdded] = useState("");
+    const [cv_updated, setCvUpdated] = useState("");
+    const [cv_input_error1, setCvInputError1] = useState("");
+    const [cv_input_error2, setCvInputError2] = useState("");
+    const [cv_input_error3, setCvInputError3] = useState("");
+
     const [addResult, setAddResult] = useState(-1);
     const [render, setRender] = useState(false);
 
@@ -563,6 +603,47 @@ const AdminContent = ({lang}) => {
                     setMessageHeader7(r.messages_header7)
                     setMessageHeader8(r.messages_header8)
                     setMessageRead(r.messages_read);
+
+                    setStuffZoneHeader1(r.stuff_zone_header1);
+                    setStuffZoneHeader2(r.stuff_zone_header2);
+                    setStuffZoneHeader3(r.stuff_zone_header3);
+                    setStuffZoneHeader4(r.stuff_zone_header4);
+                    setStuffZoneHeader5(r.stuff_zone_header5);
+                    setStuffZoneHeader6(r.stuff_zone_header6);
+                    setStuffZoneText1(r.stuff_zone_text1);
+                    setStuffZoneText2(r.stuff_zone_text2);
+                    setStuffZoneText3(r.stuff_zone_text3);
+                    setStuffZoneText4(r.stuff_zone_text4);
+                    setStuffZoneText5(r.stuff_zone_text5);
+                    setStuffZoneText6(r.stuff_zone_text6);
+                    setStuffZoneCircle1(r.stuff_zone_circle1);
+                    setStuffZoneCircle2(r.stuff_zone_circle2);
+                    setStuffZoneCircle3(r.stuff_zone_circle3);
+                    setPost(r.post);
+                    setPost1(r.post1);
+                    setPost2(r.post2);
+                    setPost3(r.post3);
+                    setPost4(r.post4);
+                    setPost5(r.post5);
+                    setCvType1(r.cv_type1);
+                    setCvType2(r.cv_type2);
+                    setCvType3(r.cv_type3);
+                    setAddNew(r.add_new);
+                    setFindNewStuff(r.find_new_stuff);
+                    setSeeCv(r.see_cv);
+                    setCvInput1(r.cv_input1);
+                    setCvInput2(r.cv_input2);
+                    setCvInput3(r.cv_input3);
+                    setClubSearchDropdown1(r.club_search_dropdown1);
+                    setClubSearchDropdown2(r.club_search_dropdown2);
+                    setDeleteCvText(r.delete_cv_text);
+                    setCvDeleted(r.cv_deleted);
+                    setCvAdded(r.cv_added);
+                    setCvUpdated(r.cv_updated);
+                    setCvInputError1(r.cv_input_error1);
+                    setCvInputError2(r.cv_input_error2);
+                    setCvInputError3(r.cv_input_error3);
+
                     setRender(true);
                 }
             });
@@ -624,7 +705,16 @@ const AdminContent = ({lang}) => {
             delete_team, delete_team_yes, delete_team_no, team_deleted, reset_password1,
             reset_password2, reset_password3, reset_password4, reset_password5, reset_password6, reset_password7, register_input1,
             messages_header1, messages_header2, messages_header3, messages_header4, messages_header5, messages_header6,
-            messages_header7, messages_header8, messages_read
+            messages_header7, messages_header8, messages_read,
+            stuff_zone_header1, stuff_zone_header2, stuff_zone_header3,
+            stuff_zone_header4, stuff_zone_header5, stuff_zone_header6,
+            stuff_zone_text1, stuff_zone_text2, stuff_zone_text3,
+            stuff_zone_text4, stuff_zone_text5, stuff_zone_text6,
+            stuff_zone_circle1, stuff_zone_circle2, stuff_zone_circle3,
+            post, post1, post2, post3, post4, post5,
+            cv_type1, cv_type2, cv_type3, add_new, find_new_stuff, see_cv,
+            cv_input1, cv_input2, cv_input3, club_search_dropdown1, club_search_dropdown2,
+            delete_cv_text, cv_deleted, cv_added, cv_updated, cv_input_error1, cv_input_error2, cv_input_error3
         })
             .then((res) => {
                 if(res?.data?.result) {
@@ -939,6 +1029,46 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="Wiadomości - 7" value={messages_header7} func={setMessageHeader7} name="messages_header7" />
                         <ChangeContentLabel label="Wiadomości - 8" value={messages_header8} func={setMessageHeader8} name="messages_header8" />
                         <ChangeContentLabel label="Wiadomości - 9" value={messages_read} func={setMessageRead} name="message_read" />
+
+                        <ChangeContentLabel label="Strefa asystenta - nagłówek 1" value={stuff_zone_header1} func={setStuffZoneHeader1} name="stuff_zone_header1" />
+                        <ChangeContentLabel label="Strefa asystenta - nagłówek 2" value={stuff_zone_header2} func={setStuffZoneHeader2} name="stuff_zone_header2" />
+                        <ChangeContentLabel label="Strefa asystenta - nagłówek 3" value={stuff_zone_header3} func={setStuffZoneHeader3} name="stuff_zone_header3" />
+                        <ChangeContentLabel label="Strefa asystenta - nagłówek 4" value={stuff_zone_header4} func={setStuffZoneHeader4} name="stuff_zone_header4" />
+                        <ChangeContentLabel label="Strefa asystenta - nagłówek 5" value={stuff_zone_header5} func={setStuffZoneHeader5} name="stuff_zone_header5" />
+                        <ChangeContentLabel label="Strefa asystenta - nagłówek 6" value={stuff_zone_header6} func={setStuffZoneHeader6} name="stuff_zone_header6" />
+                        <ChangeContentLabel label="Strefa asystenta - tekst 1" value={stuff_zone_text1} func={setStuffZoneText1} name="stuff_zone_text1" type="textarea" />
+                        <ChangeContentLabel label="Strefa asystenta - tekst 2" value={stuff_zone_text2} func={setStuffZoneText2} name="stuff_zone_text2" type="textarea" />
+                        <ChangeContentLabel label="Strefa asystenta - tekst 3" value={stuff_zone_text3} func={setStuffZoneText3} name="stuff_zone_text3" type="textarea" />
+                        <ChangeContentLabel label="Strefa asystenta - tekst 4" value={stuff_zone_text4} func={setStuffZoneText4} name="stuff_zone_text4" type="textarea" />
+                        <ChangeContentLabel label="Strefa asystenta - tekst 5" value={stuff_zone_text5} func={setStuffZoneText5} name="stuff_zone_text5" type="textarea" />
+                        <ChangeContentLabel label="Strefa asystenta - tekst 6" value={stuff_zone_text6} func={setStuffZoneText6} name="stuff_zone_text6" type="textarea" />
+                        <ChangeContentLabel label="Stefa asystenta - napis pod kółkiem 1" value={stuff_zone_circle1} func={setStuffZoneCircle1} name="stuff_zone_circle1" />
+                        <ChangeContentLabel label="Stefa asystenta - napis pod kółkiem 2" value={stuff_zone_circle2} func={setStuffZoneCircle2} name="stuff_zone_circle2" />
+                        <ChangeContentLabel label="Stefa asystenta - napis pod kółkiem 3" value={stuff_zone_circle3} func={setStuffZoneCircle3} name="stuff_zone_circle3" />
+                        <ChangeContentLabel label="Posada" value={post} func={setPost} name="post" />
+                        <ChangeContentLabel label="Posada 1" value={post1} func={setPost1} name="post1" />
+                        <ChangeContentLabel label="Posada 2" value={post2} func={setPost2} name="post2" />
+                        <ChangeContentLabel label="Posada 3" value={post3} func={setPost3} name="post3" />
+                        <ChangeContentLabel label="Posada 4" value={post4} func={setPost4} name="post4" />
+                        <ChangeContentLabel label="Posada 5" value={post5} func={setPost5} name="post5" />
+                        <ChangeContentLabel label="Typ wpisu do CV 1" value={cv_type1} func={setCvType1} name="cv_type1" />
+                        <ChangeContentLabel label="Typ wpisu do CV 1" value={cv_type2} func={setCvType2} name="cv_type2" />
+                        <ChangeContentLabel label="Typ wpisu do CV 1" value={cv_type3} func={setCvType3} name="cv_type3" />
+                        <ChangeContentLabel label="Dodaj nowy" value={add_new} func={setAddNew} name="add_new" />
+                        <ChangeContentLabel label="Znajdź nowych asystentów" value={find_new_stuff} func={setFindNewStuff} name="find_new_stuff" />
+                        <ChangeContentLabel label="Zobacz CV" value={see_cv} func={setSeeCv} name="see_cv" />
+                        <ChangeContentLabel label="CV input 1" value={cv_input1} func={setCvInput1} name="cv_input1" />
+                        <ChangeContentLabel label="CV input 2" value={cv_input2} func={setCvInput2} name="cv_input2" />
+                        <ChangeContentLabel label="CV input 3" value={cv_input3} func={setCvInput3} name="cv_input3" />
+                        <ChangeContentLabel label="Menu rozwijane klubu - 1" value={club_search_dropdown1} func={setClubSearchDropdown1} name="club_search_dropdown1" />
+                        <ChangeContentLabel label="Menu rozwijane klubu - 2" value={club_search_dropdown2} func={setClubSearchDropdown2} name="club_search_dropdown2" />
+                        <ChangeContentLabel label="Usuń CV - tekst" value={delete_cv_text} func={setDeleteCvText} name="delete_cv_text" />
+                        <ChangeContentLabel label="CV usunięte" value={cv_deleted} func={setCvDeleted} name="cv_deleted" />
+                        <ChangeContentLabel label="CV dodane" value={cv_added} func={setCvAdded} name="cv_added" />
+                        <ChangeContentLabel label="CV zaktualizowane" value={cv_updated} func={setCvUpdated} name="cv_updated" />
+                        <ChangeContentLabel label="CV - błąd 1" value={cv_input_error1} func={setCvInputError1} name="cv_input_error1" />
+                        <ChangeContentLabel label="CV - błąd 2" value={cv_input_error2} func={setCvInputError2} name="cv_input_error2" />
+                        <ChangeContentLabel label="CV - błąd 3" value={cv_input_error3} func={setCvInputError3} name="cv_input_error3" />
 
                         <button className="admin__btn admin__btn--addNotification admin__btn--cms"
                                 onClick={() => { handleSubmit(); }}>

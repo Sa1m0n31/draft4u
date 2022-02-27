@@ -4,10 +4,11 @@ import check from '../static/img/save-parameter.svg'
 
 import { Range, getTrackBackground } from 'react-range';
 import {
+    getAllStuffPositions,
     updateUserBirthday,
     updateUserClub, updateUserEmail, updateUserExperience, updateUserLicenceNumber,
-    updateUserPhoneNumber,
-    updateUserSalary
+    updateUserPhoneNumber, updateUserPosition,
+    updateUserSalary, updateUserStuffPosition
 } from "../helpers/user";
 import UserProfileImage from "./UserProfileImage";
 import {calculateAge} from "../helpers/others";
@@ -33,6 +34,9 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [licence, setLicence] = useState("");
     const [experience, setExperience] = useState("");
     const [leagues, setLeagues] = useState([]);
+    const [stuffPosition, setStuffPosition] = useState(null);
+    const [editPosition, setEditPosition] = useState(false);
+    const [positions, setPositions] = useState([]);
 
     const [editEmail, setEditEmail] = useState(false);
     const [editAge, setEditAge] = useState(false);
@@ -61,6 +65,15 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     }, []);
 
     useEffect(() => {
+        if(isStuff) {
+            getAllStuffPositions()
+                .then((res) => {
+                    setPositions(res?.data?.result);
+                });
+        }
+    }, [isStuff]);
+
+    useEffect(() => {
         setFavoritePlayer(favorite);
     }, [favorite]);
 
@@ -73,6 +86,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         setLicence(player.licence_number);
         setLeagues(setLeaguesByExperience(player.experience));
         setValues([player.salary_from, player.salary_to]);
+        console.log(player);
+        setStuffPosition(player.stuff_position);
     }, [player]);
 
     const setLeaguesByExperience = (experience) => {
@@ -275,6 +290,11 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         }
     }, [email]);
 
+    const changeUserPosition = () => {
+        setEditPosition(false);
+        updateUserStuffPosition(stuffPosition);
+    }
+
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
             <UserProfileImage user={player} club={clubProp} />
@@ -434,6 +454,38 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                     </div> : ""}
                 </div>
             </>}
+
+            {isStuff ? <label className="userInfoEdition__form__field">
+                <span className="userInfoEdition__key">
+                    Posada
+                </span>
+                <span className="userInfoEdition__value">
+                    <label className={editPosition ? "label--edit" : ""}
+                           onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserPosition(e.keyCode === 9); }}
+                    >
+                        {editPosition ? <select className="select--editProfile"
+                                                disabled={!editPosition}
+                                                value={stuffPosition}
+                                                onChange={(e) => { setStuffPosition(e.target.value); }}
+                        >
+                            {positions?.map((item, index) => {
+                                return <option value={item.name} key={index}>
+                                    {item.name}
+                                </option>
+                            })}
+                        </select> : <input className="input--editProfile"
+                                           disabled={true}
+                                           value={stuffPosition ? stuffPosition : "-"} />}
+
+                        {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPosition(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>}
+                    </label>
+                </span>
+            </label> : ''}
+
             <label className="userInfoEdition__form__field"
                     onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserSalary(e.keyCode === 9); }}
             >

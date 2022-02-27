@@ -78,7 +78,19 @@ const convertStringToURL = (str) => {
 }
 
 const getImageUrl = (path) => {
-    return `${API_URL}/image?url=/media/fields/${path}`;
+    return `https://draft4u.com.pl/image?url=/media/fields/${path}`;
 }
 
-export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getNotificationsNumber, convertStringToURL, getImageUrl }
+const getDate = (d) => {
+    const date = new Date(d);
+    if(date) return date?.getDate() + "." + parseInt(date?.getMonth()+1) + "." + date?.getFullYear();
+    else return '';
+}
+
+const getDateForInput = (d) => {
+    const date = new Date(d);
+    if(date) return date.getFullYear() + '-' + (date.getMonth() < 9 ? '0' + parseInt(date.getMonth()+1) : parseInt(date.getMonth()+1)) + '-' + date.getDate();
+    else return null;
+}
+
+export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById, getMessagePreview, getUniqueListBy, getDate, getNotificationsNumber, convertStringToURL, getImageUrl, getDateForInput }

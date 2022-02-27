@@ -220,19 +220,20 @@ const getUserData = (request, response, userId) => {
         let query = '';
         if(facebook) {
             hash = crypto.createHash('sha256').update(userId.toString()).digest('hex');
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.hash = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.hash = $1`;
             values = [hash];
         }
         else if(!isNumeric(userId)) {
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1 OR identities.hash = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1 OR identities.hash = $1`;
             values = [userId];
         }
         else {
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
             values = [userId];
         }
 
         db.query(query, values, (err, res) => {
+            console.log(err);
             if(res) {
                 if(res.rows.length) {
                     response.send({
@@ -418,8 +419,35 @@ router.put("/update-user-position", basicAuth, (request, response) => {
     updateQuery(query, values, response);
 });
 
+router.put("/update-user-stuff-position", basicAuth, (request, response) => {
+    const { position } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users u SET position = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
+    const values = [position+10, userId]; // position id > 10 for stuff
+
+    updateQuery(query, values, response);
+});
+
 router.get("/get-all-positions", (request, response) => {
     const query = 'SELECT * FROM positions';
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            })
+        }
+    });
+});
+
+router.get("/get-all-stuff-positions", (request, response) => {
+    const query = 'SELECT * FROM stuff_positions';
 
     db.query(query, [], (err, res) => {
         if(res) {
@@ -538,11 +566,15 @@ router.post('/add-cv', (request, response) => {
    const { type, title, from, to, description } = request.body;
    const userId = request.user;
 
+   console.log('add cv');
+   console.log(userId);
+
    const id = uuidv4();
-   const query = 'INSERT INTO cvs VALUES ($1, $2, $3, $4, $5, NOW(), $6)';
+   const query = 'INSERT INTO cvs VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7)';
    const values = [id, type, title, from, to, description, userId];
 
    db.query(query, values, (err, res) => {
+       console.log(err);
        if(res) {
            response.send({
                result: 1
@@ -559,7 +591,7 @@ router.post('/add-cv', (request, response) => {
 router.post('/update-cv', (request, response) => {
     const { id, title, from, to, description } = request.body;
 
-    const query = 'UPDATE cvs SET title = $1, from = $2, to = $3, description = $4 WHERE id = $4';
+    const query = 'UPDATE cvs SET title = $1, from_date = $2, to_date = $3, description = $4 WHERE id = $5';
     const values = [title, from, to, description, id];
 
     db.query(query, values, (err, res) => {
@@ -600,13 +632,14 @@ router.get('/get-player-cvs', (request, response) => {
     const id = request.query.id;
     const userId = request.user;
 
-    const query = 'SELECT * FROM cvs WHERE user = $1 OR user = $2';
+    const query = 'SELECT * FROM cvs WHERE user_id = $1 OR user_id = $2';
     const values = [id, userId];
 
     db.query(query, values, (err, res) => {
         if(res) {
+            console.log(res.rows);
             response.send({
-                result: res
+                result: res.rows
             });
         }
         else {

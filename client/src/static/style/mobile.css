@@ -1043,6 +1043,72 @@
     .paymentMethod__list {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .stuffSection {
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 0 !important;
+    }
+
+    .stuff__addNewBtn {
+        border-radius: 0 !important;
+    }
+
+    .stuffModal__header,
+    .stuff__header {
+        font-size: 19px;
+    }
+
+    .stuffModal__dateLabel,
+    .stuffModal__label,
+    .cv__title {
+        font-size: 17px;
+    }
+
+    .cv__date, .cv__desc {
+        font-size: 14px;
+    }
+
+    .cv__menu {
+        margin-left: 20px;
+    }
+
+    .cv__btn {
+        width: 15px;
+    }
+
+    .stuffModal {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+        z-index: 999;
+    }
+
+    .stuffModal__input {
+        height: 40px;
+    }
+
+    .stuffModal__textarea {
+        height: 140px;
+    }
+
+    .stuffModal__label--title, .stuffModal__dateLabel {
+        width: 100%;
+    }
+
+    .stuffModal__label,
+    .stuffModal__dateLabel {
+        margin-bottom: 20px;
+    }
+
+    .stuffModal__form {
+        margin-top: 15px;
+    }
+
+    .stuffModal__header {
+        margin-top: 30px;
+    }
 }
 
 @media(max-width: 900px) {
@@ -1066,6 +1132,22 @@
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
+    }
+
+    .deleteCvModal {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        z-index: 999;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .deleteCvModal .modal__inner {
+        margin: 0;
+        width: 100%;
     }
 
     .splide__arrows,
@@ -2444,6 +2526,11 @@
     .video__title {
         font-size: 15px;
         padding: 5px 20px;
+    }
+
+    .stuff__writeMsg {
+        width: 90vw;
+        margin-top: 0;
     }
 
     @media(min-width: 700px) {
