@@ -35,6 +35,7 @@ import ContactInfo from "./ContactInfo";
 import { ContentContext } from "../App";
 import polandIcon from '../static/img/poland-flag.svg'
 import ukIcon from '../static/img/united-kingdom.svg'
+import arrowDownIcon from '../static/img/arrow-down-menu.svg'
 
 const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
@@ -389,19 +390,25 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <a className="mobileMenu__list__link" href="/">{menuClub[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/szukaj">{menuClub[1]}</a>
+                    <a className="mobileMenu__list__link" href="/szukaj-zawodnika">{menuClub[1]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/ulubieni">{menuClub[2]}</a>
+                    <a className="mobileMenu__list__link" href="/szukaj-sztabu">{menuClub[2]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/sklady">{menuClub[3]}</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni-zawodnicy">{menuClub[3]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">{menuClub[4]}</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni-sztab">{menuClub[4]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">{menuClub[5]}</a>
+                    <a className="mobileMenu__list__link" href="/sklady">{menuClub[5]}</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">{menuClub[6]}</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/mapa">{menuClub[7]}</a>
                 </li>
             </ul> : ""}
 
@@ -497,14 +504,40 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/szukaj">
+                        <div className="siteHeader__menu__link">
                             {menuClub[1]}
-                        </a>
+                            <img className="siteHeader__menu__arrowDown" src={arrowDownIcon} alt="rozwin" />
+                            <ul className="siteHeader__menu__submenu">
+                                <li className="siteHeader__menu__submenu__item">
+                                    <a className="siteHeader__menu__link" href="/szukaj-zawodnika">
+                                        {content.club_search_dropdown1}
+                                    </a>
+                                </li>
+                                <li className="siteHeader__menu__submenu__item">
+                                    <a className="siteHeader__menu__link" href="/szukaj-sztabu">
+                                        {content.club_search_dropdown2}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/ulubieni">
+                    <li className="siteHeader__menu__list__item siteHeader__menu__list__item--favorites">
+                        <div className="siteHeader__menu__link">
                             {menuClub[2]}
-                        </a>
+                            <img className="siteHeader__menu__arrowDown" src={arrowDownIcon} alt="rozwin" />
+                            <ul className="siteHeader__menu__submenu">
+                                <li className="siteHeader__menu__submenu__item">
+                                    <a className="siteHeader__menu__link" href="/ulubieni-zawodnicy">
+                                        {content.club_search_dropdown1}
+                                    </a>
+                                </li>
+                                <li className="siteHeader__menu__submenu__item">
+                                    <a className="siteHeader__menu__link" href="/ulubieni-sztab">
+                                        {content.club_search_dropdown2}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/sklady">

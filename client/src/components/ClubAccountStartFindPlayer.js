@@ -51,7 +51,7 @@ const ClubAccountStartFindPlayer = () => {
             })}
         </main>
 
-        <a className="button button--hover button--showPlayersPage" href="/szukaj">
+        <a className="button button--hover button--showPlayersPage" href="/szukaj-zawodnika">
             <img className="btn__img" src={getImageUrl(content.img20)} alt="przegladaj" />
         </a>
     </section>

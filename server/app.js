@@ -176,13 +176,19 @@ app.get("/wpis/*", (req, res) => {
 app.get("/konto-klubu", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-app.get("/szukaj", (req, res) => {
+app.get("/szukaj-zawodnika", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/szukaj-sztabu", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 app.get("/profil-zawodnika", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-app.get("/ulubieni", (req, res) => {
+app.get("/ulubieni-zawodnicy", (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+app.get("/ulubieni-sztab", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 app.get("/porownywarka", (req, res) => {

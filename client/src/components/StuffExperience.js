@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import SingleCv from "./SingleCv";
+import {ContentContext} from "../App";
 
 const StuffExperience = ({cvs, openCvModal, deleteCvModal}) => {
+    const { content } = useContext(ContentContext);
+
     return <div className="stuffSection">
         <h3 className="stuff__header">
-            Wykształcenie
+            {content.cv_type1}
         </h3>
 
         {cvs?.map((item, index) => {
@@ -20,7 +23,7 @@ const StuffExperience = ({cvs, openCvModal, deleteCvModal}) => {
         })}
 
         <button className="stuff__addNewBtn" onClick={() => { openCvModal(null, 'experience'); }}>
-            + Dodaj nowy
+            + {content.add_new}
         </button>
     </div>
 };

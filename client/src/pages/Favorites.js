@@ -85,8 +85,12 @@ const Favorites = ({club, favorites}) => {
     useEffect(() => {
         getFavoritesByClub()
             .then((res) => {
-                setPlayers(res?.data?.result);
-                setFilteredPlayers(res?.data?.result);
+                const pl = res?.data?.result?.filter((item) => {
+                    const splittedId = item.identity?.split('-');
+                    return splittedId[splittedId.length-1] !== 'stuff';
+                });
+                setPlayers(pl);
+                setFilteredPlayers(pl);
             });
     }, []);
 

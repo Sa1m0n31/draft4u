@@ -320,6 +320,8 @@ const AdminContent = ({lang}) => {
     const [cv_input_error1, setCvInputError1] = useState("");
     const [cv_input_error2, setCvInputError2] = useState("");
     const [cv_input_error3, setCvInputError3] = useState("");
+    const [delete_cv_yes, setDeleteCvYes] = useState("");
+    const [delete_cv_no, setDeleteCvNo] = useState("");
 
     const [addResult, setAddResult] = useState(-1);
     const [render, setRender] = useState(false);
@@ -643,6 +645,8 @@ const AdminContent = ({lang}) => {
                     setCvInputError1(r.cv_input_error1);
                     setCvInputError2(r.cv_input_error2);
                     setCvInputError3(r.cv_input_error3);
+                    setDeleteCvYes(r.delete_cv_yes);
+                    setDeleteCvNo(r.delete_cv_no);
 
                     setRender(true);
                 }
@@ -714,7 +718,8 @@ const AdminContent = ({lang}) => {
             post, post1, post2, post3, post4, post5,
             cv_type1, cv_type2, cv_type3, add_new, find_new_stuff, see_cv,
             cv_input1, cv_input2, cv_input3, club_search_dropdown1, club_search_dropdown2,
-            delete_cv_text, cv_deleted, cv_added, cv_updated, cv_input_error1, cv_input_error2, cv_input_error3
+            delete_cv_text, cv_deleted, cv_added, cv_updated, cv_input_error1, cv_input_error2, cv_input_error3,
+            delete_cv_yes, delete_cv_no
         })
             .then((res) => {
                 if(res?.data?.result) {
@@ -1052,8 +1057,8 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="Posada 4" value={post4} func={setPost4} name="post4" />
                         <ChangeContentLabel label="Posada 5" value={post5} func={setPost5} name="post5" />
                         <ChangeContentLabel label="Typ wpisu do CV 1" value={cv_type1} func={setCvType1} name="cv_type1" />
-                        <ChangeContentLabel label="Typ wpisu do CV 1" value={cv_type2} func={setCvType2} name="cv_type2" />
-                        <ChangeContentLabel label="Typ wpisu do CV 1" value={cv_type3} func={setCvType3} name="cv_type3" />
+                        <ChangeContentLabel label="Typ wpisu do CV 2" value={cv_type2} func={setCvType2} name="cv_type2" />
+                        <ChangeContentLabel label="Typ wpisu do CV 3" value={cv_type3} func={setCvType3} name="cv_type3" />
                         <ChangeContentLabel label="Dodaj nowy" value={add_new} func={setAddNew} name="add_new" />
                         <ChangeContentLabel label="Znajdź nowych asystentów" value={find_new_stuff} func={setFindNewStuff} name="find_new_stuff" />
                         <ChangeContentLabel label="Zobacz CV" value={see_cv} func={setSeeCv} name="see_cv" />
@@ -1068,7 +1073,9 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="CV zaktualizowane" value={cv_updated} func={setCvUpdated} name="cv_updated" />
                         <ChangeContentLabel label="CV - błąd 1" value={cv_input_error1} func={setCvInputError1} name="cv_input_error1" />
                         <ChangeContentLabel label="CV - błąd 2" value={cv_input_error2} func={setCvInputError2} name="cv_input_error2" />
-                        <ChangeContentLabel label="CV - błąd 3" value={cv_input_error3} func={setCvInputError3} name="cv_input_error3" />
+                        <ChangeContentLabel label="CV - błąd 3" value={cv_input_error2} func={setCvInputError2} name="cv_input_error2" />
+                        <ChangeContentLabel label="Usuń wpis w CV" value={delete_cv_yes} func={setDeleteCvYes} name="delete_cv_yes" />
+                        <ChangeContentLabel label="Powrót" value={delete_cv_no} func={setDeleteCvNo} name="delete_cv_no" />
 
                         <button className="admin__btn admin__btn--addNotification admin__btn--cms"
                                 onClick={() => { handleSubmit(); }}>

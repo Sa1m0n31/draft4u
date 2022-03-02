@@ -120,7 +120,7 @@ router.get("/get-club-by-id", (request, response) => {
 });
 
 router.get("/get-all-players", basicAuth, (request, response) => {
-   const query = `SELECT u.id as user_id, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range 
+   const query = `SELECT id.id as identity, u.id as user_id, u.email, u.phone_number, u.club, u.first_name, u.salary_from, u.salary_to, u.sex, u.position, u.last_name, i.file_path, u.birthday, u.weight, u.height, u.block_range, u.attack_range, u.vertical_range 
    FROM users u 
    JOIN identities id ON id.user_id = u.id
    LEFT OUTER JOIN images i ON u.profile_picture = i.id

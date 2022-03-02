@@ -13,6 +13,8 @@ import ClubTeamsPage from "../pages/ClubTeamsPage";
 import ChatPage from "../pages/ChatPage";
 import Notifications from "../pages/Notifications";
 import ChangePassword from "../pages/ChangePassword";
+import SearchStuffPage from "../pages/SearchStuffPage";
+import FavoritesStuff from "../pages/FavoritesStuff";
 
 const TestClubContext = React.createContext(true);
 
@@ -35,10 +37,27 @@ const ClubWrapper = ({page}) => {
 
                             getAllPlayers()
                                 .then((res) => {
-                                    const players = res?.data?.result;
+                                    const players = res?.data?.result.filter((item) => {
+                                        const splittedId = item.identity?.split('-');
+                                        return splittedId[splittedId.length-1] !== 'stuff';
+                                    });
+                                    const stuff = res?.data?.result?.filter((item) => {
+                                        const splittedId = item.identity?.split('-');
+                                        return splittedId[splittedId.length-1] === 'stuff';
+                                    });
+
                                     getFavoritesByClub()
                                         .then((res) => {
-                                            const favorites = res?.data?.result;
+                                            const favorites = res?.data?.result.filter((item) => {
+                                                // console.log(item);
+                                                const splittedId = item.identity?.split('-');
+                                                console.log(splittedId[splittedId.length-1] !== 'stuff');
+                                                return splittedId[splittedId.length-1] !== 'stuff';
+                                            });
+                                            const favoritesStuff = res?.data?.result?.filter((item) => {
+                                                const splittedId = item.identity?.split('-');
+                                                return splittedId[splittedId.length-1] === 'stuff';
+                                            });
 
                                             if(club) {
                                                 switch(page) {
@@ -77,6 +96,15 @@ const ClubWrapper = ({page}) => {
                                                         break;
                                                     case 10:
                                                         setRenderSwitch(<ChangePassword club={club} />);
+                                                        break;
+                                                    case 11:
+                                                        setRenderSwitch(<SearchStuffPage club={club}
+                                                                                           playersProp={stuff}
+                                                                                           favorites={favoritesStuff} />);
+                                                        break;
+                                                    case 12:
+                                                        setRenderSwitch(<FavoritesStuff club={club}
+                                                                                   favorites={favoritesStuff} />);
                                                         break;
                                                     default:
                                                         setRenderSwitch(<ClubAccountStart club={club} favorites={favorites} />);

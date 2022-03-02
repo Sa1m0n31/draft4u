@@ -151,8 +151,11 @@ function App() {
                 <Route path="/konto-klubu">
                     <ClubWrapper page={1} />
                 </Route>
-                <Route path="/szukaj">
+                <Route path="/szukaj-zawodnika">
                     <ClubWrapper page={2} />
+                </Route>
+                <Route path="/szukaj-sztabu">
+                    <ClubWrapper page={11} />
                 </Route>
                 <Route path="/porownywarka">
                     <ClubWrapper page={3} />
@@ -160,8 +163,11 @@ function App() {
                 <Route path="/profil-zawodnika">
                     <ClubWrapper page={4} />
                 </Route>
-                <Route path="/ulubieni">
+                <Route path="/ulubieni-zawodnicy">
                     <ClubWrapper page={5} />
+                </Route>
+                <Route path="/ulubieni-sztab">
+                    <ClubWrapper page={12} />
                 </Route>
                 <Route path="/sklady">
                     <DndProvider backend={HTML5Backend}>

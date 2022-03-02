@@ -86,7 +86,6 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         setLicence(player.licence_number);
         setLeagues(setLeaguesByExperience(player.experience));
         setValues([player.salary_from, player.salary_to]);
-        console.log(player);
         setStuffPosition(player.stuff_position);
     }, [player]);
 
@@ -457,7 +456,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
 
             {isStuff ? <label className="userInfoEdition__form__field">
                 <span className="userInfoEdition__key">
-                    Posada
+                    {content.post}
                 </span>
                 <span className="userInfoEdition__value">
                     <label className={editPosition ? "label--edit" : ""}

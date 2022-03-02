@@ -8,7 +8,6 @@ import StuffEducation from "./StuffEducation";
 import StuffCourses from "./StuffCourses";
 
 const StuffInfoEdition = ({id, club}) => {
-    const [cvs, setCvs] = useState([]);
     const [experience, setExperience] = useState([]);
     const [education, setEducation] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -24,6 +23,7 @@ const StuffInfoEdition = ({id, club}) => {
     const [to, setTo] = useState(null);
     const [description, setDescription] = useState("");
     const [status, setStatus] = useState(null);
+    const [error, setError] = useState("");
 
     const { content } = useContext(ContentContext);
 
@@ -46,24 +46,52 @@ const StuffInfoEdition = ({id, club}) => {
     }, [update]);
 
     const addNewCv = () => {
+        if(!title) {
+            setError(content.cv_input_error1);
+            return 0;
+        }
+        else if(!from || !to) {
+            setError(content.cv_input_error2);
+            return 0;
+        }
+        else if(!description) {
+            setError(content.cv_input_error3);
+            return 0;
+        }
+
         addCv(type, title, from, to, description)
             .then((res) => {
                 if(res?.data?.result) {
                     setUpdate(!update);
-                    setStatus('Wpis został dodany');
+                    setError("");
+                    setStatus(content.cv_added);
                 }
-                else setStatus('Coś poszło nie tak...');
+                else setStatus(content.error);
             });
     }
 
     const updateCvById = () => {
+        if(!title) {
+            setError(content.cv_input_error1);
+            return 0;
+        }
+        else if(!from || !to) {
+            setError(content.cv_input_error2);
+            return 0;
+        }
+        else if(!description) {
+            setError(content.cv_input_error3);
+            return 0;
+        }
+
         updateCv(cvToEditId, title, from, to, description)
             .then((res) => {
                 if(res?.data?.result) {
                     setUpdate(!update);
-                    setStatus('Wpis został zaktualizowany');
+                    setError("");
+                    setStatus(content.cv_updated);
                 }
-                else setStatus('Coś poszło nie tak...');
+                else setStatus(content.error);
             });
     }
 
@@ -87,6 +115,7 @@ const StuffInfoEdition = ({id, club}) => {
 
     const deleteCvModal = (id) => {
         setDeleteModal(true);
+        setDeleted(-1);
         setCvToEditId(id);
     }
 
@@ -112,19 +141,19 @@ const StuffInfoEdition = ({id, club}) => {
             <div className="modal__inner">
                 {deleted === -1 ? <>
                     <h3 className="modal__header">
-                        Czy na pewno chcesz usunąć ten wpis w CV?
+                        {content.delete_cv_text}
                     </h3>
 
                     <div className="modal__buttons">
                         <button className="modal__btn" onClick={() => { deleteCvById(); }}>
-                            Usuń
+                            {content.delete_cv_yes}
                         </button>
                         <button className="modal__btn" onClick={() => { setDeleteModal(false); }}>
-                            Powrót
+                            {content.delete_cv_no}
                         </button>
                     </div>
                 </> : <h3 className="modal__header">
-                    {deleted === 1 ? "Wpis został usunięty" : "Coś poszło nie tak... Prosimy spróbować później"}
+                    {deleted === 1 ? content.cv_deleted : content.error}
                 </h3>}
             </div>
         </div> : ''}
@@ -135,19 +164,19 @@ const StuffInfoEdition = ({id, club}) => {
             </button>
 
             <h4 className="stuffModal__header">
-                Doświadczenia zawodowe
+                {type === 'experience' ? content.cv_type1 : (type === 'education' ? content.cv_type2 : content.cv_type3)}
             </h4>
 
             {!status ? <main className="stuffModal__form">
                 <label className="stuffModal__label stuffModal__label--title">
-                    Tytuł
+                    {content.cv_input1}
                     <input className="stuffModal__input"
-                           placeholder="Tytuł"
+                           placeholder={content.cv_input1}
                            value={title}
                            onChange={(e) => { setTitle(e.target.value); }} />
                 </label>
                 <section className="stuffModal__dateLabel">
-                    Data
+                    {content.cv_input2}
                     <div className="stuffModal__dateWrapper">
                         <input className="stuffModal__input"
                                type="date"
@@ -161,15 +190,17 @@ const StuffInfoEdition = ({id, club}) => {
                     </div>
                 </section>
                 <label className="stuffModal__label stuffModal__label--desc">
-                    Opis praktyki
+                    {content.cv_input3}
                     <textarea className="stuffModal__input stuffModal__textarea"
-                              placeholder="Opis praktyki"
+                              placeholder={content.cv_input3}
                               value={description}
                               onChange={(e) => { setDescription(e.target.value); }}>
-
                     </textarea>
                 </label>
 
+                {error ? <span className="stuffModal__error">
+                    {error}
+                </span> : ''}
                 <button className="stuffModal__submitBtn" onClick={() => { cvToEditId ? updateCvById() : addNewCv(); }}>
                     <img className="btn__img" src={getImageUrl(content.img12)} alt="dodaj" />
                 </button>
@@ -187,9 +218,9 @@ const StuffInfoEdition = ({id, club}) => {
         <StuffEducation cvs={education} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
         <StuffCourses cvs={courses} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
 
-        <a className="stuff__writeMsg" href={`/wiadomosci?new=${id}`}>
+        {club ? <a className="stuff__writeMsg" href={`/wiadomosci?new=${id}`}>
             <img className="btn__img" src={getImageUrl(content.img11)} alt="napisz" />
-        </a>
+        </a> : ''}
     </section>
 };
 

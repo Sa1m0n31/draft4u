@@ -1998,7 +1998,7 @@
         min-height: 100vh;
         height: 100%;
         background: #282828;
-        z-index: 12;
+        z-index: 999;
     }
 
     .playersWall__mobileFilters__header {
@@ -2009,6 +2009,13 @@
         align-items: center;
         height: 60px;
         position: relative;
+    }
+
+    .playerCard--stuff .playerCard__imgWrapper {
+        width: 130px;
+        height: 130px;
+        margin-top: -65px;
+        margin-bottom: 15px;
     }
 
     .playersWall__mobileFilters__header__btn {
@@ -2024,6 +2031,10 @@
     .playersWall__mobileFilters__header__btn__img {
         filter: brightness(0) invert(1);
         transform: rotate(180deg);
+    }
+
+    .stuffCard__stats__item > * {
+        font-size: 14px;
     }
 
     .playersWall__mobileFilters__header__h {
