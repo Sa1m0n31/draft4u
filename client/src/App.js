@@ -30,6 +30,7 @@ import ContentPage from "./pages/ContentPage";
 import {getCustomFields} from "./helpers/admin";
 import DraftLoader from "./components/Loader";
 import LoadingPage from "./pages/LoadingPage";
+import Stuff from "./pages/Stuff";
 
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 
@@ -92,6 +93,9 @@ function App() {
           </Route>
           <Route path={["/klub", '/club']}>
               <Club />
+          </Route>
+          <Route path="/sztab">
+              <Stuff />
           </Route>
           <Route path={["/mapa", "/map"]}>
               <Map />

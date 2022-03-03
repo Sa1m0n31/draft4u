@@ -264,14 +264,20 @@ const RegisterModal = (props) => {
         </h3>
 
         {step0 ? <div className="registerModal__step0">
-            <div className="registerModal__step0__buttons">
+            <div className="registerModal__step0__buttons d-desktop-flex">
                 <button className="registerModal__step0__btn" onClick={() => { chooseAccountType(0); }}>
-                    <img className="registerModal__step0__btn__img" src={playerZone} alt="strefa-zawodnika" />
-                    <img className="registerModal__step0__btn__img__caption" src={playerZoneCaption} alt="strefa-zawodnika" />
+                    <img className="registerModal__step0__btn__img" src={getImageUrl(content.img37)} alt="strefa-zawodnika" />
                 </button>
                 <button className="registerModal__step0__btn" onClick={() => { chooseAccountType(1); }}>
-                    <img className="registerModal__step0__btn__img" src={coachZone} alt="strefa-asystenta" />
-                    <img className="registerModal__step0__btn__img__caption" src={coachZoneCaption} alt="strefa-asystenta" />
+                    <img className="registerModal__step0__btn__img" src={getImageUrl(content.img36)} alt="strefa-asystenta" />
+                </button>
+            </div>
+            <div className="registerModal__step0__buttons d-mobile">
+                <button className="registerModal__step0__btn" onClick={() => { chooseAccountType(0); }}>
+                    <img className="registerModal__step0__btn__img" src={getImageUrl(content.img35)} alt="strefa-zawodnika" />
+                </button>
+                <button className="registerModal__step0__btn" onClick={() => { chooseAccountType(1); }}>
+                    <img className="registerModal__step0__btn__img" src={getImageUrl(content.img34)} alt="strefa-asystenta" />
                 </button>
             </div>
         </div> : <>

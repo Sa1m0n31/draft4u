@@ -72,18 +72,18 @@ const StuffCard = ({index, player, favoriteView, favorite, addPlayerToFavorites}
         <main className="playerCard__stats">
             <section className="stuffCard__stats__item flex">
                 <h3 className="stuffCard__stats__item__header">
-                    Aktualny klub
-                </h3>
-                <p className="stuffCard__stats__item__value">
-                    {player.club ? player.club : '-'}
-                </p>
-            </section>
-            <section className="stuffCard__stats__item flex">
-                <h3 className="stuffCard__stats__item__header">
                     {content.post}
                 </h3>
                 <p className="stuffCard__stats__item__value">
                     {post}
+                </p>
+            </section>
+            <section className="stuffCard__stats__item flex">
+                <h3 className="stuffCard__stats__item__header">
+                    {content.player_parameter_4}
+                </h3>
+                <p className="stuffCard__stats__item__value">
+                    {player.club ? player.club : '-'}
                 </p>
             </section>
             <section className="stuffCard__stats__item flex">

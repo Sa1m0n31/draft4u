@@ -3,9 +3,10 @@ import StuffExperience from "./StuffExperience";
 import {addCv, deleteCv, getCvs, updateCv} from "../helpers/user";
 import closeIcon from '../static/img/close-grey.svg'
 import {getDate, getDateForInput, getImageUrl} from "../helpers/others";
-import {ContentContext} from "../App";
+import {ContentContext, StuffContext} from "../App";
 import StuffEducation from "./StuffEducation";
 import StuffCourses from "./StuffCourses";
+import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const StuffInfoEdition = ({id, club}) => {
     const [experience, setExperience] = useState([]);
@@ -26,6 +27,7 @@ const StuffInfoEdition = ({id, club}) => {
     const [error, setError] = useState("");
 
     const { content } = useContext(ContentContext);
+    const { testClub } = useContext(TestClubContext);
 
     useEffect(() => {
         getCvs(id)
@@ -218,7 +220,7 @@ const StuffInfoEdition = ({id, club}) => {
         <StuffEducation cvs={education} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
         <StuffCourses cvs={courses} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
 
-        {club ? <a className="stuff__writeMsg" href={`/wiadomosci?new=${id}`}>
+        {club && !testClub ? <a className="stuff__writeMsg" href={`/wiadomosci?new=${id}`}>
             <img className="btn__img" src={getImageUrl(content.img11)} alt="napisz" />
         </a> : ''}
     </section>

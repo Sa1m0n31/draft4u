@@ -1073,7 +1073,7 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="CV zaktualizowane" value={cv_updated} func={setCvUpdated} name="cv_updated" />
                         <ChangeContentLabel label="CV - błąd 1" value={cv_input_error1} func={setCvInputError1} name="cv_input_error1" />
                         <ChangeContentLabel label="CV - błąd 2" value={cv_input_error2} func={setCvInputError2} name="cv_input_error2" />
-                        <ChangeContentLabel label="CV - błąd 3" value={cv_input_error2} func={setCvInputError2} name="cv_input_error2" />
+                        <ChangeContentLabel label="CV - błąd 3" value={cv_input_error3} func={setCvInputError3} name="cv_input_error2" />
                         <ChangeContentLabel label="Usuń wpis w CV" value={delete_cv_yes} func={setDeleteCvYes} name="delete_cv_yes" />
                         <ChangeContentLabel label="Powrót" value={delete_cv_no} func={setDeleteCvNo} name="delete_cv_no" />
 

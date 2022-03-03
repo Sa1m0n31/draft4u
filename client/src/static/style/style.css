@@ -169,6 +169,7 @@ ul {
     font-size: 21px;
     padding: 0 20px;
     opacity: .8;
+    white-space: nowrap;
     text-transform: uppercase;
 }
 
@@ -230,6 +231,10 @@ ul {
 .mobileMenu__btn__img {
     width: 100%;
     height: auto;
+}
+
+.container--homepage .mobileMenu__btn__img {
+    filter: brightness(1) invert(1);
 }
 
 .siteHeader__player {
@@ -552,7 +557,7 @@ ul {
     background: var(--dark);
     z-index: -1;
     width: 28% !important;
-    left: 31% !important;
+    left: 32.5%;
     transform: skewX(-14.1deg);
     transform-origin: center;
 }
@@ -588,22 +593,31 @@ ul {
     z-index: -1;
 }
 
-@media(min-width: 1650px) {
-    .landingPage__inner {
-        margin-bottom: -1.7%;
-    }
+.landingPage__inner {
+    margin-bottom: -1.7%;
 }
 
-.landingPage__inner::after {
+.landingPage__inner__section::after {
     content: "";
     position: absolute;
     bottom: -55px;
     left: 0;
     z-index: 0;
-    width: 100vw;
+    width: 100%;
     height: 240px;
-    /*background: rgba(255, 255, 255, .5);*/
-    background: transparent linear-gradient(180deg, #FFFFFF00 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(180deg, #FFFFFF00 0%, #FFFFFF 60%) 0% 0% no-repeat padding-box;
+}
+
+.landingPage__inner__section:first-of-type::after {
+    left: -15%;
+    transform: skewX(-14.1deg) !important;
+}
+
+.landingPage__inner__section:nth-of-type(2)::after {
+    background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
+    transform: skewX(-14.1deg);
+    left: -10%;
+    width: 102%;
 }
 
 .landingPage__inner__section {
@@ -613,7 +627,7 @@ ul {
     justify-content: flex-end;
     align-items: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .landingPage__person:hover,
@@ -622,7 +636,7 @@ ul {
 }
 
 .landingPage__inner__section:nth-of-type(2):hover .landingPage__person {
-    transform: scale(1.05) translateY(110px);
+    transform: scale(1.05) translateY(150px);
 }
 
 .landingPage__inner__section:nth-of-type(2) {
@@ -630,13 +644,12 @@ ul {
 }
 
 .landingPage__inner__section:nth-of-type(2) .landingPage__person {
-    transform: translateY(110px);
+    transform: translateY(150px);
     width: 95%;
-    filter: brightness(.8);
 }
 
 .landingPage__inner__section:nth-of-type(2) .landingPage__personCaption {
-    margin-left: -5%;
+    margin-left: -7%;
 }
 
 .landingPage__person {
@@ -651,7 +664,8 @@ ul {
     transform: translateX(-50%);
     display: block;
     z-index: 2;
-    width: 40%;
+    width: auto;
+    height: 16%;
 }
 
 .landingPage__left, .landingPage__right {
@@ -5587,6 +5601,10 @@ input::-webkit-inner-spin-button {
     align-items: center;
 }
 
+.clubForm__inner .registerForm__btnWrapper {
+    justify-content: flex-start;
+}
+
 .clubForm .registerForm--nextBtn {
     width: 250px;
     margin: 0;
@@ -6086,15 +6104,19 @@ input::-webkit-inner-spin-button {
 
 .registerModal__step0__btn {
     width: 49%;
-    height: 80%;
+    height: auto;
     border-radius: 20px;
-    background: #fff;
+    background: transparent;
     position: relative;
 }
 
 .registerModal__step0__btn__img {
+    width: 100%;
     transition: .2s all;
-    transform-origin: bottom center;
+}
+
+.registerModal__step0__btn:hover .registerModal__step0__btn__img {
+    filter: brightness(.95);
 }
 
 .registerModal__step0__btn__img__caption {
@@ -6104,20 +6126,6 @@ input::-webkit-inner-spin-button {
     transform: translateX(-50%);
     width: 50%;
     z-index: 3;
-}
-
-.registerModal__step0__btn::after {
-    content: "";
-    background: transparent linear-gradient(180deg, #FFFFFF00 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-}
-
-.registerModal__step0__btn:hover .registerModal__step0__btn__img {
-    transform: scale(1.015);
 }
 
 .stuffSection {
@@ -6365,7 +6373,7 @@ input::-webkit-inner-spin-button {
     margin-bottom: -90px;
 }
 
-.container--dark .stuffSection {
+.container--dark .stuffSection{
     background: #474747;
 }
 
@@ -6395,7 +6403,11 @@ input::-webkit-inner-spin-button {
 }
 
 .container--dark .stuffSection {
-    padding-bottom: 10px;
+    padding-bottom: 30px;
+}
+
+.container--dark .cv {
+    margin-bottom: 0;
 }
 
 .cv:last-of-type {
@@ -6503,4 +6515,9 @@ div.siteHeader__menu__link {
     display: block;
     margin: 0 auto 10px;
     width: 100%;
+}
+
+.d-mobile .registerModal__step0__btn {
+    width: 100%;
+    margin-bottom: 20px;
 }

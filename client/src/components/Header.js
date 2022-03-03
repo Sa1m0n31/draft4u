@@ -319,6 +319,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <a className="mobileMenu__list__link" href="/klub">{menuBeforeLogin[3]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/sztab">Sztab</a>
+                </li>
+                <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[4]}</a>
                 </li>
             </ul> : ""}
@@ -468,6 +471,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/klub">
                             {menuBeforeLogin[3]}
+                        </a>
+                    </li>
+                    <li className="siteHeader__menu__list__item">
+                        <a className="siteHeader__menu__link" href="/sztab">
+                            Sztab
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
