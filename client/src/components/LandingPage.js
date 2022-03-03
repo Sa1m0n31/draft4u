@@ -1,10 +1,8 @@
 import React, {useContext, useRef} from 'react'
 import ClubSlider from "./ClubSlider";
-import trener from '../static/img/trener.png'
-import zawodnicy from '../static/img/zawodnicy.png'
-import belka from '../static/img/belka.png'
-import boisko from '../static/img/boisko-hero.svg'
-import pilka from '../static/img/tlo-zawodnikow.png'
+import person1 from '../static/img/sztab-postac.png'
+import person2 from '../static/img/zawodnik-postac.png'
+import person3 from '../static/img/klub-postac.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
@@ -38,35 +36,18 @@ const LandingPage = ({registerFromThirdParty}) => {
 
     return <main className="landingPage">
         <main className="landingPage__inner">
-
-            <a className="landingPage__link landingPage__link--left"
-               onMouseEnter={() => { animationPlayer(); }}
-               onMouseLeave={() => { animationPlayerEnd(); }}
-               href="/zawodnik"></a>
-            <a className="landingPage__link landingPage__link--right"
-               onMouseEnter={() => { animationCoach(); }}
-               onMouseLeave={() => { animationCoachEnd(); }}
-               href="/klub">
+            <a className="landingPage__inner__section" href="/sztab">
+                <img className="landingPage__person" src={person1} alt="strefa-asystenta" />
+                <img className="landingPage__personCaption" src={getImageUrl(content.img30)} alt="strefa-asystenta" />
             </a>
-
-            <img className="landingPage__img"
-                 id="boisko"
-                 src={boisko} alt="boisko" />
-            <img className="landingPage__img"
-                 id="pilka"
-                 src={pilka} alt="boisko" />
-
-            <img className="landingPage__img"
-                 id="belka"
-                 src={getImageUrl(content.img1)} alt="belka" />
-            <img className="landingPage__img"
-                 id="trener"
-                 ref={clubZone}
-                 src={trener} alt="trener" />
-            <img className="landingPage__img"
-                 id="zawodnicy"
-                 ref={playerZone}
-                 src={zawodnicy} alt="zawodnicy" />
+            <a className="landingPage__inner__section" href="/zawodnik">
+                <img className="landingPage__person" src={person2} alt="strefa-asystenta" />
+                <img className="landingPage__personCaption" src={getImageUrl(content.img31)} alt="strefa-asystenta" />
+            </a>
+            <a className="landingPage__inner__section" href="/klub">
+                <img className="landingPage__person" src={person3} alt="strefa-asystenta" />
+                <img className="landingPage__personCaption" src={getImageUrl(content.img32)} alt="strefa-asystenta" />
+            </a>
         </main>
 
         <ClubSlider />

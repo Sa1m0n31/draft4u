@@ -382,7 +382,15 @@ router.post('/update-images', upload.fields([
     { name: 'img25', maxCount: 1 },
     { name: 'img26', maxCount: 1 },
     { name: 'img27', maxCount: 1 },
-    { name: 'img28', maxCount: 1 }
+    { name: 'img28', maxCount: 1 },
+    { name: 'img29', maxCount: 1 },
+    { name: 'img30', maxCount: 1 },
+    { name: 'img31', maxCount: 1 },
+    { name: 'img32', maxCount: 1 },
+    { name: 'img33', maxCount: 1 },
+    { name: 'img34', maxCount: 1 },
+    { name: 'img35', maxCount: 1 },
+    { name: 'img36', maxCount: 1 }
 ]), (request, response) => {
     const files = request.files;
     let img1 = null,
@@ -412,7 +420,15 @@ router.post('/update-images', upload.fields([
         img25 = null,
         img26 = null,
         img27 = null,
-        img28 = null;
+        img28 = null,
+        img29 = null,
+        img30 = null,
+        img31 = null,
+        img32 = null,
+        img33 = null,
+        img34 = null,
+        img35 = null,
+        img36 = null;
     if(files.img1) img1 = files.img1[0].filename;
     if(files.img2) img2 = files.img2[0].filename;
     if(files.img3) img3 = files.img3[0].filename;
@@ -441,6 +457,14 @@ router.post('/update-images', upload.fields([
     if(files.img26) img26 = files.img26[0].filename;
     if(files.img27) img27 = files.img27[0].filename;
     if(files.img28) img28 = files.img28[0].filename;
+    if(files.img29) img29 = files.img29[0].filename;
+    if(files.img30) img30 = files.img30[0].filename;
+    if(files.img31) img31 = files.img31[0].filename;
+    if(files.img32) img32 = files.img32[0].filename;
+    if(files.img33) img33 = files.img33[0].filename;
+    if(files.img34) img34 = files.img34[0].filename;
+    if(files.img35) img35 = files.img35[0].filename;
+    if(files.img36) img36 = files.img36[0].filename;
 
     const lang = request.body.lang;
 
@@ -471,14 +495,24 @@ router.post('/update-images', upload.fields([
                     img25 = COALESCE($25, img25), 
                     img26 = COALESCE($26, img26), 
                     img27 = COALESCE($27, img27), 
-                    img28 = COALESCE($28, img28)
-                    WHERE language = $29`
+                    img28 = COALESCE($28, img28),
+                    img30 = COALESCE($29, img30),
+                    img31 = COALESCE($30, img31),
+                    img32 = COALESCE($31, img32),
+                    img33 = COALESCE($32, img33),
+                    img34 = COALESCE($33, img34),
+                    img35 = COALESCE($34, img35),
+                    img36 = COALESCE($35, img36),
+                    img37 = COALESCE($36, img37)
+                    WHERE language = $37`
     const values = [img1, img2, img3, img4, img5,
                     img6, img7, img8, img9, img10,
                     img11, img12, img13, img14, img15,
                     img16, img17, img18, img19, img20,
                     img21, img22, img23, img24, img25,
-                    img26, img27, img28, lang];
+                    img26, img27, img28, img29, img30,
+                    img31, img32, img33, img34, img35,
+                    img36, lang];
 
     db.query(query, values, (err, res) => {
         console.log(err);

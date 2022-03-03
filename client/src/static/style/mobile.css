@@ -224,12 +224,6 @@
     }
 }
 
-@media(max-width: 1500px) {
-    .landingPage__inner {
-        transform: translateX(-50%) scale(.8);
-    }
-}
-
 @media(max-width: 1400px) {
     .clubCarousel__item__img {
         height: 60px;
@@ -405,10 +399,6 @@
 
     .homepage--overlay--right {
         transform: skewX(-14.5deg);
-    }
-
-    .landingPage__inner {
-        transform: translateX(-50%) scale(.7);
     }
 
     .playersWall__compareSection__item__deleteBtn {
@@ -749,9 +739,9 @@
         white-space: nowrap;
     }
 
-    .landingPage__inner {
-        transform: translateX(-50%) scale(.4);
-    }
+    /*.landingPage__inner {*/
+    /*    transform: translateX(-50%) scale(.4);*/
+    /*}*/
 
     .clubTeams__header {
         font-size: 24px;
@@ -2586,17 +2576,17 @@
         left: 0.6%;
     }
 
-    .landingPage__link--left::after {
+    .landingPage__link--left::after.landingPage__inner {
         right: 6%;
         height: 100px;
     }
 
-    .landingPage__inner {
-        height: 57vw !important;
-        width: 101% !important;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+    /*.landingPage__inner {*/
+    /*    height: 57vw !important;*/
+    /*    width: 101% !important;*/
+    /*    left: 50%;*/
+    /*    transform: translateX(-50%);*/
+    /*}*/
 
     .aboutUs__header {
         margin-bottom: 90px !important;
@@ -2717,8 +2707,7 @@
         width: 100%;
         height: 280px;
         background: var(--dark);
-        transform: translateY(-100%) skewY(
-                -8deg);
+        transform: translateY(-100%);
         z-index: -1;
     }
 
@@ -2740,71 +2729,71 @@
     }
 }
 
-@media(max-width: 500px) {
-    .landingPage__link--left::after {
-        height: 50px;
-    }
+/*@media(max-width: 500px) {*/
+/*    .landingPage__link--left::after {*/
+/*        height: 50px;*/
+/*    }*/
 
-    #belka {
-        left: 0.3%;
-    }
+/*    #belka {*/
+/*        left: 0.3%;*/
+/*    }*/
 
-    .container--homepage .footer::before {
-        height: 275px;
-    }
-}
+/*    .container--homepage .footer::before {*/
+/*        height: 275px;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 450px) {
-    #belka {
-        left: 0;
-    }
-}
+/*@media(max-width: 450px) {*/
+/*    #belka {*/
+/*        left: 0;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 430px) {
-    .container--homepage .footer::before {
-        height: 271px;
-    }
-}
+/*@media(max-width: 430px) {*/
+/*    .container--homepage .footer::before {*/
+/*        height: 271px;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 370px) {
-    .landingPage__link--left::after {
-        height: 30px;
-    }
+/*@media(max-width: 370px) {*/
+/*    .landingPage__link--left::after {*/
+/*        height: 30px;*/
+/*    }*/
 
-    .container--homepage .footer::before {
-        height: 267px;
-    }
-}
+/*    .container--homepage .footer::before {*/
+/*        height: 267px;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 320px) {
-    .container--homepage .footer::before {
-        height: 264px;
-    }
-}
+/*@media(max-width: 320px) {*/
+/*    .container--homepage .footer::before {*/
+/*        height: 264px;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 420px) {
-    #belka {
-        left: -0.5%;
-    }
-}
+/*@media(max-width: 420px) {*/
+/*    #belka {*/
+/*        left: -0.5%;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 390px) {
-    #belka {
-        left: -0.7%;
-    }
-}
+/*@media(max-width: 390px) {*/
+/*    #belka {*/
+/*        left: -0.7%;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 380px) {
-    #belka {
-        left: -0.9%;
-    }
-}
+/*@media(max-width: 380px) {*/
+/*    #belka {*/
+/*        left: -0.9%;*/
+/*    }*/
+/*}*/
 
-@media(max-width: 370px) {
-    #belka {
-        left: -1%;
-    }
-}
+/*@media(max-width: 370px) {*/
+/*    #belka {*/
+/*        left: -1%;*/
+/*    }*/
+/*}*/
 
 @media(max-width: 350px) {
     .aboutUs__header {
@@ -2831,6 +2820,10 @@
 @media(min-height: 1300px) {
     .aboutUs__main {
         padding: 150px 0 120px;
+    }
+
+    .landingPage__inner {
+        margin-bottom: -2.8%;
     }
 }
 

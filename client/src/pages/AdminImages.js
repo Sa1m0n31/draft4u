@@ -39,19 +39,26 @@ const AdminImages = ({lang}) => {
         { img: null, updateImage: false, imageUpdated: false, label: 'Button 20' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Button 21' },
         { img: null, updateImage: false, imageUpdated: false, label: 'Button 22' },
-    ])
-
-    const [img, setImg] = useState(null);
-    const [updateImage, setUpdateImage] = useState(false);
-    const [imageUpdated, setImageUpdated] = useState(false);
+        { img: null, updateImage: false, imageUpdated: false, label: 'Button 23' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Strona główna - asystent' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Strona główna - zawodnik' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Strona główna - klub' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Strefa asystenta' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Rejestracja mobile - sztab' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Rejestracja mobile - klub' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Rejestracja desktop - sztab' },
+        { img: null, updateImage: false, imageUpdated: false, label: 'Rejestracja desktop - klub' },
+    ]);
 
     useEffect(() => {
         getCustomFields(lang)
             .then((res) => {
+                console.log(res?.data?.result[0]);
                 const keyValuePairs = Object.entries(res?.data?.result[0]);
                 const imagesKeyValue = keyValuePairs.filter((item) => {
                     return item[0].substring(0, 3) === 'img';
                 });
+                console.log(imagesKeyValue);
                 setImages(images?.map((item, index) => {
                     return {
                         img: item.img,

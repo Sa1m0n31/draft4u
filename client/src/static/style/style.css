@@ -548,10 +548,11 @@ ul {
 }
 
 .container--homepage::after {
-    right: 0;
+    right: unset !important;
     background: var(--dark);
     z-index: -1;
-    width: 53.3%;
+    width: 28% !important;
+    left: 31% !important;
     transform: skewX(-14.1deg);
     transform-origin: center;
 }
@@ -570,17 +571,87 @@ ul {
 }
 
 .landingPage__inner {
-    width: 1100px;
-    height: 720px;
+    width: 100%;
+    height: auto;
+    min-height: 350px;
     background: transparent;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+    align-items: flex-end;
     position: relative;
     left: 50%;
     transform-origin: center center;
     transform: translateX(-50%);
+    margin-bottom: -2.3%;
+    margin-top: -2%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+@media(min-width: 1650px) {
+    .landingPage__inner {
+        margin-bottom: -1.7%;
+    }
+}
+
+.landingPage__inner::after {
+    content: "";
+    position: absolute;
+    bottom: -55px;
+    left: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 240px;
+    /*background: rgba(255, 255, 255, .5);*/
+    background: transparent linear-gradient(180deg, #FFFFFF00 0%, #FFFFFF 100%) 0% 0% no-repeat padding-box;
+}
+
+.landingPage__inner__section {
+    width: 27%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.landingPage__person:hover,
+.landingPage__inner__section:hover .landingPage__person {
+    transform: scale(1.05);
+}
+
+.landingPage__inner__section:nth-of-type(2):hover .landingPage__person {
+    transform: scale(1.05) translateY(110px);
+}
+
+.landingPage__inner__section:nth-of-type(2) {
+    z-index: 5;
+}
+
+.landingPage__inner__section:nth-of-type(2) .landingPage__person {
+    transform: translateY(110px);
+    width: 95%;
+    filter: brightness(.8);
+}
+
+.landingPage__inner__section:nth-of-type(2) .landingPage__personCaption {
+    margin-left: -5%;
+}
+
+.landingPage__person {
+    width: 85%;
+    transition: .2s all;
+}
+
+.landingPage__personCaption {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    z-index: 2;
+    width: 40%;
 }
 
 .landingPage__left, .landingPage__right {
@@ -750,19 +821,14 @@ ul {
     /*border-left: 9.2vw solid red;*/
 }
 
-@media(-webkit-min-device-pixel-ratio: 1.05) {
-    .landingPage__inner {
-        transform: translateX(-50%) scale(.8);
-        transform-origin: top center;
-    }
-}
-
 /* Club slider */
 .clubCarousel {
     width: 100%;
     margin: 200px auto 30px;
     height: 240px;
     background: rgba(255, 255, 255, .7);
+    position: relative;
+    z-index: 3;
 }
 
 .container--homepage .clubCarousel {
@@ -5423,7 +5489,7 @@ input::-webkit-inner-spin-button {
 }
 
 .container--homepage .clubCarousel::after {
-    content: "";
+    /*content: "";*/
     position: absolute;
     bottom: 0;
     right: 0;
