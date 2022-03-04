@@ -146,12 +146,24 @@
     .landingPage__inner__section:first-of-type::after {
         width: 105%;
     }
+
+    .landingPage__inner__section:nth-of-type(2) .landingPage__person {
+        transform: translateY(110px);
+    }
+
+    .landingPage__inner__section:nth-of-type(2):hover .landingPage__person {
+        transform: scale(1.05) translateY(110px);
+    }
 }
 
 @media(max-width: 1600px) {
     .landingPage__inner__section:nth-of-type(2)::after {
         left: -3%;
         width: 98%;
+    }
+
+    .label--edit--email {
+        min-width: 300px;
     }
 
     .clubForm .registerForm--nextBtn {
@@ -2687,11 +2699,11 @@
 
 @media(max-width: 600px) {
     .landingPage__inner__section .landingPage__person {
-        transform: translateY(-26px);
+        transform: translateY(0);
     }
 
     .landingPage__inner__section:hover .landingPage__person {
-        transform: scale(1.02) translateY(-26px);
+        transform: scale(1.02) translateY(0);
     }
 
     .landingPage__inner__section:nth-of-type(2) .landingPage__person {
@@ -2917,13 +2929,18 @@
 
 @media(max-width: 450px) {
     .container--homepage::after {
-        left: 1%;
+        left: -5%;
+        width: 32% !important;
+    }
+
+    .label--edit--email {
+        min-width: 250px;
     }
 }
 
 @media(max-width: 420px) {
     .container--homepage::after {
-        left: -2%;
+        left: -9%;
     }
 }
 
@@ -2938,6 +2955,13 @@
 
     .landingPage__inner {
         margin-top: -170px;
+    }
+
+    .landingPage__inner__section:nth-of-type(2)::after {
+        width: 77%;
+        display: block;
+        left: 0;
+        height: 110px;
     }
 }
 
@@ -3040,6 +3064,7 @@
     .mobileMenu__bottom {
         transform: scale(.7);
         transform-origin: center bottom;
+        bottom: 8vh;
     }
 }
 

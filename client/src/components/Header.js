@@ -393,25 +393,22 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <a className="mobileMenu__list__link" href="/">{menuClub[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/szukaj-zawodnika">{menuClub[1]}</a>
+                    <a className="mobileMenu__list__link" href="/szukaj-zawodnika">Zawodnicy</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/szukaj-sztabu">{menuClub[2]}</a>
+                    <a className="mobileMenu__list__link" href="/szukaj-sztabu">Sztab</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/ulubieni-zawodnicy">{menuClub[3]}</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni-zawodnicy">Ulubieni - zawodnicy</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/ulubieni-sztab">{menuClub[4]}</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni-sztab">Ulubieni - sztab</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/sklady">{menuClub[5]}</a>
+                    <a className="mobileMenu__list__link" href="/sklady">Składy</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">{menuClub[6]}</a>
-                </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">{menuClub[7]}</a>
+                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">Zapisane drużyny</a>
                 </li>
             </ul> : ""}
 
