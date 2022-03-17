@@ -609,7 +609,7 @@ ul {
 }
 
 .landingPage__inner__section:first-of-type::after {
-    left: -15%;
+    left: -17%;
     transform: skewX(-14.1deg) !important;
 }
 
@@ -619,6 +619,7 @@ ul {
     transform: skewX(-14.1deg);
     left: -10%;
     width: 102%;
+    display: none;
 }
 
 .landingPage__inner__section {
@@ -646,11 +647,15 @@ ul {
 
 .landingPage__inner__section:nth-of-type(2) .landingPage__person {
     transform: translateY(150px);
-    width: 95%;
+    width: 85%;
 }
 
 .landingPage__inner__section:nth-of-type(2) .landingPage__personCaption {
     margin-left: -7%;
+}
+
+.landingPage__inner__section:first-of-type {
+    z-index: 1 !important;
 }
 
 .landingPage__person {

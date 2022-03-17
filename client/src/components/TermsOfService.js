@@ -11,7 +11,7 @@ const TermsOfService = () => {
 
     useEffect(() => {
         if(content) {
-            setMain(stateToHTML((convertFromRaw(JSON.parse(content.privacy_policy)))))
+            setMain(stateToHTML((convertFromRaw(JSON.parse(content.terms_of_service)))))
         }
     }, [content]);
 

@@ -319,10 +319,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <a className="mobileMenu__list__link" href="/klub">{menuBeforeLogin[3]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/sztab">Sztab</a>
+                    <a className="mobileMenu__list__link" href="/sztab">{menuBeforeLogin[4]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[4]}</a>
+                    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[5]}</a>
                 </li>
             </ul> : ""}
 
@@ -393,22 +393,22 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <a className="mobileMenu__list__link" href="/">{menuClub[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/szukaj-zawodnika">Zawodnicy</a>
+                    <a className="mobileMenu__list__link" href="/szukaj-zawodnika">{menuClub[6]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/szukaj-sztabu">Sztab</a>
+                    <a className="mobileMenu__list__link" href="/szukaj-sztabu">{menuClub[7]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/ulubieni-zawodnicy">Ulubieni - zawodnicy</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni-zawodnicy">{menuClub[8]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/ulubieni-sztab">Ulubieni - sztab</a>
+                    <a className="mobileMenu__list__link" href="/ulubieni-sztab">{menuClub[9]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/sklady">Składy</a>
+                    <a className="mobileMenu__list__link" href="/sklady">{menuClub[3]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">Zapisane drużyny</a>
+                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">{menuClub[4]}</a>
                 </li>
             </ul> : ""}
 
@@ -472,12 +472,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/sztab">
-                            Sztab
+                            {menuBeforeLogin[4]}
                         </a>
                     </li>
                     <li className="siteHeader__menu__list__item">
                         <a className="siteHeader__menu__link" href="/mapa">
-                            {menuBeforeLogin[4]}
+                            {menuBeforeLogin[5]}
                         </a>
                     </li>
                 </ul> : ""}
