@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MapContent from "../components/MapContent";
 import {isLoggedIn} from "../helpers/auth";
-import DraftLoader from "../components/Loader";
 import {getClubData} from "../helpers/club";
 import {getUserData} from "../helpers/user";
 import LoadingPage from "./LoadingPage";

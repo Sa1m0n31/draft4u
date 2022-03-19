@@ -2237,6 +2237,7 @@ ul {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 50px;
+    position: relative;
 }
 
 .mapContent__header__item__header {
@@ -6540,4 +6541,40 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .input--editProfile[type="date"] {
     text-align: right !important;
+}
+
+.mapDot--poland {
+    top: 50%;
+    left: 64%;
+}
+
+.mapContent__countrySelectWrapper {
+    background: transparent;
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+}
+
+.mapContent__countrySelect {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: transparent;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #707070;
+    opacity: .9;
+}
+
+.mapContent__countrySelect__arrow {
+    width: 20px;
+    margin-left: 10px;
+}
+
+.mapContent__countrySelect--hidden {
+    visibility: hidden;
+}
+
+.mapContent__countrySelectWrapper:hover .mapContent__countrySelect--hidden {
+    visibility: visible;
 }

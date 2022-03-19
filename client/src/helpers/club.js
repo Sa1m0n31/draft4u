@@ -97,7 +97,7 @@ const getClubLocations = () => {
     return axios.get(`${API_URL}/club/get-locations`);
 }
 
-const addClub = (name, league, login, password, x, y, img, nip, krs, city, email) => {
+const addClub = (name, league, login, password, x, y, img, nip, krs, city, email, country) => {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     let formData = new FormData();
     formData.append('name', name);
@@ -111,11 +111,12 @@ const addClub = (name, league, login, password, x, y, img, nip, krs, city, email
     formData.append('krs', krs);
     formData.append('city', city);
     formData.append('email', email);
+    formData.append('country', country);
 
     return axios.post(`${API_URL}/club/add`, formData, config);
 }
 
-const updateClub = (clubId, name, league, login, x, y, img, nip, krs, city, email) => {
+const updateClub = (clubId, name, league, login, x, y, img, nip, krs, city, email, country) => {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     let formData = new FormData();
     formData.append('clubId', clubId);
@@ -128,6 +129,7 @@ const updateClub = (clubId, name, league, login, x, y, img, nip, krs, city, emai
     formData.append('krs', krs);
     formData.append('city', city);
     formData.append('email', email);
+    formData.append('country', country);
     if(img) {
         if(img === 'delete') {
             formData.append('imgUpdate', 'delete');

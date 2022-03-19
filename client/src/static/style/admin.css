@@ -819,3 +819,14 @@ html, body {
     font-size: 14px;
     margin-left: 10px;
 }
+
+.admin__clubCountrySelect {
+    margin-left: 40px;
+    padding: 3px 15px;
+    background: transparent;
+    color: #fff;
+}
+
+.admin__clubCountrySelect option {
+    background: #313131 !important;
+}

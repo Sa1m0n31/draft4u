@@ -47,7 +47,7 @@ router.post('/send-form', basicAuth, (request, response) => {
 })
 
 router.get("/get-all", (request, response) => {
-    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, l.sex, i.file_path, id.active FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id JOIN identities id ON c.id = id.id';
+    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, c.country, l.sex, i.file_path, id.active FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id JOIN identities id ON c.id = id.id';
     db.query(query, (err, res) => {
        if(res) {
             response.send({
@@ -63,9 +63,10 @@ router.get("/get-all", (request, response) => {
 });
 
 router.get("/get-locations", (request, response) => {
-    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues FROM clubs c JOIN images i ON c.logo = i.id JOIN identities id ON c.id = id.id WHERE id.active = true GROUP BY x, y`;
+    const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues, c.country FROM clubs c JOIN images i ON c.logo = i.id JOIN identities id ON c.id = id.id WHERE id.active = true GROUP BY x, y, country`;
 
     db.query(query, [], (err, res) => {
+        console.log(err);
         if(res) {
             response.send({
                 result: res.rows
@@ -285,12 +286,14 @@ router.post("/update", basicAuth, upload.single("image"), (request, response) =>
 });
 
 router.post("/add", basicAuth, upload.single("image"), (request, response) => {
-    const {  name, login, password, league, x, y, nip, krs, city, email } = request.body;
+    let {  name, login, password, league, x, y, nip, krs, city, email, country } = request.body;
 
     let filename = null;
     if(request.file) {
         filename = request.file.filename;
     }
+
+    if(!country) country = 1;
 
     const hash = crypto.createHash('sha256').update(password).digest('hex');
     const id = uuidv4();
@@ -304,8 +307,8 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
             if(res) {
                 if(res.rows) {
                     const imageId = res.rows[0].id;
-                    const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)';
-                    const values = [id, name, league, login, hash, imageId, x, y, nip, krs, city, email];
+                    const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)';
+                    const values = [id, name, league, login, hash, imageId, x, y, nip, krs, city, email, country];
 
                     db.query(query, values, (err, res) => {
                         console.log(err);
@@ -345,8 +348,8 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         });
     }
     else {
-        const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, NULL, $6, $7, $8, $9, $10, $11)';
-        const values = [id, name, league, login, hash, x, y, nip, krs, city, email];
+        const query = 'INSERT INTO clubs VALUES ($1, $2, $3, $4, $5, NULL, $6, $7, $8, $9, $10, $11, $12)';
+        const values = [id, name, league, login, hash, x, y, nip, krs, city, email, country];
 
         db.query(query, values, (err, res) => {
             console.log(err);

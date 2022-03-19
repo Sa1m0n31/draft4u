@@ -9,7 +9,8 @@ import {
     getLeagues,
     updateClub
 } from "../helpers/club";
-import mapImg from '../static/img/poland.svg'
+import mapPoland from '../static/img/poland.svg'
+import mapEngland from '../static/img/mapa-wielka-brytania.svg'
 import settings from "../settings";
 import trashIcon from "../static/img/trash-black.svg";
 import Dropzone from "react-dropzone-uploader";
@@ -35,6 +36,7 @@ const AdminAddClub = ({admin}) => {
     const [leagues, setLeagues] = useState([]);
     const [locationSelected, setLocationSelected] = useState(0);
     const [clubLocations, setClubLocations] = useState([]);
+    const [country, setCountry] = useState(1);
 
     const [nameError, setNameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -47,6 +49,7 @@ const AdminAddClub = ({admin}) => {
     const [passwordChangeStatus, setPasswordChangeStatus] = useState(-1);
 
     const [clubId, setClubId] = useState("");
+    const [currentMap, setCurrentMap] = useState(mapPoland);
 
     const currentClubPoint = useRef(null);
     const mapWrapper = useRef(null);
@@ -127,14 +130,15 @@ const AdminAddClub = ({admin}) => {
                 return 0;
             }
 
-            addClub(name, league, username, password, x ? x : 0, y ? y : 0, img?.file, nip, krs, city, email)
+            addClub(name, league, username, password, x ? x : 0, y ? y : 0, img?.file, nip, krs, city, email, country)
                 .then((res) => {
                     setAddResult(res?.data?.result);
                     window.scrollTo(0, 0);
                 });
         }
         else {
-            updateClub(clubId, name, league, username, x ? x : 0, y ? y : 0, imageUpdated ? (img ? img.file : 'delete') : null, nip, krs, city, email)
+            updateClub(clubId, name, league, username, x ? x : 0, y ? y : 0,
+                imageUpdated ? (img ? img.file : 'delete') : null, nip, krs, city, email, country)
                 .then((res) => {
                     setAddResult(res?.data?.result);
                     window.scrollTo(0, 0);
@@ -237,6 +241,36 @@ const AdminAddClub = ({admin}) => {
                 setPasswordChangeStatus(res?.data?.result);
             });
     }
+
+    useEffect(() => {
+        switch(parseInt(country)) {
+            case 1:
+                setCurrentMap(mapPoland);
+                break;
+            case 2:
+                setCurrentMap(mapEngland);
+                break;
+            default:
+                break;
+        }
+
+        getLeagues()
+            .then((res) => {
+                setLeagues(res?.data?.result?.filter((item) => {
+                    return item.country === parseInt(country);
+                })?.sort((a, b) => {
+                    if(a.name > b.name) return 1;
+                    else return -1;
+                }));
+            });
+
+        getClubLocations()
+            .then((res) => {
+                setClubLocations(res?.data?.result?.filter((item) => {
+                    return item.country === parseInt(country);
+                }));
+            });
+    }, [country]);
 
     return <div className="container container--dark container--admin">
         <AdminTop />
@@ -415,6 +449,10 @@ const AdminAddClub = ({admin}) => {
                             <label className="admin__label">
                                 Wybierz lokalizację klubu
                             </label>
+                            <select className="admin__clubCountrySelect" onChange={(e) => { setCountry(e.target.value); }}>
+                                <option value={1}>Polska</option>
+                                <option value={2}>Wielka Brytania</option>
+                            </select>
                             {locationSelected ? <button className="admin__btn admin__btn--removeLocation" onClick={() => { setLocationSelected(false); }}>
                                 Usuń aktualną lokalizację
                             </button> : ""}
@@ -423,7 +461,7 @@ const AdminAddClub = ({admin}) => {
                              </span> : ""}
                         </section>
                         <section className="admin__map" onClick={(e) => { addPointOnMap(e); }} ref={mapWrapper}>
-                            <img className="admin__map__img" src={mapImg} alt="polska" />
+                            <img className="admin__map__img" src={currentMap} alt="polska" />
 
                             <button className="clubPoint" ref={currentClubPoint}>
 

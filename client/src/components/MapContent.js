@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useRef, useContext} from 'react'
 
 import poland from '../static/img/poland.svg'
+import england from '../static/img/mapa-wielka-brytania.svg'
+import europe from '../static/img/mapa-europa.svg'
 import {getAllClubs, getClubLocations} from '../helpers/club'
 import { Range } from 'react-range';
 import manIcon from '../static/img/woman.svg'
@@ -8,6 +10,7 @@ import womanIcon from '../static/img/man.svg'
 import settings from "../settings";
 import ReactSiema from 'react-siema'
 import {ContentContext} from "../App";
+import arrowDownBlack from '../static/img/arrow-down-black.svg'
 
 const MapContent = () => {
     const { content, language } = useContext(ContentContext);
@@ -19,6 +22,10 @@ const MapContent = () => {
     const [loaded, setLoaded] = useState(false);
     const [currentDotClubs, setCurrentDotClubs] = useState([]);
     const [rangeValue, setRangeValue] = useState([0]);
+
+    const [country, setCountry] = useState(0);
+    const [countries, setCountries] = useState(["Polska", "Wielka Brytania"]);
+    const [countryMap, setCountryMap] = useState(europe);
 
     const [sex, setSex] = useState([0]);
     const [league, setLeague] = useState([0]);
@@ -34,14 +41,14 @@ const MapContent = () => {
         setFilteredDots(dots.filter((item) => {
             return item.leagues.split(';').findIndex((item) => {
                 return parseInt(item.toString()) < 5;
-            }) !== -1;
+            }) !== -1 && item.country === country;
         }));
     }
     const setFemaleDots = () => {
         setFilteredDots(dots.filter((item) => {
             return item.leagues.split(';').findIndex((item) => {
                 return parseInt(item.toString()) > 4;
-            }) !== -1;
+            }) !== -1 && item.country === country;
         }));
     }
 
@@ -50,14 +57,14 @@ const MapContent = () => {
             setFilteredDots(dots.filter((item) => {
                 return item.leagues.split(';').findIndex((item) => {
                     return parseInt(item.toString()) === n;
-                }) !== -1;
+                }) !== -1 && item.country === country;
             }));
         }
         else {
             setFilteredDots(dots.filter((item) => {
                 return item.leagues.split(';').findIndex((item) => {
                     return parseInt(item.toString()) === n+4;
-                }) !== -1;
+                }) !== -1 && item.country === country;
             }));
         }
     }
@@ -69,11 +76,11 @@ const MapContent = () => {
                     return item.x !== 0 && item.y !== 0;
                 });
                 setDots(allDots);
-                setFilteredDots(allDots.filter((item) => {
-                    return item.leagues.split(';').findIndex((item) => {
-                        return parseInt(item.toString()) < 5;
-                    }) !== -1;
-                }));
+                // setFilteredDots(allDots.filter((item) => {
+                //     return item.leagues.split(';').findIndex((item) => {
+                //         return parseInt(item.toString()) < 5;
+                //     }) !== -1;
+                // }));
             });
 
         getAllClubs()
@@ -83,9 +90,10 @@ const MapContent = () => {
                         return item?.active && item?.file_path;
                     });
                     setClubs(allClubs);
-                    setFilteredClubs(allClubs.filter((item) => {
-                        return item.sex;
-                    }));
+                    setFilteredClubs(allClubs);
+                    // setFilteredClubs(allClubs.filter((item) => {
+                    //     return item.sex;
+                    // }));
                     setLoaded(true);
                 }
             });
@@ -109,8 +117,8 @@ const MapContent = () => {
             if(sex[0] === 0) {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
-                        if(!league[0]) return item.sex;
-                        else return item.sex && parseInt(item.league) === league[0];
+                        if(!league[0]) return item.sex && item.country === country;
+                        else return item.sex && parseInt(item.league) === league[0] && item.country === country;
                     }));
                     if(league[0]) setDotsByLeague(1, league[0]);
                     else setMaleDots();
@@ -121,8 +129,8 @@ const MapContent = () => {
             else {
                 setTimeout(() => {
                     setFilteredClubs(clubs.filter((item) => {
-                        if(!league[0]) return !item.sex;
-                        else return !item.sex && parseInt(item.league) === league[0]+4;
+                        if(!league[0]) return !item.sex && item.country === country;
+                        else return !item.sex && parseInt(item.league) === league[0]+4 && item.country === country;
                     }));
                     if(league[0]) setDotsByLeague(0, league[0]);
                     else setFemaleDots();
@@ -131,7 +139,7 @@ const MapContent = () => {
                 }, 500);
             }
         }
-    }, [sex, league]);
+    }, [sex, league, country]);
 
     const hideClubsOnMap = () => {
         document.querySelectorAll(".mapDot__btn").forEach((item, i, array) => {
@@ -185,13 +193,43 @@ const MapContent = () => {
         }));
     }
 
+    useEffect(() => {
+        switch(parseInt(country)) {
+            case 1:
+                setCountryMap(poland);
+                setCountries(["Polska", "Wielka Brytania"]);
+                break;
+            case 2:
+                setCountryMap(england);
+                setCountries(["Wielka Brytania", "Polska"]);
+                break;
+            default:
+                break;
+        }
+    }, [country]);
+
+    useEffect(() => {
+        setFilteredDots(dots?.filter((item) => {
+            return item.country === country;
+        }));
+    }, [country]);
+
     return <main className="mapContent">
         <header className="mapContent__header">
             <h2 className="player__header">
                 {content.map_header}
             </h2>
+            {country ? <section className="mapContent__countrySelectWrapper">
+                <button className="mapContent__countrySelect mapContent__countrySelect--main">
+                    {countries[0]}
+                    <img className="mapContent__countrySelect__arrow" src={arrowDownBlack} alt="rozwin" />
+                </button>
+                <button className="mapContent__countrySelect mapContent__countrySelect--hidden" onClick={() => { setCountry(country === 1 ? 2 : 1); }}>
+                    {countries[1]}
+                </button>
+            </section>: ""}
 
-            <section className="mapContent__filters">
+            {country ? <section className="mapContent__filters">
                 <section className="mapContent__header__item">
                     <h3 className="mapContent__header__item__header">
                         {content.map_gender}
@@ -240,7 +278,7 @@ const MapContent = () => {
                     </aside>
                 </section>
 
-                <section className="mapContent__header__item">
+                {country === 1 ? <section className="mapContent__header__item">
                     <h3 className="mapContent__header__item__header">
                         {content.map_leagues}
                     </h3>
@@ -309,13 +347,23 @@ const MapContent = () => {
                         <span>{content.map_league2}</span>
                         <span>{content.map_league3}</span>
                     </aside>
-                </section>
-            </section>
+                </section> : ""}
+            </section> : ""}
         </header>
 
         <section className="mapContent__clubsWrapper">
             <section className="mapImg">
-                <img className="mapImg__img" src={poland} alt="mapa-polski" />
+                <img className="mapImg__img" src={countryMap} alt="mapa-polski" />
+
+                {/* Countries dots */}
+                {!country ? <>
+                    <section className="mapDot mapDot--poland">
+                        <button className="mapDot__btn" onClick={() => { setCountry(1); }}></button>
+                    </section>
+                    <section className="mapDot mapDot--england">
+                        <button className="mapDot__btn" onClick={() => { setCountry(2); }}></button>
+                    </section>
+                </> : ""}
 
                 {filteredDots.map((item, index) => {
                     return <section className="mapDot" key={index} style={{top: `${item.y}%`, left: `${item.x}%`}}>
