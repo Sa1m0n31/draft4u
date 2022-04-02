@@ -163,4 +163,10 @@ const sendClubForm = (name, mail, phone, msg) => {
     });
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, changeClubPasswordFromAdminPanel, changeClubPassword, sendClubForm }
+const activateClub = (id) => {
+    return axios.post(`${API_URL}/club/activate`, {
+        id
+    });
+}
+
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, changeClubPasswordFromAdminPanel, changeClubPassword, sendClubForm, activateClub }

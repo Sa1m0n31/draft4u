@@ -49,9 +49,7 @@ const ClubWrapper = ({page}) => {
                                     getFavoritesByClub()
                                         .then((res) => {
                                             const favorites = res?.data?.result.filter((item) => {
-                                                // console.log(item);
                                                 const splittedId = item.identity?.split('-');
-                                                console.log(splittedId[splittedId.length-1] !== 'stuff');
                                                 return splittedId[splittedId.length-1] !== 'stuff';
                                             });
                                             const favoritesStuff = res?.data?.result?.filter((item) => {

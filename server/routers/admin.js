@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const crypto = require('crypto');
 const db = require("../database/db");
+const nodemailer = require("nodemailer");
+const smtpTransport = require('nodemailer-smtp-transport');
 
 router.get("/get-admin-by-id", (request, response) => {
    const id = request.query.id;
@@ -285,6 +287,60 @@ router.get('/get-users-parameters-completed', (request, response) => {
             response.send({
                 result: res.rows
             });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.post('/send-info-about-terms-update', (request, response) => {
+    const query = 'SELECT CONCAT(u.email, c.email) as email FROM identities i LEFT OUTER JOIN clubs c USING(id) LEFT OUTER JOIN users u ON i.user_id = u.id';
+
+    db.query(query, [], (err, res) => {
+        if(res) {
+            const result = res.rows;
+            if(result) {
+                const emails = result.map((item) => {
+                    return item.email;
+                });
+
+                let transporter = nodemailer.createTransport(smtpTransport ({
+                    auth: {
+                        user: process.env.EMAIL_ADDRESS,
+                        pass: process.env.EMAIL_PASSWORD
+                    },
+                    host: process.env.EMAIL_HOST,
+                    secureConnection: true,
+                    port: 465,
+                    tls: {
+                        rejectUnauthorized: false
+                    },
+                }));
+
+                let mailOptions = {
+                    from: process.env.EMAIL_ADDRESS,
+                    to: emails,
+                    subject: 'Zmiana regulaminu na Draft4U',
+                    html: `<h2>Zmiana regulaminu</h2>
+            <p>Informujemy o zmianie regulaminu Draft4U. Nowy regulamin dostępny jest <a href="https://draft4u.com.pl/regulamin" target="_blank">TUTAJ</a>.</p>
+            <p>Pozdrawiamy</p>
+            <p>Zespół Draft4U</p>`
+                }
+
+                transporter.sendMail(mailOptions, function(error, info) {
+                    response.send({
+                        result: 1
+                    });
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
         }
         else {
             response.send({

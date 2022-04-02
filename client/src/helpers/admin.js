@@ -119,4 +119,8 @@ const updateTerms = (terms, policy, cookies, language) => {
     });
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo, getCustomFields, updateCustomFields, updateCustomImages, getCustomImages, updateTerms, getTerms }
+const sendInfoAboutTermsUpdate = () => {
+    return axios.post(`${API_URL}/admin/send-info-about-terms-update`);
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo, getCustomFields, updateCustomFields, updateCustomImages, getCustomImages, updateTerms, getTerms, sendInfoAboutTermsUpdate }

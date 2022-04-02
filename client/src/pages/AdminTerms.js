@@ -3,13 +3,8 @@ import AdminTop from "../components/AdminTop";
 import PanelMenu from "../components/PanelMenu";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import settings from "../settings";
-import trashIcon from "../static/img/trash-black.svg";
-import Dropzone from "react-dropzone-uploader";
-import {addArticle, generateImageLink, getArticle, updateArticle} from "../helpers/blog";
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
-import closeIcon from "../static/img/close-grey.svg";
-import {getTerms, updateTerms} from "../helpers/admin";
+import {getTerms, sendInfoAboutTermsUpdate, updateTerms} from "../helpers/admin";
 
 const AdminTerms = ({lang}) => {
     const [status, setStatus] = useState(-1);
@@ -17,6 +12,7 @@ const AdminTerms = ({lang}) => {
     const [terms, setTerms] = useState(null);
     const [policy, setPolicy] = useState(null);
     const [cookies, setCookies] = useState(null);
+    const [mailSend, setMailSend] = useState(0);
 
     useEffect(() => {
         if(lang) {
@@ -47,6 +43,17 @@ const AdminTerms = ({lang}) => {
             });
     }
 
+    const sendInfoAboutTermsChange = () => {
+        sendInfoAboutTermsUpdate()
+            .then((res) => {
+                if(res?.data?.result) setMailSend(1);
+                else setMailSend(-1);
+            })
+            .catch(() => {
+                setMailSend(-1);
+            });
+    }
+
     return <div className="container container--dark container--admin">
         <AdminTop />
         <main className="admin">
@@ -65,6 +72,13 @@ const AdminTerms = ({lang}) => {
                             Coś poszło nie tak... Skontaktuj się z administratorem systemu
                         </span>}
                     </span> : ""}
+                    {!mailSend ? <button className='admin__btn admin__btn--sendMail' onClick={() => { sendInfoAboutTermsChange(); }}>
+                        Wyślij maila o zmianie regulaminu
+                    </button> : (mailSend === 1 ? <span className="sendMailInfo">
+                        Mail został pomyślnie wysłany
+                    </span> : <span className="sendMailInfo">
+                        Coś poszło nie tak... Prosimy spróbować później
+                    </span>)}
                 </header>
                 <main className="admin__editorWrapper">
                     <div className="admin__label admin__label--100 admin__label--terms">

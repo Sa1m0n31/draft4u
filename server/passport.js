@@ -42,7 +42,7 @@ const init = (passport) => {
                 else if(user.active === null) {
                     return done(null, false, { message: 'Konto zawodnika zostało zablokowane' });
                 }
-                else if(user.active === false) {
+                else if(user.active === false && user.user_id) {
                     return done(null, false, { message: 'Zweryfikuj swój adres email aby się zalogować' });
                 }
                 else {

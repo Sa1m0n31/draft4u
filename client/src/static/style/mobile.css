@@ -812,6 +812,56 @@
         display: flex !important;
     }
 
+    .termsForClubs__inner {
+        width: 100%;
+        height: 100%;
+    }
+
+    .termsForClubs__inner > article {
+        height: 85%;
+    }
+
+    .termsForClubs__buttons {
+        flex-direction: column;
+    }
+
+    .mapContent__clubsWrapper {
+        margin-top: 0;
+    }
+
+    .termsForClubs__btn {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        margin-top: 20px;
+        margin-bottom: 0;
+    }
+
+    .mapContent__countrySelectWrapper {
+        position: relative;
+        top: unset;
+        bottom: unset;
+        left: unset;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .mapContent__countrySelect {
+        margin-right: 25px;
+        font-size: 14px;
+    }
+
+    .mapContent__countrySelect--main {
+        font-weight: 700;
+    }
+
+    .mapContent__countrySelect--hidden {
+        visibility: visible;
+        opacity: .7;
+    }
+
     .landingPage__inner {
         margin-bottom: 10%;
     }
@@ -1898,6 +1948,7 @@
         margin-left: 5vw;
     }
 
+    .mapContent__header .player__header,
     .player .player__header {
         margin-left: 0;
     }
@@ -3076,6 +3127,12 @@
 
     .landingPage__inner {
         margin-bottom: -2.8%;
+    }
+}
+
+@media(-webkit-max-device-pixel-ratio: 1.05) {
+    .siteHeader__menu__submenu {
+        bottom: -125px;
     }
 }
 

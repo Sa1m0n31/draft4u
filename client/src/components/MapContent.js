@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef, useContext} from 'react'
-
 import poland from '../static/img/poland.svg'
 import england from '../static/img/mapa-wielka-brytania.svg'
-import europe from '../static/img/mapa-europa.svg'
+import europe from '../static/img/mapa-europa.png'
 import {getAllClubs, getClubLocations} from '../helpers/club'
 import { Range } from 'react-range';
 import manIcon from '../static/img/woman.svg'
@@ -36,6 +35,21 @@ const MapContent = () => {
     document.addEventListener("click", () => {
         hideClubsOnMap();
     });
+
+    useEffect(() => {
+        if(language === 'pl') {
+            setCountries(countries?.map((item) => {
+                if(item === 'Polska' || item === 'Poland') return 'Polska';
+                else return 'Wielka Brytania';
+            }));
+        }
+        else {
+            setCountries(countries?.map((item) => {
+                if(item === 'Polska' || item === 'Poland') return 'Poland';
+                else return 'Great Britain';
+            }));
+        }
+    }, [language]);
 
     const setMaleDots = () => {
         setFilteredDots(dots.filter((item) => {
@@ -194,18 +208,23 @@ const MapContent = () => {
     }
 
     useEffect(() => {
-        switch(parseInt(country)) {
-            case 1:
-                setCountryMap(poland);
-                setCountries(["Polska", "Wielka Brytania"]);
-                break;
-            case 2:
-                setCountryMap(england);
-                setCountries(["Wielka Brytania", "Polska"]);
-                break;
-            default:
-                break;
-        }
+            switch(parseInt(country)) {
+                case 0:
+                    setCountryMap(europe);
+                    break;
+                case 1:
+                    setCountryMap(poland);
+                    if(language === 'pl') setCountries(["Polska", "Wielka Brytania"]);
+                    else setCountries(["Poland", "Great Britain"]);
+                    break;
+                case 2:
+                    setCountryMap(england);
+                    if(language === 'pl') setCountries(["Wielka Brytania", "Polska"]);
+                    else setCountries(['Great Britain', 'Poland']);
+                    break;
+                default:
+                    break;
+            }
     }, [country]);
 
     useEffect(() => {
@@ -222,15 +241,18 @@ const MapContent = () => {
             {country ? <section className="mapContent__countrySelectWrapper">
                 <button className="mapContent__countrySelect mapContent__countrySelect--main">
                     {countries[0]}
-                    <img className="mapContent__countrySelect__arrow" src={arrowDownBlack} alt="rozwin" />
+                    <img className="mapContent__countrySelect__arrow d-desktop-900" src={arrowDownBlack} alt="rozwin" />
                 </button>
                 <button className="mapContent__countrySelect mapContent__countrySelect--hidden" onClick={() => { setCountry(country === 1 ? 2 : 1); }}>
                     {countries[1]}
                 </button>
+                <button className="mapContent__countrySelect mapContent__countrySelect--hidden" onClick={() => { setCountry(0); }}>
+                    {language === 'pl' ? 'Europa' : 'Europe'}
+                </button>
             </section>: ""}
 
             {country ? <section className="mapContent__filters">
-                <section className="mapContent__header__item">
+                <section className="mapContent__header__item mapContent__filters--sex">
                     <h3 className="mapContent__header__item__header">
                         {content.map_gender}
                     </h3>
@@ -241,7 +263,6 @@ const MapContent = () => {
                         values={sex}
                         onChange={(values) => {
                             setSex(values);
-
                         }}
                         renderTrack={({ props, children }) => (
                             <div

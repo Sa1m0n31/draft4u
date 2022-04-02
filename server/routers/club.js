@@ -66,7 +66,6 @@ router.get("/get-locations", (request, response) => {
     const query = `SELECT x, y, STRING_AGG(i.file_path, ';') as logos, STRING_AGG(c.league::text, ';') as leagues, c.country FROM clubs c JOIN images i ON c.logo = i.id JOIN identities id ON c.id = id.id WHERE id.active = true GROUP BY x, y, country`;
 
     db.query(query, [], (err, res) => {
-        console.log(err);
         if(res) {
             response.send({
                 result: res.rows
@@ -83,7 +82,7 @@ router.get("/get-locations", (request, response) => {
 router.get("/get-club-data", (request, response) => {
    const clubId = request.user;
 
-   const query = 'SELECT c.id, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, c.league, i.file_path FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id WHERE c.id = $1';
+   const query = 'SELECT c.id, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, c.league, i.file_path, id.active FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id LEFT OUTER JOIN identities id ON id.id = c.id WHERE c.id = $1';
    const values = [clubId];
 
    db.query(query, values, (err, res) => {
@@ -303,7 +302,6 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         const values = [filename];
 
         db.query(query, values, (err, res) => {
-            console.log(err);
             if(res) {
                 if(res.rows) {
                     const imageId = res.rows[0].id;
@@ -311,13 +309,11 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
                     const values = [id, name, league, login, hash, imageId, x, y, nip, krs, city, email, country];
 
                     db.query(query, values, (err, res) => {
-                        console.log(err);
                         if(res) {
-                            const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, true, NULL)';
+                            const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL)';
                             const values = [id, hash];
 
                             db.query(query, values, (err, res) => {
-                                console.log(err);
                                 if(res) {
                                     response.send({
                                         result: 1
@@ -352,13 +348,11 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         const values = [id, name, league, login, hash, x, y, nip, krs, city, email, country];
 
         db.query(query, values, (err, res) => {
-            console.log(err);
             if(res) {
-                const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, true, NULL)';
+                const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL)';
                 const values = [id, hash];
 
                 db.query(query, values, (err, res) => {
-                    console.log(err);
                     if(res) {
                         response.send({
                             result: 1
@@ -379,6 +373,69 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
             }
         });
     }
+});
+
+const sendInfoAboutNewClubActivated = (id) => {
+    const query = 'SELECT name FROM clubs WHERE id = $1';
+    const values = [id];
+
+    console.log('hello');
+
+    db.query(query, values, (err, res) => {
+       if(res) {
+           const name = res.rows[0].name;
+
+           let transporter = nodemailer.createTransport(smtpTransport ({
+               auth: {
+                   user: process.env.EMAIL_ADDRESS,
+                   pass: process.env.EMAIL_PASSWORD
+               },
+               host: process.env.EMAIL_HOST,
+               secureConnection: true,
+               port: 465,
+               tls: {
+                   rejectUnauthorized: false
+               },
+           }));
+
+           let mailOptions = {
+               from: process.env.EMAIL_ADDRESS,
+               to: 'sajmon0031@gmail.com',
+               subject: 'Nowy klub dołączył do Draft4U!',
+               html: `<h2>Nowy klub zaakceptował regulamin i dołączył do Draft4U!</h2>
+            <p>Klub, który zaakceptował regulamin to <b>${name}</b></p>`
+           }
+
+           transporter.sendMail(mailOptions, function(error, info) {
+                console.log(error);
+                console.log(info);
+           });
+       }
+    });
+}
+
+router.post('/activate', (request, response) => {
+   const { id } = request.body;
+
+   const query = 'UPDATE identities SET active = true WHERE id = $1';
+   const values = [id];
+
+   console.log('/activate');
+   db.query(query, values, (err, res) => {
+       console.log(err);
+        if(res) {
+            console.log('res ok');
+            sendInfoAboutNewClubActivated(id);
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+   });
 });
 
 router.post("/change-password", basicAuth, (request, response) => {
