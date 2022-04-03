@@ -4,8 +4,10 @@ import {stateToHTML} from "draft-js-export-html";
 import {convertFromRaw} from "draft-js";
 import {activateClub} from "../helpers/club";
 import {logoutUser} from "../helpers/auth";
-import btn1 from '../static/img/dalej-btn.png'
-import btn2 from '../static/img/delete-btn.svg'
+import btn1 from '../static/img/akceptuje.jpg'
+import btn2 from '../static/img/nie-akceptuje.jpg'
+import btn1English from '../static/img/accept.jpg'
+import btn2English from '../static/img/decline.jpg'
 
 const TermsForClubs = ({club}) => {
     const { content } = useContext(ContentContext);

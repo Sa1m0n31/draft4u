@@ -821,6 +821,10 @@
         height: 85%;
     }
 
+    .scroller * {
+        font-size: 14px;
+    }
+
     .termsForClubs__buttons {
         flex-direction: column;
     }
@@ -831,8 +835,8 @@
 
     .termsForClubs__btn {
         width: 100%;
-        max-width: 200px;
-        height: auto;
+        max-width: 250px;
+        height: 28px;
         margin-top: 20px;
         margin-bottom: 0;
     }

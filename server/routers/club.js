@@ -400,7 +400,7 @@ const sendInfoAboutNewClubActivated = (id) => {
 
            let mailOptions = {
                from: process.env.EMAIL_ADDRESS,
-               to: 'sajmon0031@gmail.com',
+               to: process.env.CONTACT_FORM_ADDRESS,
                subject: 'Nowy klub dołączył do Draft4U!',
                html: `<h2>Nowy klub zaakceptował regulamin i dołączył do Draft4U!</h2>
             <p>Klub, który zaakceptował regulamin to <b>${name}</b></p>`

@@ -6604,7 +6604,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: var(--dark);
     color: #fff;
     padding: 30px;
-
+    border-radius: 15px;
 }
 
 .termsForClubs__inner > article {
@@ -6622,10 +6622,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .termsForClubs__btn {
     display: block;
-    width: 300px;
+    width: 350px;
     margin: 40px 20px 0;
-    height: 53px;
+    height: 40px;
     overflow: hidden;
+    opacity: .9;
+    transition: .2s all;
+}
+
+.termsForClubs__btn:hover {
+    opacity: 1;
 }
 
 .scroller {
