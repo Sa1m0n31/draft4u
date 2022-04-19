@@ -322,7 +322,8 @@ router.post('/send-info-about-terms-update', (request, response) => {
 
                 let mailOptions = {
                     from: process.env.EMAIL_ADDRESS,
-                    to: emails,
+                    to: [],
+                    bcc: emails,
                     subject: 'Zmiana regulaminu na Draft4U',
                     html: `<h2>Zmiana regulaminu</h2>
             <p>Informujemy o zmianie regulaminu Draft4U. Nowy regulamin dostępny jest <a href="https://draft4u.com.pl/regulamin" target="_blank">TUTAJ</a>.</p>
