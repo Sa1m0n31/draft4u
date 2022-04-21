@@ -5,6 +5,7 @@ import person2 from '../static/img/zawodnik-postac-2.png'
 import person3 from '../static/img/klub-postac.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
+import Partners from "./Partners";
 
 const LandingPage = () => {
     const { content } = useContext(ContentContext);
@@ -26,6 +27,7 @@ const LandingPage = () => {
         </main>
 
         <ClubSlider />
+        <Partners />
     </main>
 }
 

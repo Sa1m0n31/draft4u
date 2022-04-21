@@ -78,4 +78,10 @@ const logoutUser = () => {
     });
 }
 
-export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple, registerFromThirdParty, registerUser, verifyUser, logoutUser }
+const registerSecondAccount = () => {
+    return axios.post(`${API_URL}/auth/register-second-type`, {}, {
+        withCredentials: true
+    });
+}
+
+export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple, registerFromThirdParty, registerUser, verifyUser, logoutUser, registerSecondAccount }

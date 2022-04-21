@@ -307,6 +307,13 @@ router.post('/send-info-about-terms-update', (request, response) => {
                     return item.email;
                 });
 
+                let emailsChunks = [];
+                const chunkSize = 50;
+                for (let i=0; i<emails.length; i+=chunkSize) {
+                    const chunk = emails.slice(i, i + chunkSize);
+                    emailsChunks.push(chunk);
+                }
+
                 let transporter = nodemailer.createTransport(smtpTransport ({
                     auth: {
                         user: process.env.EMAIL_ADDRESS,
@@ -320,20 +327,24 @@ router.post('/send-info-about-terms-update', (request, response) => {
                     },
                 }));
 
-                let mailOptions = {
-                    from: process.env.EMAIL_ADDRESS,
-                    to: [],
-                    bcc: emails,
-                    subject: 'Zmiana regulaminu na Draft4U',
-                    html: `<h2>Zmiana regulaminu</h2>
-            <p>Informujemy o zmianie regulaminu Draft4U. Nowy regulamin dostępny jest <a href="https://draft4u.com.pl/regulamin" target="_blank">TUTAJ</a>.</p>
-            <p>Pozdrawiamy</p>
-            <p>Zespół Draft4U</p>`
-                }
+                emailsChunks.forEach(async (item, index, array) => {
+                    let mailOptions = {
+                        from: process.env.EMAIL_ADDRESS,
+                        to: [],
+                        bcc: item,
+                        subject: 'Zmiana regulaminu na Draft4U',
+                        html: `<h2 style="color: #000;">Zmiana regulaminu</h2>
+            <p style="color: #000;">Informujemy o zmianie regulaminu Draft4U. Nowy regulamin dostępny jest <a href="https://draft4u.com.pl/regulamin" target="_blank">TUTAJ</a>.</p>
+            <p style="color: #000;">Pozdrawiamy</p>
+            <p style="color: #000;">Zespół Draft4U</p>`
+                    }
 
-                transporter.sendMail(mailOptions, function(error, info) {
-                    response.send({
-                        result: 1
+                    await transporter.sendMail(mailOptions, function(error, info) {
+                        if(index === array.length-1) {
+                            response.send({
+                                result: 1
+                            });
+                        }
                     });
                 });
             }

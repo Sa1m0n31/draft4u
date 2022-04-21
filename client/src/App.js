@@ -17,9 +17,7 @@ import AboutUs from "./pages/AboutUs";
 import Player from "./pages/Player";
 import Club from "./pages/Club";
 import Map from "./pages/Map";
-import CookieConsent from "react-cookie-consent";
 import UserWrapper from "./wrappers/UserWrapper";
-import PaymentReturnPage from "./pages/PaymentReturnPage";
 import ClubWrapper from "./wrappers/ClubWrapper";
 import AdminLogin from "./pages/AdminLogin";
 import AdminWrapper from "./wrappers/AdminWrapper";
@@ -28,7 +26,6 @@ import axios from "axios";
 import AUTH_HEADER from "./static/restrict/credentials";
 import ContentPage from "./pages/ContentPage";
 import {getCustomFields} from "./helpers/admin";
-import DraftLoader from "./components/Loader";
 import LoadingPage from "./pages/LoadingPage";
 import Stuff from "./pages/Stuff";
 

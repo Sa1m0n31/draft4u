@@ -3,10 +3,11 @@ import settings from "../settings";
 
 const { API_URL } = settings;
 
-const isEmailAvailable = (email) => {
+const isEmailAvailable = (email, accountType) => {
     return axios.get(`${API_URL}/user/is-email-available`, {
         params: {
-            email
+            email,
+            type: accountType
         }
     })
 }
@@ -331,6 +332,12 @@ const getCvs = (id) => {
     });
 }
 
+const isUserWithTwoAccounts = () => {
+    return axios.get(`${API_URL}/user/is-user-with-two-accounts`, {
+        withCredentials: true
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail, updateUserExperience,
     updateUserClub, updateUserSalary, updateUserBirthday,
@@ -339,5 +346,6 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
     getUserById, getUserFavorites, getUserVisited,
     getIdentityById, resetPassword,
-    addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition
+    addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition,
+    isUserWithTwoAccounts
 }

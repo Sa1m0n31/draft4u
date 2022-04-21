@@ -9,14 +9,21 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const apiAuth = require("../apiAuth");
 const basicAuth = new apiAuth().basicAuth;
 
-const multer  = require('multer')
-const upload = multer({ dest: 'media/users' })
+const multer  = require('multer');
+const upload = multer({ dest: 'media/users' });
 
 router.get("/is-email-available", (request, response) => {
    const email = request.query.email;
+   const type = parseInt(request.query.type); // 0 - player, 1 - staff
 
    if(email) {
-       const query = 'SELECT * FROM users WHERE LOWER(email) = LOWER($1)';
+       let query = '';
+       if(type === 0) {
+           query = `SELECT u.id FROM users u JOIN identities i ON u.id = i.user_id WHERE LOWER(u.email) = LOWER($1) AND i.id NOT LIKE '%-stuff'`;
+       }
+       else {
+            query = `SELECT u.id FROM users u JOIN identities i ON u.id = i.user_id WHERE LOWER(u.email) = LOWER($1) AND i.id LIKE '%-stuff'`
+       }
        const values = [email];
        db.query(query, values, (err, res) => {
           if(res) {
@@ -233,7 +240,6 @@ const getUserData = (request, response, userId) => {
         }
 
         db.query(query, values, (err, res) => {
-            console.log(err);
             if(res) {
                 if(res.rows.length) {
                     response.send({
@@ -566,9 +572,6 @@ router.post('/add-cv', (request, response) => {
    const { type, title, from, to, description } = request.body;
    const userId = request.user;
 
-   console.log('add cv');
-   console.log(userId);
-
    const id = uuidv4();
    const query = 'INSERT INTO cvs VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7)';
    const values = [id, type, title, from, to, description, userId];
@@ -637,9 +640,30 @@ router.get('/get-player-cvs', (request, response) => {
 
     db.query(query, values, (err, res) => {
         if(res) {
-            console.log(res.rows);
             response.send({
                 result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.get('/is-user-with-two-accounts', (request, response) => {
+    const id = request.user;
+
+    const query = `SELECT id FROM users WHERE email = (
+                        SELECT email FROM users u JOIN identities i ON u.id = i.user_id WHERE i.id = $1
+                    )`;
+    const values = [id];
+
+    db.query(query, values, (err, res) => {
+        if(res.rowCount > 1) {
+            response.send({
+                result: 1
             });
         }
         else {

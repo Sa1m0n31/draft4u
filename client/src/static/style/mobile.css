@@ -937,6 +937,7 @@
         max-width: none;
     }
 
+    .partners,
     .clubCarousel {
         height: 180px;
     }
@@ -2804,6 +2805,19 @@
 
     .container--homepage::after {
         left: 8%;
+    }
+
+    .partners {
+        bottom: -235px;
+    }
+
+    .partners__main {
+        justify-content: center;
+    }
+
+    .partners__imgWrapper {
+        width: 80px;
+        height: 70px;
     }
 
     .mapDot__btn__details__data span {

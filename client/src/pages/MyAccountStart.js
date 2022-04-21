@@ -5,6 +5,7 @@ import MyAccountStartHeader from "../components/MyAccountStartHeader";
 import BlogSection from "../components/BlogSection";
 import ClubActivities from "../components/ClubActivities";
 import MyAccountStartBottom from "../components/MyAccountStartBottom";
+import AddAccountTypeSection from "../components/AddAccountTypeSection";
 
 const MyAccountStart = ({user, isLocal}) => {
     const [fullName, setFullName] = useState("");
@@ -17,6 +18,7 @@ const MyAccountStart = ({user, isLocal}) => {
         <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
 
         <MyAccountStartHeader fullName={fullName} image={user.file_path} />
+        <AddAccountTypeSection />
         <BlogSection />
         <ClubActivities />
         <MyAccountStartBottom userId={user.id} />

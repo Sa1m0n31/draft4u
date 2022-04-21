@@ -144,7 +144,7 @@ const RegisterModal = (props) => {
             setEmail("");
         }
         else {
-            isEmailAvailable(email)
+            isEmailAvailable(email, accountType)
                 .then(res => {
                     if(res?.data?.result !== 1) {
                         setEmailError(content.email_already_in_use);

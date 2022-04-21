@@ -81,11 +81,18 @@ const init = (passport) => {
         return done(null, profile);
     }
 
+    const userSwitchAccountTypeAuth = (userId, identity, done) => {
+        sendInfoAboutLogin(userId);
+        return done(null, identity);
+    }
+
     passport.use('admin-local', new LocalStrategy(adminAuth));
 
     passport.use('user-local', new LocalStrategy(userAuth, (ver) => {
         console.log(ver);
     }));
+
+    passport.use('user-switch', new LocalStrategy(userSwitchAccountTypeAuth));
 
     passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,

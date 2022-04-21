@@ -124,6 +124,15 @@ router.post("/login",
     }
 );
 
+router.post('/auto-login',
+    passport.authenticate('user-switch', { session: true, failureFlash: true, failureRedirect: '/auth/failure' }),
+    (request, response) => {
+        response.send({
+            result: 1
+        })
+    }
+);
+
 router.get('/failure', (request, response) => {
     const errorMsg = request.flash().error[0];
     response.send({
@@ -224,6 +233,84 @@ router.post("/register-local", (request, response) => {
        }
    });
 });
+
+router.post('/register-second-type', (request, response) => {
+    const identity = request.user;
+
+    console.log('identity: ' + identity);
+
+    const query = 'SELECT u.id as user_id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number FROM users u JOIN identities i ON u.id = i.user_id WHERE i.id = $1';
+    const values = [identity];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            if(res.rows) {
+                const result = res.rows[0];
+                const { user_id, email, first_name, last_name, sex, birthday, phone_number } = result;
+
+                const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD') + INTERVAL '1 DAY', $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                const values = [email, first_name, last_name, sex, birthday, phone_number];
+
+                db.query(query, values, (err, res) => {
+                    if(res) {
+                        const insertedUserId = res.rows[0].id;
+                        const query = 'SELECT hash, subscription, newsletter FROM identities WHERE user_id = $1';
+                        const values = [user_id];
+
+                        db.query(query, values, (err, res) => {
+                            if(res) {
+                                if(res.rows) {
+                                    const { id, hash, subscription, newsletter } = res.rows[0];
+                                    const newId = uuidv4() + (id.split('-')[id.split('-').length-1] !== 'stuff' ? '-stuff' : '');
+                                    const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, $4, $5)`;
+                                    const values = [newId, insertedUserId, hash, subscription, newsletter];
+
+                                    db.query(query, values, (err, res) => {
+                                        if(res) {
+                                            response.send({
+                                                result: 1
+                                            });
+                                        }
+                                        else {
+                                            response.send({
+                                                result: 0
+                                            });
+                                        }
+                                    });
+                                }
+                                else {
+                                    response.send({
+                                        result: 0
+                                    });
+                                }
+                            }
+                            else {
+                                response.send({
+                                    result: 0
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        response.send({
+                            result: 0
+                        });
+                    }
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+})
 
 router.get("/get-user-subscription", basicAuth, (request, response) => {
    const userId = request.query.user;

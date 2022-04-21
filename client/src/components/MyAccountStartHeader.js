@@ -1,8 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import ctaBtn from "../static/img/btn-cta.png";
 import man from '../static/img/profile.png'
-import profileEditionBtn from '../static/img/edytuj-profil-btn.png'
-import {getUserProfileImage} from "../helpers/user";
 import settings from "../settings";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";

@@ -5666,6 +5666,7 @@ input::-webkit-inner-spin-button {
 
 .container--homepage .footer {
     z-index: 1;
+    padding-top: 280px;
 }
 
 .container--homepage .landingPage {
@@ -6658,4 +6659,67 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .pageText article h1,
 .pageText article h2 {
     text-align: center;
+}
+
+.partners {
+    margin-top: 30px;
+    position: absolute;
+    bottom: -265px;
+    left: 0;
+    width: 100%;
+    height: 240px;
+    background: rgba(255, 255, 255, .7);
+}
+
+.partners__main {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.partners__imgWrapper {
+    height: 100px;
+    width: 120px;
+    margin: 0 30px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.partners__img {
+    height: 100%;
+    width: auto;
+    position: absolute;
+    transition: .4s all;
+}
+
+.partners__img--grey {
+    top: 0;
+    left: 0;
+    filter: grayscale(1);
+}
+
+.partners__img--color {
+    left: 0;
+    top: -100%;
+}
+
+.partners__imgWrapper:hover .partners__img--color {
+    top: 0;
+}
+
+.partners__imgWrapper:hover .partners__img--grey {
+    top: 100%;
+}
+
+.addAccountTypeSection {
+    margin-bottom: 0;
+}
+
+.addAccountTypeSection .player__flex__img {
+    width: 90%;
+}
+
+.addAccountTypeSection .button--player--register {
+    margin-top: 30px;
 }
