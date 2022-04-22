@@ -46,12 +46,10 @@ const AdminTerms = ({lang}) => {
     const sendInfoAboutTermsChange = () => {
         sendInfoAboutTermsUpdate()
             .then((res) => {
-                console.log(res);
                 if(res?.data?.result) setMailSend(1);
                 else setMailSend(-1);
             })
             .catch((err) => {
-                console.log(err);
                 setMailSend(-1);
             });
     }

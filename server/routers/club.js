@@ -379,8 +379,6 @@ const sendInfoAboutNewClubActivated = (id) => {
     const query = 'SELECT name FROM clubs WHERE id = $1';
     const values = [id];
 
-    console.log('hello');
-
     db.query(query, values, (err, res) => {
        if(res) {
            const name = res.rows[0].name;

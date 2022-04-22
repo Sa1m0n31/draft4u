@@ -28,7 +28,6 @@ const PlayerPage = ({club}) => {
 
                 const identitySplitted = result.identity.split('-');
                 if(identitySplitted[identitySplitted.length-1] === 'stuff') {
-                    console.log('YAS');
                     setIsStuff(true);
                 }
             });

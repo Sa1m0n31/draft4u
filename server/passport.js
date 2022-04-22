@@ -82,9 +82,6 @@ const init = (passport) => {
     }
 
     const userSwitchAccountTypeAuth = (username, password, done) => {
-        console.log("SWITCH ACCOUNTS - PASSPORT");
-        console.log(username);
-        console.log(password);
         sendInfoAboutLogin(password);
         return done(null, {
             id: password
@@ -98,7 +95,7 @@ const init = (passport) => {
     }));
 
     passport.use('user-switch', new LocalStrategy(userSwitchAccountTypeAuth, (ver) => {
-        console.log('2132');
+        // console.log('2132');
     }));
 
     passport.use('facebook', new FacebookStrategy({
@@ -118,7 +115,6 @@ const init = (passport) => {
 
     passport.serializeUser((user, done) => {
         if(user) {
-            console.log('SERIALIZE: ' + user.id);
             if(user.name || user.provider) done(null, user); /* Facebook or Google */
             else done(null, user.id); /* Local */
         }
@@ -263,7 +259,6 @@ const init = (passport) => {
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        console.log("DESERIALIZE: " + res.rows[0].id);
                         if(res.rows.length) done(null, res.rows[0].id);
                     }
                 });

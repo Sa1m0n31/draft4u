@@ -53,12 +53,10 @@ const AdminImages = ({lang}) => {
     useEffect(() => {
         getCustomFields(lang)
             .then((res) => {
-                console.log(res?.data?.result[0]);
                 const keyValuePairs = Object.entries(res?.data?.result[0]);
                 const imagesKeyValue = keyValuePairs.filter((item) => {
                     return item[0].substring(0, 3) === 'img';
                 });
-                console.log(imagesKeyValue);
                 setImages(images?.map((item, index) => {
                     return {
                         img: item.img,

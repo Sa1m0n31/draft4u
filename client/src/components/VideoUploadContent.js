@@ -57,7 +57,6 @@ const VideoUploadContent = () => {
     }, [videoUpload]);
 
     const getPlayElementsByPosition = (position) => {
-        console.log(content);
         const { element1, element2, element3, element4, element5, element6, element_7, element_8 } = content;
         switch(position) {
             case 'atakujący':
@@ -90,7 +89,6 @@ const VideoUploadContent = () => {
     }
 
     const getVideoIndexByPlay = (play) => {
-        console.log(play);
         return videos.findIndex((item) => {
             if(play) return item.name === removePolishChars(play);
             else return '';

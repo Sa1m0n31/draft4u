@@ -25,7 +25,6 @@ router.post("/register-payment", (request, response) => {
     const CLIENT_ID = process.env.PRZELEWY_24_CLIENT_ID;
     const CRC = process.env.PRZELEWY_24_CRC;
 
-    console.log(code);
     const queryDiscountCode = 'UPDATE coupons SET use_limit = use_limit - 1, used = used + 1 WHERE name = $1';
     const valuesDiscountCode = [code];
 
@@ -200,7 +199,7 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
 }
 
 router.post('/add-paypal-payment', (request, response) => {
-    const { userId, amount, code, email } = request.body;
+    const { userId, amount, code } = request.body;
     const sessionId = uuidv4();
     const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
     const values = [userId, sessionId, amount];

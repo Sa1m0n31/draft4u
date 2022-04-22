@@ -194,10 +194,6 @@ const SearchStuffPage = ({club, favorites, playersProp}) => {
         }
     }
 
-    useEffect(() => {
-        console.log(content);
-    }, [content]);
-
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 

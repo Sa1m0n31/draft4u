@@ -94,8 +94,6 @@ router.get('/verification', (request, response) => {
 
 router.get("/auth", (request, response) => {
     if(request.user) {
-        console.log("IS LOGGED IN");
-        console.log(request.user);
         if(isNumeric(request.user.toString())) {
            /* Admin */
             response.send({result: 2});
@@ -106,7 +104,6 @@ router.get("/auth", (request, response) => {
         }
     }
     else {
-        console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOT");
         response.send({ result: 0 });
     }
 });
@@ -132,8 +129,6 @@ router.post("/login",
 router.post('/auto-login',
     passport.authenticate('user-switch', { session: true }),
     (request, response) => {
-        console.log('/aut-login');
-        console.log(request.body);
         response.send({
             result: 1
         })
@@ -244,8 +239,6 @@ router.post("/register-local", (request, response) => {
 router.post('/register-second-type', (request, response) => {
     const identity = request.user;
 
-    console.log('identity: ' + identity);
-
     const query = 'SELECT u.id as user_id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number FROM users u JOIN identities i ON u.id = i.user_id WHERE i.id = $1';
     const values = [identity];
 
@@ -260,7 +253,6 @@ router.post('/register-second-type', (request, response) => {
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        console.log(res.rows);
                         const insertedUserId = res.rows[0].id;
                         const query = 'SELECT hash, subscription, newsletter FROM identities WHERE user_id = $1';
                         const values = [user_id];
@@ -275,7 +267,6 @@ router.post('/register-second-type', (request, response) => {
 
                                     db.query(query, values, (err, res) => {
                                         if(res) {
-                                            console.log('success');
                                             response.send({
                                                 result: 1
                                             });
