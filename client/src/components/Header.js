@@ -16,11 +16,11 @@ import padlock from '../static/img/padlock.svg'
 import question from '../static/img/question.svg'
 import logoutIcon from '../static/img/logout.svg'
 import profilePictureExample from '../static/img/profile.png'
-import {logoutUser} from "../helpers/auth";
+import {autoLogin, logoutUser} from "../helpers/auth";
 import settings from "../settings";
 import arrowRightGold from '../static/img/arrow-right-gold.svg'
 import {getClubMessages, getUserMessages} from "../helpers/chat";
-import {convertStringToURL, getMessagePreview, getUniqueListBy} from "../helpers/others";
+import {getMessagePreview, getUniqueListBy} from "../helpers/others";
 import example from "../static/img/profile-picture.png";
 import { io } from "socket.io-client";
 import {getClubData} from "../helpers/club";
@@ -30,12 +30,13 @@ import {
     readAllNotifications,
     readNotification
 } from "../helpers/notification";
-import {getIdentityById, getUserById, getUserData} from "../helpers/user";
+import {getIdentityById, getSecondAccountData, getUserById, getUserData} from "../helpers/user";
 import ContactInfo from "./ContactInfo";
-import { ContentContext } from "../App";
+import {ContentContext, StuffContext} from "../App";
 import polandIcon from '../static/img/poland-flag.svg'
 import ukIcon from '../static/img/united-kingdom.svg'
 import arrowDownIcon from '../static/img/arrow-down-menu.svg'
+import switchIcon from '../static/img/switch.svg'
 
 const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
@@ -57,6 +58,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     const [menuClub, setMenuClub] = useState([]);
     const [dropdownPlayer, setDropdownPlayer] = useState([]);
     const [dropdownClub, setDropdownClub] = useState([]);
+    const [accountSwitch, setAccountSwitch] = useState(false);
 
     let loginBoxWrapper = useRef(null);
     let registerModal = useRef(null);
@@ -70,6 +72,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     const mobileMenuChildren = [mobileMenuCloseBtn, mobileMenuHeader, mobileMenuList, mobileMenuBottom];
 
     const { content, language, setLanguage } = useContext(ContentContext);
+    const { isStuff } = useContext(StuffContext);
 
     document.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -79,8 +82,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     });
 
     useEffect(() => {
-        console.log(club);
-    }, [profileImage]);
+        const twoAccounts = localStorage.getItem('2a');
+        if(twoAccounts) {
+            setAccountSwitch(true);
+        }
+    }, []);
 
     useEffect(() => {
         if(content) {
@@ -179,6 +185,20 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     useEffect(() => {
         setNewMessages(getNumberOfNewMessages());
     }, [messages]);
+
+    const switchAccounts = () => {
+        getSecondAccountData()
+            .then((res) => {
+                const result = res?.data?.result;
+                if(result) {
+                    const { id, user_id } = result;
+                    autoLogin(user_id, id)
+                        .then((res) => {
+                            window.location = '/rozpocznij';
+                        });
+                }
+            });
+    }
 
     const getNumberOfNewMessages = () => {
         if(messages?.length) {
@@ -361,6 +381,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             </ul> : ""}
 
             {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
+                {accountSwitch ? <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { switchAccounts(); }}>
+                        <img className="mobileMenu__bottom__img" src={switchIcon} alt="zmien-typ-konta" />
+                        {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}
+                    </button>
+                </li> : ''}
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zmien-haslo-zawodnika">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
@@ -649,6 +675,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
                             {!club ? <>
+                                {accountSwitch ? <button className="profileMenu__list__link" onClick={() => { switchAccounts(); }}>
+                                    <img className="profileMenu__list__img" src={switchIcon} alt="przelacz" />
+                                    {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}
+                                </button> : ''}
                                 <a className="profileMenu__list__link" href="/faq">
                                     <img className="profileMenu__list__img" src={question} alt="faq" />
                                     {dropdownPlayer[0]}

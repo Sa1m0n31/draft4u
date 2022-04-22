@@ -6,6 +6,7 @@ import {loginUser} from "../helpers/auth";
 import settings from "../settings";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
+import {isUserWithTwoAccounts} from "../helpers/user";
 
 const LoginBox = () => {
     const { content } = useContext(ContentContext);
@@ -24,7 +25,18 @@ const LoginBox = () => {
             loginUser(email, password)
                 .then(res => {
                     /* Login success */
-                    if(res?.data?.result) window.location = "/rozpocznij";
+                    if(res?.data?.result) {
+                        isUserWithTwoAccounts()
+                            .then((res) => {
+                               if(res?.data?.result) {
+                                   localStorage.setItem('2a', '1');
+                               }
+                               else {
+                                   localStorage.removeItem('2a');
+                               }
+                               window.location = "/rozpocznij";
+                            });
+                    }
                     else {
                         setEmail("");
                         setPassword("");

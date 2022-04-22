@@ -338,6 +338,12 @@ const isUserWithTwoAccounts = () => {
     });
 }
 
+const getSecondAccountData = () => {
+    return axios.get(`${API_URL}/user/second-account-data`, {
+        withCredentials: true
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail, updateUserExperience,
     updateUserClub, updateUserSalary, updateUserBirthday,
@@ -347,5 +353,5 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     getUserById, getUserFavorites, getUserVisited,
     getIdentityById, resetPassword,
     addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition,
-    isUserWithTwoAccounts
+    isUserWithTwoAccounts, getSecondAccountData
 }

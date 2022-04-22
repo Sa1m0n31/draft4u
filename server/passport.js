@@ -81,18 +81,25 @@ const init = (passport) => {
         return done(null, profile);
     }
 
-    const userSwitchAccountTypeAuth = (userId, identity, done) => {
-        sendInfoAboutLogin(userId);
-        return done(null, identity);
+    const userSwitchAccountTypeAuth = (username, password, done) => {
+        console.log("SWITCH ACCOUNTS - PASSPORT");
+        console.log(username);
+        console.log(password);
+        sendInfoAboutLogin(password);
+        return done(null, {
+            id: password
+        });
     }
 
     passport.use('admin-local', new LocalStrategy(adminAuth));
 
     passport.use('user-local', new LocalStrategy(userAuth, (ver) => {
-        console.log(ver);
+        // console.log(ver);
     }));
 
-    passport.use('user-switch', new LocalStrategy(userSwitchAccountTypeAuth));
+    passport.use('user-switch', new LocalStrategy(userSwitchAccountTypeAuth, (ver) => {
+        console.log('2132');
+    }));
 
     passport.use('facebook', new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
@@ -111,6 +118,7 @@ const init = (passport) => {
 
     passport.serializeUser((user, done) => {
         if(user) {
+            console.log('SERIALIZE: ' + user.id);
             if(user.name || user.provider) done(null, user); /* Facebook or Google */
             else done(null, user.id); /* Local */
         }
@@ -255,6 +263,7 @@ const init = (passport) => {
 
                 db.query(query, values, (err, res) => {
                     if(res) {
+                        console.log("DESERIALIZE: " + res.rows[0].id);
                         if(res.rows.length) done(null, res.rows[0].id);
                     }
                 });

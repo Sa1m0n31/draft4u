@@ -336,6 +336,7 @@ ul {
     align-items: center;
     background: transparent;
     width: 100%;
+    font-size: 16px;
     transition: .2s all;
 }
 
@@ -6722,4 +6723,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .addAccountTypeSection .button--player--register {
     margin-top: 30px;
+}
+
+.registerModal--accountType {
+    display: block;
+    z-index: 100;
+}
+
+.registerModal--accountType .registerModal__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerModal--accountType .registerResult {
+    margin: auto;
+}
+
+.registerModal--accountType .registerForm--nextBtn {
+    margin-top: 60px;
 }

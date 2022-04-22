@@ -9,6 +9,15 @@ const isLoggedIn = () => {
     });
 }
 
+const autoLogin = (userId, identity) => {
+    return axios.post(`${API_URL}/auth/auto-login`, {
+        username: userId,
+        password: identity
+    }, {
+        withCredentials: true
+    });
+}
+
 const loginUser = (email, password) => {
     return axios.post(`${API_URL}/auth/login`, {
         username: email,
@@ -84,4 +93,5 @@ const registerSecondAccount = () => {
     });
 }
 
-export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple, registerFromThirdParty, registerUser, verifyUser, logoutUser, registerSecondAccount }
+export { isLoggedIn, loginUser, loginAdmin, loginFacebook, loginGoogle, loginApple,
+    registerFromThirdParty, registerUser, verifyUser, logoutUser, registerSecondAccount, autoLogin }

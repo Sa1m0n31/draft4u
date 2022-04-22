@@ -322,6 +322,13 @@ const AdminContent = ({lang}) => {
     const [cv_input_error3, setCvInputError3] = useState("");
     const [delete_cv_yes, setDeleteCvYes] = useState("");
     const [delete_cv_no, setDeleteCvNo] = useState("");
+    const [add_account_type_header, setAddAccountTypeHeader] = useState("");
+    const [add_account_type_text_user, setAddAccountTypeTextUser] = useState("");
+    const [add_account_type_text_staff, setAddAccountTypeTextStaff] = useState("");
+    const [after_add_account_type_user, setAfterAddAccountTypeUser] = useState("");
+    const [after_add_account_type_staff, setAfterAddAccountTypeStaff] = useState("");
+    const [switch_account_type_user, setSwitchAccountTypeUser] = useState("");
+    const [switch_account_type_staff, setSwitchAccountTypeStaff] = useState("");
 
     const [addResult, setAddResult] = useState(-1);
     const [render, setRender] = useState(false);
@@ -647,6 +654,13 @@ const AdminContent = ({lang}) => {
                     setCvInputError3(r.cv_input_error3);
                     setDeleteCvYes(r.delete_cv_yes);
                     setDeleteCvNo(r.delete_cv_no);
+                    setAddAccountTypeHeader(r.add_account_type_header);
+                    setAddAccountTypeTextUser(r.add_account_type_text_user);
+                    setAddAccountTypeTextStaff(r.add_account_type_text_staff);
+                    setAfterAddAccountTypeUser(r.after_add_account_type_user);
+                    setAfterAddAccountTypeStaff(r.after_add_account_type_staff);
+                    setSwitchAccountTypeUser(r.switch_account_type_user);
+                    setSwitchAccountTypeStaff(r.switch_account_type_staff);
 
                     setRender(true);
                 }
@@ -719,7 +733,8 @@ const AdminContent = ({lang}) => {
             cv_type1, cv_type2, cv_type3, add_new, find_new_stuff, see_cv,
             cv_input1, cv_input2, cv_input3, club_search_dropdown1, club_search_dropdown2,
             delete_cv_text, cv_deleted, cv_added, cv_updated, cv_input_error1, cv_input_error2, cv_input_error3,
-            delete_cv_yes, delete_cv_no
+            delete_cv_yes, delete_cv_no, add_account_type_header, add_account_type_text_user, add_account_type_text_staff,
+            after_add_account_type_user, after_add_account_type_staff, switch_account_type_user, switch_account_type_staff
         })
             .then((res) => {
                 if(res?.data?.result) {
@@ -1076,6 +1091,14 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="CV - błąd 3" value={cv_input_error3} func={setCvInputError3} name="cv_input_error2" />
                         <ChangeContentLabel label="Usuń wpis w CV" value={delete_cv_yes} func={setDeleteCvYes} name="delete_cv_yes" />
                         <ChangeContentLabel label="Powrót" value={delete_cv_no} func={setDeleteCvNo} name="delete_cv_no" />
+
+                        <ChangeContentLabel label="Propozycja dodania konta - nagłówek" value={add_account_type_header} func={setAddAccountTypeHeader} name="add_account_type_header" />
+                        <ChangeContentLabel label="Propozycja dodania konta - tekst dla zawodnika" value={add_account_type_text_user} func={setAddAccountTypeTextUser} name="add_account_type_text_user" />
+                        <ChangeContentLabel label="Propozycja dodania konta - tekst dla sztabu" value={add_account_type_text_staff} func={setAddAccountTypeTextStaff} name="add_account_type_text_staff" />
+                        <ChangeContentLabel label="Po dodaniu drugiego typu konta - zawodnik" value={after_add_account_type_user} func={setAfterAddAccountTypeUser} name="after_add_account_type_user" />
+                        <ChangeContentLabel label="Po dodaniu drugiego typu konta - zawodnik" value={after_add_account_type_staff} func={setAfterAddAccountTypeStaff} name="after_add_account_type_staff" />
+                        <ChangeContentLabel label="Zmiana typu konta - zawodnik" value={switch_account_type_user} func={setSwitchAccountTypeUser} name="switch_account_type_user" />
+                        <ChangeContentLabel label="Zmiana typu konta - zawodnik" value={switch_account_type_staff} func={setSwitchAccountTypeStaff} name="switch_account_type_staff" />
 
                         <button className="admin__btn admin__btn--addNotification admin__btn--cms"
                                 onClick={() => { handleSubmit(); }}>

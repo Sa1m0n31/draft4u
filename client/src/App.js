@@ -62,7 +62,9 @@ function App() {
           });
   }, [language]);
 
-  return render ? <ContentContext.Provider value={{content, language, setLanguage}}><Router>
+  return render ? <ContentContext.Provider value={{content, language, setLanguage}}>
+      <StuffContext.Provider value={{isStuff, setIsStuff}}>
+      <Router>
           {/* Public routes */}
           <Route exact path="/">
               <Homepage />
@@ -114,7 +116,6 @@ function App() {
           </Route>
 
           {/* User routes */}
-            <StuffContext.Provider value={{isStuff, setIsStuff}}>
                 <Route path="/rozpocznij">
                     <UserWrapper page={1} />
                 </Route>
@@ -187,7 +188,6 @@ function App() {
                 <Route path="/zmien-haslo-klubu">
                     <ClubWrapper page={10} />
                 </Route>
-            </StuffContext.Provider>
 
           {/* Admin panel */}
           <Route path="/admin">
@@ -251,6 +251,7 @@ function App() {
               <AdminWrapper page={19} />
           </Route>
       </Router>
+      </StuffContext.Provider>
       </ContentContext.Provider> : <LoadingPage />
 }
 

@@ -200,7 +200,7 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
 }
 
 router.post('/add-paypal-payment', (request, response) => {
-    const { userId, amount, code } = request.body;
+    const { userId, amount, code, email } = request.body;
     const sessionId = uuidv4();
     const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
     const values = [userId, sessionId, amount];
@@ -217,8 +217,8 @@ router.post('/add-paypal-payment', (request, response) => {
         db.query(query, values, (err, res) => {
             if(res) {
                 const { first_name, last_name, email } = res.rows[0];
-                const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
-                const values = [userId];
+                const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id IN (SELECT id FROM users WHERE email = $1)`;
+                const values = [email];
 
                 db.query(query, values, (err, res) => {
                     if(res) {
@@ -271,9 +271,9 @@ router.post("/verify", (request, response) => {
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        const { user_id, first_name, last_name, email } = res.rows[0];
-                        const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
-                        const values = [user_id];
+                        const { first_name, last_name, email } = res.rows[0];
+                        const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id IN (SELECT id FROM users WHERE email = $1)`;
+                        const values = [email];
 
                         db.query(query, values, (err, res) => {
                             if(res) {

@@ -674,4 +674,35 @@ router.get('/is-user-with-two-accounts', (request, response) => {
     });
 });
 
+router.get('/second-account-data', (request, response) => {
+    const id = request.user;
+
+    const query = `SELECT i.id, i.user_id FROM identities i 
+                    JOIN users u ON i.user_id = u.id 
+                    WHERE i.id != $1 AND u.email = (
+                        SELECT email FROM users u JOIN identities i ON i.user_id = u.id WHERE i.id = $1
+                    )`;
+    const values = [id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            if(res.rows) {
+                response.send({
+                    result: res.rows[0]
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
 module.exports = router;

@@ -336,8 +336,15 @@ router.post('/update', (request, response) => {
         cv_input_error2 = $311,
         cv_input_error3 = $312,
         delete_cv_yes = $313,
-        delete_cv_no = $314
-        WHERE language = $315`;
+        delete_cv_no = $314,
+        add_account_type_header = $315,
+        add_account_type_text_user = $316,
+        add_account_type_text_staff =$317,
+        after_add_account_type_user = $318,
+        after_add_account_type_staff = $319,
+        switch_account_type_user = $320,
+        switch_account_type_staff = $321 
+        WHERE language = $322`;
 
     db.query(query, values, (err, res) => {
         console.log(err);
