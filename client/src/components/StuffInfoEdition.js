@@ -113,15 +113,34 @@ const StuffInfoEdition = ({id, club}) => {
             setTo(null);
             setDescription(null);
         }
+
+        if(window.innerWidth < 997) {
+            document.querySelector('html').style.height = '100%';
+            document.querySelector('html').style.overflow = 'hidden';
+            document.querySelector('body').style.height = '100%';
+            document.querySelector('body').style.overflow = 'hidden';
+        }
     }
 
     const deleteCvModal = (id) => {
+        if(window.innerWidth < 997) {
+            document.querySelector('html').style.height = '100%';
+            document.querySelector('html').style.overflow = 'hidden';
+            document.querySelector('body').style.height = '100%';
+            document.querySelector('body').style.overflow = 'hidden';
+        }
+
         setDeleteModal(true);
         setDeleted(-1);
         setCvToEditId(id);
     }
 
     const closeModal = () => {
+        document.querySelector('html').style.height = 'auto';
+        document.querySelector('html').style.overflow = 'scroll';
+        document.querySelector('body').style.height = 'auto';
+        document.querySelector('body').style.overflow = 'default';
+
         setModal(false);
         setCvToEditId(null);
     }

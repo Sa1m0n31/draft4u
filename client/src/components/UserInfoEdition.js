@@ -321,7 +321,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                                onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserAge(e.keyCode === 9); }}
                                disabled={!editAge}
                                required={true}
-                               className="input--editProfile"
+                               className="input--editProfile input--birthdate"
                                name="age" />
                         {!editAge ? <button className="userInfoEdition__btn" onClick={() => { setEditAge(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />

@@ -6542,6 +6542,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -webkit-appearance: none;
 }
 
+.input--birthdate,
 .input--editProfile[type="date"] {
     text-align: right !important;
 }
