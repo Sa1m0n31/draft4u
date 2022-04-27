@@ -56,6 +56,7 @@ function App() {
           .then((res) => {
               const r = res?.data?.result[0];
               if(r) {
+                  console.log(r);
                   setContent(r);
                   setRender(true);
               }

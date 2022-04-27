@@ -62,18 +62,18 @@ const init = (passport) => {
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {
-           if(res) {
-               const admin = res.rows[0];
-               if(!admin) {
-                   return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
-               }
-               else {
-                   return done(null, admin);
-               }
-           }
-           else {
-               return done(err, false, { message: "Coś poszło nie tak..." });
-           }
+            if(res) {
+                const admin = res.rows[0];
+                if(!admin) {
+                    return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
+                }
+                else {
+                    return done(null, admin);
+                }
+            }
+            else {
+                return done(err, false, { message: "Coś poszło nie tak..." });
+            }
         });
     }
 
@@ -141,6 +141,7 @@ const init = (passport) => {
                 else {
                     values = [id.id + '@facebookauth'];
                 }
+
                 db.query(query, values, (err, res) => {
                     if(res) {
                         /* Add new identity */
@@ -164,20 +165,30 @@ const init = (passport) => {
                     }
                     else {
                         /* Error - user with the same email address already exists */
-                        if(parseInt(err.code) === 23505) {
-                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
-                            const values = [hash];
+                        try {
+                            if(err) {
+                                if((parseInt(err.code) === 23505) && (hash)) {
+                                    const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                                    const values = [hash];
 
-                            db.query(query, values, (err, res) => {
-                                if(res) {
-                                    done(null, res.rows[0].id);
+                                    db.query(query, values, (err, res) => {
+                                        if(res) {
+                                            done(null, res.rows[0].id);
+                                        }
+                                        else {
+                                            done(null, null);
+                                        }
+                                    });
                                 }
                                 else {
                                     done(null, null);
                                 }
-                            });
+                            }
+                            else {
+                                done(null, null);
+                            }
                         }
-                        else {
+                        catch(err) {
                             done(null, null);
                         }
                     }

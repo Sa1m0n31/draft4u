@@ -69,12 +69,14 @@ const RegisterModal = (props) => {
     }, [sex]);
 
     useEffect(() => {
-        if(props.registerFromThirdParty) {
+        if(props.registerFromThirdParty && formStep1 && formStep2) {
             setCurrentStep(2);
-            formStep1.current.style.display = "none";
-            formStep2.current.style.display = "block";
+            if(formStep1.current && formStep2.current) {
+                formStep1.current.style.display = "none";
+                formStep2.current.style.display = "block";
+            }
         }
-    }, [props.registerFromThirdParty]);
+    }, [props.registerFromThirdParty, formStep1, formStep2]);
 
     const resetErrors = (e) => {
         if(e) e.preventDefault();
@@ -263,7 +265,7 @@ const RegisterModal = (props) => {
             {props.registerFromThirdParty ? content.register_header_2 : content.register_header}
         </h3>
 
-        {step0 ? <div className="registerModal__step0">
+        <div className={!step0 ? "hidden" : "registerModal__step0"}>
             <div className="registerModal__step0__buttons d-desktop-flex">
                 <button className="registerModal__step0__btn" onClick={() => { chooseAccountType(0); }}>
                     <img className="registerModal__step0__btn__img" src={getImageUrl(content.img37)} alt="strefa-zawodnika" />
@@ -280,7 +282,9 @@ const RegisterModal = (props) => {
                     <img className="registerModal__step0__btn__img" src={getImageUrl(content.img34)} alt="strefa-asystenta" />
                 </button>
             </div>
-        </div> : <>
+        </div>
+
+        <div className={step0 ? "hidden" : ""}>
             <img className={props.mobile ? "d-none" : "registerModal__img"} src={playerImg} alt="siatkarz" />
 
             {userRegistered === -1 ? <h4 className="registerModal__step">
@@ -438,7 +442,7 @@ const RegisterModal = (props) => {
                     <img className="registerForm--nextBtn__img" src={getImageUrl(content.img14)} alt="zaloguj-sie" />
                 </button>) : ""}
             </section>) }
-        </>}
+        </div>
 
     </main>
 }

@@ -210,32 +210,27 @@ router.post('/add-paypal-payment', (request, response) => {
     db.query(queryDiscountCode, valuesDiscountCode);
 
     db.query(query, values, (err, res) => {
-        const query = 'SELECT first_name, last_name, email FROM users WHERE id = $1';
-        const values = [userId];
+        if(res) {
+            const { first_name, last_name, email } = res.rows[0];
+            const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
+            const values = [userId];
 
-        db.query(query, values, (err, res) => {
-            if(res) {
-                const { first_name, last_name, email } = res.rows[0];
-                const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id IN (SELECT id FROM users WHERE email = $1)`;
-                const values = [email];
-
-                db.query(query, values, (err, res) => {
-                    if(res) {
-                        addInvoice(`${first_name} ${last_name}`, email, amount * 100, response);
-                    }
-                    else {
-                        response.send({
-                            status: 0
-                        });
-                    }
-                });
-            }
-            else {
-                response.send({
-                    status: 0
-                });
-            }
-        });
+            db.query(query, values, (err, res) => {
+                if(res) {
+                    addInvoice(`${first_name} ${last_name}`, email, amount * 100, response);
+                }
+                else {
+                    response.send({
+                        status: 0
+                    });
+                }
+            });
+        }
+        else {
+            response.send({
+                status: 0
+            });
+        }
     });
 });
 
@@ -270,9 +265,9 @@ router.post("/verify", (request, response) => {
 
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        const { first_name, last_name, email } = res.rows[0];
-                        const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id IN (SELECT id FROM users WHERE email = $1)`;
-                        const values = [email];
+                        const { first_name, last_name, email, user_id } = res.rows[0];
+                        const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
+                        const values = [user_id];
 
                         db.query(query, values, (err, res) => {
                             if(res) {

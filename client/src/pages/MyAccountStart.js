@@ -14,17 +14,17 @@ const MyAccountStart = ({user, isLocal}) => {
 
     useEffect(() => {
         // For Facebook and Google accounts
-        isUserWithTwoAccounts()
-            .then((res) => {
-                if(res?.data?.result) {
-                    localStorage.setItem('2a', '1');
-                    setDoubleAccount(true);
-                }
-                else {
-                    localStorage.removeItem('2a');
-                    setDoubleAccount(false);
-                }
-            });
+        // isUserWithTwoAccounts()
+        //     .then((res) => {
+        //         if(res?.data?.result) {
+        //             localStorage.setItem('2a', '1');
+        //             setDoubleAccount(true);
+        //         }
+        //         else {
+        //             localStorage.removeItem('2a');
+        //             setDoubleAccount(false);
+        //         }
+        //     });
 
         setFullName(user.first_name + " " + user.last_name);
     }, []);
@@ -33,7 +33,7 @@ const MyAccountStart = ({user, isLocal}) => {
         <Header loggedIn={true} player={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
 
         <MyAccountStartHeader fullName={fullName} image={user.file_path} />
-        {!doubleAccount ? <AddAccountTypeSection /> : ''}
+        {/*{!doubleAccount ? <AddAccountTypeSection /> : ''}*/}
         <BlogSection />
         <ClubActivities />
         <MyAccountStartBottom userId={user.id} />

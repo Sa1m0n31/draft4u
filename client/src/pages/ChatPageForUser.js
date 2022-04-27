@@ -178,7 +178,7 @@ const ChatPageForUser = ({user, isLocal}) => {
             });
 
             socket.on("message", (data) => {
-                alert(data);
+                // alert(data);
             });
         }
     }, [socket]);

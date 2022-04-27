@@ -381,12 +381,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             </ul> : ""}
 
             {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
-                {accountSwitch ? <li className="mobileMenu__bottom__item">
-                    <button className="mobileMenu__bottom__link" onClick={() => { switchAccounts(); }}>
-                        <img className="mobileMenu__bottom__img" src={switchIcon} alt="zmien-typ-konta" />
-                        {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}
-                    </button>
-                </li> : ''}
+                {/*{accountSwitch ? <li className="mobileMenu__bottom__item">*/}
+                {/*    <button className="mobileMenu__bottom__link" onClick={() => { switchAccounts(); }}>*/}
+                {/*        <img className="mobileMenu__bottom__img" src={switchIcon} alt="zmien-typ-konta" />*/}
+                {/*        {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}*/}
+                {/*    </button>*/}
+                {/*</li> : ''}*/}
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zmien-haslo-zawodnika">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
@@ -675,10 +675,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
                             {!club ? <>
-                                {accountSwitch ? <button className="profileMenu__list__link" onClick={() => { switchAccounts(); }}>
-                                    <img className="profileMenu__list__img" src={switchIcon} alt="przelacz" />
-                                    {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}
-                                </button> : ''}
+                                {/*{accountSwitch ? <button className="profileMenu__list__link" onClick={() => { switchAccounts(); }}>*/}
+                                {/*    <img className="profileMenu__list__img" src={switchIcon} alt="przelacz" />*/}
+                                {/*    {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}*/}
+                                {/*</button> : ''}*/}
                                 <a className="profileMenu__list__link" href="/faq">
                                     <img className="profileMenu__list__img" src={question} alt="faq" />
                                     {dropdownPlayer[0]}

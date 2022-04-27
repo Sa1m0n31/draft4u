@@ -960,9 +960,12 @@
         max-width: none;
     }
 
-    .partners,
     .clubCarousel {
         height: 180px;
+    }
+
+    .partners {
+        height: 380px;
     }
 
     .clubCarousel__header {
@@ -2841,16 +2844,17 @@
     }
 
     .partners {
-        bottom: -235px;
-    }
-
-    .partners__main {
-        justify-content: center;
+        bottom: -350px;
+        height: 320px;
     }
 
     .partners__imgWrapper {
         width: 80px;
         height: 70px;
+    }
+
+    .partners__imgWrapper:first-of-type {
+        margin-left: 0;
     }
 
     .mapDot__btn__details__data span {
@@ -2990,6 +2994,10 @@
 
     .footer {
         z-index: 1;
+    }
+
+    .container--homepage .footer {
+        padding-top: 390px;
     }
 
     .container--homepage .footer::before {

@@ -876,6 +876,14 @@ ul {
     padding: 20px 20px 40px 20px;
 }
 
+.clubCarousel__header--marginTop {
+    margin-top: 20px;
+}
+
+.partners .clubCarousel__header {
+    padding-bottom: 20px;
+}
+
 .clubCarousel__item {
     display: flex;
     justify-content: center;
@@ -5667,7 +5675,7 @@ input::-webkit-inner-spin-button {
 
 .container--homepage .footer {
     z-index: 1;
-    padding-top: 280px;
+    padding-top: 480px;
 }
 
 .container--homepage .landingPage {
@@ -5978,7 +5986,8 @@ input::-webkit-inner-spin-button {
 
 .contact__main .registerForm--nextBtn {
     width: 70%;
-    max-height: 30px;
+    max-height: 60px;
+    margin-bottom: -30px;
 }
 
 .contact__main__bottom {
@@ -6666,10 +6675,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .partners {
     margin-top: 30px;
     position: absolute;
-    bottom: -265px;
+    bottom: -465px;
     left: 0;
     width: 100%;
-    height: 240px;
+    height: 410px;
     background: rgba(255, 255, 255, .7);
 }
 
@@ -6698,7 +6707,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .partners__img--grey {
     top: 0;
     left: 0;
-    filter: grayscale(1);
+    filter: grayscale(.8);
 }
 
 .partners__img--color {

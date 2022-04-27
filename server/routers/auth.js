@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const cors = require("cors");
 const db = require("../database/db");
 const { v4: uuidv4 } = require('uuid');
-require('../passport')(passport);
+require('../passport-new')(passport);
 const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
 
@@ -254,16 +254,16 @@ router.post('/register-second-type', (request, response) => {
                 db.query(query, values, (err, res) => {
                     if(res) {
                         const insertedUserId = res.rows[0].id;
-                        const query = 'SELECT hash, subscription, newsletter FROM identities WHERE user_id = $1';
+                        const query = 'SELECT hash, newsletter, adapter FROM identities WHERE user_id = $1';
                         const values = [user_id];
 
                         db.query(query, values, (err, res) => {
                             if(res) {
                                 if(res.rows) {
-                                    const { hash, subscription, newsletter } = res.rows[0];
+                                    const { hash, newsletter, adapter } = res.rows[0];
                                     const newId = uuidv4() + (identity.split('-')[identity.split('-').length-1] !== 'stuff' ? '-stuff' : '');
-                                    const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, true, $4, $5)`;
-                                    const values = [newId, insertedUserId, hash, subscription, newsletter];
+                                    const query = `INSERT INTO identities VALUES ($1, $2, $3, $4, true, NOW() + INTERVAL '14 DAY', $5)`;
+                                    const values = [newId, insertedUserId, adapter, hash, newsletter];
 
                                     db.query(query, values, (err, res) => {
                                         if(res) {

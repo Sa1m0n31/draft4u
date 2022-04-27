@@ -26,16 +26,18 @@ const LoginBox = () => {
                 .then(res => {
                     /* Login success */
                     if(res?.data?.result) {
-                        isUserWithTwoAccounts()
-                            .then((res) => {
-                               if(res?.data?.result) {
-                                   localStorage.setItem('2a', '1');
-                               }
-                               else {
-                                   localStorage.removeItem('2a');
-                               }
-                               window.location = "/rozpocznij";
-                            });
+                        window.location = "/rozpocznij";
+
+                        // isUserWithTwoAccounts()
+                        //     .then((res) => {
+                        //        if(res?.data?.result) {
+                        //            localStorage.setItem('2a', '1');
+                        //        }
+                        //        else {
+                        //            localStorage.removeItem('2a');
+                        //        }
+                        //        window.location = "/rozpocznij";
+                        //     });
                     }
                     else {
                         setEmail("");
@@ -92,12 +94,12 @@ const LoginBox = () => {
             {content.login_box2}
         </span>
 
-        <a className="button button--facebook" href={`${settings.API_URL}/auth/facebook`}>
+        <a className="button button--facebook" href="/auth/facebook">
             <img className="button--facebook__img" src={facebookIcon} alt="facebook" />
             Continue with Facebook
         </a>
 
-        <a className="button button--google" href={`${settings.API_URL}/auth/google`}>
+        <a className="button button--google" href="/auth/google">
             <img className="button--google__img" src={googleIcon} alt="google" />
             Continue with Google
         </a>
