@@ -30,7 +30,7 @@ import {
     readAllNotifications,
     readNotification
 } from "../helpers/notification";
-import {getIdentityById, getSecondAccountData, getUserById, getUserData} from "../helpers/user";
+import {getIdentityById, getSecondAccountData, getUserById, getUserData, isUserWithTwoAccounts} from "../helpers/user";
 import ContactInfo from "./ContactInfo";
 import {ContentContext, StuffContext} from "../App";
 import polandIcon from '../static/img/poland-flag.svg'
@@ -82,10 +82,17 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
     });
 
     useEffect(() => {
-        const twoAccounts = localStorage.getItem('2a');
-        if(twoAccounts) {
-            setAccountSwitch(true);
-        }
+        isUserWithTwoAccounts()
+            .then((res) => {
+                if(res?.data?.result) {
+                    localStorage.setItem('2a', '1');
+                    setAccountSwitch(true);
+                }
+                else {
+                    localStorage.setItem('2a', '0');
+                    setAccountSwitch(false);
+                }
+            });
     }, []);
 
     useEffect(() => {
@@ -381,12 +388,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             </ul> : ""}
 
             {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
-                {/*{accountSwitch ? <li className="mobileMenu__bottom__item">*/}
-                {/*    <button className="mobileMenu__bottom__link" onClick={() => { switchAccounts(); }}>*/}
-                {/*        <img className="mobileMenu__bottom__img" src={switchIcon} alt="zmien-typ-konta" />*/}
-                {/*        {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}*/}
-                {/*    </button>*/}
-                {/*</li> : ''}*/}
+                {accountSwitch ? <li className="mobileMenu__bottom__item">
+                    <button className="mobileMenu__bottom__link" onClick={() => { switchAccounts(); }}>
+                        <img className="mobileMenu__bottom__img" src={switchIcon} alt="zmien-typ-konta" />
+                        {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}
+                    </button>
+                </li> : ''}
                 <li className="mobileMenu__bottom__item">
                     <a className="mobileMenu__bottom__link" href="/zmien-haslo-zawodnika">
                         <img className="mobileMenu__bottom__img" src={padlock} alt="zmien-haslo" />
@@ -675,10 +682,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     <ul className="profileMenu__list">
                         <li className="profileMenu__list__item">
                             {!club ? <>
-                                {/*{accountSwitch ? <button className="profileMenu__list__link" onClick={() => { switchAccounts(); }}>*/}
-                                {/*    <img className="profileMenu__list__img" src={switchIcon} alt="przelacz" />*/}
-                                {/*    {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}*/}
-                                {/*</button> : ''}*/}
+                                {accountSwitch ? <button className="profileMenu__list__link" onClick={() => { switchAccounts(); }}>
+                                    <img className="profileMenu__list__img" src={switchIcon} alt="przelacz" />
+                                    {isStuff ? content.switch_account_type_staff : content.switch_account_type_user}
+                                </button> : ''}
                                 <a className="profileMenu__list__link" href="/faq">
                                     <img className="profileMenu__list__img" src={question} alt="faq" />
                                     {dropdownPlayer[0]}

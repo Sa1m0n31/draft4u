@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const cors = require("cors");
 const db = require("../database/db");
 const { v4: uuidv4 } = require('uuid');
-require('../passport-new')(passport);
+require('../passport')(passport);
 const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
 

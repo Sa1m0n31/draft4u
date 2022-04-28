@@ -3,14 +3,30 @@ import closeIcon from "../static/img/close-grey.svg";
 import successIcon from "../static/img/success.svg";
 import {getImageUrl} from "../helpers/others";
 import {ContentContext, StuffContext} from "../App";
+import {getSecondAccountData} from "../helpers/user";
+import {autoLogin} from "../helpers/auth";
 
 const SecondAccountModal = ({mobile}) => {
     const { content } = useContext(ContentContext);
     const { isStuff } = useContext(StuffContext);
 
+    const switchAccounts = () => {
+        getSecondAccountData()
+            .then((res) => {
+                const result = res?.data?.result;
+                if(result) {
+                    const { id, user_id } = result;
+                    autoLogin(user_id, id)
+                        .then((res) => {
+                            window.location = '/rozpocznij';
+                        });
+                }
+            });
+    }
+
     return <div className="registerModal registerModal--accountType">
         <main className="registerModal__inner">
-            <button className={mobile ? "d-none" : "registerModal__closeBtn"} onClick={() => { window.location = '/rozpocznij'; }}>
+            <button className={mobile ? "d-none" : "registerModal__closeBtn"} onClick={() => { switchAccounts(); }}>
                 <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" />
             </button>
             <section className="registerResult">
@@ -19,7 +35,7 @@ const SecondAccountModal = ({mobile}) => {
                     {isStuff ? content.after_add_account_type_staff : content.after_add_account_type_user}
                 </h4>
 
-                <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { window.location = '/rozpocznij'; }}>
+                <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { switchAccounts(); }}>
                     <img className="registerForm--nextBtn__img" src={getImageUrl(content.img12)} alt="dalej" />
                 </button>
             </section>

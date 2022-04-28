@@ -62,18 +62,18 @@ const init = (passport) => {
         const values = [username, hash];
 
         db.query(query, values, (err, res) => {
-            if(res) {
-                const admin = res.rows[0];
-                if(!admin) {
-                    return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
-                }
-                else {
-                    return done(null, admin);
-                }
-            }
-            else {
-                return done(err, false, { message: "Coś poszło nie tak..." });
-            }
+           if(res) {
+               const admin = res.rows[0];
+               if(!admin) {
+                   return done(null, false, { message: 'Niepoprawna nazwa użytkownika lub hasło' });
+               }
+               else {
+                   return done(null, admin);
+               }
+           }
+           else {
+               return done(err, false, { message: "Coś poszło nie tak..." });
+           }
         });
     }
 
@@ -127,9 +127,12 @@ const init = (passport) => {
         if(id) {
             if(id.provider === 'google') {
                 /* Google */
-                const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience)
+                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+                            WHERE NOT EXISTS (
+                                SELECT 1 FROM users WHERE email = $1
+                            ) RETURNING id`;
                 if(id.emails) {
                     if(id.emails.length) {
                         values = [id.emails[0].value];
@@ -141,54 +144,73 @@ const init = (passport) => {
                 else {
                     values = [id.id + '@facebookauth'];
                 }
-
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        /* Add new identity */
                         if(res.rows) {
-                            const userId = res.rows[0].id;
-                            query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                            values = [uuid, userId, 3, hash];
+                            /* Add new identity */
+                            if(res.rows.length) {
+                                const uuid = uuidv4();
+                                const userId = res.rows[0].id;
+                                query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
+                                values = [uuid, userId, 3, hash];
+
+                                db.query(query, values, (err, res) => {
+                                    if(res) {
+                                        done(null, uuid);
+                                    }
+                                    else {
+                                        done(null, null);
+                                    }
+                                });
+                            }
+                            else {
+                                const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                                const values = [hash];
+
+                                db.query(query, values, (err, res) => {
+                                    if(res) {
+                                        done(null, res.rows[0].id);
+                                    }
+                                    else {
+                                        done(null, null);
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                            const values = [hash];
 
                             db.query(query, values, (err, res) => {
                                 if(res) {
-                                    done(null, uuid);
+                                    done(null, res.rows[0].id);
                                 }
                                 else {
                                     done(null, null);
                                 }
                             });
                         }
-                        else {
-                            done(null, null);
-                        }
                     }
                     else {
-                        /* Error - user with the same email address already exists */
-                        try {
-                            if(err) {
-                                if((parseInt(err.code) === 23505) && (hash)) {
-                                    const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
-                                    const values = [hash];
+                        if(err) {
+                            if(parseInt(err.code) === 23505) {
+                                const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                                const values = [hash];
 
-                                    db.query(query, values, (err, res) => {
-                                        if(res) {
-                                            done(null, res.rows[0].id);
-                                        }
-                                        else {
-                                            done(null, null);
-                                        }
-                                    });
-                                }
-                                else {
-                                    done(null, null);
-                                }
+                                db.query(query, values, (err, res) => {
+                                    if(res) {
+                                        done(null, res.rows[0].id);
+                                    }
+                                    else {
+                                        done(null, null);
+                                    }
+                                });
                             }
                             else {
                                 done(null, null);
                             }
                         }
-                        catch(err) {
+                        else {
                             done(null, null);
                         }
                     }
@@ -198,7 +220,11 @@ const init = (passport) => {
                 /* Facebook */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience)
+                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+                            WHERE NOT EXISTS (
+                                SELECT 1 FROM users WHERE email = $1
+                            ) RETURNING id`;
                 if(id.emails) {
                     if(id.emails.length) {
                         values = [id.emails[0].value, id.name.givenName, id.name.familyName];
@@ -212,28 +238,52 @@ const init = (passport) => {
                 }
                 db.query(query, values, (err, res) => {
                     if(res) {
-                        /* Add new identity */
                         if(res.rows) {
-                            const userId = res.rows[0].id;
-                            query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                            values = [uuid, userId, 2, hash];
+                            /* Add new identity */
+                            if(res.rows.length) {
+                                const userId = res.rows[0].id;
+                                if(userId) {
+                                    query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
+                                    values = [uuid, userId, 2, hash];
 
-                            db.query(query, values, (err, res) => {
-                                if(res) {
-                                    done(null, uuid);
+                                    db.query(query, values, (err, res) => {
+                                        if(res) {
+                                            done(null, uuid);
+                                        }
+                                        else {
+                                            done(null, null);
+                                        }
+                                    });
                                 }
                                 else {
-                                    done(null, null);
+                                    const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
+                                    const values = [hash];
+
+                                    db.query(query, values, (err, res) => {
+                                        if(res) {
+                                            done(null, res.rows[0].id);
+                                        }
+                                        else {
+                                            done(null, null);
+                                        }
+                                    });
                                 }
-                            });
+                            }
+                            else {
+                                const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
+                                const values = [hash];
+
+                                db.query(query, values, (err, res) => {
+                                    if(res) {
+                                        done(null, res.rows[0].id);
+                                    }
+                                    else {
+                                        done(null, null);
+                                    }
+                                });
+                            }
                         }
                         else {
-                            done(null, null);
-                        }
-                    }
-                    else {
-                        /* Error - user with the same email already exists */
-                        if(parseInt(err.code) === 23505) {
                             const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
                             const values = [hash];
 
@@ -246,9 +296,20 @@ const init = (passport) => {
                                 }
                             });
                         }
-                        else {
-                            done(null, null);
-                        }
+                    }
+                    else {
+                        /* Error - user with the same email already exists */
+                        const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
+                        const values = [hash];
+
+                        db.query(query, values, (err, res) => {
+                            if(res) {
+                                done(null, res.rows[0].id);
+                            }
+                            else {
+                                done(null, null);
+                            }
+                        });
                     }
                 });
             }

@@ -3,7 +3,6 @@ import React, {useState, useEffect, useContext} from 'react'
 import googleIcon from '../static/img/google.png'
 import facebookIcon from '../static/img/facebook.svg'
 import {loginUser} from "../helpers/auth";
-import settings from "../settings";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 import {isUserWithTwoAccounts} from "../helpers/user";
@@ -28,16 +27,16 @@ const LoginBox = () => {
                     if(res?.data?.result) {
                         window.location = "/rozpocznij";
 
-                        // isUserWithTwoAccounts()
-                        //     .then((res) => {
-                        //        if(res?.data?.result) {
-                        //            localStorage.setItem('2a', '1');
-                        //        }
-                        //        else {
-                        //            localStorage.removeItem('2a');
-                        //        }
-                        //        window.location = "/rozpocznij";
-                        //     });
+                        isUserWithTwoAccounts()
+                            .then((res) => {
+                               if(res?.data?.result) {
+                                   localStorage.setItem('2a', '1');
+                               }
+                               else {
+                                   localStorage.setItem('2a', '0');
+                               }
+                               window.location = "/rozpocznij";
+                            });
                     }
                     else {
                         setEmail("");
