@@ -27,7 +27,7 @@ const LandingPage = () => {
         </main>
 
         <ClubSlider />
-        <Partners />
+        {/*<Partners />*/}
     </main>
 }
 

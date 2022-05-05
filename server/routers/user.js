@@ -87,7 +87,10 @@ const sendPasswordRemindLink = (email, token, response) => {
 router.post("/password-remind", basicAuth, (request, response) => {
     const { email } = request.body;
 
-    const query = 'SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE LOWER(u.email) = LOWER($1)';
+    const query = `SELECT i.id FROM identities i 
+                    LEFT OUTER JOIN users u ON i.user_id = u.id 
+                    LEFT OUTER JOIN clubs c ON i.id = c.id 
+                    WHERE LOWER(u.email) = LOWER($1) OR LOWER(c.email) = LOWER($1)`;
     const values = [email];
 
     db.query(query, values, (err, res) => {
@@ -160,27 +163,23 @@ router.post("/reset-password", basicAuth, (request, response) => {
 
     const newPasswordHash = crypto.createHash('sha256').update(password).digest('hex');
 
-    const query = 'UPDATE identities i SET hash = $1 FROM users u WHERE i.user_id = u.id AND LOWER(u.email) = LOWER($2)';
+    const query1 = 'UPDATE identities i SET hash = $1 FROM users u WHERE i.user_id = u.id AND LOWER(u.email) = LOWER($2)';
+    const query2 = 'UPDATE identities i SET hash = $1 FROM clubs c WHERE c.id = i.id AND LOWER(c.email) = LOWER($2)';
     const values = [newPasswordHash, email];
 
-    db.query(query, values, (err, res) => {
-        if(res) {
-            if(res.rowCount) {
+    db.query(query1, values, (err, res) => {
+        db.query(query2, values, (err, res) => {
+            if(res) {
                 response.send({
                     result: 1
                 });
             }
             else {
                 response.send({
-                    result: -2
+                    result: 0
                 });
             }
-        }
-        else {
-            response.send({
-                result: 0
-            })
-        }
+        });
     });
 });
 

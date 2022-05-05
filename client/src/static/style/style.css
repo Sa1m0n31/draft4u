@@ -5675,7 +5675,7 @@ input::-webkit-inner-spin-button {
 
 .container--homepage .footer {
     z-index: 1;
-    padding-top: 480px;
+    /*padding-top: 480px;*/
 }
 
 .container--homepage .landingPage {
@@ -6679,7 +6679,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     left: 0;
     width: 100%;
     height: 410px;
-    background: rgba(255, 255, 255, .7);
+    background: #1A1A1A;
+}
+
+.partners .clubCarousel__header {
+    color: #dddddd;
 }
 
 .partners__main {

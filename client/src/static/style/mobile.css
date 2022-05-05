@@ -2997,7 +2997,7 @@
     }
 
     .container--homepage .footer {
-        padding-top: 390px;
+        /*padding-top: 390px;*/
     }
 
     .container--homepage .footer::before {
