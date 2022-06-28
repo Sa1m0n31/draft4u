@@ -1,9 +1,6 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import registerBtn from '../static/img/register-btn.png'
-import buyNowBtn from '../static/img/buy-now.png'
-import playerHeader from '../static/img/header-zawodnicy.jpg'
 import img1 from '../static/img/strefa-zawodnika-1.png'
 import img2 from '../static/img/strefa-zawodnika-2.png'
 import img3 from '../static/img/czat.png'
@@ -16,8 +13,30 @@ import discountImg from '../static/img/discount.png'
 import phone from '../static/img/ekran-glowny.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
+import PlayerSlide1 from "../components/PlayerSlide1";
+import Slider from 'react-slick'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import PlayerSlide2 from "../components/PlayerSlide2";
+import PlayerSlide3 from "../components/PlayerSlide3";
+import PlayerSlide4 from "../components/PlayerSlide4";
+import PlayerSlide5 from "../components/PlayerSlide5";
 
 const Player = () => {
+    const [slide, setSlide] = useState(0);
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        draggable: false
+    };
+
+    const slider = useRef(null);
+    const faqContainer = useRef(null);
+
     const openRegisterModal = () => {
         if(window.innerWidth > 768) {
             document.querySelector(".loginBoxWrapper").style.display = "none";
@@ -28,136 +47,84 @@ const Player = () => {
         }
     }
 
-    const { content } = useContext(ContentContext);
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    useEffect(() => {
+
+        window.addEventListener('wheel', (event) => {
+            /* Sprawdzamy czy nie FAQ */
+            const path = event.path || (event.composedPath && event.composedPath());
+            let isFaq = false;
+            if(path) {
+                isFaq = path.findIndex((item) => {
+                    return item.className === 'faq scrollCarousel__slide';
+                }) !== -1;
+            }
+
+            if(isFaq) {
+                if (faqContainer.current) {
+                    const { scrollTop, scrollHeight, offsetHeight } = faqContainer.current;
+                    console.log(scrollTop, scrollHeight, offsetHeight);
+                    if (scrollTop + offsetHeight === scrollHeight) {
+                        // console.log("reached bottom");
+                    }
+                }
+
+                /* Przesuwamy sie tylko jesli jestesmy maksymalnie na gorze lub maksymalnie na dole */
+                if (event.deltaY < 0) {
+                    if(window.scrollY === 0) {
+                        slider.current.slickPrev();
+                    }
+                }
+                else {
+                    if (faqContainer.current) {
+                        const { scrollTop, scrollHeight, clientHeight } = faqContainer.current;
+                        if (scrollTop + clientHeight === scrollHeight) {
+                        }
+                    }
+                }
+            }
+            else {
+                if (event.deltaY < 0) {
+                    if(window.scrollY === 0) {
+                        slider.current.slickPrev();
+                    }
+                }
+                else if (event.deltaY > 0) {
+                    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        slider.current.slickNext();
+                        setTimeout(() => {
+                            scrollToTop();
+                        }, 100);
+                    }
+                }
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+
+    }, [slide]);
 
     return <div className="container container--light container--player">
         <Header menu="dark" />
         <main className="player">
-            <figure className="player__firstImgWrapper">
-                <img className="player__firstImgWrapper__img" src={getImageUrl(content.img2)} alt="draft4u" />
-            </figure>
-
-            <section className="player__section player__flex player__flex--section player__section--1">
-                <figure className="player__flex__imgWrapper player__flex__imgWrapper--phone">
-                    <img className="player__flex__img d-desktop" src={img1} alt="widok" />
-                    <img className="player__flex__img d-mobile" src={phone} alt="widok" />
-                </figure>
-
-                <article className="player__flex__content">
-                    <h2 className="player__header">
-                        {content.player_zone_header1}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.player_zone_text1}
-                    </p>
-                </article>
-            </section>
-            <section className="player__section player__flex player__flex--section player__section--1 player__flex--section--chat">
-                <article className="player__flex__content player__flex__content--chat">
-                    <h2 className="player__header">
-                        {content.player_zone_header2}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.player_zone_text2}
-                    </p>
-                </article>
-
-                <figure className="player__flex__imgWrapper player__flex__imgWrapper--chat">
-                    <img className="player__flex__img" src={img3} alt="widok" />
-                </figure>
-            </section>
-
-            <section className="player__section">
-                <h2 className="player__header">
-                    {content.player_zone_header3}
-                </h2>
-                <p className="player__flex__text">
-                    {content.player_zone_text3}
-                </p>
-
-                <section className="player__flex player__flex--margin">
-                    <section className="player__step">
-                        <img className="player__step__img" src={step2} alt="krok1" />
-                        <h3 className="player__step__header">
-                            {content.player_zone_circle1}
-                        </h3>
-                    </section>
-                    <section className="player__step">
-                        <img className="player__step__img" src={step1} alt="krok2" />
-                        <h3 className="player__step__header">
-                            {content.player_zone_circle2}
-                        </h3>
-                    </section>
-                    <section className="player__step">
-                        <img className="player__step__img" src={step3} alt="krok3" />
-                        <h3 className="player__step__header">
-                            {content.player_zone_circle3}
-                        </h3>
-                    </section>
-                </section>
-
-                <p className="player__flex__text player__flex__text--afterSteps">
-                    {content.player_zone_text4}
-                </p>
-            </section>
-
-            <section className="player__section player__flex player__flex--section">
-                <article className="player__flex__content player__flex__content--first14">
-                    <h2 className="player__header">
-                        {content.player_zone_header5}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.player_zone_text5}
-                    </p>
-                    <button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>
-                        <img className="btn__img" src={getImageUrl(content.img8)} alt="zarejestruj-sie" />
-                    </button>
-                </article>
-                <figure className="player__flex__imgWrapper tmpWrapper d-desktop">
-                    <img className="btn__img" src={img2} alt="dolacz-za-darmo" />
-                </figure>
-            </section>
-
-            <section className="player__section player__flex player__flex--section">
-                <article className="player__flex__content player__flex__content--first14">
-                    <h2 className="player__header">
-                        {content.player_zone_header5}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.player_zone_text6}
-                    </p>
-                </article>
-                <div className="player__flex__imgWrapper tmpWrapper">
-                    <section className="player__option">
-                        <img className="player__option__discount" src={discountImg} alt="promocja" />
-                        <h3 className="player__option__name">
-                            {content.player_zone_buy_frame1}
-                        </h3>
-                        <h4 className="player__option__price">
-                            99
-                            <span className="player__option__currency">
-                                PLN
-                            </span>
-                        </h4>
-                        <button className="button button--hover button--buyNow" onClick={() => { openRegisterModal(); }}>
-                            <img className="btn__img" src={getImageUrl(content.img9)} alt="kup-teraz" />
-                        </button>
-                        <span className="player__option--bottom">
-                            {content.player_zone_buy_frame2}
-                        </span>
-                    </section>
-                </div>
-            </section>
-
-            <section className="player__section player__section--faq">
-                <h2 className="player__header">
-                    {content.player_zone_header6}
-                </h2>
-                <PlayerFAQ />
-            </section>
+            <div className="scrollCarousel">
+                <Slider ref={slider} {...settings}>
+                    <PlayerSlide1 openRegisterModal={openRegisterModal} />
+                    <PlayerSlide2 />
+                    <PlayerSlide3 />
+                    <PlayerSlide4 />
+                    <PlayerSlide5 openRegisterModal={openRegisterModal} />
+                    <PlayerFAQ ref={faqContainer} />
+                </Slider>
+            </div>
         </main>
-        <ClubSlider />
-        <Footer theme="light" border={true} />
     </div>
 }
 

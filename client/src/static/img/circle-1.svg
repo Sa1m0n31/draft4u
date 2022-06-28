@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="214" height="214" viewBox="0 0 214 214">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1.04" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f3d48b"/>
+      <stop offset="1" stop-color="#cb9150"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="0.5" x2="3.881" y2="0.5" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" y1="0.5" x2="1.704" y2="0.5" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="-0.87" y1="0.5" x2="1.72" y2="0.5" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-5" x1="-0.369" y1="0.5" x2="2.062" y2="0.5" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Group_196" data-name="Group 196" transform="translate(0.268)">
+    <g id="Ellipse_27" data-name="Ellipse 27" transform="translate(-0.268)" fill="#fff" stroke="#707070" stroke-width="1">
+      <circle cx="107" cy="107" r="107" stroke="none"/>
+      <circle cx="107" cy="107" r="106.5" fill="none"/>
+    </g>
+    <g id="Warstwa_2" data-name="Warstwa 2" transform="translate(59.571 48.115)">
+      <g id="Layer_2" data-name="Layer 2">
+        <path id="Path_580" data-name="Path 580" d="M83.376,89.372,68.264,102.193a7.048,7.048,0,0,1-7.414,1.113,7.127,7.127,0,0,1-4.25-6.47l-.212-19.623a7.089,7.089,0,0,1,.661-3.022L87.364,7.651V2.361A2.369,2.369,0,0,0,85,0H28.335V25.975a2.369,2.369,0,0,1-2.36,2.36H0V115.7a2.369,2.369,0,0,0,2.361,2.361H85a2.369,2.369,0,0,0,2.361-2.361V82.029L85.1,87.012A7.7,7.7,0,0,1,83.376,89.372Zm-32.042,9.8H17.024a2.361,2.361,0,1,1,0-4.723H51.334a2.361,2.361,0,1,1,0,4.723ZM14.663,79.5a2.353,2.353,0,0,1,2.361-2.361H46.918a2.361,2.361,0,1,1,0,4.723H17.024A2.368,2.368,0,0,1,14.663,79.5Zm36.67-14.97H17.024a2.361,2.361,0,1,1,0-4.723H51.334a2.361,2.361,0,1,1,0,4.723Zm0-17.308H17.024a2.361,2.361,0,1,1,0-4.723H51.334a2.361,2.361,0,1,1,0,4.723Z" fill="url(#linear-gradient)"/>
+        <path id="Path_581" data-name="Path 581" d="M56.932,34.71,34.69,56.952H56.932Z" transform="translate(-33.321 -33.34)" fill="url(#linear-gradient-2)"/>
+        <path id="Path_582" data-name="Path 582" d="M1563.9,732.755a50.424,50.424,0,0,1,19.4,9.064l22.085-48.427L1585.9,684.51Z" transform="translate(-1502.165 -657.489)" fill="url(#linear-gradient-3)"/>
+        <path id="Path_583" data-name="Path 583" d="M2196.751,76.488a10.546,10.546,0,0,0-5.573-6,10.721,10.721,0,0,0-8.194-.283,10.548,10.548,0,0,0-6,5.573L2170.73,89.5l19.487,8.882,6.25-13.7A10.615,10.615,0,0,0,2196.751,76.488Z" transform="translate(-2085.04 -66.783)" fill="url(#linear-gradient-4)"/>
+        <path id="Path_584" data-name="Path 584" d="M1550.39,2044.561a2.509,2.509,0,0,0,.992.212,2.377,2.377,0,0,0,1.535-.567l12.706-10.8a45.762,45.762,0,0,0-16.783-7.845l.182,16.875A2.341,2.341,0,0,0,1550.39,2044.561Z" transform="translate(-1487.699 -1945.601)" fill="url(#linear-gradient-5)"/>
+      </g>
+    </g>
+  </g>
+</svg>

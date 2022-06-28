@@ -1898,7 +1898,7 @@ ul {
 
 /* Player */
 .club, .player {
-    width: var(--siteWidthSuperNarrow);
+    width: 100vw;
     margin: 50px auto;
 }
 
@@ -2038,6 +2038,11 @@ ul {
     width: 100%;
 }
 
+.faq {
+    overflow: auto;
+    padding-bottom: 30px;
+}
+
 .container--dark .faq * {
     color: #fff;
 }
@@ -2060,43 +2065,25 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #fff;
+    background: transparent;
     width: 100%;
     height: 90px;
-    border: 1px solid var(--grey);
-    padding: 0 50px;
-    margin: 40px 0 30px;
+    padding: 0;
+    margin: 40px 0 0;
 }
 
 .faq__btn {
     background: transparent;
     height: 100%;
     width: auto;
-    font-size: 32px;
+    flex-basis: 25%;
+    font-size: 24px;
     font-weight: 700;
     text-transform: uppercase;
 }
 
 .faq__btn--current {
-    position: relative;
-}
-
-.faq__btn--current::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    transition: .4s all;
-    background: var(--gold);
-}
-
-.faq__header__divider {
-    width: 2px;
-    height: 60%;
-    background: var(--gold);
-    display: block;
+    background: #fff;
 }
 
 .player__section--faq {
@@ -2105,12 +2092,12 @@ ul {
 }
 
 .faq__questions {
-    margin: 40px 0;
+    margin: 0;
 }
 
 .faq__question {
     background: #fff;
-    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .container--dark .faq {
@@ -2127,7 +2114,6 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--grey);
     height: 90px;
     padding: 0 2%;
     background: #fff;
@@ -2139,7 +2125,7 @@ ul {
 
 .faq__question__header__h {
     font-weight: 700;
-    font-size: 32px;
+    font-size: 24px;
 }
 
 .faq__question__header__btn {
@@ -2158,6 +2144,12 @@ ul {
     height: 0;
     opacity: 0;
     transition: .4s all;
+}
+
+@media(min-width: 768px) {
+    .container--player {
+        height: 100vh;
+    }
 }
 
 .container--player .clubCarousel {
@@ -6757,3 +6749,251 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .registerModal--accountType .registerForm--nextBtn {
     margin-top: 60px;
 }
+
+.scrollCarousel {
+    width: 100%;
+    height: auto;
+    min-height: 75vh;
+}
+
+.player {
+    position: relative;
+    margin-top: 50px;
+}
+
+.scrollCarousel__slide {
+    width: calc(var(--siteWidthNarrow) - 20px);
+    margin: auto;
+    background: transparent;
+    /*color: red;*/
+    height: auto;
+    min-height: 70vh;
+    max-height: calc(100vh - 177px);
+    overflow-x: visible;
+}
+
+.scrollCarousel__slide.faq {
+    overflow-x: unset;
+}
+
+.slick-slider,
+.slick-list {
+    width: 100%;
+    min-height: 10vh;
+}
+
+.scrollCarousel__buttons {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+}
+
+.scrollCarousel__buttons__item {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+    margin: 4px 0;
+    display: block;
+}
+
+.scrollCarousel__buttons__item--current {
+    background: var(--gold);
+}
+
+.slick-arrow {
+    display: none !important;
+}
+
+.bigHeader {
+    color: var(--gold);
+    font-size: 94px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.slick-dots {
+    position: fixed !important;
+    left: calc((100vw - var(--siteWidth)) / 2 - 30px) !important;
+    bottom: unset !important;
+    top: 50% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 50px !important;
+}
+
+.slick-dots button::before {
+    display: none !important;
+}
+
+.slick-dots button {
+    width: 15px !important;
+    height: 15px !important;
+    background: #fff !important;
+    border: 1px solid grey !important;
+    border-radius: 50% !important;
+    margin: 6px 0 !important;
+}
+
+.slick-dots .slick-active button {
+    background: var(--gold) !important;
+}
+
+.text {
+    color: #707070;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+.whitespace {
+    white-space: nowrap;
+}
+
+.bigHeader--slide1 {
+    font-size: 72px;
+    color: #CE9662;
+    text-align: left;
+}
+
+.scrollCarousel__slide--1 {
+    justify-content: space-between;
+}
+
+.scrollCarousel__slide--1 > div:first-of-type {
+    padding-top: 10vh;
+    width: 50%;
+}
+
+.scrollCarousel__slide--1 > div:last-of-type {
+    width: 50%;
+}
+
+.bigHeader__subheader {
+    color: #707070;
+    font-size: 32px;
+    max-width: 450px;
+    margin-top: 5vh;
+}
+
+.scrollCarousel__slide--3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.whiteBackground {
+    background: #fff;
+    width: 100%;
+    height: fit-content;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.whiteBackground > * {
+    width: 100% !important;
+    flex-basis: 100% !important;
+}
+
+.scrollCarousel__slide--3 {
+    padding: 30px;
+}
+
+.whiteBackground__bottom,
+.whiteBackground__circles {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.whiteBackground__bottom {
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    max-width: 1100px;
+}
+
+.whiteBackground__circles__item {
+    width: 20%;
+    max-width: 215px;
+    margin: 0 5%;
+}
+
+.circleImg {
+    width: 100%;
+    height: auto;
+}
+
+.circle__header {
+    color: #707070;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 25px;
+}
+
+.whiteBackground__bottom__header {
+    color: #CE9662;
+    max-width: 650px;
+    font-size: 64px;
+    width: 45%;
+}
+
+.whiteBackground .text {
+    width: 40%;
+    display: block;
+}
+
+.scrollCarousel__slide--1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.scrollCarousel__slide--4 figure {
+    width: 100%;
+}
+
+.scrollCarousel__slide--4 figure .img {
+    width: 100%;
+    height: auto;
+}
+
+.scrollCarousel__slide--4 {
+    position: relative;
+}
+
+.scrollCarousel__slide__backgroundHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 290px;
+    color: #fff;
+    text-align: center;
+    z-index: -1;
+}
+
+.d-block {
+    display: block;
+}
+
+.scrollCarousel__slide--5 .img {
+    max-width: 800px;
+}
+
+/*.faq::-webkit-scrollbar {*/
+/*    display: none;*/
+/*}*/
+
+/*.faq {*/
+/*    -ms-overflow-style: none;  !* IE and Edge *!*/
+/*    scrollbar-width: none;  !* Firefox *!*/
+/*}*/

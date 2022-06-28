@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef, useContext} from 'react'
 import {ContentContext} from "../App";
 
-const PlayerFAQ = () => {
+const PlayerFAQ = React.forwardRef((props, ref) => {
     const [category, setCategory] = useState(0);
     const [faq, setFaq] = useState([]);
 
@@ -99,38 +99,55 @@ const PlayerFAQ = () => {
     }, [content]);
 
     const toggleQuestion = (index) => {
-        const currentQuestion = document.getElementById(`faq__question-${category}-${index}`);
-        const currentButton = document.getElementById(`faq__button-${category}-${index}`);
+        const currentQuestion = Array.from(document.querySelectorAll(`#faq__question-${category}-${index}`));
+        const currentButton = Array.from(document.querySelectorAll(`#faq__button-${category}-${index}`));
 
-        if(window.getComputedStyle(currentQuestion).getPropertyValue("opacity") === "0") {
-            currentQuestion.style.padding = "3%";
-            currentQuestion.style.border = "1px solid #707070"
-            currentQuestion.style.margin = "5px 0";
-            currentQuestion.style.height = "auto";
-            currentButton.style.transform = "rotate(45deg)";
+        if(window.getComputedStyle(currentQuestion[0]).getPropertyValue("opacity") === "0") {
+            currentQuestion.forEach((item) => {
+                item.style.padding = "0 2% 2%";
+                item.style.margin = "5px 0";
+                item.style.height = "auto";
+            });
+
+            currentButton.forEach((item) => {
+                item.style.transform = "rotate(45deg)";
+            });
+
             setTimeout(() => {
-                currentQuestion.style.opacity = "1";
+                currentQuestion.forEach((item) => {
+                    item.style.opacity = "1";
+                });
             }, 400);
         }
         else {
-            currentButton.style.transform = "none";
-            currentQuestion.style.opacity = "0";
+            currentQuestion.forEach((item) => {
+                item.style.opacity = "0";
+            });
+            currentButton.forEach((item) => {
+                item.style.transform = "none";
+            });
+
             setTimeout(() => {
-                currentQuestion.style.padding = "0";
-                currentQuestion.style.margin = "0";
-                currentQuestion.style.height = "0";
-                currentQuestion.style.border = "none";
+                currentQuestion.forEach((item) => {
+                    item.style.padding = "0";
+                    item.style.margin = "0";
+                    item.style.height = "0";
+                });
             }, 400);
         }
     }
 
-    return <section className="faq">
+    return <section className="faq scrollCarousel__slide" ref={ref}>
+
+        <h1 className="bigHeader">
+            Najczęstsze pytania
+        </h1>
+
         <header className="faq__header">
             {faq.map((item, index, array) => {
                 return <><button className={category !== index ? "faq__btn" : "faq__btn faq__btn--current"} onClick={() => { setCategory(index); }}>
                     {faq[index].header}
                 </button>
-                {index !== array.length-1 ? <span className="faq__header__divider"></span> : ""}
                 </>
             })}
         </header>
@@ -157,6 +174,6 @@ const PlayerFAQ = () => {
             })}
         </main>
     </section>
-}
+})
 
 export default PlayerFAQ;
