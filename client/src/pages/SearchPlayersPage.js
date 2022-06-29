@@ -40,7 +40,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
     const [favoritesState, setFavoritesState] = useState([]);
 
-    const [comparator, setComparator] = useState([0, 0, 0]);
+    const [comparator, setComparator] = useState([0, 0]);
 
     useEffect(() => {
         setFavoritesState(favorites);
@@ -236,10 +236,10 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
 
     const addPlayerToComparator = (player) => {
         if(!isPlayerInComparator(player)) {
-            /* Three players in comparator */
+            /* Two players in comparator */
             if(comparator.filter((item) => {
                 return item;
-            }).length === 3) {
+            }).length === 2) {
                 window.scrollTo(0,document.body.scrollHeight);
                 return 0;
             }
@@ -486,7 +486,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
                     </h3>
                 </section>
             })}
-            <a className="button button--hover button--compare" onClick={(e) => { areThreeToCompare(e); }} href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}&third=${comparator[2].user_id}`}>
+            <a className="button button--hover button--compare" onClick={(e) => { areThreeToCompare(e); }} href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}`}>
                 <img className="btn__img" src={getImageUrl(content.img24)} alt="porownaj" />
             </a>
         </section>

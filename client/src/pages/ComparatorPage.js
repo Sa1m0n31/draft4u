@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Header from "../components/Header";
 import example from "../static/img/zzaksa.png";
 import Footer from "../components/Footer";
@@ -6,9 +6,14 @@ import ComparedPlayer from "../components/ComparedPlayer";
 import ComparatorChart from "../components/ComparatorChart";
 import {getUserById} from "../helpers/user";
 import {getFavoritesByClub, getPlayerHighlight, isPlayerFavorite} from "../helpers/club";
+import ComparedPlayerTop from "../components/ComparedPlayerTop";
+import {ContentContext} from "../App";
+import {calculateAge} from "../helpers/others";
 
 const ComparatorPage = ({club}) => {
     const colors = ["#AE5D0D", "#D4C289", "#A9A9A9"];
+
+    const { content } = useContext(ContentContext);
 
     const [favorites, setFavorites] = useState([]);
 
@@ -79,6 +84,10 @@ const ComparatorPage = ({club}) => {
     }, []);
 
     useEffect(() => {
+        console.log(content);
+    }, [content]);
+
+    useEffect(() => {
         setPlayersArray([firstPlayer, secondPlayer, thirdPlayer]);
     }, [firstPlayer, secondPlayer, thirdPlayer, favorites]);
 
@@ -108,12 +117,220 @@ const ComparatorPage = ({club}) => {
 
         <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
             {playersArray.map((item, index) => {
-                if(item) return <ComparedPlayer player={item}
-                                                video={videosArray[index]}
-                                                color={colors[index]}
-                                                nameMinHeight={nameMinHeight} />
+                if(item) {
+                    return <ComparedPlayerTop player={item}
+                                           color={colors[index]}
+                                           nameMinHeight={nameMinHeight} />
+                }
             })}
         </main>
+
+        <section className="comparatorValues">
+            <section className="comparatorValues__keySection">
+                <span>
+                    {calculateAge(firstPlayer?.birthday)}
+                </span>
+                <span>
+                    {content.age}
+                </span>
+                <span>
+                    {calculateAge(secondPlayer?.birthday)}
+                </span>
+            </section>
+            <section className="comparatorValues__valuesSection">
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${calculateAge(firstPlayer?.birthday) + 30}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${calculateAge(secondPlayer?.birthday) + 30}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+            </section>
+
+            <section className="comparatorValues__keySection">
+                <span>
+                    {firstPlayer.salary_from ? firstPlayer.salary_from + " - " + firstPlayer.salary_to : "-"}
+                </span>
+                <span>
+                    {content.player_parameter_7}
+                </span>
+                <span>
+                    {secondPlayer.salary_from ? secondPlayer.salary_from + " - " + secondPlayer.salary_to : "-"}
+                </span>
+            </section>
+            <section className="comparatorValues__valuesSection">
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${(firstPlayer.salary_from ? firstPlayer.salary_from : 0) / 30000 * 100}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${(secondPlayer.salary_from ? secondPlayer.salary_from : 0) / 30000 * 100}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section className="comparatorValues">
+            <section className="comparatorValues__keySection">
+                <span>
+                    {firstPlayer.attack_range ? firstPlayer.attack_range : '-'}
+                </span>
+                <span>
+                    {content.player_parameter_8}
+                </span>
+                <span>
+                    {secondPlayer.attack_range ? secondPlayer.attack_range : '-'}
+                </span>
+            </section>
+            <section className="comparatorValues__valuesSection">
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${firstPlayer.attack_range - 270}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${secondPlayer.attack_range - 270}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+            </section>
+
+            <section className="comparatorValues__keySection">
+                <span>
+                    {firstPlayer.vertical_range ? firstPlayer.vertical_range : '-'}
+                </span>
+                <span>
+                      {content.player_parameter_9}
+                </span>
+                <span>
+                    {secondPlayer.vertical_range ? secondPlayer.vertical_range : '-'}
+                </span>
+            </section>
+            <section className="comparatorValues__valuesSection">
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${firstPlayer.vertical_range - 250}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${secondPlayer.vertical_range - 250}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+            </section>
+
+            <section className="comparatorValues__keySection">
+                <span>
+                    {firstPlayer.block_range ? firstPlayer.block_range : '-'}
+                </span>
+                <span>
+                      {content.player_parameter_10}
+                </span>
+                <span>
+                    {secondPlayer.block_range ? secondPlayer.block_range : '-'}
+                </span>
+            </section>
+            <section className="comparatorValues__valuesSection">
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${firstPlayer.block_range - 250}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${secondPlayer.block_range - 250}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+            </section>
+
+            <section className="comparatorValues__keySection">
+                <span>
+                    {firstPlayer.weight ? firstPlayer.weight : '-'}
+                </span>
+                <span>
+                      {content.player_parameter_12}
+                </span>
+                <span>
+                    {secondPlayer.weight ? secondPlayer.weight : '-'}
+                </span>
+            </section>
+            <section className="comparatorValues__valuesSection">
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${firstPlayer.weight - 30}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+                <div className="comparatorValues__valuesSection__bar">
+                    <div className="bar bar--age" style={
+                        {
+                            width: `${secondPlayer.weight - 30}%`
+                        }
+                    }>
+
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+            {playersArray.map((item, index) => {
+                if(item) {
+                    return <ComparedPlayer player={item}
+                                           video={videosArray[index]}
+                                           color={colors[index]}
+                                           nameMinHeight={nameMinHeight} />
+                }
+            })}
+        </section>
 
         {playersArray?.filter((item) => { return item; }).length > 1 ? <ComparatorChart datasets={playersArray?.filter((item) => { return item; })} /> : ""}
 

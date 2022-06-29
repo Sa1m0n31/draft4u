@@ -31,7 +31,9 @@ const Player = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        draggable: false
+        draggable: false,
+        adaptiveHeight: true,
+        waitForAnimate: true
     };
 
     const slider = useRef(null);
@@ -67,35 +69,37 @@ const Player = () => {
             }
 
             if(isFaq) {
-                if (faqContainer.current) {
-                    const { scrollTop, scrollHeight, offsetHeight } = faqContainer.current;
-                    console.log(scrollTop, scrollHeight, offsetHeight);
-                    if (scrollTop + offsetHeight === scrollHeight) {
-                        // console.log("reached bottom");
-                    }
-                }
+                document.querySelector('.container').style.height = 'auto';
 
                 /* Przesuwamy sie tylko jesli jestesmy maksymalnie na gorze lub maksymalnie na dole */
                 if (event.deltaY < 0) {
                     if(window.scrollY === 0) {
+                        if(window.innerWidth > 768 && window.innerHeight > 680) {
+                            document.querySelector('.container').style.height = '100vh';
+                        }
                         slider.current.slickPrev();
                     }
                 }
                 else {
-                    if (faqContainer.current) {
-                        const { scrollTop, scrollHeight, clientHeight } = faqContainer.current;
-                        if (scrollTop + clientHeight === scrollHeight) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        if(window.innerWidth > 768 && window.innerHeight > 680) {
+                            document.querySelector('.container').style.height = '100vh';
                         }
+                        slider.current.slickNext();
                     }
                 }
             }
             else {
-                if (event.deltaY < 0) {
+                if(window.innerWidth > 768 && window.innerHeight > 680) {
+                    document.querySelector('.container').style.height = '100vh';
+                }
+
+                if(event.deltaY < 0) {
                     if(window.scrollY === 0) {
                         slider.current.slickPrev();
                     }
                 }
-                else if (event.deltaY > 0) {
+                else if(event.deltaY > 0) {
                     if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                         slider.current.slickNext();
                         setTimeout(() => {

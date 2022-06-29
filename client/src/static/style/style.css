@@ -2039,7 +2039,8 @@ ul {
 }
 
 .faq {
-    overflow: auto;
+    height: auto !important;
+    max-height: none !important;
     padding-bottom: 30px;
 }
 
@@ -2147,7 +2148,7 @@ ul {
 }
 
 @media(min-width: 768px) {
-    .container--player {
+    .container--player, .container--club {
         height: 100vh;
     }
 }
@@ -4162,8 +4163,6 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 28%;
-    margin-right: 10%;
     position: relative;
 }
 
@@ -4182,11 +4181,12 @@ input::-webkit-inner-spin-button {
 }
 
 .comparedPlayer__imgWrapper {
-    width: 300px;
-    height: 300px;
+    width: 160px;
+    height: 160px;
     border: 8px solid transparent;
     border-radius: 50%;
     overflow: hidden;
+    margin: auto;
 }
 
 #comparedPlayer--brown .comparedPlayer__imgWrapper {
@@ -4209,7 +4209,7 @@ input::-webkit-inner-spin-button {
 
 .comparedPlayer__fullName {
     color: #DFDFDF;
-    font-size: 38px;
+    font-size: 28px;
     margin: 20px auto;
     text-align: center;
     display: flex;
@@ -4257,8 +4257,13 @@ input::-webkit-inner-spin-button {
 
 .comparator__main {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start;
+    max-width: 1000px;
+}
+
+.comparator__main > * {
+    width: 48%;
 }
 
 .comparator__chart {
@@ -4328,7 +4333,7 @@ input::-webkit-inner-spin-button {
 }
 
 .comparedPlayer__icons {
-    margin: 5px auto;
+    margin: 15px auto 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6809,6 +6814,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .bigHeader {
+    font-family: 'Oxanium', cursive;
     color: var(--gold);
     font-size: 94px;
     text-align: center;
@@ -6847,6 +6853,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #707070;
     font-weight: 600;
     font-size: 19px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container--dark .text {
+    color: #fff;
 }
 
 .whitespace {
@@ -6877,6 +6888,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 32px;
     max-width: 450px;
     margin-top: 5vh;
+}
+
+.container--dark .bigHeader__subheader {
+    color: #fff;
 }
 
 .scrollCarousel__slide--3 {
@@ -6981,6 +6996,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     z-index: -1;
 }
 
+.container--dark .scrollCarousel__slide__backgroundHeader {
+    color: #707070;
+    font-size: 210px;
+    padding-top: 100px;
+}
+
+.container--dark .scrollCarousel__slide__backgroundHeader span {
+    white-space: nowrap;
+}
+
 .d-block {
     display: block;
 }
@@ -6997,3 +7022,196 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /*    -ms-overflow-style: none;  !* IE and Edge *!*/
 /*    scrollbar-width: none;  !* Firefox *!*/
 /*}*/
+
+.scrollCarousel__slide--1--club figure {
+    transform: translateY(-15%);
+}
+
+.scrollCarousel__slide--3--club figure {
+    display: none !important;
+}
+
+.scrollCarousel__slide--3--club {
+    background-image: url("../img/background-big.png");
+    background-position: 70% 60%;
+}
+
+.scrollCarousel__slide--5--club {
+    background-image: url("../img/profil-background.png");
+    background-position: 58% 50%;
+}
+
+.scrollCarousel__icons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.scrollCarousel__icons__item {
+    width: 15%;
+    flex-basis: 15%;
+    min-width: 80px;
+}
+
+.scrollCarousel__icons .img {
+    width: 100%;
+    height: auto;
+}
+
+.scrollCarousel__icons__item__header {
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.scrollCarousel__slide--6--club > div:first-of-type {
+    width: 55%;
+}
+
+.scrollCarousel__slide--1--stuff > figure,
+.scrollCarousel__slide--6--club > figure {
+    width: 40%;
+}
+
+.scrollCarousel__slide--6--club .bigHeader--slide1 {
+    font-size: 42px;
+}
+
+.scrollCarousel__slide--1--stuff figure {
+    margin-top: 0;
+}
+
+.scrollCarousel__slide--6--club figure .img {
+    transform: translate(-10%, -5%);
+}
+
+.scrollCarousel__slide--1--stuff figure .img {
+    transform: translate(-15%, -7%);
+}
+
+.scrollCarousel__slide--3--stuff .whiteBackground__bottom {
+    padding-top: 40px;
+}
+
+.comparedPlayer__top {
+    background: #343434;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+}
+
+.comparedPlayer__top__right {
+    margin-left: 30px;
+}
+
+.comparedPlayer__top__right__key {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.comparedPlayer__top__right__value {
+    color: var(--goldDark);
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.comparedPlayer__top__right__key--second {
+    margin-top: 20px;
+}
+
+.comparatorValues {
+    background: #343434;
+    border-radius: 15px;
+    padding: 25px;
+    width: var(--siteWidthNarrow);
+    margin: 20px auto 40px;
+    max-width: 1000px;
+}
+
+.comparatorValues__keySection {
+    position: relative;
+    width: 100%;
+    height: 50px;
+}
+
+.comparatorValues__keySection > span {
+    font-size: 32px;
+    color: var(--goldDark);
+}
+
+.comparatorValues__keySection > span:first-of-type {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.comparatorValues__keySection > span:nth-of-type(2) {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+}
+
+.comparatorValues__keySection > span:last-child {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+}
+
+.comparatorValues__valuesSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 30px;
+}
+
+.comparatorValues__valuesSection__bar {
+    width: 49.5%;
+    background: #5E5E5E;
+    height: 7px;
+    position: relative;
+    overflow: hidden;
+}
+
+.comparatorValues__valuesSection__bar .bar {
+    position: absolute;
+    height: 100%;
+}
+
+.comparatorValues__valuesSection__bar:first-of-type .bar {
+    background: #AE5D0D;
+    right: 0;
+}
+
+.comparatorValues__valuesSection__bar:last-of-type .bar {
+    background: #D4C289;
+    left: 0;
+}
+
+@media(-webkit-min-device-pixel-ratio: 1.05) {
+    @media(min-width: 1200px) {
+        .scrollCarousel__slide--1 .img {
+            transform: translateY(-8%) !important;
+        }
+
+        .scrollCarousel__slide--1 > div:first-of-type {
+            justify-content: flex-start !important;
+            padding-top: 8vh;
+        }
+    }
+
+    .scrollCarousel__slide__backgroundHeader {
+        font-size: 200px;
+    }
+}

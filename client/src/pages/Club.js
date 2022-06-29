@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useRef} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import header from '../static/img/header-klub.jpg'
@@ -11,97 +11,74 @@ import PlayerFAQ from "../components/PlayerFAQ";
 import ClubForm from "../components/ClubForm";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
+import Slider from "react-slick";
+import PlayerSlide1 from "../components/PlayerSlide1";
+import PlayerSlide2 from "../components/PlayerSlide2";
+import PlayerSlide3 from "../components/PlayerSlide3";
+import PlayerSlide4 from "../components/PlayerSlide4";
+import PlayerSlide5 from "../components/PlayerSlide5";
+import ClubSlide1 from "../components/ClubSlide1";
+import ClubSlide2 from "../components/ClubSlide2";
+import ClubSlide3 from "../components/ClubSlide3";
+import ClubSlide4 from "../components/ClubSlide4";
+import ClubSlide5 from "../components/ClubSlide5";
+import ClubSlide6 from "../components/ClubSlide6";
 
 const Club = () => {
     const { content } = useContext(ContentContext);
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        draggable: false,
+        adaptiveHeight: true,
+        waitForAnimate: true
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    useEffect(() => {
+        window.addEventListener('wheel', (event) => {
+            if (event.deltaY < 0) {
+                if(window.scrollY === 0) {
+                    slider.current.slickPrev();
+                }
+            }
+            else if (event.deltaY > 0) {
+                if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                    slider.current.slickNext();
+                    setTimeout(() => {
+                        scrollToTop();
+                    }, 100);
+                }
+            }
+        });
+    }, []);
+
+    const slider = useRef(null);
+
     return <div className="container container--dark container--club">
         <Header theme="dark" menu="light" clubPage={true} />
         <main className="club">
-            <figure className="player__firstImgWrapper">
-                <img className="player__firstImgWrapper__img" src={getImageUrl(content.img3)} alt="draft4u" />
-            </figure>
-
-            <section className="player__section player__flex player__flex--section player__section--1 club__section">
-                <figure className="player__flex__imgWrapper player__flex__imgWrapper--phone">
-                    <img className="player__flex__img" src={img1} alt="widok" />
-                </figure>
-
-                <article className="player__flex__content">
-                    <h2 className="player__header">
-                        {content.club_zone_header1}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.club_zone_text1}
-                    </p>
-                </article>
-            </section>
-
-            <section className="player__section player__flex player__flex--section player__section--1 club__section">
-                <article className="player__flex__content">
-                    <h2 className="player__header">
-                        {content.club_zone_header2}
-                    </h2>
-                    <p className="player__flex__text player__flex__text--marginRight">
-                        {content.club_zone_text2}
-                    </p>
-                </article>
-
-                <figure className="player__flex__imgWrapper">
-                    <img className="player__flex__img player__flex__imgWrapper--clubImg2" src={img4} alt="widok" />
-                </figure>
-            </section>
-
-            <section className="player__section player__flex player__flex--section player__section--1 club__section club__section--beforeChat">
-                <figure className="player__flex__imgWrapper">
-                    <img className="player__flex__img player__flex__imgWrapper--clubImg3" src={img3} alt="widok" />
-                </figure>
-
-                <article className="player__flex__content">
-                    <h2 className="player__header">
-                        {content.club_zone_header3}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.club_zone_text3}
-                    </p>
-                </article>
-            </section>
-
-            <section className="player__section player__flex player__flex--section player__section--1 club__section player__flex--section--chat">
-                <article className="player__flex__content player__flex__content--chat">
-                    <h2 className="player__header">
-                        {content.club_zone_header4}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.club_zone_text4}
-                    </p>
-                </article>
-
-                <figure className="player__flex__imgWrapper player__flex__imgWrapper--chat">
-                    <img className="player__flex__img player__flex__imgWrapper--clubImg3" src={img5} alt="widok" />
-                </figure>
-            </section>
-
-            <section className="player__section player__flex player__flex--section player__section--1 club__section">
-                <figure className="player__flex__imgWrapper">
-                    <img className="player__flex__img player__flex__imgWrapper--clubImg2" src={img2} alt="widok" />
-                </figure>
-
-                <article className="player__flex__content">
-                    <h2 className="player__header">
-                        {content.club_zone_header5}
-                    </h2>
-                    <p className="player__flex__text">
-                        {content.club_zone_text5}
-                    </p>
-                </article>
-            </section>
-
-            <ClubForm />
-
-            <PlayerFAQ />
+            <div className="scrollCarousel">
+                <Slider ref={slider} {...settings}>
+                    <ClubSlide1 />
+                    <ClubSlide2 />
+                    <ClubSlide3 />
+                    <ClubSlide4 />
+                    <ClubSlide5 />
+                    <ClubSlide6 />
+                </Slider>
+            </div>
         </main>
-        <Footer theme="dark" border={true} />
     </div>
 }
 

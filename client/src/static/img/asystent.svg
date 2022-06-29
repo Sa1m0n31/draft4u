@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="99" height="99" viewBox="0 0 99 99">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-0.286" y1="0.943" x2="1" y2="0.96" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f3d48b"/>
+      <stop offset="1" stop-color="#cb9150"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_197" data-name="Group 197" transform="translate(0)">
+    <g id="Ellipse_29" data-name="Ellipse 29" transform="translate(0)" fill="#fff" stroke="#707070" stroke-width="1">
+      <circle cx="49.5" cy="49.5" r="49.5" stroke="none"/>
+      <circle cx="49.5" cy="49.5" r="49" fill="none"/>
+    </g>
+    <g id="Warstwa_2" data-name="Warstwa 2" transform="translate(25.425 22.888)">
+      <g id="Layer_1" data-name="Layer 1" transform="translate(0 0)">
+        <path id="Path_586" data-name="Path 586" d="M244.22,37.364l-3.92,1.89,1.561-4.062Zm27.813-25.52L251.971,33.63l-7.2,3.469-2.689-2.477,2.868-7.461L265.011,5.375ZM271.362.33,276.545,5.1a1.254,1.254,0,0,1,.073,1.766l-3.967,4.308-7.024-6.467L269.6.4a1.254,1.254,0,0,1,1.766-.073Z" transform="translate(-227.836 0.003)" fill-rule="evenodd" fill="url(#linear-gradient)"/>
+        <path id="Path_587" data-name="Path 587" d="M5.365,62.4H24.788v5.365H5.365V104.26H41.858v-19.2h5.366v19.2a5.375,5.375,0,0,1-5.366,5.365H5.365A5.375,5.375,0,0,1,0,104.26V67.765A5.375,5.375,0,0,1,5.365,62.4" transform="translate(0 -59.163)" fill-rule="evenodd" fill="url(#linear-gradient)"/>
+      </g>
+    </g>
+  </g>
+</svg>

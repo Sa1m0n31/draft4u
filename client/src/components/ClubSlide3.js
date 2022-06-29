@@ -3,16 +3,16 @@ import img1 from '../static/img/sklad.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
-const PlayerSlide2 = () => {
+const ClubSlide3 = () => {
     const { content } = useContext(ContentContext);
 
-    return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--2">
+    return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--2 scrollCarousel__slide--3--club">
         <div>
             <h1 className="bigHeader bigHeader--slide1">
-                {content.player_zone_header4}
+                {content.club_zone_header2}
             </h1>
             <p className="text">
-                {content.player_zone_text5}
+                {content.club_zone_text2}
             </p>
             <h2 className="bigHeader__subheader">
                 Stwórz swój wymarzony skład i zacznij do realizować
@@ -24,4 +24,4 @@ const PlayerSlide2 = () => {
     </div>
 };
 
-export default PlayerSlide2;
+export default ClubSlide3;

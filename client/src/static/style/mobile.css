@@ -55,6 +55,10 @@
         transform: skewX(-14.1deg);
     }
 
+    .container--dark .scrollCarousel__slide__backgroundHeader {
+        font-size: 150px;
+    }
+
     .userInfoEdition__value,
     .input--editProfile, .select--editProfile,
     .userInfoEdition__value label,
@@ -169,6 +173,11 @@
         width: 98%;
     }
 
+    .scrollCarousel__slide--5--club .img {
+        height: 60vh;
+        width: auto !important;
+    }
+
     .circle__header {
         font-size: 21px;
     }
@@ -196,6 +205,19 @@
         align-items: flex-start;
         justify-content: center;
         width: 45%;
+    }
+
+    .scrollCarousel__slide--1--stuff figure .img,
+    .scrollCarousel__slide--6--club figure .img {
+        transform: none;
+    }
+
+    .scrollCarousel__slide--6--club figure {
+        width: 38%;
+    }
+
+    .scrollCarousel__slide--6--club > div:first-of-type {
+        width: 60%;
     }
 
     @media(min-width: 768px) {
@@ -343,17 +365,23 @@
         left: 28%;
     }
 
+    .container--dark .scrollCarousel__slide__backgroundHeader {
+        font-size: 120px;
+    }
+
     .player,
     .scrollCarousel__slide {
         height: calc(100vh - 158px);
     }
 
-    .scrollCarousel,
-    .scrollCarousel > .slick-slider,
-    .scrollCarousel .slick-list,
-    .scrollCarousel .slick-track
-    {
-        height: 100%;
+    @media(min-width: 768px) {
+        .scrollCarousel,
+        .scrollCarousel > .slick-slider,
+        .scrollCarousel .slick-list,
+        .scrollCarousel .slick-track
+        {
+            height: 100%;
+        }
     }
 
     .clubCarousel__item__img {
@@ -525,6 +553,25 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .comparedPlayer__imgWrapper {
+        width: 100px;
+        height: 100px;
+        border-width: 3px;
+    }
+
+    .comparatorValues {
+        width: 100%;
+        max-width: 90vw;
+    }
+
+    .comparatorValues__keySection > span {
+        font-size: 15px;
+    }
+
+    .container--dark .scrollCarousel__slide__backgroundHeader {
+        font-size: 100px;
     }
 
     .whiteBackground__circles__item {
@@ -796,11 +843,6 @@
         font-size: 17px;
     }
 
-    .comparedPlayer__imgWrapper {
-        width: 200px;
-        height: 200px;
-    }
-
     .comparedPlayer__fullName {
         font-size: 24px;
     }
@@ -893,6 +935,10 @@
         .scrollCarousel__slide--1 figure {
             display: none;
         }
+    }
+
+    .container--dark .scrollCarousel__slide__backgroundHeader {
+        font-size: 70px;
     }
 
     .scrollCarousel__slide--1 > div:first-of-type {
@@ -1441,6 +1487,90 @@
         display: block !important;
     }
 
+    .comparatorValues {
+        display: none !important;
+    }
+
+    .scrollCarousel__icons {
+        justify-content: center;
+    }
+
+    .club {
+        margin-bottom: 0;
+    }
+
+    .scrollCarousel__icons__item {
+        width: 30%;
+        flex-basis: 40%;
+        margin: 0 20px 25px;
+        max-width: 100px;
+    }
+
+    .scrollCarousel__icons__item .img {
+        max-width: 80px;
+        display: block;
+        margin: auto;
+    }
+
+    .scrollCarousel__icons__item__header {
+        font-size: 12px;
+    }
+
+    .scrollCarousel__slide--6--club figure {
+        max-height: 460px !important;
+        margin-top: -40px;
+    }
+
+    .scrollCarousel__slide--6--club .bigHeader--slide1 {
+        font-size: 28px;
+    }
+
+    .scrollCarousel__slide--5--club figure {
+        max-height: none !important;
+    }
+
+    .whitespace {
+        white-space: normal;
+    }
+
+    .scrollCarousel__slide--5--club {
+        background-image: url("../img/profil-background-small.png");
+        background-position: center;
+    }
+
+    .scrollCarousel__slide--5--club .img {
+        width: 80% !important;
+        margin: auto;
+        display: block;
+        margin-top: 40px;
+        height: auto;
+    }
+
+    .faq__header {
+        margin-bottom: 30px;
+    }
+
+    .faq__question__main {
+        padding: 0 5%;
+    }
+
+    .faq__header .faq__btn {
+        width: 100%;
+        padding: 15px 0;
+        height: 100%;
+        background: #fff;
+        border: 1px solid #707070;
+    }
+
+    .faq__header .faq__btn--current {
+        border-color: var(--goldDark);
+        color: var(--goldDark);
+    }
+
+    .faq__question {
+        border: 1px solid #707070;
+    }
+
     .player {
         margin-top: 20px;
         margin-bottom: 0;
@@ -1521,14 +1651,14 @@
     .scrollCarousel__slide--1 figure {
         order: 1;
         width: 100%;
-        max-height: 400px;
+        max-height: 200px;
         overflow: hidden;
         margin-top: 0;
     }
 
     .scrollCarousel__slide--1 figure {
-        max-height: 550px;
-        margin-top: 30px;
+        max-height: 350px;
+        margin-top: 0;
     }
 
     .scrollCarousel__slide--5 figure {
@@ -1545,8 +1675,36 @@
         align-items: center;
     }
 
+    .scrollCarousel__slide--1--club figure {
+        transform: none;
+        margin-top: -80px;
+        max-height: 480px;
+    }
+
+    .container--dark .scrollCarousel__slide--1:not(.scrollCarousel__slide--2) > div:first-of-type {
+        background: #1A1A1A;
+    }
+
+    .container--dark .scrollCarousel__slide--1:not(.scrollCarousel__slide--2) > div:first-of-type {
+        margin-top: -50px;
+    }
+
+    .scrollCarousel__slide--3--club {
+        background-image: url("../img/background-small.png");
+        background-position: 70% 60%;
+    }
+
     .bigHeader__subheader {
         display: none;
+    }
+
+    .scrollCarousel__slide--3--club .bigHeader__subheader {
+        display: block;
+        font-size: 21px;
+    }
+
+    .scrollCarousel__slide--3--club {
+        justify-content: center;
     }
 
     .scrollCarousel__slide--2 > div:first-of-type {
@@ -1766,6 +1924,7 @@
 
     .club,
     .player {
+        min-height: calc(100vh - 172px);
         width: 100%;
         position: relative;
         padding: 0;
@@ -3483,4 +3642,24 @@
     .mobileMenu__bottom {
         transform: scale(.6);
     }
+}
+
+@media(max-height: 680px) {
+    @media(min-width: 768px) {
+        .container--player, .container--club {
+            height: 800px;
+        }
+
+        .scrollCarousel__slide {
+            max-height: 100%;
+            height: 800px;
+        }
+    }
+
+    /*.slick-slider,*/
+    /*.slick-track,*/
+    /*.scrollCarousel,*/
+    /*.club, .player {*/
+    /*    height: 100%;*/
+    /*}*/
 }

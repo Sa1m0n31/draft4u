@@ -104,7 +104,12 @@ const PlayerFAQ = React.forwardRef((props, ref) => {
 
         if(window.getComputedStyle(currentQuestion[0]).getPropertyValue("opacity") === "0") {
             currentQuestion.forEach((item) => {
-                item.style.padding = "0 2% 2%";
+                if(window.innerWidth > 768) {
+                    item.style.padding = "0 2% 2%";
+                }
+                else {
+                    item.style.padding = "0 5% 5%";
+                }
                 item.style.margin = "5px 0";
                 item.style.height = "auto";
             });

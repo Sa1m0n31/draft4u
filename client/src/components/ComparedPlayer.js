@@ -44,33 +44,11 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
 
     let playerRef = useRef(null);
 
-    const addPlayerToFavorites = () => {
-        if(!favoritePlayer) {
-            addToFavorites(player.id);
-        }
-        else {
-            deleteFromFavorites(player.id);
-        }
-        setFavoritePlayer(!favoritePlayer);
-    }
-
     useEffect(() => {
         if(playVideo) {
 
         }
     }, [playVideo]);
-
-    const deletePlayerFromComparator = (id) => {
-        // Delete only if there are three players in comparator
-        const params = new URLSearchParams(window.location.search);
-        const first = parseInt(params.get('first'));
-        const second = parseInt(params.get('second'));
-        const third = parseInt(params.get('third'));
-        if(first > 0 && second > 0 && third > 0) {
-            const newUrl = window.location.href.replace(id, '-1');
-            window.location = newUrl;
-        }
-    }
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -84,132 +62,8 @@ const ComparedPlayer = ({player, video, color, nameMinHeight}) => {
         }
     }, []);
 
-    const getPositionById = (id) => {
-        switch(id) {
-            case 3:
-                return content.position3;
-            case 1:
-                return content.position1;
-            case 4:
-                return content.position4;
-            case 2:
-                return content.position2;
-            case 5:
-                return content.position5;
-            default:
-                return null;
-        }
-    }
-
     return <section className="comparedPlayer">
         {playVideo ? <ModalVideoPlayer closeModal={() => { setPlayVideo(false); }} source={`${settings.API_URL}/video/get?url=/videos/${video.file_path}`} /> : ""}
-
-        <button className="playersWall__compareSection__item__deleteBtn" onClick={() => { deletePlayerFromComparator(player.id); }}>
-            <img className="btn__img" src={trashIcon} alt="usun" />
-        </button>
-        <figure className="comparedPlayer__imgWrapper" style={{
-            borderColor: color
-        }}>
-            <img className="comparedPlayer__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : profile} alt="profilowe" />
-        </figure>
-        <h2 className="comparedPlayer__fullName" style={{
-            minHeight: nameMinHeight + 'px'
-        }}>
-            {player.first_name} {testClub ? '******' : player.last_name}
-        </h2>
-        <section className="comparedPlayer__icons">
-            <button className="comparedPlayer__icons__item" onClick={() => { addPlayerToFavorites(); }}>
-                <img className="btn__img" src={!favoritePlayer ? heart : heartFilled} alt="dodaj-do-ulubionych" />
-            </button>
-            <div className="comparedPlayer__icons__item">
-                <img className="btn__img" src={balance} alt="waga" />
-            </div>
-        </section>
-        <section className="comparedPlayer__section">
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                    {content.age}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {calculateAge(player.birthday)}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item comparedPlayer__section__item--salary">
-                <span className="comparedPlayer__section__key">
-                    {content.player_parameter_7}
-                </span>
-                <span className="comparedPlayer__section__value comparedPlayer__section__value--salary">
-                    {player.salary_from ? player.salary_from + " - " + player.salary_to : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item comparedPlayer__section__item--club">
-                <span className="comparedPlayer__section__key">
-                    {content.player_parameter_4}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player?.club ? player.club : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item comparedPlayer__section__item--club">
-                <span className="comparedPlayer__section__key">
-                    {content.player_parameter_6}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player?.experience ? player.experience : "-"}
-                </span>
-            </section>
-        </section>
-
-        <section className="comparedPlayer__section">
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                       {content.player_parameter_8}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player.attack_range ? player.attack_range : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                       {content.player_parameter_9}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player.vertical_range ? player.vertical_range : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                       {content.player_parameter_10}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player.block_range ? player.block_range : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                       {content.player_parameter_12}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player.weight ? player.weight + " kg" : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                       {content.player_parameter_11}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player.height ? player.height + " cm" : "-"}
-                </span>
-            </section>
-            <section className="comparedPlayer__section__item">
-                <span className="comparedPlayer__section__key">
-                    {content.position}
-                </span>
-                <span className="comparedPlayer__section__value">
-                    {player.position ? getPositionById(player.position) : "-"}
-                </span>
-            </section>
-        </section>
 
         <section className="comparedPlayer__videoSection" onClick={() => { if(video) setPlayVideo(true); }}>
             {video ?
