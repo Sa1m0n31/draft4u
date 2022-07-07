@@ -61,6 +61,38 @@ const Club = () => {
                 }
             }
         });
+
+        if(window.innerWidth < 768) {
+            let touchstartY = 0
+            let touchendY = 0
+
+            function checkDirection() {
+                if (touchendY < touchstartY) {
+                    // down
+                    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        slider.current.slickNext();
+                        setTimeout(() => {
+                            scrollToTop();
+                        }, 100);
+                    }
+                }
+                if (touchendY > touchstartY) {
+                    // wp
+                    if(window.scrollY === 0) {
+                        slider.current.slickPrev();
+                    }
+                }
+            }
+
+            document.addEventListener('touchstart', e => {
+                touchstartY = e.changedTouches[0].screenY
+            })
+
+            document.addEventListener('touchend', e => {
+                touchendY = e.changedTouches[0].screenY
+                checkDirection()
+            })
+        }
     }, []);
 
     const slider = useRef(null);

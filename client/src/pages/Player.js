@@ -1,18 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import img1 from '../static/img/strefa-zawodnika-1.png'
-import img2 from '../static/img/strefa-zawodnika-2.png'
-import img3 from '../static/img/czat.png'
-import step1 from '../static/img/krok-1.svg'
-import step2 from '../static/img/krok-2.svg'
-import step3 from '../static/img/krok-3.svg'
 import PlayerFAQ from "../components/PlayerFAQ";
-import ClubSlider from "../components/ClubSlider";
-import discountImg from '../static/img/discount.png'
-import phone from '../static/img/ekran-glowny.png'
-import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
 import PlayerSlide1 from "../components/PlayerSlide1";
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
@@ -109,11 +97,39 @@ const Player = () => {
                 }
             }
         });
+
+        if(window.innerWidth < 768) {
+            let touchstartY = 0
+            let touchendY = 0
+
+            function checkDirection() {
+                if (touchendY < touchstartY) {
+                    // down
+                    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        slider.current.slickNext();
+                        setTimeout(() => {
+                            scrollToTop();
+                        }, 100);
+                    }
+                }
+                if (touchendY > touchstartY) {
+                    // wp
+                    if(window.scrollY === 0) {
+                        slider.current.slickPrev();
+                    }
+                }
+            }
+
+            document.addEventListener('touchstart', e => {
+                touchstartY = e.changedTouches[0].screenY
+            })
+
+            document.addEventListener('touchend', e => {
+                touchendY = e.changedTouches[0].screenY
+                checkDirection()
+            })
+        }
     }, []);
-
-    useEffect(() => {
-
-    }, [slide]);
 
     return <div className="container container--light container--player">
         <Header menu="dark" />

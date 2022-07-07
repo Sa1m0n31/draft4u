@@ -145,7 +145,7 @@ const PlayerFAQ = React.forwardRef((props, ref) => {
     return <section className="faq scrollCarousel__slide" ref={ref}>
 
         <h1 className="bigHeader">
-            Najczęstsze pytania
+            FAQ
         </h1>
 
         <header className="faq__header">

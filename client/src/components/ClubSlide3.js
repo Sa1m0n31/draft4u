@@ -4,7 +4,7 @@ import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
 const ClubSlide3 = () => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--2 scrollCarousel__slide--3--club">
         <div>
@@ -15,7 +15,7 @@ const ClubSlide3 = () => {
                 {content.club_zone_text2}
             </p>
             <h2 className="bigHeader__subheader">
-                Stwórz swój wymarzony skład i zacznij do realizować
+                Show yourself!
             </h2>
         </div>
         <figure>

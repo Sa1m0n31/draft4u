@@ -4,18 +4,18 @@ import imgMobile from '../static/img/phone-mock-mobile.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
-const PlayerSlide4 = ({openRegisterModal}) => {
-    const { content } = useContext(ContentContext);
+const PlayerSlide4 = () => {
+    const { language } = useContext(ContentContext);
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--4">
         <h1 className="scrollCarousel__slide__backgroundHeader d-desktop">
-            Czatuj
+            {language === 'pl' ? 'Czatuj' : 'Chat'}
             <span className="d-block">
-                z klubami
+                {language === 'pl' ? 'z klubami' : 'with clubs'}
             </span>
         </h1>
         <h2 className="bigHeader d-mobile">
-            Czatuj z klubami
+            {language === 'pl' ? 'Czatuj z klubami' : 'Chat with clubs'}
         </h2>
         <figure>
             <img className="img d-desktop" src={img1} alt="dolacz-do-nas" />

@@ -1491,6 +1491,10 @@
         display: none !important;
     }
 
+    .siteHeader {
+        max-width: 90vw;
+    }
+
     .scrollCarousel__icons {
         justify-content: center;
     }

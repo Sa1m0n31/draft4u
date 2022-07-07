@@ -5,17 +5,17 @@ import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
 const ClubSlide4 = () => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--4">
         <h1 className="scrollCarousel__slide__backgroundHeader d-desktop">
-            Czatuj
+            {language === 'pl' ? 'Czatuj' : 'Chat'}
             <span className="d-block">
-                z zawodnikami
+                {language === 'pl' ? 'z zawodnikami' : 'with players'}
             </span>
         </h1>
         <h2 className="bigHeader d-mobile">
-            Czatuj z zawodnikami
+            {language === 'pl' ? 'Czatuj z zawodnikami' : 'Chat with players'}
         </h2>
         <figure>
             <img className="img d-desktop" src={img1} alt="dolacz-do-nas" />

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import img1 from '../static/img/slide-6-background.png'
-import {ContentContext} from "../App";
+import {ContentContext, LanguageContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 import i1 from '../static/img/trener.svg'
 import i2 from '../static/img/fizjoterapeuta.svg'
@@ -9,8 +9,8 @@ import i4 from '../static/img/trener-przygotowania.svg'
 import i5 from '../static/img/statystyk.svg'
 import {getAllStuffPositions} from "../helpers/user";
 
-const ClubSlide6 = ({openRegisterModal}) => {
-    const { content } = useContext(ContentContext);
+const ClubSlide6 = () => {
+    const { content, language } = useContext(ContentContext);
 
     const [positions, setPositions] = useState([]);
 
@@ -28,10 +28,10 @@ const ClubSlide6 = ({openRegisterModal}) => {
     return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--6--club">
         <div>
             <h1 className="bigHeader bigHeader--slide1">
-                Poszukujesz specjalistów do sztabu? Mamy ich!
+                {language !== 'en' ? 'Szukasz członka sztabu szkoleniowego?' : 'Are you looking for a member of the training stff? '}
             </h1>
             <p className="text">
-                {content.club_zone_text1}
+                {language !== 'en' ? 'Na Draft4u ogłaszają się trenerzy, asystenci, statystycy oraz trenerzy od przygotowania motorycznego. Krótko mówiąc tutaj znajdziesz wszystko czego szukasz.' : 'Draft4U features coaches, assistants, statisticians and motor preparation coaches. In short, here you are sure to find everything you re looking for.'}
             </p>
             <div className="scrollCarousel__icons">
                 <div className="scrollCarousel__icons__item">

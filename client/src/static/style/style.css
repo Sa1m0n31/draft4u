@@ -2608,6 +2608,7 @@ ul {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     margin: 25px 0;
 }
 
@@ -2615,6 +2616,7 @@ ul {
     margin-right: 35px;
     width: 100px;
     height: auto;
+    margin-bottom: 20px;
 }
 
 .myAccountStart__bottom__subscriptions {
