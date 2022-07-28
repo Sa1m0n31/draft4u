@@ -8,7 +8,7 @@ const upload = multer({ dest: 'media/fields' })
 
 router.get("/get-all", (request, response) => {
    const { lang } = request.query;
-   const query = 'SELECT * FROM content WHERE language = $1';
+   const query = 'SELECT * FROM content WHERE LOWER(language) = LOWER($1)';
    const values = [lang];
    db.query(query, values, (err, res) => {
       if(res) sendResposne(response, res.rows);

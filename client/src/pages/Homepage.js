@@ -14,7 +14,7 @@ const Homepage = () => {
             .then(res => {
                 if(res?.data?.result) window.location = "/rozpocznij";
                 else setLoaded(true);
-            })
+            });
     },[]);
 
     return <>

@@ -212,6 +212,10 @@
         transform: none;
     }
 
+    .scrollCarousel__slide--1--stuff figure .img {
+        transform: translate(0, -7%);
+    }
+
     .scrollCarousel__slide--6--club figure {
         width: 38%;
     }
@@ -1452,6 +1456,11 @@
     .stuffModal__header {
         margin-top: 30px;
     }
+
+    .container--dark .input--birthdate {
+        text-align: right !important;
+        margin-right: 0 !important;
+    }
 }
 
 @media(max-width: 900px) {
@@ -1485,6 +1494,40 @@
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
+    }
+
+    .createSquad__squad__item__imgWrapper {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .createSquad__squad__item__data__section {
+        flex-wrap: wrap;
+    }
+
+    .createSquad__squad__item__data__key,
+    .createSquad__squad__item__data__value {
+        width: 100%;
+        text-align: right;
+        margin-right: 0;
+    }
+
+    .player__section.player__flex.player__flex--section.player__section--1.club__section {
+        padding-bottom: 0;
+    }
+
+    .scrollCarousel__slide--6--club figure .img {
+        margin-top: -40px;
+    }
+
+    .aboutUs__profileWrapper--background::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: transparent linear-gradient(180deg,hsla(0,0%,99.1%,0),hsla(0,0%,96.1%,.9) 60%,#fff5f5) 0 0 no-repeat padding-box;
     }
 
     .comparatorValues {
@@ -1593,7 +1636,7 @@
     .whiteBackground__circles__item {
         width: 100%;
         max-width: 300px;
-        margin-bottom: 30px;
+        margin-bottom: 60px;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -1614,7 +1657,7 @@
     }
 
     .whiteBackground__circles__item figure {
-        max-width: 60%;
+        max-width: 50%;
     }
 
     .circle__header {
@@ -1728,6 +1771,10 @@
         text-align: center;
         width: 100%;
         margin-top: 20px;
+    }
+
+    .container--club .scrollCarousel__slide--2 .bigHeader--slide1 {
+        margin-top: 0;
     }
 
     .landingPage__inner__section:nth-of-type(3)::after {
@@ -1915,7 +1962,7 @@
     }
 
     .aboutUs__header {
-        margin-bottom: 120px !important;
+        margin-bottom: 30vw !important;
     }
 
     .player .player__option__price {
@@ -2197,11 +2244,11 @@
     }
 
     .aboutUs__profileWrapper {
-        transform: scale(1.9) translateX(10%);
+        transform: scale(1.9) translateX(-5%);
     }
 
     .aboutUs__profileWrapper--background {
-        transform: scale(1.4) translateX(0);
+        transform: scale(1.4) translateX(-8%);
         filter: brightness(.4) opacity(.5);
     }
 
@@ -2533,8 +2580,9 @@
 
     .myAccountStart__bottom__content__lock {
         margin: 0 auto;
+        display: block;
         transform: none;
-        max-width: 100%;
+        max-width: 80%;
     }
 
     .player__flex__content .player__header, .myAccountStart__bottom__content__section .player__header {
@@ -2938,10 +2986,6 @@
         font-size: 12px;
     }
 
-    .createSquad__squad__item__data__key {
-        margin-right: 6px;
-    }
-
     .chat__main,
     .chat__list {
         flex-basis: 100%;
@@ -3280,9 +3324,9 @@
     /*    transform: translateX(-50%);*/
     /*}*/
 
-    .aboutUs__header {
-        margin-bottom: 90px !important;
-    }
+    /*.aboutUs__header {*/
+    /*    margin-bottom: 90px !important;*/
+    /*}*/
 
     .container--homepage .clubCarousel {
         margin-top: 70px;
@@ -3388,7 +3432,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 280px;
+        height: 240px;
         background: var(--dark);
         transform: translateY(-100%);
         z-index: -1;
@@ -3430,7 +3474,7 @@
     }
 
     .landingPage__inner {
-        margin-bottom: 110px;
+        margin-bottom: 50px;
         justify-content: space-evenly;
     }
 

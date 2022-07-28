@@ -46,7 +46,7 @@ const ComparedPlayerTop = ({player, color, nameMinHeight}) => {
             <div className="comparedPlayer__top__left">
                 <figure className="comparedPlayer__imgWrapper" style={{
                     borderColor: color
-                }}>
+                }} onClick={() => { window.location = `/profil-zawodnika?id=${player?.id}`; }}>
                     <img className="comparedPlayer__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : profile} alt="profilowe" />
                 </figure>
                 <section className="comparedPlayer__icons">
@@ -59,11 +59,9 @@ const ComparedPlayerTop = ({player, color, nameMinHeight}) => {
                 </section>
             </div>
             <div className="comparedPlayer__top__right">
-                <h2 className="comparedPlayer__fullName" style={{
-                    // minHeight: nameMinHeight + 'px'
-                }}>
+                <a className="comparedPlayer__fullName" href={`/profil-zawodnika?id=${player?.id}`}>
                     {player.first_name} {testClub ? '******' : player.last_name}
-                </h2>
+                </a>
                 <h3 className="comparedPlayer__top__right__key">
                     Pozycja
                 </h3>
@@ -74,7 +72,7 @@ const ComparedPlayerTop = ({player, color, nameMinHeight}) => {
                     Aktualny klub
                 </h3>
                 <h4 className="comparedPlayer__top__right__value">
-                    {player.club}
+                    {player.club ? player.club : '-'}
                 </h4>
             </div>
         </div>

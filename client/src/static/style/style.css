@@ -1774,7 +1774,7 @@ ul {
     align-items: flex-end;
     width: var(--siteWidthNarrow);
     max-width: 1500px;
-    margin: 100px auto 0;
+    margin: 40px auto 0;
 }
 
 .aboutUs__main > * {
@@ -2003,6 +2003,7 @@ ul {
 }
 
 .player__option {
+    display: block;
     width: 28%;
     padding: 30px;
     background: #fff;
@@ -2645,7 +2646,7 @@ ul {
 .userInfoEdition__section {
     position: relative;
     width: 350px;
-    margin-right: 10vw;
+    margin-right: 0;
 }
 
 .userInfoEdition__section .dzu-dropzone {
@@ -2809,7 +2810,7 @@ ul {
 }
 
 .userInfoEdition__form__field {
-    font-size: 28px;
+    font-size: 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2917,7 +2918,7 @@ ul {
 .input--editProfile, .select--editProfile {
     border: none !important;
     outline: none !important;
-    font-size: 28px;
+    font-size: 22px;
     text-align: right;
     color: #3D3D3D;
     font-weight: 500;
@@ -4188,6 +4189,7 @@ input::-webkit-inner-spin-button {
     border: 8px solid transparent;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;
     margin: auto;
 }
 
@@ -4211,6 +4213,7 @@ input::-webkit-inner-spin-button {
 
 .comparedPlayer__fullName {
     color: #DFDFDF;
+    font-weight: 700;
     font-size: 28px;
     margin: 20px auto;
     text-align: center;
@@ -4328,6 +4331,7 @@ input::-webkit-inner-spin-button {
 
 .comparedPlayer__videoSection > div > .video-react {
     min-height: 250px;
+    height: 250px;
 }
 
 .comparedPlayer__videoSection .video-react .video-react-big-play-button {
@@ -4592,6 +4596,8 @@ input::-webkit-inner-spin-button {
 .createSquad__squad__item__imgWrapper {
     width: 120px;
     height: 120px;
+    flex-basis: 100%;
+    max-width: 120px;
     border: 3px solid #fff;
     border-radius: 50%;
     overflow: hidden;
@@ -4625,7 +4631,6 @@ input::-webkit-inner-spin-button {
 
 .createSquad__squad__item__data__key {
     color: #fff;
-    font-size: 17px;
     margin-right: 15px;
 }
 
@@ -4633,8 +4638,12 @@ input::-webkit-inner-spin-button {
     margin-left: 20px;
 }
 
+.createSquad__squad__item__data__key,
 .createSquad__squad__item__data__value {
-    font-size: 17px;
+    font-size: 14px;
+}
+
+.createSquad__squad__item__data__value {
     color: #474747;
 }
 
@@ -5474,7 +5483,6 @@ input::-webkit-inner-spin-button {
 }
 
 .comparedPlayer .video-react {
-    height: auto !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -5848,7 +5856,7 @@ input::-webkit-inner-spin-button {
 .input--editProfile--experience {
     white-space: normal;
     display: block;
-    max-width: 200px;
+    max-width: 260px;
     text-align: right !important;
 }
 
@@ -6015,6 +6023,11 @@ input::-webkit-inner-spin-button {
     align-items: center;
     margin: 25px auto;
     padding-left: 10%;
+    transition: .2s all;
+}
+
+.contact__main__bottom__item:hover {
+    color: var(--goldDark);
 }
 
 .contact__main__bottom__icon {
@@ -6962,6 +6975,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 45%;
 }
 
+.whiteBackground__bottom__header--smallLineHeight {
+    line-height: 68px;
+}
+
 .whiteBackground .text {
     width: 40%;
     display: block;
@@ -7081,11 +7098,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .scrollCarousel__slide--6--club .bigHeader--slide1 {
-    font-size: 42px;
+    font-size: 56px;
+    text-transform: uppercase;
 }
 
 .scrollCarousel__slide--1--stuff figure {
     margin-top: 0;
+}
+
+.scrollCarousel__slide--6--club .text {
+    padding-bottom: 25px;
 }
 
 .scrollCarousel__slide--6--club figure .img {
@@ -7146,7 +7168,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .comparatorValues__keySection > span {
-    font-size: 32px;
+    font-size: 28px;
     color: var(--goldDark);
 }
 
@@ -7216,4 +7238,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .scrollCarousel__slide__backgroundHeader {
         font-size: 200px;
     }
+}
+
+.aboutUs__buttons button:hover {
+    filter: invert(64%) sepia(83%) saturate(237%) hue-rotate(356deg) brightness(94%) contrast(90%);
+}
+
+@media(min-width: 1200px) {
+    .whiteBackground__circles__item--special .circle__header {
+        width: 120%;
+        transform: translateX(-10%);
+    }
+}
+
+.whiteBackground__bottom__header,
+.scrollCarousel__slide--2 .bigHeader,
+.scrollCarousel__slide--1--stuff .bigHeader {
+    text-transform: uppercase;
 }

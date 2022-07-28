@@ -333,4 +333,6 @@ app.use("/admin", basicAuth, adminRouter);
 app.use("/payment", paymentRouter);
 app.use("/chat", basicAuth, chatRouter);
 
-server.listen(5000);
+server.listen(5000, () => {
+    console.log('start listening on port 5000....');
+});

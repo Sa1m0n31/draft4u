@@ -18,6 +18,9 @@ const MyAccountStartHeader = ({fullName, image}) => {
                 <h2 className="player__header">
                     {content.welcome_header} {fullName}
                 </h2>
+                <figure className="player__flex__imgWrapper player__flex__imgWrapper--profile d-mobile">
+                    <img className="player__flex__img" src={profilePicture} alt="widok" />
+                </figure>
                 <p className="player__flex__text">
                     {content.welcome_text}
                 </p>
@@ -26,7 +29,7 @@ const MyAccountStartHeader = ({fullName, image}) => {
                 </a>
             </article>
 
-            <figure className="player__flex__imgWrapper player__flex__imgWrapper--profile">
+            <figure className="player__flex__imgWrapper player__flex__imgWrapper--profile d-desktop">
                 <img className="player__flex__img" src={profilePicture} alt="widok" />
             </figure>
         </section>

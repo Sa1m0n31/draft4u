@@ -30,7 +30,7 @@ const PlayerSlide3 = () => {
                         {content.player_zone_circle2}
                     </h3>
                 </div>
-                <div className="whiteBackground__circles__item">
+                <div className="whiteBackground__circles__item whiteBackground__circles__item--special">
                     <figure>
                         <img className="circleImg" src={circle3} alt="wpisz-dane" />
                     </figure>
@@ -41,7 +41,7 @@ const PlayerSlide3 = () => {
             </div>
 
             <div className="whiteBackground__bottom">
-                <h2 className="whiteBackground__bottom__header d-desktop">
+                <h2 className="whiteBackground__bottom__header whiteBackground__bottom__header--smallLineHeight d-desktop">
                     {content.player_zone_header3}
                 </h2>
                 <p className="text">

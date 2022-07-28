@@ -5,6 +5,9 @@ const db = require("../database/db");
 const multer  = require('multer')
 const upload = multer({ dest: 'media/chat' })
 
+const nodemailer = require("nodemailer");
+const smtpTransport = require('nodemailer-smtp-transport');
+
 router.get("/get-user-messages", (request, response) => {
     if(request.user) {
         const query = `SELECT m.chat_id, m.content, m.created_at, c.name, img.file_path, rm.read_at, m.type, c.id, rm.type as read_by_club FROM
@@ -88,7 +91,6 @@ router.get("/get-chat-content", (request, response) => {
 });
 
 router.get("/is-chat-read", (request, response) => {
-    /* TODO */
     const id = request.query.id;
     const club = request.query.club;
 
@@ -122,6 +124,40 @@ router.get("/is-chat-read", (request, response) => {
     });
 });
 
+const sendMailAboutNewMessage = (email, response) => {
+    let transporter = nodemailer.createTransport(smtpTransport ({
+        auth: {
+            user: process.env.EMAIL_ADDRESS,
+            pass: process.env.EMAIL_PASSWORD
+        },
+        host: process.env.EMAIL_HOST,
+        secureConnection: true,
+        port: 465,
+        tls: {
+            rejectUnauthorized: false
+        },
+    }));
+
+    console.log(email);
+
+    let mailOptions = {
+        from: process.env.EMAIL_ADDRESS,
+        to: email,
+        subject: 'Masz nową wiadomość w Draft4U!',
+        html: '<h2>Ktoś napisał do Ciebie w Draft4U!</h2> ' +
+            '<p>Zaloguj się na swoje konto, aby sprawdzić </p> ' +
+            `<a href="https://draft4u.com.pl">Przejdź do Draft4U</a>` +
+            `<p>Pozdrawiamy</p>` +
+            `<p>Zespół Draft4U</p>`
+    }
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        response.send({
+            result: 1
+        });
+    });
+}
+
 router.post("/add-message", (request, response) => {
    const { chatId, content, isClub } = request.body;
    let club = false;
@@ -133,8 +169,45 @@ router.post("/add-message", (request, response) => {
 
    db.query(query, values, (err, res) => {
        if(res) {
-          response.send({
-              result: 1
+           let query, values;
+
+          if(club) {
+              query = `SELECT u.email FROM identities i
+                    JOIN users u ON i.user_id = u.id
+                    WHERE i.id = $1`;
+              values = [chatId.split(';')[1]];
+          }
+          else {
+              query = `SELECT c.email FROM identities i
+                    JOIN clubs c ON c.id = i.id
+                    WHERE i.id = $1`;
+              values = [chatId.split(';')[0]];
+          }
+
+          db.query(query, values, (err, res) => {
+             if(res) {
+                 if(res.rows) {
+                     if(res.rows.length) {
+                         const email = res.rows[0].email;
+                         sendMailAboutNewMessage(email, response);
+                     }
+                     else {
+                         response.send({
+                             result: 1
+                         });
+                     }
+                 }
+                 else {
+                     response.send({
+                         result: 1
+                     });
+                 }
+             }
+             else {
+                 response.send({
+                     result: 1
+                 });
+             }
           });
       }
       else {

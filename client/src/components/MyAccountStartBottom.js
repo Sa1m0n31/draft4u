@@ -59,7 +59,7 @@ const MyAccountStartBottom = ({userId}) => {
                 <h4 className="myAccountStart__subheader">
                     {days <= 0 ? content.your_subscription_text_expire : content.your_subscription_text_ok.replace('x', days)}
                 </h4>
-                {days < 30 ? <section className="player__option">
+                {days < 30 ? <a className="player__option" href="/zaplac">>
                     <img className="player__option__discount" src={discountImg} alt="promocja" />
                     <h3 className="player__option__name">
                         {content.player_zone_buy_frame1}
@@ -70,10 +70,10 @@ const MyAccountStartBottom = ({userId}) => {
                                 PLN
                             </span>
                     </h4>
-                    <a className="button button--hover button--buyNow" href="/zaplac">
+                    <div className="button button--hover button--buyNow">
                         <img className="btn__img" src={buyNowBtn} alt="kup-teraz" />
-                    </a>
-                </section> : <p className="player__flex__text">
+                    </div>
+                </a> : <p className="player__flex__text">
                     {content.ty_page_text}
                 </p>}
             </section>
