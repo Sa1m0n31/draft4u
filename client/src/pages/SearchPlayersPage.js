@@ -318,7 +318,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
         <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 
         {/* DESKTOP HEADER */}
-        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop max-1000">
             <img className="btn__img clubAccountHeader__img" src={getImageUrl(content.img5)} alt="klub" />
         </header>
 
@@ -384,7 +384,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
             </button>
         </aside> : ""}
 
-        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters d-desktop">
+        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 max-1000 searchFilters d-desktop">
             <section className="searchFilters__filters">
                 <SingleFilter value={sex} changeValue={setSex} min={0} max={1} step={1} width="5%" header={content.map_gender} />
                 <SingleFilter value={age} changeValue={setAge} min={16} max={50} step={1} width="20%" header={content.age} />
@@ -472,7 +472,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
             </button> : ""}
         </nav>
 
-        <section className="playersWall__compareSection siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+        <section className="playersWall__compareSection siteWidthSuperNarrow siteWidthSuperNarrow--1400 max-1000">
             {comparator.map((item, index) => {
                 return <section className="playersWall__compareSection__item" key={index}>
                     {item ?  <button className="playersWall__compareSection__item__deleteBtn" onClick={() => { deleteFromComparator(item); }}>

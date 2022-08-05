@@ -87,10 +87,21 @@ const AboutUs = () => {
     const nextPlayer = (mobile = false) => {
         /* Animation */
         if(!mobile || window.innerWidth < 768) {
-            document.querySelector(".aboutUs__images").style.opacity = "0";
-            document.querySelector(".aboutUs__captionWrapper").style.opacity = "0";
-            document.querySelector(".aboutUs__subheader").style.opacity = "0";
-            document.querySelector(".aboutUs__desc").style.opacity = "0";
+            const images = document.querySelector(".aboutUs__images");
+            const captionWrapper = document.querySelector(".aboutUs__captionWrapper");
+            const subheader = document.querySelector(".aboutUs__subheader");
+            const description = document.querySelector(".aboutUs__desc");
+
+            images.style.opacity = "0";
+            captionWrapper.style.opacity = "0";
+            subheader.style.opacity = "0";
+            description.style.opacity = "0";
+
+            setTimeout(() => {
+                captionWrapper.style.transform = 'translateX(-100px)';
+                subheader.style.transform = 'translateX(-100px)';
+                description.style.transform = 'translateX(-100px)';
+            }, 200);
 
             setAnimationCounter(prevState => {
                 return !prevState;
@@ -117,10 +128,14 @@ const AboutUs = () => {
                         bartekForeground.current.style.display = 'none';
                     }
 
-                    document.querySelector(".aboutUs__images").style.opacity = "1";
-                    document.querySelector(".aboutUs__captionWrapper").style.opacity = "1";
-                    document.querySelector(".aboutUs__subheader").style.opacity = "1";
-                    document.querySelector(".aboutUs__desc").style.opacity = "1";
+                    captionWrapper.style.transform = 'none';
+                    subheader.style.transform = 'none';
+                    description.style.transform = 'none';
+
+                    images.style.opacity = "1";
+                    captionWrapper.style.opacity = "1";
+                    subheader.style.opacity = "1";
+                    description.style.opacity = "1";
                 }, 50);
             }, 500);
         }

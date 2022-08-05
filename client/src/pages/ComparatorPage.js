@@ -115,7 +115,7 @@ const ComparatorPage = ({club}) => {
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
-        <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+        <main className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {playersArray.map((item, index) => {
                 if(item) {
                     return <ComparedPlayerTop player={item}
@@ -158,7 +158,7 @@ const ComparatorPage = ({club}) => {
                 </div>
             </section>
 
-            <section className="comparatorValues__keySection">
+            <section className="comparatorValues__keySection comparatorValues__keySection--salary">
                 <span>
                     {firstPlayer.salary_from ? firstPlayer.salary_from + " - " + firstPlayer.salary_to : "-"}
                 </span>
@@ -321,7 +321,7 @@ const ComparatorPage = ({club}) => {
             </section>
         </section>
 
-        <section className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+        <section className="comparator__main siteWidthSuperNarrow siteWidthSuperNarrow--1400">
             {playersArray.map((item, index) => {
                 if(item) {
                     return <ComparedPlayer player={item}

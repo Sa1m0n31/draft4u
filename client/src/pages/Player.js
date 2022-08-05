@@ -11,7 +11,7 @@ import PlayerSlide4 from "../components/PlayerSlide4";
 import PlayerSlide5 from "../components/PlayerSlide5";
 
 const Player = () => {
-    const [slide, setSlide] = useState(0);
+    const [currentSlide, setCurrentSlide] = useState(0);
 
     const settings = {
         dots: true,
@@ -135,11 +135,13 @@ const Player = () => {
         <Header menu="dark" />
         <main className="player">
             <div className="scrollCarousel">
-                <Slider ref={slider} {...settings}>
+                <Slider ref={slider} {...settings}
+                    beforeChange={(e) => { setCurrentSlide(e); }}
+                >
                     <PlayerSlide1 openRegisterModal={openRegisterModal} />
                     <PlayerSlide2 />
                     <PlayerSlide3 />
-                    <PlayerSlide4 />
+                    <PlayerSlide4 currentSlide={currentSlide} />
                     <PlayerSlide5 openRegisterModal={openRegisterModal} />
                     <PlayerFAQ ref={faqContainer} />
                 </Slider>

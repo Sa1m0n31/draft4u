@@ -369,6 +369,15 @@
         left: 28%;
     }
 
+    .chatImages .bigHeader {
+        font-size: 36px;
+        line-height: 1em;
+    }
+
+    .chatImages figure {
+        max-width: 320px;
+    }
+
     .container--dark .scrollCarousel__slide__backgroundHeader {
         font-size: 120px;
     }
@@ -1496,6 +1505,82 @@
         display: block !important;
     }
 
+    .comparedPlayer__top {
+        flex-direction: column;
+    }
+
+    .comparedPlayer__icons__item {
+        width: 15px;
+    }
+
+    .comparedPlayer__top__right {
+        margin-left: 0;
+    }
+
+    .comparedPlayer__top__right__key {
+        font-size: 11px;
+    }
+
+    .comparedPlayer__fullName,
+    .comparedPlayer__top__right__value {
+        font-size: 14px;
+    }
+
+    .comparedPlayer__top__right * {
+        text-align: center;
+    }
+
+    .comparedPlayer__top > * {
+        width: 100%;
+    }
+
+    .comparatorValues__keySection > span {
+        font-size: 12px;
+    }
+
+    .comparatorValues__keySection--salary span {
+        font-size: 10px;
+    }
+
+    .comparatorValues__valuesSection__bar {
+        height: 4px;
+    }
+
+    .comparatorValues__valuesSection {
+        margin: 10px 0;
+    }
+
+    .comparedPlayer__videoSection > div > .video-react {
+        height: 100px;
+        min-height: 100px;
+        margin-bottom: 20px;
+    }
+
+    .chatImages {
+        top: 300px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        padding: 0 !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chatImages figure {
+        max-width: 70vw;
+    }
+
+    .chatImages figure {
+        margin-top: 20px !important;
+        margin-bottom: 10px;
+    }
+
+    .chatImages figure:nth-of-type(2) {
+        margin-left: 30px;
+    }
+
     .createSquad__squad__item__imgWrapper {
         max-width: 50px;
         max-height: 50px;
@@ -1528,10 +1613,6 @@
         width: 100%;
         height: 60px;
         background: transparent linear-gradient(180deg,hsla(0,0%,99.1%,0),hsla(0,0%,96.1%,.9) 60%,#fff5f5) 0 0 no-repeat padding-box;
-    }
-
-    .comparatorValues {
-        display: none !important;
     }
 
     .siteHeader {
@@ -1833,10 +1914,22 @@
         width: 100%;
     }
 
+    .playerCard__balanceBtn {
+        width: 30px;
+        height: 40px;
+    }
+
     .splide__arrows,
-    .playerCard__balanceBtn,
     .d-desktop {
         display: none !important;
+    }
+
+    .playersWall__compareSection__item {
+        margin-bottom: 30px;
+    }
+
+    .playersWall__compareSection {
+        flex-direction: column;
     }
 
     .contact__main,
@@ -2636,7 +2729,7 @@
     }
 
     .playerCard__imgWrapper {
-        height: clamp(100px, 70vw, 300px);
+        height: clamp(100px, 50vw, 300px);
     }
 
     .playersWall--mobile {
@@ -2746,7 +2839,7 @@
     }
 
     .playersWall--mobile {
-        min-height: 80vh;
+        min-height: 50vh;
     }
 
     .playersWall__playersNotFoundHeader {
@@ -3149,11 +3242,11 @@
     }
 
     .playerCard__header {
-        height: 55px;
+        height: 45px;
     }
 
     .playerCard__header__h {
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .playerCard__stats {
@@ -3165,7 +3258,7 @@
     }
 
     .playerCard__stats__item__value {
-        font-size: 24px;
+        font-size: 21px;
     }
 
     .playerCard__stats__item__key {
@@ -3173,8 +3266,8 @@
     }
 
     .playerCard__moreBtn {
-        font-size: 15px;
-        height: 35px;
+        font-size: 13px;
+        height: 30px;
         border-width: 2px;
     }
 
@@ -3268,6 +3361,10 @@
 @media(max-width: 576px) {
     .container--homepage .clubCarousel::after {
         display: none;
+    }
+
+    .comparator__chart {
+        margin-right: -7vw;
     }
 
     .container--homepage::after {

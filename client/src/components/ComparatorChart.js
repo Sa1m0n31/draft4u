@@ -119,7 +119,7 @@ const ComparatorChart = ({datasets}) => {
         }
     }, [datasets]);
 
-    return <section className="comparator__chart d-desktop">
+    return <section className="comparator__chart">
         <Chart
             options={options}
             series={series}

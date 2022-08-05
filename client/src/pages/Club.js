@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import header from '../static/img/header-klub.jpg'
@@ -26,6 +26,8 @@ import ClubSlide6 from "../components/ClubSlide6";
 
 const Club = () => {
     const { content } = useContext(ContentContext);
+
+    const [currentSlide, setCurrentSlide] = useState(0);
 
     const settings = {
         dots: true,
@@ -97,15 +99,17 @@ const Club = () => {
 
     const slider = useRef(null);
 
-    return <div className="container container--dark container--club">
+    return <div className={currentSlide === 1 ? "container container--dark container--club container--club--background" : "container container--dark container--club"}>
         <Header theme="dark" menu="light" clubPage={true} />
         <main className="club">
             <div className="scrollCarousel">
-                <Slider ref={slider} {...settings}>
+                <Slider ref={slider} {...settings}
+                        beforeChange={(e) => { setCurrentSlide(e); }}
+                >
                     <ClubSlide1 />
                     <ClubSlide2 />
                     <ClubSlide3 />
-                    <ClubSlide4 />
+                    <ClubSlide4 currentSlide={currentSlide} />
                     <ClubSlide5 />
                     <ClubSlide6 />
                 </Slider>

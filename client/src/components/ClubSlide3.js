@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import img1 from '../static/img/sklad.png'
 import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
 
 const ClubSlide3 = () => {
-    const { content, language } = useContext(ContentContext);
+    const { content } = useContext(ContentContext);
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--2 scrollCarousel__slide--3--club">
         <div>

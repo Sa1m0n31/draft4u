@@ -620,7 +620,7 @@ ul {
     transform: skewX(-14.1deg);
     left: -10%;
     width: 102%;
-    display: none;
+    /*display: none;*/
 }
 
 .landingPage__inner__section {
@@ -1799,6 +1799,7 @@ ul {
     margin: 40px 0;
     width: 470px;
     height: auto;
+    transition: .4s all;
 }
 
 .aboutUs__caption {
@@ -1813,6 +1814,7 @@ ul {
     color: var(--grey);
     width: 550px;
     max-width: 100%;
+    transition: .4s all;
 }
 
 .aboutUs__quote {
@@ -1829,6 +1831,7 @@ ul {
     max-width: 100%;
     font-weight: 500;
     line-height: 25px;
+    transition: .4s all;
 }
 
 .aboutUs__images {
@@ -3997,6 +4000,10 @@ input::-webkit-inner-spin-button {
     transition: .2s all;
 }
 
+.max-1000 {
+    max-width: 1000px;
+}
+
 .searchFilters__position__button:hover {
     color: #fff;
 }
@@ -4042,6 +4049,7 @@ input::-webkit-inner-spin-button {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 3%;
     flex-wrap: wrap;
+    max-width: 1000px;
 }
 
 .playersWall__compareSection__item__deleteBtn {
@@ -5629,6 +5637,10 @@ input::-webkit-inner-spin-button {
     justify-content: flex-start;
 }
 
+.contact__main .registerForm--nextBtn {
+    background: transparent;
+}
+
 .clubForm .registerForm--nextBtn {
     width: 250px;
     margin: 0;
@@ -6992,6 +7004,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .scrollCarousel__slide--4 figure {
     width: 100%;
+    transition: .4s all;
 }
 
 .scrollCarousel__slide--4 figure .img {
@@ -7013,6 +7026,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #fff;
     text-align: center;
     z-index: -1;
+    transition: .5s all;
+    transition-delay: .5s;
 }
 
 .container--dark .scrollCarousel__slide__backgroundHeader {
@@ -7050,9 +7065,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none !important;
 }
 
-.scrollCarousel__slide--3--club {
+.container--club--background {
     background-image: url("../img/background-big.png");
-    background-position: 70% 60%;
 }
 
 .scrollCarousel__slide--5--club {
@@ -7255,4 +7269,43 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .scrollCarousel__slide--2 .bigHeader,
 .scrollCarousel__slide--1--stuff .bigHeader {
     text-transform: uppercase;
+}
+
+.mobilePhone {
+    transition: .5s all;
+    transition-delay: .5s;
+}
+
+.scrollCarousel__slide--4 {
+    position: relative;
+}
+
+.chatImages {
+    position: absolute;
+    top: 50%;
+    left: 6vw;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: .4s all;
+}
+
+.chatImages figure {
+    max-width: 390px;
+    margin-bottom: 30px;
+    opacity: 0;
+    transition: .4s all;
+}
+
+.chatImages .img {
+    width: 100%;
+}
+
+.chatImages figure:nth-of-type(2) {
+    margin-left: 60px;
+}
+
+.chatImages .bigHeader {
+    text-align: left;
+    line-height: 80px;
+    font-size: 76px;
 }

@@ -198,7 +198,7 @@ const SearchStuffPage = ({club, favorites, playersProp}) => {
         <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 
         {/* DESKTOP HEADER */}
-        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop max-1000">
             <img className="btn__img clubAccountHeader__img" src={getImageUrl(content.img5)} alt="klub" />
         </header>
 
@@ -252,7 +252,7 @@ const SearchStuffPage = ({club, favorites, playersProp}) => {
             </button>
         </aside> : ""}
 
-        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters d-desktop">
+        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters max-1000 d-desktop">
             <section className="searchFilters__position">
                 <span className="searchFilters__position__header">
                     {content.post}:

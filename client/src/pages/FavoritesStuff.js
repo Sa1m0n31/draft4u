@@ -41,7 +41,7 @@ const FavoritesStuff = ({club, favorites}) => {
     const [verticalRange, setVerticalRange] = useState([20, 130]);
     const [salary, setSalary] = useState([1000, 30000]);
 
-    const [comparator, setComparator] = useState([0, 0, 0]);
+    const [comparator, setComparator] = useState([0, 0]);
 
     useEffect(() => {
         setFavoritesState(favorites);
@@ -205,7 +205,7 @@ const FavoritesStuff = ({club, favorites}) => {
         <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
         {/* DESKTOP HEADER */}
-        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop">
+        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 max-1000 d-desktop">
             <img className="btn__img clubAccountHeader__img" src={getImageUrl(content.img6)} alt="klub" />
         </header>
 
@@ -259,7 +259,7 @@ const FavoritesStuff = ({club, favorites}) => {
             </button>
         </aside> : ""}
 
-        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters d-desktop">
+        <aside className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 searchFilters max-1000 d-desktop">
             <section className="searchFilters__position">
                 <span className="searchFilters__position__header">
                     {content.post}:
