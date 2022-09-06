@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
 import PlayerCard from "./PlayerCard";
-import przegladajBtn from "../static/img/zobacz-btn.png";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";

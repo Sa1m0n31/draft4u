@@ -333,7 +333,7 @@
     }
 
     .playerCard__stats__item__value {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .playerCard__header__h {
@@ -566,6 +566,12 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .playersWall {
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 10%;
+        justify-items: center;
     }
 
     .comparedPlayer__imgWrapper {
@@ -1438,7 +1444,7 @@
     .input--birthdate {
         text-align: left !important;
         width: auto !important;
-        margin-right: -25px !important;
+        margin-right: -5px !important;
     }
 
     .stuffModal__input {
@@ -1503,6 +1509,10 @@
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
+    }
+
+    .select--editProfile option {
+        font-size: 14px;
     }
 
     .comparedPlayer__top {
@@ -1916,7 +1926,11 @@
 
     .playerCard__balanceBtn {
         width: 30px;
-        height: 40px;
+        height: auto;
+    }
+
+    .playerCard__top__left__buttons {
+        margin-bottom: 5px !important;
     }
 
     .splide__arrows,
@@ -2718,8 +2732,31 @@
         display: block;
     }
 
-    .playerCard {
-        width: 95% !important;
+    .playersWall--mobile .splide__slide {
+        margin-right: 30px;
+    }
+
+    .playerCard__position {
+        margin: 0 auto 5px;
+        font-size: 18px;
+    }
+
+    .playerCard__imgWrapper {
+        height: 140px;
+    }
+
+    .playerCard__logo, .playerCard__flag {
+        margin: 8px 0;
+    }
+
+    .playerCard__flag {
+        margin: 10px 0;
+    }
+
+    .playerCard__logo .img {
+        width: 25px;
+        height: auto;
+        max-height: 25px;
     }
 
     .button--showPlayersPage {
@@ -2729,7 +2766,7 @@
     }
 
     .playerCard__imgWrapper {
-        height: clamp(100px, 50vw, 300px);
+        height: clamp(100px, 45vw, 300px);
     }
 
     .playersWall--mobile {
@@ -3276,8 +3313,7 @@
     }
 
     .playerCard__addToFavorites {
-        width: 21px;
-        margin-top: -2px;
+        width: 15px;
     }
 
     .container--light .notifications .messageMenu__list__item__header {
@@ -3558,8 +3594,16 @@
         left: 5%;
     }
 
+    .scrollCarousel__slide--1--stuff figure .img--siergiej {
+        transform: translate(0, 0) !important;
+    }
+
     .landingPage__person {
         width: 110% !important;
+    }
+
+    .landingPage__person--1 {
+        width: 100% !important;
     }
 
     .landingPage__inner__section:nth-of-type(2) .landingPage__person {

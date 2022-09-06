@@ -47,7 +47,7 @@ router.delete("/delete", (request, response) => {
 router.get("/get-favorites-by-club", (request, response) => {
     const clubId = request.user;
 
-    const query = 'SELECT id.id as identity, u.id, u.id as user_id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, i.file_path FROM favorites f JOIN users u ON f.user_id = u.id JOIN identities id ON id.user_id = u.id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE f.club_id = $1';
+    const query = 'SELECT id.id as identity, u.id, u.id as user_id, u.country, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.position, i.file_path FROM favorites f JOIN users u ON f.user_id = u.id JOIN identities id ON id.user_id = u.id LEFT OUTER JOIN images i ON i.id = u.profile_picture WHERE f.club_id = $1';
     const values = [clubId];
 
     db.query(query, values, (err, res) => {

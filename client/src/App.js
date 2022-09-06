@@ -28,6 +28,7 @@ import ContentPage from "./pages/ContentPage";
 import {getCustomFields} from "./helpers/admin";
 import LoadingPage from "./pages/LoadingPage";
 import Stuff from "./pages/Stuff";
+import "../node_modules/flag-icons/css/flag-icons.min.css";
 
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 

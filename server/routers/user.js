@@ -226,15 +226,15 @@ const getUserData = (request, response, userId) => {
         let query = '';
         if(facebook) {
             hash = crypto.createHash('sha256').update(userId.toString()).digest('hex');
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.hash = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.country, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.hash = $1`;
             values = [hash];
         }
         else if(!isNumeric(userId)) {
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1 OR identities.hash = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.country, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.id = $1 OR identities.hash = $1`;
             values = [userId];
         }
         else {
-            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
+            query = `SELECT identities.id as identity, identities.adapter, identities.active, u.id, u.country, u.email, u.first_name, u.last_name, u.sex, u.birthday, u.phone_number, u.attack_range, u.vertical_range, u.block_range, u.height, u.weight, u.salary_from, u.salary_to, u.licence_number, u.club, u.experience, u.position, p.name, sp.name as stuff_position, i.file_path FROM users u LEFT OUTER JOIN positions p ON u.position = p.id LEFT OUTER JOIN stuff_positions sp ON sp.id + 10 = u.position LEFT OUTER JOIN images i ON u.profile_picture = i.id JOIN identities ON identities.user_id = u.id WHERE identities.user_id = $1`;
             values = [userId];
         }
 
@@ -420,6 +420,16 @@ router.put("/update-user-position", basicAuth, (request, response) => {
 
     const query = 'UPDATE users u SET position = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
     const values = [position, userId];
+
+    updateQuery(query, values, response);
+});
+
+router.put("/update-user-country", basicAuth, (request, response) => {
+    const { country } = request.body;
+    const userId = request.user;
+
+    const query = 'UPDATE users u SET country = $1 FROM identities i WHERE u.id = i.user_id AND i.id = $2';
+    const values = [country, userId];
 
     updateQuery(query, values, response);
 });

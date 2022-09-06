@@ -6,12 +6,12 @@ import { Range, getTrackBackground } from 'react-range';
 import {
     getAllStuffPositions,
     updateUserBirthday,
-    updateUserClub, updateUserEmail, updateUserExperience, updateUserLicenceNumber,
-    updateUserPhoneNumber, updateUserPosition,
+    updateUserClub, updateUserCountry, updateUserEmail, updateUserExperience, updateUserLicenceNumber,
+    updateUserPhoneNumber,
     updateUserSalary, updateUserStuffPosition
 } from "../helpers/user";
 import UserProfileImage from "./UserProfileImage";
-import {calculateAge} from "../helpers/others";
+import {calculateAge, countriesEn, countriesPl} from "../helpers/others";
 import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
@@ -20,7 +20,7 @@ import {ContentContext, StuffContext} from "../App";
 import {TestClubContext} from "../wrappers/ClubWrapper";
 
 const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
     const { testClub } = useContext(TestClubContext);
     const { isStuff } = useContext(StuffContext);
 
@@ -37,6 +37,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [stuffPosition, setStuffPosition] = useState(null);
     const [editPosition, setEditPosition] = useState(false);
     const [positions, setPositions] = useState([]);
+    const [country, setCountry] = useState(0);
+    const [editCountry, setEditCountry] = useState(false);
 
     const [editEmail, setEditEmail] = useState(false);
     const [editAge, setEditAge] = useState(false);
@@ -47,12 +49,13 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     const [editExperience, setEditExperience] = useState(false);
 
     const [favoritePlayer, setFavoritePlayer] = useState(false);
+    const [countries, setCountries] = useState([]);
+    const [countriesCodes, setCountriesCodes] = useState([]);
 
     const phoneNumberRef = useRef(null);
     const clubRef = useRef(null);
     const licenseRef = useRef(null);
     const emailRef = useRef(null);
-    const experienceRef = useRef(null);
 
     const STEP = 100;
     const MIN = 1000;
@@ -74,6 +77,16 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
     }, [isStuff]);
 
     useEffect(() => {
+        if(language === 'pl') {
+            setCountries(Object.entries(countriesPl).map((item) => (item[1])));
+        }
+        else {
+            setCountries(Object.entries(countriesEn).map((item) => (item[1])));
+        }
+        setCountriesCodes(Object.entries(countriesEn).map((item) => (item[0])));
+    }, [language]);
+
+    useEffect(() => {
         setFavoritePlayer(favorite);
     }, [favorite]);
 
@@ -87,6 +100,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         setLeagues(setLeaguesByExperience(player.experience));
         setValues([player.salary_from, player.salary_to]);
         setStuffPosition(player.stuff_position);
+        setCountry(player.country);
     }, [player]);
 
     const setLeaguesByExperience = (experience) => {
@@ -294,6 +308,13 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
         updateUserStuffPosition(stuffPosition);
     }
 
+    const changeUserCountry = (tab) => {
+        setEditCountry(false);
+        updateUserCountry(country);
+
+        if(tab) setEditSalary(true);
+    }
+
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
             <UserProfileImage user={player} club={clubProp} />
@@ -481,6 +502,41 @@ const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
                         </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPosition(); }}>
                             <img className="userInfoEdition__btn__img" src={check} alt="ok" />
                         </button>}
+                    </label>
+                </span>
+            </label> : ''}
+
+            {!isStuff ? <label className="userInfoEdition__form__field">
+                <span className="userInfoEdition__key">
+                    {language === 'pl' ? 'Kraj' : 'Country'}
+                </span>
+                <span className="userInfoEdition__value userInfoEdition__value--countries">
+                    <label className={editPosition ? "label--edit" : ""}
+                           onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserCountry(e.keyCode === 9); }}
+                    >
+                        {clubProp ? <span>
+                            {countries[country]}
+                        </span> : (editCountry ? <select className="select--editProfile"
+                                                         disabled={!editCountry}
+                                                         value={country}
+                                                         onChange={(e) => { setCountry(e.target.value); }}
+                        >
+                            {countries?.map((item, index) => {
+                                return <option value={index}
+                                               key={index}
+                                               className="countryOption">
+                                    {item}
+                                </option>
+                            })}
+                        </select> : <input className="input--editProfile"
+                                           disabled={true}
+                                           value={countries[country] ? countries[country] : "-"} />)}
+
+                        {!clubProp ? (!editCountry ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditCountry(true); }}>
+                            <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
+                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserCountry(); }}>
+                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button>) : ''}
                     </label>
                 </span>
             </label> : ''}

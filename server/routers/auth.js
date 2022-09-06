@@ -196,7 +196,7 @@ router.post("/register-local", (request, response) => {
    const hash = crypto.createHash('sha256').update(password).digest('hex');
    const gender = sex === 1;
 
-   const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD') + INTERVAL '1 DAY', $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+   const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD') + INTERVAL '1 DAY', $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160) RETURNING id`;
    const values = [email, firstName, lastName, gender, birthday, phoneNumber];
 
    db.query(query, values, (err, res) => {
@@ -248,7 +248,7 @@ router.post('/register-second-type', (request, response) => {
                 const result = res.rows[0];
                 const { user_id, email, first_name, last_name, sex, birthday, phone_number } = result;
 
-                const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD'), $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) RETURNING id`;
+                const query = `INSERT INTO users VALUES (nextval('users_id_sequence'), $1, $2, $3, $4, TO_DATE($5, 'YYYY-MM-DD'), $6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160) RETURNING id`;
                 const values = [email, first_name, last_name, sex, birthday, phone_number];
 
                 db.query(query, values, (err, res) => {

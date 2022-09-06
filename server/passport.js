@@ -128,8 +128,8 @@ const init = (passport) => {
             if(id.provider === 'google') {
                 /* Google */
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience)
-                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+                query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience, country)
+                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
                             WHERE NOT EXISTS (
                                 SELECT 1 FROM users WHERE email = $1
                             ) RETURNING id`;
@@ -220,8 +220,8 @@ const init = (passport) => {
                 /* Facebook */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
-                query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience)
-                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+                query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience, country)
+                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
                             WHERE NOT EXISTS (
                                 SELECT 1 FROM users WHERE email = $1
                             ) RETURNING id`;

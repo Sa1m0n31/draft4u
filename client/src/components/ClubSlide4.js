@@ -72,7 +72,7 @@ const ClubSlide4 = ({currentSlide}) => {
                 {language === 'pl' ? <span>Czatuj<br/>z zawodnikami</span> : <span>Chat<br/>with players</span>}
             </h2>
             <figure ref={chat1Ref}>
-                <img className="img" src={chat1} alt="czat" />
+                <img className="img img--chat1" src={chat3} alt="czat" />
             </figure>
             <figure ref={chat2Ref}>
                 <img className="img" src={chat2} alt="czat" />

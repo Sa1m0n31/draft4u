@@ -174,6 +174,14 @@ const updateUserPosition = (position) => {
     });
 }
 
+const updateUserCountry = (id) => {
+    return axios.put(`${API_URL}/user/update-user-country`, {
+        country: id
+    }, {
+        withCredentials: true
+    });
+}
+
 const updateUserStuffPosition = (position) => {
     let positionId;
     switch(position.toLowerCase()) {
@@ -351,7 +359,7 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     updateUserHeight, updateUserWeight, updateUserPosition,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
     getUserById, getUserFavorites, getUserVisited,
-    getIdentityById, resetPassword,
+    getIdentityById, resetPassword, updateUserCountry,
     addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition,
     isUserWithTwoAccounts, getSecondAccountData
 }

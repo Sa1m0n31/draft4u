@@ -7,6 +7,7 @@ import ClubAccountBottom from "../components/ClubAccountBottom";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 import TermsForClubs from "../components/TermsForClubs";
+import {getAllClubs} from "../helpers/club";
 
 const ClubAccountStart = ({club, favorites}) => {
     const { content } = useContext(ContentContext);
@@ -16,6 +17,16 @@ const ClubAccountStart = ({club, favorites}) => {
     useEffect(() => {
         if(club) {
             setRender(true);
+
+            getAllClubs()
+                .then((res) => {
+                   localStorage.setItem('clubLogos', JSON.stringify(res?.data?.result?.map((item) => {
+                       return {
+                           name: item.name,
+                           logo: item.file_path
+                       }
+                   })));
+                });
         }
     }, [club]);
 

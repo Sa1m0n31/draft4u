@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import img1 from '../static/img/slide-6-background.png'
+import img1 from '../static/img/trener-siergiej.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
@@ -19,7 +19,7 @@ const StuffSlide1 = ({openRegisterModal}) => {
             </button>
         </div>
         <figure>
-            <img className="img" src={img1} alt="dolacz-do-nas" />
+            <img className="img img--siergiej" src={img1} alt="dolacz-do-nas" />
         </figure>
     </div>
 };
