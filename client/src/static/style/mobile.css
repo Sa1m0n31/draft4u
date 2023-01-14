@@ -1482,6 +1482,12 @@
     .container--homepage::after {
         width: 60%;
     }
+
+    .findNewPlayerWrapper .splide__slide {
+        margin-right: 30px;
+        margin-bottom: -20px;
+        height: 420px;
+    }
 }
 
 @media(max-width: 850px) {

@@ -7421,3 +7421,7 @@ label.userInfoEdition__form__field {
     right: 0;
     transform: translatey(-50%);
 }
+
+.findNewPlayerWrapper--clubAccountStart {
+    max-width: 1000px;
+}
