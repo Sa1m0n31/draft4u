@@ -24,103 +24,190 @@ const ClubWrapper = ({page}) => {
     const [testClub, setTestClub] = useState(true);
 
     useEffect(() => {
-        isLoggedIn()
+        getAllPlayers()
             .then((res) => {
-                if(!res?.data?.result) window.location = "/";
-                else {
-                    getClubData()
-                        .then((res) => {
-                            setLoaded(true);
+                const club = 141;
+                setLoaded(true);
 
-                            const club = res?.data?.result;
-                            if(club?.file_path) setTestClub(false);
+                const players = res?.data?.result.filter((item) => {
+                    const splittedId = item.identity?.split('-');
+                    return splittedId[splittedId.length-1] !== 'stuff';
+                });
+                const stuff = res?.data?.result?.filter((item) => {
+                    const splittedId = item.identity?.split('-');
+                    return splittedId[splittedId.length-1] === 'stuff';
+                });
 
-                            getAllPlayers()
-                                .then((res) => {
-                                    const players = res?.data?.result.filter((item) => {
-                                        const splittedId = item.identity?.split('-');
-                                        return splittedId[splittedId.length-1] !== 'stuff';
-                                    });
-                                    const stuff = res?.data?.result?.filter((item) => {
-                                        const splittedId = item.identity?.split('-');
-                                        return splittedId[splittedId.length-1] === 'stuff';
-                                    });
-
-                                    getFavoritesByClub()
-                                        .then((res) => {
-                                            const favorites = res?.data?.result.filter((item) => {
-                                                const splittedId = item.identity?.split('-');
-                                                return splittedId[splittedId.length-1] !== 'stuff';
-                                            });
-                                            const favoritesStuff = res?.data?.result?.filter((item) => {
-                                                const splittedId = item.identity?.split('-');
-                                                return splittedId[splittedId.length-1] === 'stuff';
-                                            });
-
-                                            if(club) {
-                                                switch(page) {
-                                                    case 1:
-                                                        setRenderSwitch(<ClubAccountStart club={club}
-                                                                                          playersProp={players}
-                                                                                          favorites={favorites} />);
-                                                        break;
-                                                    case 2:
-                                                        setRenderSwitch(<SearchPlayersPage club={club}
-                                                                                           playersProp={players}
-                                                                                           favorites={favorites} />);
-                                                        break;
-                                                    case 3:
-                                                        setRenderSwitch(<ComparatorPage club={club} />);
-                                                        break;
-                                                    case 4:
-                                                        setRenderSwitch(<PlayerPage club={club} />);
-                                                        break;
-                                                    case 5:
-                                                        setRenderSwitch(<Favorites club={club}
-                                                                                   playersProp={players}
-                                                                                   favorites={favorites} />);
-                                                        break;
-                                                    case 6:
-                                                        setRenderSwitch(<CreateSquadPage club={club} />);
-                                                        break;
-                                                    case 7:
-                                                        setRenderSwitch(<ClubTeamsPage club={club} />);
-                                                        break;
-                                                    case 8:
-                                                        setRenderSwitch(<ChatPage club={club} />);
-                                                        break;
-                                                    case 9:
-                                                        setRenderSwitch(<Notifications club={club} />);
-                                                        break;
-                                                    case 10:
-                                                        setRenderSwitch(<ChangePassword club={club} />);
-                                                        break;
-                                                    case 11:
-                                                        setRenderSwitch(<SearchStuffPage club={club}
-                                                                                           playersProp={stuff}
-                                                                                           favorites={favoritesStuff} />);
-                                                        break;
-                                                    case 12:
-                                                        setRenderSwitch(<FavoritesStuff club={club}
-                                                                                   favorites={favoritesStuff} />);
-                                                        break;
-                                                    default:
-                                                        setRenderSwitch(<ClubAccountStart club={club} favorites={favorites} />);
-                                                        break;
-                                                }
-                                            }
-                                            else {
-                                                getUserData()
-                                                    .then((res) => {
-                                                        if(res?.data?.result) window.location = "/rozpocznij";
-                                                        else window.location = "/";
-                                                    });
-                                            }
-                                        });
-                                });
+                getFavoritesByClub()
+                    .then((res) => {
+                        const favorites = res?.data?.result.filter((item) => {
+                            const splittedId = item.identity?.split('-');
+                            return splittedId[splittedId.length-1] !== 'stuff';
                         });
-                }
+                        const favoritesStuff = res?.data?.result?.filter((item) => {
+                            const splittedId = item.identity?.split('-');
+                            return splittedId[splittedId.length-1] === 'stuff';
+                        });
+
+                        if(club) {
+                            switch(page) {
+                                case 1:
+                                    setRenderSwitch(<ClubAccountStart club={club}
+                                                                      playersProp={players}
+                                                                      favorites={favorites} />);
+                                    break;
+                                case 2:
+                                    setRenderSwitch(<SearchPlayersPage club={club}
+                                                                       playersProp={players}
+                                                                       favorites={favorites} />);
+                                    break;
+                                case 3:
+                                    setRenderSwitch(<ComparatorPage club={club} />);
+                                    break;
+                                case 4:
+                                    setRenderSwitch(<PlayerPage club={club} />);
+                                    break;
+                                case 5:
+                                    setRenderSwitch(<Favorites club={club}
+                                                               playersProp={players}
+                                                               favorites={favorites} />);
+                                    break;
+                                case 6:
+                                    setRenderSwitch(<CreateSquadPage club={club} />);
+                                    break;
+                                case 7:
+                                    setRenderSwitch(<ClubTeamsPage club={club} />);
+                                    break;
+                                case 8:
+                                    setRenderSwitch(<ChatPage club={club} />);
+                                    break;
+                                case 9:
+                                    setRenderSwitch(<Notifications club={club} />);
+                                    break;
+                                case 10:
+                                    setRenderSwitch(<ChangePassword club={club} />);
+                                    break;
+                                case 11:
+                                    setRenderSwitch(<SearchStuffPage club={club}
+                                                                     playersProp={stuff}
+                                                                     favorites={favoritesStuff} />);
+                                    break;
+                                case 12:
+                                    setRenderSwitch(<FavoritesStuff club={club}
+                                                                    favorites={favoritesStuff} />);
+                                    break;
+                                default:
+                                    setRenderSwitch(<ClubAccountStart club={club} favorites={favorites} />);
+                                    break;
+                            }
+                        }
+                        else {
+                            getUserData()
+                                .then((res) => {
+                                    if(res?.data?.result) window.location = "/rozpocznij";
+                                    else window.location = "/";
+                                });
+                        }
+                    });
             });
+
+        // isLoggedIn()
+        //     .then((res) => {
+        //         if(!res?.data?.result) window.location = "/";
+        //         else {
+        //             getClubData()
+        //                 .then((res) => {
+        //                     setLoaded(true);
+        //
+        //                     const club = res?.data?.result;
+        //                     if(club?.file_path) setTestClub(false);
+        //
+        //                     getAllPlayers()
+        //                         .then((res) => {
+        //                             const players = res?.data?.result.filter((item) => {
+        //                                 const splittedId = item.identity?.split('-');
+        //                                 return splittedId[splittedId.length-1] !== 'stuff';
+        //                             });
+        //                             const stuff = res?.data?.result?.filter((item) => {
+        //                                 const splittedId = item.identity?.split('-');
+        //                                 return splittedId[splittedId.length-1] === 'stuff';
+        //                             });
+        //
+        //                             getFavoritesByClub()
+        //                                 .then((res) => {
+        //                                     const favorites = res?.data?.result.filter((item) => {
+        //                                         const splittedId = item.identity?.split('-');
+        //                                         return splittedId[splittedId.length-1] !== 'stuff';
+        //                                     });
+        //                                     const favoritesStuff = res?.data?.result?.filter((item) => {
+        //                                         const splittedId = item.identity?.split('-');
+        //                                         return splittedId[splittedId.length-1] === 'stuff';
+        //                                     });
+        //
+        //                                     if(club) {
+        //                                         switch(page) {
+        //                                             case 1:
+        //                                                 setRenderSwitch(<ClubAccountStart club={club}
+        //                                                                                   playersProp={players}
+        //                                                                                   favorites={favorites} />);
+        //                                                 break;
+        //                                             case 2:
+        //                                                 setRenderSwitch(<SearchPlayersPage club={club}
+        //                                                                                    playersProp={players}
+        //                                                                                    favorites={favorites} />);
+        //                                                 break;
+        //                                             case 3:
+        //                                                 setRenderSwitch(<ComparatorPage club={club} />);
+        //                                                 break;
+        //                                             case 4:
+        //                                                 setRenderSwitch(<PlayerPage club={club} />);
+        //                                                 break;
+        //                                             case 5:
+        //                                                 setRenderSwitch(<Favorites club={club}
+        //                                                                            playersProp={players}
+        //                                                                            favorites={favorites} />);
+        //                                                 break;
+        //                                             case 6:
+        //                                                 setRenderSwitch(<CreateSquadPage club={club} />);
+        //                                                 break;
+        //                                             case 7:
+        //                                                 setRenderSwitch(<ClubTeamsPage club={club} />);
+        //                                                 break;
+        //                                             case 8:
+        //                                                 setRenderSwitch(<ChatPage club={club} />);
+        //                                                 break;
+        //                                             case 9:
+        //                                                 setRenderSwitch(<Notifications club={club} />);
+        //                                                 break;
+        //                                             case 10:
+        //                                                 setRenderSwitch(<ChangePassword club={club} />);
+        //                                                 break;
+        //                                             case 11:
+        //                                                 setRenderSwitch(<SearchStuffPage club={club}
+        //                                                                                    playersProp={stuff}
+        //                                                                                    favorites={favoritesStuff} />);
+        //                                                 break;
+        //                                             case 12:
+        //                                                 setRenderSwitch(<FavoritesStuff club={club}
+        //                                                                            favorites={favoritesStuff} />);
+        //                                                 break;
+        //                                             default:
+        //                                                 setRenderSwitch(<ClubAccountStart club={club} favorites={favorites} />);
+        //                                                 break;
+        //                                         }
+        //                                     }
+        //                                     else {
+        //                                         getUserData()
+        //                                             .then((res) => {
+        //                                                 if(res?.data?.result) window.location = "/rozpocznij";
+        //                                                 else window.location = "/";
+        //                                             });
+        //                                     }
+        //                                 });
+        //                         });
+        //                 });
+        //         }
+        //     });
     }, []);
 
     return <>

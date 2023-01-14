@@ -318,9 +318,9 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
         <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 
         {/* DESKTOP HEADER */}
-        <header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop max-1000">
-            <img className="btn__img clubAccountHeader__img" src={getImageUrl(content.img5)} alt="klub" />
-        </header>
+        {/*<header className="siteWidthSuperNarrow siteWidthSuperNarrow--1400 d-desktop max-1000">*/}
+        {/*    <img className="btn__img clubAccountHeader__img" src={getImageUrl(content.img5)} alt="klub" />*/}
+        {/*</header>*/}
 
         {/* MOBILE HEADER */}
         <header className="playersWall__mobileHeader d-mobile">

@@ -44,7 +44,7 @@ router.post('/send-form', basicAuth, (request, response) => {
             result: 1
         });
     });
-})
+});
 
 router.get("/get-all", (request, response) => {
     const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, c.country, l.sex, i.file_path, id.active FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id JOIN identities id ON c.id = id.id';

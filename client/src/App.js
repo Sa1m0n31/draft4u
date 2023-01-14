@@ -117,78 +117,78 @@ function App() {
           </Route>
 
           {/* User routes */}
-                <Route path="/rozpocznij">
-                    <UserWrapper page={1} />
+            <Route path="/rozpocznij">
+                <UserWrapper page={1} />
+            </Route>
+            <Route path="/edycja-profilu">
+                <UserWrapper page={2} />
+            </Route>
+            <Route path="/faq">
+                <UserWrapper page={3} />
+            </Route>
+            <Route path="/dodaj-video">
+                <UserWrapper page={4} />
+            </Route>
+            <PayPalScriptProvider options={payPalOptions}>
+                <Route path="/zaplac">
+                    <UserWrapper page={5} />
                 </Route>
-                <Route path="/edycja-profilu">
-                    <UserWrapper page={2} />
-                </Route>
-                <Route path="/faq">
-                    <UserWrapper page={3} />
-                </Route>
-                <Route path="/dodaj-video">
-                    <UserWrapper page={4} />
-                </Route>
-                <PayPalScriptProvider options={payPalOptions}>
-                    <Route path="/zaplac">
-                        <UserWrapper page={5} />
-                    </Route>
-                </PayPalScriptProvider>
-                <Route path="/subskrypcja-przedluzona">
-                    <UserWrapper page={6} />
-                </Route>
-                <Route path="/czat">
-                    <UserWrapper page={7} />
-                </Route>
-                <Route path="/notyfikacje">
-                    <UserWrapper page={8} />
-                </Route>
-                <Route path="/wpis">
-                    <UserWrapper page={9} />
-                </Route>
-                <Route path="/zmien-haslo-zawodnika">
-                    <UserWrapper page={10} />
-                </Route>
+            </PayPalScriptProvider>
+            <Route path="/subskrypcja-przedluzona">
+                <UserWrapper page={6} />
+            </Route>
+            <Route path="/czat">
+                <UserWrapper page={7} />
+            </Route>
+            <Route path="/notyfikacje">
+                <UserWrapper page={8} />
+            </Route>
+            <Route path="/wpis">
+                <UserWrapper page={9} />
+            </Route>
+            <Route path="/zmien-haslo-zawodnika">
+                <UserWrapper page={10} />
+            </Route>
 
-                {/* Club routes */}
-                <Route path="/konto-klubu">
-                    <ClubWrapper page={1} />
-                </Route>
-                <Route path="/szukaj-zawodnika">
-                    <ClubWrapper page={2} />
-                </Route>
-                <Route path="/szukaj-sztabu">
-                    <ClubWrapper page={11} />
-                </Route>
-                <Route path="/porownywarka">
-                    <ClubWrapper page={3} />
-                </Route>
-                <Route path="/profil-zawodnika">
-                    <ClubWrapper page={4} />
-                </Route>
-                <Route path="/ulubieni-zawodnicy">
-                    <ClubWrapper page={5} />
-                </Route>
-                <Route path="/ulubieni-sztab">
-                    <ClubWrapper page={12} />
-                </Route>
-                <Route path="/sklady">
-                    <DndProvider backend={HTML5Backend}>
-                        <ClubWrapper page={6} />
-                    </DndProvider>
-                </Route>
-                <Route path="/zapisane-druzyny">
-                    <ClubWrapper page={7} />
-                </Route>
-                <Route path="/wiadomosci">
-                    <ClubWrapper page={8} />
-                </Route>
-                <Route path="/powiadomienia">
-                    <ClubWrapper page={9} />
-                </Route>
-                <Route path="/zmien-haslo-klubu">
-                    <ClubWrapper page={10} />
-                </Route>
+            {/* Club routes */}
+            <Route path="/konto-klubu">
+                <ClubWrapper page={1} />
+            </Route>
+            <Route path="/szukaj-zawodnika">
+                <ClubWrapper page={2} />
+            </Route>
+            <Route path="/szukaj-sztabu">
+                <ClubWrapper page={11} />
+            </Route>
+            <Route path="/porownywarka">
+                <ClubWrapper page={3} />
+            </Route>
+            <Route path="/profil-zawodnika">
+                <ClubWrapper page={4} />
+            </Route>
+            <Route path="/ulubieni-zawodnicy">
+                <ClubWrapper page={5} />
+            </Route>
+            <Route path="/ulubieni-sztab">
+                <ClubWrapper page={12} />
+            </Route>
+            <Route path="/sklady">
+                <DndProvider backend={HTML5Backend}>
+                    <ClubWrapper page={6} />
+                </DndProvider>
+            </Route>
+            <Route path="/zapisane-druzyny">
+                <ClubWrapper page={7} />
+            </Route>
+            <Route path="/wiadomosci">
+                <ClubWrapper page={8} />
+            </Route>
+            <Route path="/powiadomienia">
+                <ClubWrapper page={9} />
+            </Route>
+            <Route path="/zmien-haslo-klubu">
+                <ClubWrapper page={10} />
+            </Route>
 
           {/* Admin panel */}
           <Route path="/admin">

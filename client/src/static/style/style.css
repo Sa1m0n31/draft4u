@@ -1,5 +1,6 @@
 /* Global */
-@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;700&family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@300;400;500;700&family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
 
 * {
     box-sizing: border-box;
@@ -9,11 +10,11 @@
 }
 
 :root {
-    --dark: #282828;
+    --dark: #020305;
     --light: #f5f5f5;
     --gold: #e2b76d;
     --goldDark: #D9AA66;
-    --grey: #707070;
+    --grey: #9f9f9f;
     --yellow: #FFDC00;
     --siteWidth: clamp(200px, 85vw, 2300px);
     --siteWidthNarrow: clamp(200px, 75vw, 2100px);
@@ -116,9 +117,11 @@ ul {
 
 /* Header */
 .siteHeader {
-    width: var(--siteWidth);
+    width: 100%;
+    height: 110px;
+    background: #201E1B;
     margin: 0 auto 30px auto;
-    padding-top: 30px;
+    padding: 5px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -126,13 +129,9 @@ ul {
     z-index: 11;
 }
 
-.siteHeader--dark {
-    background: var(--dark);
-}
-
 .siteHeader__logo {
     width: 20%;
-    max-width: 250px;
+    max-width: 140px;
 }
 
 .siteHeader__logo__img {
@@ -151,6 +150,7 @@ ul {
     border-radius: 4px;
     height: 70px;
     padding: 0 50px;
+    margin-left: 4%;
     width: fit-content;
     display: flex;
     justify-content: center;
@@ -165,9 +165,9 @@ ul {
 }
 
 .siteHeader__menu__link {
-    color: var(--grey);
-    font-size: 21px;
-    padding: 0 20px;
+    color: #9F9F9F;
+    font-size: 17px;
+    padding: 0 25px;
     opacity: .8;
     white-space: nowrap;
     text-transform: uppercase;
@@ -208,8 +208,8 @@ ul {
 }
 
 .siteHeader__btn--login--dark, .siteHeader__menu--dark {
-    background: #3D3D3D;
     color: rgba(212, 212, 212, .8);
+    background: transparent;
 }
 
 .siteHeader__menu--dark .siteHeader__menu__link {
@@ -249,7 +249,7 @@ ul {
 }
 
 .siteHeader__player--club {
-    background: #3D3D3D;
+    background: transparent;
 }
 
 .siteHeader__player__btn {
@@ -383,7 +383,7 @@ ul {
     color: rgba(255, 255, 255, .6);
     font-size: 17px;
     text-align: center;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 400;
 }
 
@@ -401,7 +401,7 @@ ul {
     font-size: 12px;
     line-height: 20px;
     font-weight: 700;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     border: 2px solid #fff;
     border-radius: 50%;
 }
@@ -412,7 +412,7 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
@@ -459,7 +459,7 @@ ul {
 
 .messageMenu__list__item__header {
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 17px;
 }
 
@@ -507,7 +507,7 @@ ul {
     align-items: center;
     font-size: 16px;
     text-transform: uppercase;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     color: #fff;
     border: 1px solid var(--grey);
     padding: 10px 0;
@@ -889,7 +889,7 @@ ul {
     font-size: 24px;
     font-weight: 400;
     text-transform: uppercase;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     padding: 20px 20px 40px 20px;
 }
 
@@ -946,7 +946,7 @@ ul {
 }
 
 .footer__col__header {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 24px;
     font-weight: 500;
     text-transform: uppercase;
@@ -963,7 +963,7 @@ ul {
 
 .footer__col__list__item {
     margin: 10px 0;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 300;
     text-transform: uppercase;
 }
@@ -1315,7 +1315,7 @@ ul {
 }
 
 .registerModal__header {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 50px;
     font-weight: 500;
     color: rgba(194, 124, 59, .8);
@@ -1625,7 +1625,7 @@ ul {
     color: var(--gold);
     font-size: 32px;
     font-weight: 500;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     margin: 10px auto 20px;
     width: var(--siteWidth);
     max-width: 400px;
@@ -1804,7 +1804,7 @@ ul {
 }
 
 .aboutUs__header {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     color: #CE9662;
     font-weight: 500;
     font-size: 50px;
@@ -2038,7 +2038,7 @@ ul {
 }
 
 .player__option > * {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .player__option__name {
@@ -2075,7 +2075,7 @@ ul {
 }
 
 .faq * {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .faqPage {
@@ -2414,7 +2414,7 @@ ul {
 
 .mapContent__header__item__labels span {
     color: var(--grey);
-    font-family: 'Oxanium', sans-serif;
+    font-family: 'Goldman', sans-serif;
     font-size: 17px;
 }
 
@@ -2564,7 +2564,7 @@ ul {
 }
 
 .myAccountStart__bottom__content__days span {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .myAccountStart__bottom__content__days span {
@@ -3280,7 +3280,7 @@ input::-webkit-inner-spin-button {
     font-size: 20px;
     color: #313131;
     font-weight: 700;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-align: center;
     display: block;
     margin-top: 60px;
@@ -3564,7 +3564,7 @@ input::-webkit-inner-spin-button {
 }
 
 .payment__header {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-transform: uppercase;
     font-size: 44px;
     margin-bottom: 20px;
@@ -3943,7 +3943,7 @@ input::-webkit-inner-spin-button {
     color: #fff;
     text-transform: uppercase;
     font-size: 19px;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 500;
 }
 
@@ -3978,13 +3978,13 @@ input::-webkit-inner-spin-button {
 }
 
 .playerCard__stats__item__value {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 700;
     font-size: 28px;
 }
 
 .playerCard__stats__item__label {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 400;
     font-size: 9px;
     text-transform: uppercase;
@@ -3997,7 +3997,7 @@ input::-webkit-inner-spin-button {
     border: 3px solid #fff;
     color: #fff;
     background: transparent;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 700;
     font-size: 16px;
     text-transform: uppercase;
@@ -4059,8 +4059,8 @@ input::-webkit-inner-spin-button {
 }
 
 .searchFilters__position {
-    background: #474747;
-    border: 1px solid var(--grey);
+    background: #242424;
+    border: 1px solid #707070;
     border-radius: 3px;
     height: 50px;
     display: flex;
@@ -4082,6 +4082,7 @@ input::-webkit-inner-spin-button {
     color: rgba(255, 255, 255, .6);
     background: transparent;
     transition: .2s all;
+    font-family: 'Goldman', cursive;
 }
 
 .max-1000 {
@@ -4097,7 +4098,7 @@ input::-webkit-inner-spin-button {
 }
 
 .singleFilter__header {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 17px;
     color: #fff;
     font-weight: 400;
@@ -4125,7 +4126,7 @@ input::-webkit-inner-spin-button {
 .singleFilter__values__min, .singleFilter__values__max {
     color: rgba(255, 255, 255, .6);
     font-size: 15px;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .playersWall {
@@ -4177,7 +4178,7 @@ input::-webkit-inner-spin-button {
     color: #fff;
     font-weight: 700;
     font-size: 20px;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     background: transparent;
     text-transform: uppercase;
 }
@@ -4824,7 +4825,7 @@ input::-webkit-inner-spin-button {
 /*}*/
 
 .createSquad__players .searchFilters__position * {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .createSquad__name .input--editProfile::placeholder {
@@ -4973,14 +4974,14 @@ input::-webkit-inner-spin-button {
     font-size: 17px;
     margin-bottom: 5px;
     text-align: left;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .chat__list__item__text {
     color: #fff;
     font-size: 14px;
     text-align: left;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .container--light .chat__list__item__text {
@@ -4998,14 +4999,14 @@ input::-webkit-inner-spin-button {
 .chat__main__noMessages__header {
     text-align: center;
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 32px;
     margin-bottom: 30px;
 }
 
 .chat__main__noMessages__text {
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 17px;
     text-align: center;
     width: 75%;
@@ -5062,7 +5063,7 @@ input::-webkit-inner-spin-button {
     color: var(--gold);
     font-size: 36px;
     font-weight: 500;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     white-space: nowrap;
 }
 
@@ -5075,7 +5076,7 @@ input::-webkit-inner-spin-button {
 .chat__header__h {
     flex-basis: 30%;
     color: var(--gold);
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 46px;
     text-transform: uppercase;
 }
@@ -5249,7 +5250,7 @@ input::-webkit-inner-spin-button {
 
 .chat__message, .chat__message * {
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .chat__message__header {
@@ -5308,14 +5309,14 @@ input::-webkit-inner-spin-button {
     color: rgba(255, 255, 255, .8);
     font-size: 40px;
     text-transform: uppercase;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 500;
     margin-bottom: 50px;
 }
 
 .noTeams__header {
     color: rgba(255, 255, 255, .6);
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 500;
     margin-top: 50px;
     font-size: 21px;
@@ -5339,7 +5340,7 @@ input::-webkit-inner-spin-button {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-weight: 300;
     font-size: 18px;
 }
@@ -5503,11 +5504,11 @@ input::-webkit-inner-spin-button {
     text-align: center;
     margin: 20px auto;
     color: var(--gold);
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .single__article * {
-    font-family: 'Oxanium', cursive !important;
+    font-family: 'Goldman', cursive !important;
 }
 
 .single__article img {
@@ -5568,7 +5569,7 @@ input::-webkit-inner-spin-button {
 
 .clubTeams__tableHeader__header {
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-transform: uppercase;
     font-weight: 500;
     font-size: 14px;
@@ -5640,7 +5641,7 @@ input::-webkit-inner-spin-button {
     left: 0;
     width: 100%;
     z-index: 10;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 32px;
     color: #fff;
     text-transform: capitalize;
@@ -5944,7 +5945,7 @@ input::-webkit-inner-spin-button {
     background: transparent;
     font-size: 22px;
     font-weight: 500;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     transition: .2s all;
 }
 
@@ -6049,7 +6050,7 @@ input::-webkit-inner-spin-button {
     font-size: 26px;
     font-weight: 700;
     text-transform: uppercase;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
 }
 
 .contact__main .clubForm__inner label {
@@ -6932,7 +6933,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .bigHeader {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     color: var(--gold);
     font-size: 94px;
     text-align: center;

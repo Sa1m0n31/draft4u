@@ -30,7 +30,7 @@ import {
     readAllNotifications,
     readNotification
 } from "../helpers/notification";
-import {getIdentityById, getSecondAccountData, getUserById, getUserData, isUserWithTwoAccounts} from "../helpers/user";
+import {getIdentityById, getSecondAccountData, getUserData, isUserWithTwoAccounts} from "../helpers/user";
 import ContactInfo from "./ContactInfo";
 import {ContentContext, StuffContext} from "../App";
 import polandIcon from '../static/img/poland-flag.svg'
@@ -479,122 +479,122 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             <img className="siteHeader__logo__img" src={theme === "dark" ? logoDark : logo} alt="draft4u" />
         </a>
 
+        <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark d-desktop" : "siteHeader__menu d-desktop"}>
+            {/* Homepage menu */}
+            {!player && !club ? <ul className="siteHeader__menu__list">
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/">
+                        {menuBeforeLogin[0]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/o-nas">
+                        {menuBeforeLogin[1]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/zawodnik">
+                        {menuBeforeLogin[2]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/klub">
+                        {menuBeforeLogin[3]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/sztab">
+                        {menuBeforeLogin[4]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/mapa">
+                        {menuBeforeLogin[5]}
+                    </a>
+                </li>
+            </ul> : ""}
+
+            {/* Player menu */}
+            {player ? <ul className="siteHeader__menu__list">
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/">
+                        {menuPlayer[0]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/edycja-profilu">
+                        {menuPlayer[1]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/mapa">
+                        {menuPlayer[2]}
+                    </a>
+                </li>
+            </ul> : ""}
+
+            {/* Club menu */}
+            {club ? <ul className="siteHeader__menu__list">
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/">
+                        {menuClub[0]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <div className="siteHeader__menu__link">
+                        {menuClub[1]}
+                        <img className="siteHeader__menu__arrowDown" src={arrowDownIcon} alt="rozwin" />
+                        <ul className="siteHeader__menu__submenu">
+                            <li className="siteHeader__menu__submenu__item">
+                                <a className="siteHeader__menu__link" href="/szukaj-zawodnika">
+                                    {content.club_search_dropdown1}
+                                </a>
+                            </li>
+                            <li className="siteHeader__menu__submenu__item">
+                                <a className="siteHeader__menu__link" href="/szukaj-sztabu">
+                                    {content.club_search_dropdown2}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li className="siteHeader__menu__list__item siteHeader__menu__list__item--favorites">
+                    <div className="siteHeader__menu__link">
+                        {menuClub[2]}
+                        <img className="siteHeader__menu__arrowDown" src={arrowDownIcon} alt="rozwin" />
+                        <ul className="siteHeader__menu__submenu">
+                            <li className="siteHeader__menu__submenu__item">
+                                <a className="siteHeader__menu__link" href="/ulubieni-zawodnicy">
+                                    {content.club_search_dropdown1}
+                                </a>
+                            </li>
+                            <li className="siteHeader__menu__submenu__item">
+                                <a className="siteHeader__menu__link" href="/ulubieni-sztab">
+                                    {content.club_search_dropdown2}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/sklady">
+                        {menuClub[3]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/zapisane-druzyny">
+                        {menuClub[4]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item d-over-1200">
+                    <a className="siteHeader__menu__link" href="/mapa">
+                        {menuClub[5]}
+                    </a>
+                </li>
+            </ul> : ""}
+        </menu>
+
         <section className="siteHeader__content">
-            <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark d-desktop" : "siteHeader__menu d-desktop"}>
-                {/* Homepage menu */}
-                {!player && !club ? <ul className="siteHeader__menu__list">
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/">
-                            {menuBeforeLogin[0]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/o-nas">
-                            {menuBeforeLogin[1]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/zawodnik">
-                            {menuBeforeLogin[2]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/klub">
-                            {menuBeforeLogin[3]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/sztab">
-                            {menuBeforeLogin[4]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/mapa">
-                            {menuBeforeLogin[5]}
-                        </a>
-                    </li>
-                </ul> : ""}
-
-                {/* Player menu */}
-                {player ? <ul className="siteHeader__menu__list">
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/">
-                            {menuPlayer[0]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/edycja-profilu">
-                            {menuPlayer[1]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/mapa">
-                            {menuPlayer[2]}
-                        </a>
-                    </li>
-                </ul> : ""}
-
-                {/* Club menu */}
-                {club ? <ul className="siteHeader__menu__list">
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/">
-                            {menuClub[0]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <div className="siteHeader__menu__link">
-                            {menuClub[1]}
-                            <img className="siteHeader__menu__arrowDown" src={arrowDownIcon} alt="rozwin" />
-                            <ul className="siteHeader__menu__submenu">
-                                <li className="siteHeader__menu__submenu__item">
-                                    <a className="siteHeader__menu__link" href="/szukaj-zawodnika">
-                                        {content.club_search_dropdown1}
-                                    </a>
-                                </li>
-                                <li className="siteHeader__menu__submenu__item">
-                                    <a className="siteHeader__menu__link" href="/szukaj-sztabu">
-                                        {content.club_search_dropdown2}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li className="siteHeader__menu__list__item siteHeader__menu__list__item--favorites">
-                        <div className="siteHeader__menu__link">
-                            {menuClub[2]}
-                            <img className="siteHeader__menu__arrowDown" src={arrowDownIcon} alt="rozwin" />
-                            <ul className="siteHeader__menu__submenu">
-                                <li className="siteHeader__menu__submenu__item">
-                                    <a className="siteHeader__menu__link" href="/ulubieni-zawodnicy">
-                                        {content.club_search_dropdown1}
-                                    </a>
-                                </li>
-                                <li className="siteHeader__menu__submenu__item">
-                                    <a className="siteHeader__menu__link" href="/ulubieni-sztab">
-                                        {content.club_search_dropdown2}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/sklady">
-                            {menuClub[3]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item">
-                        <a className="siteHeader__menu__link" href="/zapisane-druzyny">
-                            {menuClub[4]}
-                        </a>
-                    </li>
-                    <li className="siteHeader__menu__list__item d-over-1200">
-                        <a className="siteHeader__menu__link" href="/mapa">
-                            {menuClub[5]}
-                        </a>
-                    </li>
-                </ul> : ""}
-            </menu>
-
             {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
                 <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(0); readAllNotificationsWrapper(); }}>
                     <img className="siteHeader__player__btn__img" src={club || newNotifications || window.innerWidth < 768 ? bellGold : bell} alt="powiadomienia" />

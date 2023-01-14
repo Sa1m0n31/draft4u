@@ -82,7 +82,7 @@
     }
 
     .siteHeader__menu__link {
-        padding: 0 7px;
+        padding: 0 16px;
     }
 
     .aboutUs {
@@ -413,10 +413,6 @@
 
     .player .player__option__currency {
         font-size: 50px;
-    }
-
-    .siteHeader__logo__img {
-        width: 200px;
     }
 
     .registerModal__inner {
