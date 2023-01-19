@@ -72,11 +72,6 @@
         width: 45%;
     }
 
-    .siteHeader__btn--register {
-        margin-left: 3%;
-        margin-right: 2%;
-    }
-
     .siteHeader__menu {
         padding: 0 20px;
     }
@@ -268,12 +263,6 @@
     .languageBtn,
     .siteHeader__menu {
         height: 60px;
-    }
-
-    .siteHeader__btn {
-        width: 200px;
-        height: 60px;
-        font-size: 17px;
     }
 
     .aboutUs__header {
@@ -534,7 +523,7 @@
 
     .siteHeader__btn {
         width: 100px;
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .siteHeader__btn--register {

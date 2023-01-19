@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import logo from '../static/img/logo.svg'
 import logoDark from '../static/img/logo-dark.png'
 import pen from '../static/img/pen-dropdown-menu.svg'
 import closeIcon from '../static/img/close-grey.svg'
 import hamburger from '../static/img/hamburger.svg'
-import LoginBox from "./LoginBox";
+import homeIcon from '../static/img/home.svg'
 import RegisterModal from "./RegisterModal";
 import loginIcon from '../static/img/log-in.svg'
 import registerIcon from '../static/img/register.svg'
@@ -476,14 +475,15 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
         </section>
 
         <a className="siteHeader__logo" href="/">
-            <img className="siteHeader__logo__img" src={theme === "dark" ? logoDark : logo} alt="draft4u" />
+            <img className="siteHeader__logo__img" src={logoDark} alt="draft4u" />
         </a>
 
-        <menu className={theme === "dark" ? "siteHeader__menu siteHeader__menu--dark d-desktop" : "siteHeader__menu d-desktop"}>
+        <menu className="siteHeader__menu siteHeader__menu--dark d-desktop">
             {/* Homepage menu */}
             {!player && !club ? <ul className="siteHeader__menu__list">
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/">
+                        <img className="homeIcon" src={homeIcon} alt="home" />
                         {menuBeforeLogin[0]}
                     </a>
                 </li>
@@ -713,22 +713,18 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     </ul>
                 </menu> : ""}
             </section> : "") : <span className="d-desktop-flex">
-                {!clubPage ? <button className="siteHeader__btn siteHeader__btn--register" onClick={() => { openRegisterModal(); }}>
+                <a className="siteHeader__btn siteHeader__btn--register"
+                                     href="/zaloz-konto">
                     {content.register}
-                </button> : ""}
-                <section className={!clubPage ? "loginBtnWrapper" : "loginBtnWrapper loginBtnWrapper--clubPage"}>
-                <button className={theme === "dark" ? "siteHeader__btn siteHeader__btn--login siteHeader__btn--login--dark" : "siteHeader__btn siteHeader__btn--login"} onClick={() => { toggleLogin(); }}>
+                </a>
+                <a className="siteHeader__btn siteHeader__btn--login siteHeader__btn--login--dark"
+                        href="/logowanie">
                     {content.login}
-                </button>
+                </a>
+            </span>}
 
-                <section className="loginBoxWrapper" ref={loginBoxWrapper}>
-                <LoginBox />
-                </section>
-                </section></span>}
-
-            {!club && !player ? <button className={theme === 'dark' ? "languageBtn languageBtn--dark d-desktop" : "languageBtn d-desktop"} onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+            {!club && !player ? <button className="languageBtn" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
                 <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
-                {language === 'pl' ? 'English' : 'Polski'}
             </button> : ""}
 
             {/* Mobile menu */}
