@@ -31,6 +31,8 @@ html, body {
 }
 
 .container {
+    background: var(--dark);
+    min-height: 100vh;
     overflow: hidden;
 }
 
@@ -39,14 +41,6 @@ body {
 }
 
 .container {
-    /*position: relative;*/
-}
-
-.container--light {
-    background: var(--light);
-}
-
-.container--dark {
     background: var(--dark);
 }
 
@@ -199,6 +193,10 @@ ul {
     background: transparent linear-gradient(268deg, #E9C37C 0%, #BE7C3E 100%) 0% 0% no-repeat padding-box;
 }
 
+.btn--gradient {
+    background: transparent linear-gradient(268deg, #E9C37C 0%, #BE7C3E 100%) 0% 0% no-repeat padding-box !important;
+}
+
 .siteHeader__btn--login {
     background: #533D14;
     border: 1px solid var(--gold);
@@ -209,7 +207,7 @@ ul {
 }
 
 .siteHeader__menu--dark .siteHeader__menu__link:hover,
-.siteHeader__btn--login--dark:hover
+.siteHeader__btn--login--dark:hover.mobileMenu__btn__img--dark
 {
     color: #fff;
 }
@@ -427,26 +425,6 @@ ul {
 
 .profileMenu--notifications {
     right: 105px;
-}
-
-.container--light .chat__list__item__imgWrapper {
-    border: none;
-    border-radius: 0;
-}
-
-.container--light .chat__mobileHeader__btn {
-    filter: brightness(0.5);
-}
-
-.container--light .chat__list__item__name {
-    color: #707070;
-    font-weight: 400;
-}
-
-.container--light .chat__message--left .chat__message__header__name,
-.container--light .chat__message--left .chat__message__header__date span,
-.container--light .chat__message--left .chat__message__content {
-    color: #fff;
 }
 
 .messageMenu__list__item__header {
@@ -863,20 +841,16 @@ ul {
     z-index: 3;
 }
 
-.container--dark .loginBox::before {
+.container .loginBox::before {
     border-bottom-color: #313131;
 }
 
-.container--dark .loginBox {
+.container .loginBox {
     background: #313131;
 }
 
-.container--dark .loginBox__passwordRemindLink {
-    color: #d4d4d4;
-}
-
-.container--dark .loginBox__or,
-.container--dark .loginBox__passwordRemindLink:hover {
+.container .loginBox__or,
+.container .loginBox__passwordRemindLink:hover {
     color: #fff;
 }
 
@@ -895,17 +869,18 @@ ul {
 .loginBox__error {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 45px;
     width: 100%;
     height: 100%;
     background: transparent;
-    padding: 10px 10px 10px 20px;
+    padding: 0;
     z-index: 6;
     color: #BC0000;
     font-style: italic;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    font-size: 12px;
 }
 
 .loginBox__form label {
@@ -959,16 +934,18 @@ ul {
 }
 
 .loginBox__passwordRemindLink {
-    color: rgba(70, 70, 70, .4);
-    font-size: 17px;
-    text-align: center;
+    font-size: 12px;
+    text-align: left;
     font-family: 'Roboto', sans-serif;
     display: block;
-    margin: 25px auto 15px;
+    margin: 0 0 15px;
+    align-self: flex-start;
+    justify-self: flex-start;
+    color: #9F9F9F;
 }
 
 .loginBox__passwordRemindLink:hover {
-    color: var(--grey);
+    color: #fff;
 }
 
 .loginBox__or {
@@ -1002,8 +979,9 @@ ul {
 
 .button--facebook, .button--google, .button--apple {
     width: 100%;
-    height: 50px;;
-    font-size: 16px;
+    max-width: 300px;
+    height: 40px;;
+    font-size: 15px;
     text-transform: uppercase;
     font-family: 'Roboto', sans-serif;
     border-radius: 4px;
@@ -1023,7 +1001,7 @@ ul {
     background: #3B5998;
     color: #fff;
     font-weight: 400;
-    margin-bottom: 20px;
+    margin: 15px 0;
 }
 
 .button--google {
@@ -1062,6 +1040,7 @@ ul {
 }
 
 /* Register */
+.chooseAccountTypeModal,
 .registerModal {
     position: fixed;
     top: 0;
@@ -1069,8 +1048,12 @@ ul {
     width: 100%;
     height: 100vh;
     background: rgba(0, 0, 0, .6);
-    z-index: 10;
+    z-index: 12;
     display: none;
+}
+
+.chooseAccountTypeModal {
+    display: block;
 }
 
 .registerModal--thirdParty {
@@ -1090,13 +1073,13 @@ ul {
 
 .registerModal__inner {
     width: 1200px;
-    height: 700px;
+    height: 600px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 30px;
-    background: #fff;
+    background: #201E1B;
     padding: 50px 70px;
 }
 
@@ -1118,8 +1101,9 @@ ul {
 .registerModal__header {
     font-family: 'Goldman', cursive;
     font-size: 50px;
+    text-align: center;
     font-weight: 500;
-    color: rgba(194, 124, 59, .8);
+    color: var(--gold);
 }
 
 .registerModal__img {
@@ -1157,11 +1141,14 @@ ul {
 }
 
 .registerForm--nextBtn {
-    width: 350px;
-    height: auto;
+    width: 250px;
+    height: 45px;
+    border-radius: 8px;
     display: block;
-    margin: 30px auto 15px;
+    margin: 25px auto 15px !important;
     opacity: .9;
+    font-size: 20px;
+    color: #fff;
 }
 
 .registerForm--nextBtn:hover {
@@ -1173,12 +1160,8 @@ ul {
     height: auto;
 }
 
-.registerForm__section {
-    width: 50%;
-}
-
 .label--checkBtn {
-    display: flex;
+    display: flex !important;
     justify-content: flex-start;
     align-items: center;
     font-family: 'Roboto', sans-serif;
@@ -1193,16 +1176,20 @@ ul {
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border: 1px solid var(--grey);
+    width: 15px;
+    height: 15px;
+    border: 1px solid #534C42;
     background: transparent;
-    border-radius: 3px;
+    border-radius: 4px;
     margin-right: 15px;
     flex-basis: 12%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.registerForm__checkBtn--checked {
+    background: var(--gold);
 }
 
 .registerForm__checkBtn .registerModal__closeBtn__img {
@@ -1221,11 +1208,12 @@ ul {
 
 .registerForm__flexFields label {
     width: 48%;
+    margin-top: 0 !important;
 }
 
 .registerForm__select {
     width: 100%;
-    height: 60px;
+    height: 52px;
     font-family: 'Roboto', sans-serif;
     color: rgba(70, 70, 70, .4);
     font-size: 22px;
@@ -1258,7 +1246,7 @@ ul {
 }
 
 .registerForm__select__option:hover {
-    background: #f1f1f1;
+    background: #020202;
 }
 
 .inputDateWrapper {
@@ -1380,7 +1368,7 @@ ul {
 }
 
 .mobileMenu__btn__img--dark {
-    filter: brightness(1) invert(1);
+    filter: brightness(0) invert(1);
 }
 
 .loginMobile .loginBox {
@@ -1866,11 +1854,11 @@ ul {
     padding-bottom: 30px;
 }
 
-.container--dark .faq * {
+.container .faq * {
     color: #fff;
 }
 
-.container--dark .faq__header {
+.container .faq__header {
     color: #fff;
     background: #474747;
 }
@@ -1923,13 +1911,13 @@ ul {
     margin-bottom: 20px;
 }
 
-.container--dark .faq {
+.container .faq {
     margin-bottom: 150px;
 }
 
-.container--dark .faq__question,
-.container--dark .faq__question__main,
-.container--dark .faq__question__header {
+.container .faq__question,
+.container .faq__question__main,
+.container .faq__question__header {
     background: #474747;
 }
 
@@ -2083,8 +2071,8 @@ ul {
     width: 100%;
 }
 
-.container--dark .mapDot__btn__details,
-.container--dark .mapImg__img {
+.container .mapDot__btn__details,
+.container .mapImg__img {
     filter: brightness(.8);
 }
 
@@ -4785,10 +4773,6 @@ input::-webkit-inner-spin-button {
     font-family: 'Goldman', cursive;
 }
 
-.container--light .chat__list__item__text {
-    color: #707070;
-}
-
 .chat__main__noMessages {
     position: absolute;
     top: 40%;
@@ -4907,10 +4891,6 @@ input::-webkit-inner-spin-button {
     transform: translateY(calc(100% - 40px));
 }
 
-.container--light .chat__main__inputWrapper {
-    background: #fff;
-}
-
 .chat__main__input {
     width: 80%;
     height: 40px;
@@ -4924,10 +4904,6 @@ input::-webkit-inner-spin-button {
     border-radius: 8px;
     font-size: 16px;
     line-height: 100%;
-}
-
-.container--light .chat__main__input {
-    color: #707070;
 }
 
 .chat__main__input::placeholder {
@@ -5023,10 +4999,6 @@ input::-webkit-inner-spin-button {
     font-size: 13px;
 }
 
-.container--light .messageReadInfo {
-    color: #313131;
-}
-
 .chat__main__content {
     height: calc(80vh - 40px);
     display: flex;
@@ -5089,14 +5061,6 @@ input::-webkit-inner-spin-button {
     background: #474747;
     margin-left: 100%;
     transform: translateX(-100%);
-}
-
-.container--light .chat__message--right {
-    background: #fff;
-}
-
-.container--light .chat__message * {
-    color: #707070;
 }
 
 .chat__message--left {
@@ -5323,20 +5287,20 @@ input::-webkit-inner-spin-button {
     background: transparent;
 }
 
-.container--dark .resetPassword {
+.container .resetPassword {
     background: #313131;
 }
 
-.container--dark .resetPassword__header {
+.container .resetPassword__header {
     color: #fff;
 }
 
-.container--dark .input {
+.container .input {
     background: transparent;
     color: #fff;
 }
 
-.container--dark .input::placeholder {
+.container .input::placeholder {
     color: #d4d4d4;
 }
 
@@ -5542,7 +5506,7 @@ input::-webkit-inner-spin-button {
     height: 100%;
 }
 
-.container--dark .mapContent__clubs {
+.container .mapContent__clubs {
     background: #474747;
     border: 1px solid #707070;
     padding: 25px;
@@ -5564,6 +5528,13 @@ input::-webkit-inner-spin-button {
 .label--marketingCheckbox .registerForm__checkBtn {
     top: 0;
     transform: none;
+}
+
+.authBox .label--checkBtn {
+    color: #9F9F9F;
+    padding-left: 25px;
+    height: auto !important;
+    margin: 15px 0 0 !important;
 }
 
 .label--checkBtn a {
@@ -5670,7 +5641,7 @@ input::-webkit-inner-spin-button {
     text-decoration: underline;
 }
 
-.container--dark .pageText * {
+.container .pageText * {
     color: #fff;
 }
 
@@ -6029,16 +6000,23 @@ input::-webkit-inner-spin-button {
     margin-top: 30px;
 }
 
-.registerModal__inner {
-    background: #F5F5F5;
-}
-
 .registerModal__step0__btn {
-    width: 49%;
-    height: auto;
+    width: 31%;
+    height: 400px;
+    color: var(--gold);
+    font-size: 44px;
+    font-weight: 400;
     border-radius: 20px;
     background: transparent;
     position: relative;
+    padding: 30px;
+    border: 3px solid var(--gold);
+    transition: .2s all;
+}
+
+.registerModal__step0__btn:hover {
+    background: var(--gold);
+    color: #fff;
 }
 
 .registerModal__step0__btn__img {
@@ -6304,21 +6282,21 @@ input::-webkit-inner-spin-button {
     margin-bottom: -90px;
 }
 
-.container--dark .stuffSection{
+.container .stuffSection{
     background: #474747;
 }
 
-.container--dark .cv__date,
-.container--dark .cv__desc {
+.container .cv__date,
+.container .cv__desc {
     color: #fff;
 }
 
-.container--dark .stuff__addNewBtn,
-.container--dark .cv__btn {
+.container .stuff__addNewBtn,
+.container .cv__btn {
     display: none;
 }
 
-.container--dark .userInfoEdition--stuff {
+.container .userInfoEdition--stuff {
     margin-bottom: 0;
 }
 
@@ -6333,11 +6311,11 @@ input::-webkit-inner-spin-button {
     opacity: .8;
 }
 
-.container--dark .stuffSection {
+.container .stuffSection {
     padding-bottom: 30px;
 }
 
-.container--dark .cv {
+.container .cv {
     margin-bottom: 0;
 }
 
@@ -6774,7 +6752,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-family: 'Segoe UI', sans-serif;
 }
 
-.container--dark .text {
+.container .text {
     color: #fff;
 }
 
@@ -6808,7 +6786,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 5vh;
 }
 
-.container--dark .bigHeader__subheader {
+.container .bigHeader__subheader {
     color: #fff;
 }
 
@@ -6921,13 +6899,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition-delay: .5s;
 }
 
-.container--dark .scrollCarousel__slide__backgroundHeader {
+.container .scrollCarousel__slide__backgroundHeader {
     color: #707070;
     font-size: 210px;
     padding-top: 100px;
 }
 
-.container--dark .scrollCarousel__slide__backgroundHeader span {
+.container .scrollCarousel__slide__backgroundHeader span {
     white-space: nowrap;
 }
 
@@ -7332,4 +7310,202 @@ label.userInfoEdition__form__field {
 .homeIcon {
     width: 15px;
     margin-right: 10px;
+}
+
+.authBox {
+    position: relative;
+    z-index: 3;
+    margin-left: 10%;
+    margin-top: 50px;
+    background: #201E1B;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 480px;
+    height: auto;
+}
+
+.authBox__socialMedia {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.authBox__socialMedia .footer__col__socialMediaLink {
+    width: 18px;
+    margin-right: 2px;
+}
+
+.authBox__socialMedia .footer__col__socialMediaLink__img {
+    width: 18px;
+}
+
+.button--auth {
+    text-transform: initial;
+}
+
+.authImg {
+    width: 60%;
+    height: auto;
+    position: absolute;
+    top: -10%;
+    right: 0;
+}
+
+.authBox__header {
+    font-family: 'Goldman', cursive;
+    font-weight: 500;
+    font-size: 52px;
+    color: #fff;
+    text-align: left;
+}
+
+.authBox__subheader {
+    text-align: left;
+    color: var(--gold);
+    font-family: 'Goldman', cursive;
+    font-size: 28px;
+    margin: 0 0 20px;
+    font-weight: 400;
+}
+
+.goldman {
+    font-family: 'Goldman', cursive;
+}
+
+.authBox .loginBox__form,
+.authBox label {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+.authBox label {
+    display: block;
+    height: 52px;
+    margin-top: 8px !important;
+}
+
+.authBox label:first-of-type {
+    margin-top: 0 !important;
+}
+
+.authBox .input {
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px 5px 45px;
+    border-radius: 12px;
+    background: #534C42;
+    font-size: 14px;
+}
+
+.input--date__overlay {
+    background: #534C42;
+    color: #d4d4d4;
+    font-size: 14px;
+}
+
+.authBox .input:focus {
+    border: 1px solid #fff;
+}
+
+.authBox .input::placeholder {
+    font-size: 14px;
+}
+
+.authBox .input--password {
+    background: transparent;
+    border: 2px solid #534C42;
+}
+
+.loginBox__form > label {
+    margin-bottom: 8px;
+}
+
+.authBox label::after {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+}
+
+.loginBox__form > label:first-of-type::after {
+    content: url("../img/login.svg");
+}
+
+.loginBox__form > label:last-of-type::after {
+    content: url("../img/password.svg");
+}
+
+.registerForm__section > label:first-of-type::after {
+    content: url("../img/login.svg");
+}
+
+.registerForm__section > label::after {
+    content: url("../img/password.svg");
+}
+
+.authBox .label--checkBtn::after {
+    content: unset;
+}
+
+.button--auth {
+    color: #fff;
+    width: 250px;
+    height: 44px;
+    font-size: 15px;
+    border-radius: 8px;
+    margin: 8px 0 20px 0 !important;
+    align-self: flex-start;
+}
+
+.registerForm__flexFields label {
+    width: 49% !important;
+    margin: 0 0 10px !important;
+}
+
+.registerForm__flexFields label::after {
+    content: url("../img/login.svg");
+}
+
+.registerForm__select {
+    background: #534C42;
+    border-radius: 10px;
+    color: #fff !important;
+    padding-left: 50px;
+    margin-bottom: 8px !important;
+    border: none;
+    outline: none;
+}
+
+.registerForm__select * {
+    color: #fff !important;
+}
+
+.registerForm__select__options {
+    background: #3d3d3d;
+}
+
+.inputDateWrapper {
+    margin-top: 10px;
+}
+
+.inputDateWrapper input,
+.inputDateWrapper {
+    background: #534C42 !important;
+    border-radius: 10px;
+}
+
+.registerForm__select__options,
+.registerForm__select {
+    font-size: 14px !important;
+}
+
+.registerForm--nextBtn--last {
+    margin: 20px auto 10px !important;
 }

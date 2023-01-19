@@ -14,15 +14,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/home.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/landing-image.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/landing-img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/ChooseAccountType.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/RegisterClub.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/RegisterUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/auth-background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/login.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/static/img/password.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RegisterModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RegisterModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/RegisterPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/RegisterPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -337,7 +341,7 @@
       <workItem from="1673608993324" duration="29000" />
       <workItem from="1673695103138" duration="7447000" />
       <workItem from="1673965046625" duration="1918000" />
-      <workItem from="1674127587173" duration="5350000" />
+      <workItem from="1674127587173" duration="13681000" />
     </task>
     <servers />
   </component>
@@ -370,10 +374,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="478" y="145" width="579" height="534" key="find.popup/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1672258399155" />
-    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1674132356503">
+    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1674144906783">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674132356503" />
+    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674144906783" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1672326083394" />
   </component>
   <component name="XDebuggerManager">

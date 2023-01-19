@@ -37,7 +37,8 @@ import ukIcon from '../static/img/united-kingdom.svg'
 import arrowDownIcon from '../static/img/arrow-down-menu.svg'
 import switchIcon from '../static/img/switch.svg'
 
-const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
+const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackground,
+                    clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [loginVisible, setLoginVisible] = useState(false);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
     const [render, setRender] = useState(false);
@@ -318,7 +319,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
             });
     }
 
-    return <header className={theme === "dark" ? "siteHeader siteHeader--dark" : "siteHeader"}>
+    return <header className={mobileBackground === 'black' ? "siteHeader siteHeader--dark siteHeader--mobileDark" : "siteHeader siteHeader--dark"}>
         <ContactInfo />
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
@@ -713,23 +714,23 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, clubPage, p
                     </ul>
                 </menu> : ""}
             </section> : "") : <span className="d-desktop-flex">
-                <a className="siteHeader__btn siteHeader__btn--register"
+                <a className="siteHeader__btn siteHeader__btn--register goldman"
                                      href="/zaloz-konto">
                     {content.register}
                 </a>
-                <a className="siteHeader__btn siteHeader__btn--login siteHeader__btn--login--dark"
+                <a className="siteHeader__btn siteHeader__btn--login siteHeader__btn--login--dark goldman"
                         href="/logowanie">
                     {content.login}
                 </a>
             </span>}
 
-            {!club && !player ? <button className="languageBtn" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
-                <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
-            </button> : ""}
+            {/*{!club && !player ? <button className="languageBtn" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>*/}
+            {/*    <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />*/}
+            {/*</button> : ""}*/}
 
             {/* Mobile menu */}
             <button className="mobileMenu__btn d-mobile" onClick={() => { openMobileMenu(); }}>
-                <img className={menu === "dark" ? "mobileMenu__btn__img mobileMenu__btn__img--dark" : "mobileMenu__btn__img"} src={hamburger} alt="menu" />
+                <img className="mobileMenu__btn__img mobileMenu__btn__img--dark" src={hamburger} alt="menu" />
             </button>
 
         </section>

@@ -1,21 +1,14 @@
 import React, {useRef, useState, useEffect, useContext} from 'react'
 import closeIcon from '../static/img/close-grey.svg'
 import playerImg from '../static/img/zawodnik-rejestracja.png'
-import nextBtn from '../static/img/dalej-btn.png'
-import registerBtnIcon from '../static/img/zarejestruj-btn.png'
 import triangleDown from '../static/img/triangle-down.svg'
 import successIcon from '../static/img/success.svg'
-import loginBtn from '../static/img/zaloguj-btn.png'
 import {isMail, isPasswordStrength} from "../helpers/validation";
 import {isEmailAvailable} from "../helpers/user";
 import {registerFromThirdParty, registerUser} from "../helpers/auth";
 import DraftLoader from "./Loader";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
-import playerZone from '../static/img/strefa-zawodnika-postac.png'
-import playerZoneCaption from '../static/img/strefa-zawodnika-tekst.png'
-import coachZone from '../static/img/strefa-asystenta-postac.png'
-import coachZoneCaption from '../static/img/strefa-asystenta-napis.png'
 
 const RegisterModal = (props) => {
     const { content } = useContext(ContentContext);
