@@ -320,7 +320,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
     }
 
     return <header className={mobileBackground === 'black' ? "siteHeader siteHeader--dark siteHeader--mobileDark" : "siteHeader siteHeader--dark"}>
-        <ContactInfo />
+        {/*<ContactInfo />*/}
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>

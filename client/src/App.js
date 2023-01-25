@@ -29,6 +29,7 @@ import {getCustomFields} from "./helpers/admin";
 import LoadingPage from "./pages/LoadingPage";
 import Stuff from "./pages/Stuff";
 import "../node_modules/flag-icons/css/flag-icons.min.css";
+import Feed from "./pages/Feed";
 
 axios.defaults.headers.common['Authorization'] = AUTH_HEADER;
 
@@ -114,6 +115,9 @@ function App() {
           </Route>
           <Route path="/polityka-plikow-cookies">
               <ContentPage type={3} />
+          </Route>
+          <Route path="/tablica">
+            <Feed />
           </Route>
 
           {/* User routes */}

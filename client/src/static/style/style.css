@@ -7509,3 +7509,232 @@ label.userInfoEdition__form__field {
 .registerForm--nextBtn--last {
     margin: 20px auto 10px !important;
 }
+
+.feed {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.feed__left,
+.feed__right {
+    width: 22%;
+}
+
+.feed__header {
+    color: var(--gold);
+    font-family: 'Goldman', sans-serif;
+    margin-bottom: 20px;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.feed__left__text {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.btn--signUpOnFeed {
+    width: 100%;
+    height: 45px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.feed__main {
+    width: 48%;
+}
+
+.feed__main__top,
+.feed__item {
+    background: #242424;
+    border-radius: 13px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.feed__main__top {
+    padding: 30px;
+}
+
+.feed__main__top__header {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.feed__main .btn--signUpOnFeed {
+    max-width: 380px;
+    margin: auto;
+}
+
+.feed__item__header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px;
+}
+
+.feed__item__header__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.feed__item__header__image > .img {
+    width: 100%;
+    height: auto;
+}
+
+.feed__item__header__content {
+    margin-left: 15px;
+}
+
+.feed__item__header__content__name {
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.feed__item__header__content__date {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.feed__item__content {
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: #fff;
+    padding: 0 15px;
+}
+
+.feed__addComment__image > .img,
+.feed__item__image > .img,
+.feed__item__image {
+    width: 100%;
+    height: auto;
+}
+
+.feed__addComment {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 95%;
+    margin: 20px auto 10px;
+}
+
+.feed__addComment__image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-basis: 100%;
+    max-width: 50px;
+}
+
+.feed__addComment__input {
+    background: rgba(145, 145, 145, .55);
+    width: 100%;
+    padding: 15px 20px 0;
+    height: auto;
+    min-height: 50px;
+    border-radius: 50px;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #fff;
+}
+
+.feed__addComment__input::placeholder {
+    color: #dedede;
+}
+
+.feed__comments {
+    width: 95%;
+    margin: 20px auto 30px;
+    padding: 0 0 20px;
+    border-top: 1px solid #919191;
+}
+
+.feed__comments__item {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.feed__comments__item__content {
+    height: auto;
+    width: auto;
+    background: rgba(145, 145, 145, .35);;
+    padding: 8px 20px;
+    border-radius: 24px;
+}
+
+.feed__comments__item__content__name {
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.feed__comments__item__content__text {
+    color: #fff;
+    font-size: 14px;
+}
+
+.feed__event {
+    background: #242424;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px 15px;
+    margin-bottom: 15px;
+}
+
+.feed__event__image {
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+}
+
+.feed__event__image > .img {
+    width: 100%;
+    height: auto;
+}
+
+.feed__event__description {
+    margin-left: 15px;
+    color: #fff;
+    font-size: 12px;
+    width: calc(100% - 80px);
+}
+
+.btn--joinEvent {
+    height: 34px;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.feed {
+    margin: auto;
+    width: 85%;
+    max-width: 1600px;
+}

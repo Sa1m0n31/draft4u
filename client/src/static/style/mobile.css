@@ -358,6 +358,70 @@
         left: 28%;
     }
 
+    .feed {
+        width: 90%;
+    }
+
+    .feed__header {
+        font-size: 21px;
+        margin-bottom: 20px;
+    }
+
+    .btn--signUpOnFeed {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .feed__main__top__header {
+        font-size: 21px;
+    }
+
+    .feed__main__top .btn--signUpOnFeed {
+        max-width: 200px;
+    }
+
+    .feed__item__header__image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .feed__item__header__content__name {
+        margin-bottom: 0;
+        font-size: 15px;
+    }
+
+    .feed__event__description,
+    .feed__comments__item__content__text,
+    .feed__item__header__content__date {
+        font-size: 10px;
+    }
+
+    .feed__event__description {
+        width: calc(100% - 60px);
+        margin-left: 8px;
+    }
+
+    .feed__event__image {
+        width: 50px;
+        height: 50px;
+    }
+
+    .feed__comments__item__content {
+        padding: 8px 18px;
+    }
+
+    .feed__addComment__image {
+        width: 35px;
+        height: 35px;
+        max-width: 35px;
+    }
+
+    .feed__comments__item__content__name,
+    .feed__item__content,
+    .feed__left__text {
+        font-size: 12px;
+    }
+
     .chatImages .bigHeader {
         font-size: 36px;
         line-height: 1em;
@@ -969,6 +1033,26 @@
         display: flex !important;
     }
 
+    .feed__event {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .feed__event > * {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .feed__event__description {
+        width: 100%;
+    }
+
+    .feed__event__image {
+        margin-bottom: 10px;
+    }
+
     @media(min-width: 768px) {
         .scrollCarousel__slide--1 figure {
             display: none;
@@ -1536,11 +1620,42 @@
         display: block !important;
     }
 
+    .feed__addComment__input {
+        min-height: 23px;
+        padding: 12px 20px 0;
+        font-size: 12px;
+    }
+
+    .feed {
+        flex-direction: column;
+    }
+
+    .feed__left {
+        display: none;
+    }
+
+    .feed > * {
+        width: 100% !important;
+    }
+
     .authBox {
         background: transparent;
         width: 90%;
         margin: 20px auto 300px;
         padding: 0;
+    }
+
+    .feed__main__top,
+    .feed__item {
+        border-radius: 5px;
+    }
+
+    .feed__main__top {
+        padding: 20px;
+    }
+
+    .feed__main__top__header {
+        font-size: 17px;
     }
 
     .authBox .button--facebook,
@@ -2442,22 +2557,6 @@
     .aboutUs__subheader, .aboutUs__desc {
         position: relative;
         z-index: 6;
-    }
-
-    .footer--light--mobile {
-        background: var(--light);
-    }
-
-    .footer--light--mobile .footer__col__header {
-        color: var(--goldDark);
-    }
-
-    .footer--light--mobile .footer__col__list__item {
-        color: #000;
-    }
-
-    .footer--light--mobile .footer__col__list__item__link:hover {
-        color: var(--goldDark);
     }
 
     .player__section, .player__flex {
