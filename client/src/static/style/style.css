@@ -4798,6 +4798,15 @@ input::-webkit-inner-spin-button {
     margin: auto;
 }
 
+.noscroll::-webkit-scrollbar {
+    display: none;
+}
+
+.noscroll {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 .chat__main__input::-webkit-scrollbar,
 .chat__main__content::-webkit-scrollbar,
 .chat__list__main::-webkit-scrollbar {
@@ -5201,6 +5210,11 @@ input::-webkit-inner-spin-button {
     transition: .4s all;
     opacity: 0;
     z-index: -1;
+}
+
+.modal--event {
+    z-index: 999;
+    opacity: 1;
 }
 
 .modal__inner {
@@ -7737,4 +7751,424 @@ label.userInfoEdition__form__field {
     margin: auto;
     width: 85%;
     max-width: 1600px;
+}
+
+.feed__main__top--add {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.btn--feedTopOption {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, .6);
+    font-size: 14px;
+    height: 30px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed .dzu-dropzone::after {
+    display: none !important;
+}
+
+.feed .dzu-inputLabel,
+.feed .dzu-dropzone {
+    opacity: 1;
+    overflow: hidden;
+    color: rgba(255, 255, 255, .6);
+    font-size: 14px;
+}
+
+.feed .dzu-inputLabel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .2s all;
+}
+
+.feed .dzu-inputLabel:hover {
+    color: #fff;
+}
+
+.feed .dzu-input {
+    width: 0;
+}
+
+.btn--feedTopOption:hover,
+.feed .dzu-dropzone:hover::before {
+    color: #fff;
+}
+
+.feed .dzu-dropzone {
+    height: 30px;
+    width: 150px;
+}
+
+.feed__main__top__options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0;
+}
+
+.feed__main__top__options > .divider {
+    height: 12px;
+    width: 1px;
+    background: rgba(255, 255, 255, .6);
+    display: block;
+    margin: 0 2px;
+}
+
+.feed__main__top--add {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.feed__main__top .feed__addComment__input {
+    width: calc(100% - 60px);
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.btn--addPost {
+    margin-top: 15px;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 19px;
+}
+
+.feed__addComment__image--main {
+    width: 55px;
+    height: 55px;
+}
+
+input.btn--feedTopOption {
+    opacity: 0;
+    position: relative;
+}
+
+input.btn--feedTopOption::before {
+    content: "Zdjęcie";
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, .6);
+}
+
+.imageInputWrapper input {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+.imageInputWrapper {
+    height: 30px;
+    cursor: pointer;
+}
+
+.feed__main__top__image {
+    margin-top: 25px;
+    position: relative;
+}
+
+.feed__main__top__image,
+.feed__main__top__image .img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.btn--remove {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: red;
+    color: #fff;
+    font-weight: 700;
+    font-size: 21px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn--modalClose {
+    background: transparent;
+    font-size: 28px;
+    top: 20px;
+    right: 20px;
+}
+
+.modal--event .modal__inner {
+    background: #201E1B;
+    width: 1080px;
+    height: 590px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 15px;
+    border: 3px solid #FFFFFF63;
+}
+
+.modal__header--event {
+    font-weight: 400;
+    font-size: 64px;
+    margin-bottom: 30px;
+}
+
+.input--event {
+    padding: 5px 15px;
+    font-size: 17px;
+    width: 100%;
+    height: 60px;
+    border-radius: 12px;
+    border: 2px solid #534C42;
+}
+
+.input--event--description {
+    background: transparent;
+    resize: none;
+    height: 160px;
+    padding-top: 15px;
+}
+
+.modal__inner__fields {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.btn--addEvent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 18px;
+    margin: 20px auto 0;
+}
+
+.input--event--title {
+    background: #534C42 !important;
+}
+
+.calendarWrapper {
+    border: 2px solid #534C42;
+    border-radius: 12px;
+    background: transparent;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 31%;
+    height: 60px;
+}
+
+.calendarWrapper > .input::placeholder,
+.calendarWrapper > span {
+    color: rgba(159, 159, 159, .8);
+    font-size: 14px;
+}
+
+.calendarWrapper > .input,
+.calendarWrapper > span > span {
+    color: #fff;
+    font-size: 14px;
+}
+
+.btn--openCalendar {
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn--openCalendar .img {
+    width: 100%;
+}
+
+.calendarWrapper > .input {
+    background: transparent;
+    width: 70%;
+    border: none;
+    outline: none;
+}
+
+.modal__inner > .checkImg {
+    width: 150px;
+    height: auto;
+    margin: 0 auto 40px;
+    filter: invert(100%) sepia(30%) saturate(4783%) hue-rotate(311deg) brightness(91%) contrast(95%);
+}
+
+.modal__inner--after {
+    justify-content: center !important;
+}
+
+.modal__inner__header--addEvent {
+    font-size: 36px;
+    text-align: center;
+    margin: 10px auto 30px;
+    color: #fff;
+}
+
+.calendarModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    background: rgba(0, 0, 0, .4);
+}
+
+/* CALENDAR */
+.react-calendar {
+    width: 400px;
+    max-width: 100%;
+    background-color: #201E1B;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+    opacity: .4;
+}
+
+.react-calendar * {
+    color: #fff !important;
+}
+
+.react-calendar__navigation button {
+    color: var(--gold);
+    min-width: 44px;
+    background: none;
+    font-size: 16px;
+    margin-top: 8px;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: black;
+}
+.react-calendar__navigation button[disabled] {
+    background-color: black;
+}
+abbr[title] {
+    text-decoration: none;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: #313131;
+    color: #fff;
+    border-radius: 6px;
+}
+.react-calendar__tile--now {
+    background: #6f48eb33;
+    border-radius: 6px;
+    font-weight: bold;
+    color: var(--gold);
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: #6f48eb33;
+    border-radius: 6px;
+    font-weight: bold;
+    color: var(--gold);
+}
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+    background: #f8f8fa;
+}
+.react-calendar__tile--active {
+    background: var(--gold);
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: var(--gold);
+    color: white;
+}
+.react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: var(--gold);
+}
+.react-calendar__tile--range {
+    background: #f8f8fa;
+    color: var(--gold);
+    border-radius: 0;
+}
+.react-calendar__tile--rangeStart {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background: var(--gold);
+    color: white;
+}
+.react-calendar__tile--rangeEnd {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background: var(--gold);
+    color: white;
+}
+
+/* END CALENDAR */
+
+.btn--event:disabled {
+    opacity: .5;
+    cursor: default !important;
+    pointer-events: none;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addPostInfo {
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0;
+}
+
+.addPostInfo--negative {
+    color: red;
 }

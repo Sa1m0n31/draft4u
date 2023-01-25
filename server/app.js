@@ -314,6 +314,8 @@ const leagueRouter = require("./routers/league");
 const adminRouter = require("./routers/admin");
 const paymentRouter = require("./routers/payment");
 const chatRouter = require("./routers/chat");
+const postRouter = require('./routers/post');
+const eventRouter = require('./routers/event');
 
 app.use("/auth", authRouter);
 app.use("/image", imageRouter); // only / not restricted (display image)
@@ -332,6 +334,8 @@ app.use("/league", basicAuth, leagueRouter);
 app.use("/admin", basicAuth, adminRouter);
 app.use("/payment", paymentRouter);
 app.use("/chat", basicAuth, chatRouter);
+app.use('/post', postRouter);
+app.use('/event', eventRouter);
 
 server.listen(5000, () => {
     console.log('start listening on port 5000....');

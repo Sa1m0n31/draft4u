@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import 'react-calendar/dist/Calendar.css';
 import './static/style/style.css'
 import './static/style/mobile.css'
 import './static/style/admin.css'

@@ -8,7 +8,7 @@ const basicAuth = new apiAuth().basicAuth;
 router.get('/get', (request, response) => {
     const postsPerPage = parseInt(process.env.POSTS_PER_PAGE);
     const { page } = request.query;
-    const query = `SELECT * FROM events LIMIT $1 OFFSET $2`;
+    const query = `SELECT * FROM events WHERE event_date > NOW() LIMIT $1 OFFSET $2 ORDER BY event_date DESC`;
     const values = [postsPerPage, page * postsPerPage];
 
     db.query(query, values, (err, res) => {
@@ -56,10 +56,10 @@ router.get('/get-events-by-club', (request, response) => {
 });
 
 router.post("/add", basicAuth, (request, response) => {
-    const { clubId, title, expireDate, eventDate, description } = request.body;
+    const { clubId, title, expireDate, eventDate, eventHour, description } = request.body;
 
-    const query = `INSERT INTO events VALUES (nextval('posts_id_sequence'), $1, $2, $3, $4, $5)`;
-    const values = [clubId, title, expireDate, eventDate, description];
+    const query = `INSERT INTO events VALUES (nextval('posts_id_sequence'), $1, $2, $3, $4, $5, $6)`;
+    const values = [title, expireDate, eventDate, eventHour, description, clubId];
     db.query(query, values,(err, res) => {
         if(res) {
             response.send({

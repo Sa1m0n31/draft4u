@@ -11,6 +11,8 @@ router.get("/get-all", (request, response) => {
    const query = 'SELECT * FROM content WHERE LOWER(language) = LOWER($1)';
    const values = [lang];
    db.query(query, values, (err, res) => {
+       console.log(res);
+       console.log(err);
       if(res) sendResposne(response, res.rows);
       else sendResposne(response, 0);
    });

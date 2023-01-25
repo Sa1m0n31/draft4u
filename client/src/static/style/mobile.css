@@ -617,6 +617,32 @@
         padding: 40px 0;
     }
 
+    .modal--event .modal__inner {
+        width: 85%;
+        height: auto;
+    }
+
+    .modal__header--event {
+        font-size: 42px;
+        margin-bottom: 25px;
+    }
+
+    .calendarWrapper,
+    .input--event {
+        height: 50px;
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+
+    .btn--addEvent {
+        width: 300px;
+        font-size: 17px;
+    }
+
+    .input--event--description {
+        height: 140px;
+    }
+
     .authImg {
         top: 10%;
     }
@@ -1618,6 +1644,59 @@
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
+    }
+
+    .react-calendar {
+        max-width: 90%;
+    }
+
+    .react-calendar__month-view__weekdays__weekday {
+        font-size: 10px;
+    }
+
+    .modal--event .modal__inner {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        padding: 40px 15px;
+    }
+
+    .calendarWrapper,
+    .input--event {
+        height: 40px;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-size: 13px !important;
+    }
+
+    .btn--openCalendar {
+        width: 15px;
+        height: 15px;
+    }
+
+    .input--event--description {
+        height: 120px;
+    }
+
+    .modal__header--event {
+        font-size: 24px !important;
+    }
+
+    .modal__inner__fields {
+        flex-direction: column;
+    }
+
+    .calendarWrapper {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .calendarWrapper:last-of-type {
+        margin-bottom: 0;
     }
 
     .feed__addComment__input {

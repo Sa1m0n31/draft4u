@@ -71,7 +71,7 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
 
     const insertPost = (userId, clubId, content, imageId) => {
         const query = `INSERT INTO posts VALUES (nextval('posts_id_sequence'), $1, $2, NOW(), $3, $4)`;
-        const values = [userId, clubId, content, imageId];
+        const values = [isNaN(userId) ? null : userId, clubId, content, imageId];
         db.query(query, values,(err, res) => {
             if(res) {
                 response.send({
@@ -98,9 +98,12 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         db.query(query, values, (err, res) => {
             if(res) {
                 if(res.rows) {
+                    console.log('insert image');
                     insertPost(userId, clubId, content, res.rows[0].id);
                 }
                 else {
+                    console.log('error in image');
+                    console.log(err);
                     response.send({
                         result: 0
                     });

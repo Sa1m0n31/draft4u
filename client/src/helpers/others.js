@@ -42,6 +42,11 @@ const isElementInArray = (arr, el) => {
     }) !== -1;
 }
 
+const addTrailingZero = (n) => {
+    if(n > 9) return n;
+    else return `0${n}`;
+}
+
 const countriesEn = {
     "AF": "Afghanistan",
     "AL": "Albania",
@@ -550,4 +555,4 @@ const getDateForInput = (d) => {
 export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById,
     countriesEn, countriesPl,
     getMessagePreview, getUniqueListBy, getDate, getNotificationsNumber, convertStringToURL,
-    getImageUrl, getDateForInput }
+    addTrailingZero, getImageUrl, getDateForInput }
