@@ -1,5 +1,5 @@
 import React from 'react';
-import checkIcon from '../static/img/check.svg';
+import checkIcon from '../static/img/check-gold.svg';
 
 const AfterAddEvent = ({closeModal}) => {
     return <div className="modal__inner modal__inner--after">

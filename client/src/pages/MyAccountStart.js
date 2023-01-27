@@ -35,10 +35,10 @@ const MyAccountStart = ({user, isLocal}) => {
         <MyAccountStartHeader fullName={fullName} image={user.file_path} />
         {!doubleAccount ? <AddAccountTypeSection /> : ''}
         <BlogSection />
-        <ClubActivities />
-        <MyAccountStartBottom userId={user.id} />
+        <ClubActivities userId={user?.id} />
+        {/*<MyAccountStartBottom userId={user.id} />*/}
 
-        <Footer theme="light" border={true} />
+        <Footer border={true} />
     </div>
 }
 

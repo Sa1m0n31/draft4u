@@ -74,8 +74,8 @@ const VideoUploader = ({setVideoUpload, videoUpload, closeUploader, userId, play
                     <h4 className="videoUploader__smallText">
                         {content.add_video_text2}
                     </h4>
-                    <button className="button button--hover button--videoUploader">
-                        <img className="btn__img" src={getImageUrl(content.img17)} alt="wybierz-plik" />
+                    <button className="button button--hover button--videoUploader btn--gradient btn--hover center goldman btn--addFile">
+                        Wybierz plik
                     </button>
                 </> : <h4 className="videoUploader__text">
                     {content.video_to_large}

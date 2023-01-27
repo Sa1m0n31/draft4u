@@ -38,7 +38,8 @@ const RegisterPage = () => {
                 Twojego konta
             </h2>
 
-            {accountType === 0 ? <RegisterUser type={0} /> : (accountType === 1 ? <RegisterUser type={1} /> : <RegisterClub />)}
+            {accountType === 0 ? <RegisterUser type={0} /> :
+                (accountType === 1 ? <RegisterUser type={1} /> : <RegisterClub />)}
         </div>
 
         <img className="authImg" src={authBackground} alt="tlo" />

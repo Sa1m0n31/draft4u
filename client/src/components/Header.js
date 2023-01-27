@@ -8,7 +8,6 @@ import RegisterModal from "./RegisterModal";
 import loginIcon from '../static/img/log-in.svg'
 import registerIcon from '../static/img/register.svg'
 import envelope from '../static/img/envelope.svg'
-import bell from '../static/img/bell.svg'
 import envelopeGold from '../static/img/envelope-gold.svg'
 import bellGold from '../static/img/bell-gold.svg'
 import padlock from '../static/img/padlock.svg'
@@ -237,24 +236,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
         }
     }
 
-    const toggleLogin = () => {
-        if(loginVisible) {
-            loginBoxWrapper.current.style.display = "none";
-            setLoginVisible(false);
-        }
-        else {
-            loginBoxWrapper.current.style.display = "block";
-            setLoginVisible(true);
-        }
-    }
-
-    const openRegisterModal = () => {
-        loginBoxWrapper.current.style.display = "none";
-        setLoginVisible(false);
-
-        registerModal.current.style.display = "block";
-    }
-
     const openMobileMenu = () => {
         mobileMenu.current.style.transform = "scaleX(1)";
         setTimeout(() => {
@@ -305,13 +286,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
         }
     }
 
-    const addNotificationToRead = (id) => {
-        readNotification(id)
-            .then((res) => {
-                setUpdateNotifications(!updateNotifications);
-            });
-    }
-
     const readAllNotificationsWrapper = () => {
         readAllNotifications()
             .then((res) => {
@@ -320,7 +294,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
     }
 
     return <header className={mobileBackground === 'black' ? "siteHeader siteHeader--dark siteHeader--mobileDark" : "siteHeader siteHeader--dark"}>
-        {/*<ContactInfo />*/}
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>
@@ -598,7 +571,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
         <section className="siteHeader__content">
             {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
                 <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(0); readAllNotificationsWrapper(); }}>
-                    <img className="siteHeader__player__btn__img" src={club || newNotifications || window.innerWidth < 768 ? bellGold : bell} alt="powiadomienia" />
+                    <img className="siteHeader__player__btn__img" src={club || newNotifications || window.innerWidth < 768 ? bellGold : bellGold} alt="powiadomienia" />
                     {newNotifications > 0 ? <span className="button__circle">
                         {newNotifications}
                     </span> : ""}
@@ -633,7 +606,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
                 </menu> : ""}
 
                 <button className="siteHeader__player__btn" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(1); }}>
-                    <img className={!newMessages && window.innerWidth > 768 ? "siteHeader__player__btn__img img--envelope" : "siteHeader__player__btn__img"} src={club || newMessages || window.innerWidth < 768 ? envelopeGold : envelope} alt="wiadomosci" />
+                    <img className={!newMessages && window.innerWidth > 768 ? "siteHeader__player__btn__img img--envelope" : "siteHeader__player__btn__img"} src={club || newMessages || window.innerWidth < 768 ? envelopeGold : envelopeGold} alt="wiadomosci" />
                     {newMessages > 0 ? <span className="button__circle">
                         {newMessages}
                     </span> : ""}

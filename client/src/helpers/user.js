@@ -352,6 +352,20 @@ const getSecondAccountData = () => {
     });
 }
 
+const getUserToClubNotifications = (userId) => {
+    return axios.get(`${API_URL}/user/get-user-to-clubs-notifications`, {
+        params: {
+            id: userId
+        }
+    });
+}
+
+const sendUserToClubNotification = (userId, clubId) => {
+    return axios.post(`${API_URL}/user/send-user-to-club-notification`, {
+        userId, clubId
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail, updateUserExperience,
     updateUserClub, updateUserSalary, updateUserBirthday,
@@ -361,5 +375,5 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     getUserById, getUserFavorites, getUserVisited,
     getIdentityById, resetPassword, updateUserCountry,
     addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition,
-    isUserWithTwoAccounts, getSecondAccountData
+    isUserWithTwoAccounts, getSecondAccountData, sendUserToClubNotification, getUserToClubNotifications
 }

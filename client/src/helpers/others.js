@@ -524,7 +524,12 @@ const getMessagePreview = (content) => {
 }
 
 const getUniqueListBy = (arr, key) => {
-    return [...new Map(arr.map(item => [item[key], item])).values()]
+    if(arr?.length) {
+        return [...new Map(arr.map(item => [item[key], item])).values()];
+    }
+    else {
+        return [];
+    }
 }
 
 const getNotificationsNumber = (n) => {
@@ -552,7 +557,12 @@ const getDateForInput = (d) => {
     else return null;
 }
 
+const getPostDate = (dateString) => {
+    const postDate = new Date(dateString);
+    return `${addTrailingZero(postDate.getDate())}.${addTrailingZero(postDate.getMonth()+1)}.${postDate.getFullYear()}`;
+}
+
 export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById,
     countriesEn, countriesPl,
     getMessagePreview, getUniqueListBy, getDate, getNotificationsNumber, convertStringToURL,
-    addTrailingZero, getImageUrl, getDateForInput }
+    addTrailingZero, getImageUrl, getDateForInput, getPostDate }

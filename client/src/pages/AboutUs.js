@@ -52,6 +52,7 @@ const AboutUs = () => {
         if(content) {
             setPlayer1({
                 id: 1,
+                name: 'Michał Makowski',
                 caption: michalCaption,
                 img: michalImg,
                 subheader: content.about_us_michal_1,
@@ -60,6 +61,7 @@ const AboutUs = () => {
             });
             setPlayer2({
                 id: 2,
+                name: 'Bartosz Cedzyński',
                 caption: bartekCaption,
                 img: bartekImg,
                 subheader: content.about_us_bartosz_2,
@@ -88,17 +90,17 @@ const AboutUs = () => {
         /* Animation */
         if(!mobile || window.innerWidth < 768) {
             const images = document.querySelector(".aboutUs__images");
-            const captionWrapper = document.querySelector(".aboutUs__captionWrapper");
+            const name = document.querySelector('.aboutUs__playerName');
             const subheader = document.querySelector(".aboutUs__subheader");
             const description = document.querySelector(".aboutUs__desc");
 
             images.style.opacity = "0";
-            captionWrapper.style.opacity = "0";
+            name.style.opacity = "0";
             subheader.style.opacity = "0";
             description.style.opacity = "0";
 
             setTimeout(() => {
-                captionWrapper.style.transform = 'translateX(-100px)';
+                name.style.transform = 'translateX(-100px)';
                 subheader.style.transform = 'translateX(-100px)';
                 description.style.transform = 'translateX(-100px)';
             }, 200);
@@ -128,12 +130,12 @@ const AboutUs = () => {
                         bartekForeground.current.style.display = 'none';
                     }
 
-                    captionWrapper.style.transform = 'none';
+                    name.style.transform = 'none';
                     subheader.style.transform = 'none';
                     description.style.transform = 'none';
 
                     images.style.opacity = "1";
-                    captionWrapper.style.opacity = "1";
+                    name.style.opacity = "1";
                     subheader.style.opacity = "1";
                     description.style.opacity = "1";
                 }, 50);
@@ -152,18 +154,15 @@ const AboutUs = () => {
                          onTouchStart={(e) => { handleTouchStart(e); }}
                          onTouchMove={(e) => { handleTouchMove(e); }}
                 >
-                    <h2 className="aboutUs__header d-desktop">
-                        {content.about_us_header}
+                    <h2 className="aboutUs__playerName goldman">
+                        {foregroundPlayer.name}
                     </h2>
-                    <figure className="aboutUs__captionWrapper">
-                        <img className="aboutUs__caption" src={foregroundPlayer.caption} alt="nazwisko-zawodnika" />
-                    </figure>
 
                     <h3 className="aboutUs__subheader">
                         {foregroundPlayer.id === 1 ? <>
-                            {foregroundPlayer.subheader} <span className="aboutUs__quote">{foregroundPlayer.quote}</span>
+                            {foregroundPlayer.subheader} <span className="aboutUs__quote goldman">{foregroundPlayer.quote}</span>
                         </> : <>
-                            <span className="aboutUs__quote">{foregroundPlayer.quote}</span> {foregroundPlayer.subheader}
+                            <span className="aboutUs__quote goldman">{foregroundPlayer.quote}</span> {foregroundPlayer.subheader}
                         </>}
                     </h3>
 

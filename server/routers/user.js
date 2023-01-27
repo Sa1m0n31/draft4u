@@ -714,4 +714,75 @@ router.get('/second-account-data', (request, response) => {
     });
 });
 
+router.get('/get-user-to-clubs-notifications', (request, response) => {
+    const id = request.query.id;
+
+    const query = `SELECT * FROM users_to_clubs_notifications WHERE user_id = $1`;
+    const values = [id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            response.send({
+                result: res.rows
+            });
+        }
+        else {
+            response.send({
+                result: []
+            });
+        }
+    });
+})
+
+router.post('/send-user-to-club-notification', (request, response) => {
+   const { userId, clubId } = request.body;
+
+   const query = `SELECT * FROM users WHERE id = $1`;
+   const values = [userId];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          const userFullName = `${res.rows[0]?.first_name} ${res.rows[0]?.last_name}`;
+
+          const query = `INSERT INTO users_to_clubs_notifications VALUES ($1, $2, NOW())`;
+          const values = [userId, clubId];
+
+          db.query(query, values, (err, res) => {
+              if(res) {
+                  // Send notificaiton to club
+                  const query = `INSERT INTO notifications VALUES (nextval('notifications_id_sequence'), NULL, $1, $2, $3, NOW()) RETURNING id`;
+                  const values = [`${userFullName} jest zainteresowany grą w Twoim klubie! Kliknij, by przejść na jego profil`,
+                      `https//draft4u.com.pl/zawodnik?id=${userId}`,
+                      'Nowy zawodnik wysłał do Ciebie swoje CV'];
+
+                  db.query(query, values, (err, res) => {
+                      if(res) {
+                          const notificationId = res.rows[0].id;
+
+                          const query = `INSERT INTO notifications_receivers VALUES ($1, $2, false)`;
+                          const values = [notificationId, clubId];
+
+                          db.query(query, values, (err, res) => {
+                              response.send({
+                                  result: 1
+                              });
+                          });
+                      }
+                  });
+              }
+              else {
+                  response.send({
+                      result: 1
+                  });
+              }
+          });
+      }
+      else {
+          response.send({
+              result: 1
+          });
+      }
+   });
+});
+
 module.exports = router;

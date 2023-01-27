@@ -17,12 +17,8 @@ const deleteEvent = (id) => {
     });
 }
 
-const getCurrentEvents = (page) => {
-    return axios.get(`${API_URL}/event/get`, {
-        params: {
-            page
-        }
-    });
+const getCurrentEvents = () => {
+    return axios.get(`${API_URL}/event/get`);
 }
 
 const getEventsByClub = (id) => {
@@ -45,5 +41,13 @@ const acceptEventEntry = (eventId, userId) => {
     });
 }
 
+const getUserEntries = (userId) => {
+    return axios.get(`${API_URL}/event/get-user-entries`, {
+        params: {
+            id: userId
+        }
+    });
+}
+
 export { addEvent, getCurrentEvents, deleteEvent, getEventsByClub,
-    addEventEntry, acceptEventEntry }
+    addEventEntry, acceptEventEntry, getUserEntries }

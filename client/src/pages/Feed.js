@@ -7,9 +7,13 @@ import {getClubData} from "../helpers/club";
 import {getUserData} from "../helpers/user";
 import profilePictureExample from '../static/img/profile.png'
 import SinglePost from "../components/SinglePost";
-import {addPost} from "../helpers/post";
+import {addPost, getPosts} from "../helpers/post";
 import EventEditionModal from "../components/EventEditionModal";
 import DraftLoader from "../components/Loader";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {getCurrentEvents, getUserEntries} from "../helpers/event";
+import settings from "../settings";
+import EventInfoModal from "../components/EventInfoModal";
 
 const Feed = () => {
     const { content } = useContext(ContentContext);
@@ -17,20 +21,40 @@ const Feed = () => {
     let postContentTextarea = useRef(null);
 
     const [loaded, setLoaded] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(true); // TODO
-    const [isClub, setIsClub] = useState(true);
-    const [isPlayer, setIsPlayer] = useState(false);
-    const [user, setUser] = useState(null); // TODO
-    const [club, setClub] = useState(5); // TODO
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [isClub, setIsClub] = useState(false);
+    const [isPlayer, setIsPlayer] = useState(true);
+    const [user, setUser] = useState(null); // 20231
+    const [club, setClub] = useState(null); // 'b2fea7ae-a9cf-419f-b473-1709c1d2a930'
     const [eventEditionModalVisible, setEventEditionModalVisible] = useState(false);
-    const [feedItems, setFeedItems] = useState([1, 2, 3]);
+    const [eventInfoModalId, setEventInfoModalId] = useState(0);
+    const [feedItems, setFeedItems] = useState([]);
     const [postContent, setPostContent] = useState('');
     const [postImage, setPostImage] = useState(null);
     const [postImageUrl, setPostImageUrl] = useState('');
     const [status, setStatus] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(0);
+    const [clubEvents, setClubEvents] = useState([]);
+    const [userEntries, setUserEntries] = useState([]);
 
     useEffect(() => {
+        getCurrentEvents()
+            .then((res) => {
+                if(res?.data?.result) {
+                    setClubEvents(res.data.result);
+                }
+            });
+
+        getPosts(0)
+            .then((res) => {
+                if(res?.data?.result) {
+                    setFeedItems(res.data.result);
+                    setPage(1);
+                }
+            });
+
         isLoggedIn()
             .then(res => {
                 if(res?.data?.result) {
@@ -55,6 +79,17 @@ const Feed = () => {
                 setLoaded(true);
             })
     },[]);
+
+    useEffect(() => {
+        if(user) {
+            getUserEntries(user)
+                .then((res) => {
+                    if(res?.data?.result) {
+                        setUserEntries(res.data.result.map((item) => (item.event_id)));
+                    }
+                });
+        }
+    }, [user]);
 
     function textAreaAdjust() {
         postContentTextarea.current.style.height = "1px";
@@ -101,13 +136,38 @@ const Feed = () => {
         }
     }, [status]);
 
+    const fetchFeedItems = async () => {
+        if(feedItems.length) {
+            const newPostsResponse = await getPosts(page);
+            const newPosts = newPostsResponse.data.result;
+
+            if(newPosts.length) {
+                await setFeedItems(prevState => ([...prevState, ...newPosts]));
+            }
+            else {
+                await setHasMore(false);
+            }
+            await setPage(prevState => (prevState+1));
+        }
+    }
+
+    const getEventById = (id) => {
+        return clubEvents.find((item) => (item.id === id));
+    }
+
     return <div className="container container--light">
         <Header loggedIn={loggedIn} player={isPlayer} club={isClub}
                 menu="dark"
                 mobileBackground="black"
                 profileImage={club ? club.file_path : (user ? user.file_path : null)} />
 
-        {eventEditionModalVisible ? <EventEditionModal closeModal={() => { setEventEditionModalVisible(false); }} /> : ''}
+        {eventEditionModalVisible ? <EventEditionModal closeModal={() => { setEventEditionModalVisible(false); }}
+                                                       clubId={club} /> : ''}
+
+        {eventInfoModalId ? <EventInfoModal closeModal={() => { setEventInfoModalId(0); }}
+                                            userId={user}
+                                            entryDisabled={!userEntries.includes(eventInfoModalId)}
+                                            event={getEventById(eventInfoModalId)} /> : ''}
 
         <main className="feed">
             <div className="feed__left">
@@ -120,7 +180,7 @@ const Feed = () => {
                     aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
                 </p>
 
-                <a href="/rejestracja" className="btn btn--gradient goldman btn--signUpOnFeed">
+                <a href="/zaloz-konto" className="btn btn--gradient goldman btn--signUpOnFeed">
                     {content.register}
                 </a>
             </div>
@@ -130,7 +190,7 @@ const Feed = () => {
                     <h2 className="feed__main__top__header goldman">
                         Chcesz pisać posty i komentować?
                     </h2>
-                    <a href="/rejestracja" className="btn btn--gradient goldman btn--signUpOnFeed">
+                    <a href="/zaloz-konto" className="btn btn--gradient goldman btn--signUpOnFeed">
                         {content.register}
                     </a>
                 </div> : <div className="feed__main__top feed__main__top--add">
@@ -184,13 +244,25 @@ const Feed = () => {
                 </div>}
 
                 {/* ACTUAL FEED */}
-                {feedItems.map((item, index) => {
-                    return <SinglePost key={index}
-                                       user={user}
-                                       club={club}
-                                       loggedIn={loggedIn}
-                                       post={item} />
-                })}
+                <InfiniteScroll
+                    dataLength={feedItems?.length ? feedItems.length : 2}
+                    next={fetchFeedItems}
+                    hasMore={hasMore}
+                    loader={<div className="center">
+                        <DraftLoader />
+                    </div>}
+                    endMessage={<span></span>}
+                >
+
+                    {feedItems.map((item, index) => {
+                        return <SinglePost key={index}
+                                           user={user}
+                                           club={club}
+                                           loggedIn={loggedIn}
+                                           post={item} />
+                    })}
+
+                </InfiniteScroll>
             </div>
 
             <div className="feed__right">
@@ -198,17 +270,22 @@ const Feed = () => {
                     Wydarzenia klubowe
                 </h3>
 
-                {[1, 2, 3].map((item, index) => {
-                    return <div className="feed__event" key={index}>
+                {clubEvents.map((item, index) => {
+                    return <div className="feed__event"
+                                key={index}>
                         <figure className="feed__event__image">
-                            <img className="img" src={profilePictureExample} alt="logo" />
+                            <img className="img" src={item.club_logo ? `${settings.API_URL}/image?url=/media/clubs/${item.club_logo}` : profilePictureExample} alt="logo" />
                         </figure>
                         <p className="feed__event__description">
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labo
+                            {item.description}
                         </p>
-                        <button className="btn btn--joinEvent btn--gradient goldman">
+                        {user && !userEntries.includes(item.id) ? <button className="btn btn--joinEvent btn--gradient goldman"
+                                                                          onClick={() => { setEventInfoModalId(item.id); }}>
                             Dołącz
-                        </button>
+                        </button> : (user ? <button className="btn btn--joinEvent btn--gradient goldman"
+                                                    onClick={() => { setEventInfoModalId(item.id); }}>
+                            Szczegóły
+                        </button> : '')}
                     </div>
                 })}
             </div>

@@ -169,4 +169,13 @@ const activateClub = (id) => {
     });
 }
 
-export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub, getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight, getClubById, getLeagues, addClub, updateClub, changeClubPasswordFromAdminPanel, changeClubPassword, sendClubForm, activateClub }
+const registerClub = (name, login, password, email, city) => {
+    return axios.post(`${API_URL}/club/register`, {
+        name, login, password, email, city
+    });
+}
+
+export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub,
+    getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight,
+    getClubById, registerClub, getLeagues, addClub, updateClub,
+    changeClubPasswordFromAdminPanel, changeClubPassword, sendClubForm, activateClub }

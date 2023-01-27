@@ -1,9 +1,8 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import UserInfoEdition from "../components/UserInfoEdition";
 import PlayerInfoEdition from "../components/PlayerInfoEdition";
-import ClubSlider from "../components/ClubSlider";
 import PlayerVideoView from "../components/PlayerVideosView";
 import {StuffContext} from "../App";
 import StuffInfoEdition from "../components/StuffInfoEdition";
@@ -19,9 +18,8 @@ const PlayerProfileEdition = ({user, isLocal}) => {
             <PlayerInfoEdition player={user} />
             <PlayerVideoView id={user.id} />
         </> : <StuffInfoEdition id={user.identity} />}
-        <ClubSlider />
 
-        <Footer theme="light" border={true} />
+        <Footer border={true} />
     </div>
 }
 

@@ -79,8 +79,8 @@ const PlayerVideoView = ({id, club}) => {
             </a> : ""}
         </main> : ""}
         <section className={videos.length ? "playerVideoView__btnWrapper" : "playerVideoView__btnWrapper--center"}>
-            {!club ? <a className="button button--hover playerVideoView__btn" href="/dodaj-video">
-                <img className="btn__img" src={getImageUrl(content.img16)} alt="wgraj-filmiki" />
+            {!club ? <a className="button button--hover playerVideoView__btn btn--hover btn--gradient goldman center btn--addVideo" href="/dodaj-video">
+                Wgraj filmik
             </a> : ""}
         </section>
     </section>

@@ -228,8 +228,6 @@ ul {
 }
 
 .siteHeader__player {
-    background: #fff;
-    border-radius: 8px;
     padding: 15px;
     height: 70px;
     margin-left: 30px;
@@ -250,6 +248,10 @@ ul {
     align-items: center;
     margin: 0 15px;
     position: relative;
+}
+
+header > section.siteHeader__content > section > button:nth-of-type(2) {
+    margin-top: -10px;
 }
 
 .siteHeader__player__btn__img {
@@ -280,11 +282,12 @@ ul {
 .profileMenu {
     position: absolute;
     bottom: -10px;
-    right: 0;
+    right: 29px;
     transform: translate(0, 100%);
     background: #fff;
     width: 200px;
     padding: 15px 0;
+    background: #3d3d3d;
 }
 
 .profileMenu::before {
@@ -298,7 +301,7 @@ ul {
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
-    border-bottom: 20px solid #fff;
+    border-bottom: 20px solid #3d3d3d;;
     background: transparent;
     z-index: 3;
 }
@@ -328,10 +331,11 @@ ul {
     width: 100%;
     font-size: 16px;
     transition: .2s all;
+    color: #fff;
 }
 
 .profileMenu__list__link:hover {
-    background: #f1f1f1;
+    background: #313131;
 }
 
 .profileMenu--club .profileMenu__list__link {
@@ -397,6 +401,7 @@ ul {
 }
 
 .emptyMenu {
+    color: #fff;
     width: 100%;
     height: 100px;
     display: flex;
@@ -417,14 +422,14 @@ ul {
 }
 
 .profileMenu--messages {
-    right: 50px;
+    right: 70px;
     width: 380px;
     padding-top: 0;
     padding-bottom: 0;
 }
 
 .profileMenu--notifications {
-    right: 105px;
+    right: 135px;
 }
 
 .messageMenu__list__item__header {
@@ -489,11 +494,11 @@ ul {
 }
 
 .messageMenu__bottom--player {
-    color: #3d3d3d;
+    color: #fff;
 }
 
 .messageMenu__bottom--player:hover {
-    background: #efefef;
+    background: #212121;
 }
 
 .messageMenu__bottom__img {
@@ -501,7 +506,7 @@ ul {
 }
 
 .messageMenu__list__item__header--player {
-    color: #3d3d3d;
+    color: #fff;
 }
 
 /* Landing page */
@@ -841,10 +846,6 @@ ul {
     z-index: 3;
 }
 
-.container .loginBox::before {
-    border-bottom-color: #313131;
-}
-
 .container .loginBox {
     background: #313131;
 }
@@ -1096,6 +1097,7 @@ ul {
 .registerModal__closeBtn__img {
     width: 100%;
     height: auto;
+    filter: brightness(0) invert(1);
 }
 
 .registerModal__header {
@@ -1556,16 +1558,18 @@ ul {
 
 /* About us */
 .aboutUs {
-    /*height: 100vh;*/
+    position: relative;
     padding-top: 40px;
+    margin-top: -30px;
     overflow: hidden;
     min-height: 950px;
+    background: #020305;
 }
 
 .aboutUs::after {
     content: "";
-    background: var(--dark);
-    width: 45%;
+    background: #000;
+    width: 55%;
     height: 100%;
     position: absolute;
     top: 0;
@@ -1613,11 +1617,19 @@ ul {
     height: auto;
 }
 
+.aboutUs__playerName {
+    font-size: 50px;
+    color: #fff;
+    font-weight: 400;
+    padding: 180px 0 30px;
+    transition: .4s all;
+}
+
 .aboutUs__subheader {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Goldman', sans-serif;
     font-size: 24px;
     font-weight: 500;
-    color: var(--grey);
+    color: #fff;
     width: 550px;
     max-width: 100%;
     transition: .4s all;
@@ -1632,7 +1644,7 @@ ul {
 .aboutUs__desc {
     margin: 30px 0;
     font-size: 18px;
-    color: var(--grey);
+    color: #fff;
     width: 550px;
     max-width: 100%;
     font-weight: 500;
@@ -1688,6 +1700,10 @@ ul {
     margin: 0 15px;
 }
 
+.aboutUs__btn img {
+    filter: brightness(0) invert(1);
+}
+
 .aboutUs__btn--prev .btn__img {
     transform: rotateY(180deg);
 }
@@ -1698,11 +1714,11 @@ ul {
 }
 
 .aboutUs__profileImg--bartek {
-    margin-top: -250px;
+    margin-top: -150px;
 }
 
 .aboutUs__profileImg--michal {
-    margin-top: -100px;
+    margin-top: -60px;
 }
 
 /* Player */
@@ -1761,7 +1777,7 @@ ul {
 
 .player__flex__text {
     margin-top: 30px;
-    color: var(--grey);
+    color: #fff;
     font-size: 16px;
     font-weight: 500;
     line-height: 27px;
@@ -1891,6 +1907,20 @@ ul {
     font-size: 24px;
     font-weight: 700;
     text-transform: uppercase;
+}
+
+.btn--editProfile {
+    width: 400px;
+    max-width: 90%;
+    height: 60px;
+    font-size: 21px;
+    border-radius: 6px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .faq__btn--current {
@@ -2310,7 +2340,7 @@ ul {
     display: block;
     background: transparent;
     font-size: 18px;
-    color: #313131;
+    color: #fff;
     font-weight: 700;
     margin-top: 15px;
     text-transform: uppercase;
@@ -2392,7 +2422,10 @@ ul {
     padding: 30px 0;
     margin: 30px auto;
     border-top: 2px solid var(--gold);
-    border-bottom: 2px solid var(--gold);
+}
+
+.clubActivities * {
+    color: #fff !important;
 }
 
 .clubActivities__empty {
@@ -2409,7 +2442,7 @@ ul {
 }
 
 .clubActivities__subheader {
-    margin-top: 60px;
+    margin-top: 20px;
     font-size: 24px;
     color: #3D3D3D;
 }
@@ -2572,7 +2605,7 @@ ul {
 }
 
 .userInfoEdition__form {
-    background: #fff;
+    background: #474747;
     border-radius: 15px;
     padding: 30px;
     width: 60%;
@@ -2614,7 +2647,7 @@ ul {
 
 .userInfoEdition__fullName {
     font-size: 40px;
-    color: #3D3D3D;
+    color: #fff;
     margin-bottom: 25px;
 }
 
@@ -2643,7 +2676,7 @@ ul {
 
 .userInfoEdition__value {
     font-weight: 500;
-    color: #3D3D3D;
+    color: #fff;
 }
 
 .userInfoEdition__btn {
@@ -2655,6 +2688,7 @@ ul {
 
 .userInfoEdition__btn__img {
     width: 100%;
+    filter: brightness(0) invert(1);
 }
 
 .playerInfoEdition {
@@ -2716,7 +2750,7 @@ ul {
 }
 
 .userInfoEdition__graphSection .caption {
-    color: #3D3D3D;
+    color: #fff;
     font-size: 21px;
 }
 
@@ -2732,6 +2766,10 @@ ul {
     color: #3D3D3D;
     font-weight: 500;
     background: transparent;
+}
+
+.input--editProfile {
+    color: #fff;
 }
 
 input[type="date"]::-webkit-inner-spin-button,
@@ -2892,7 +2930,7 @@ input::-webkit-inner-spin-button {
 /* Video upload */
 .videoUpload__backBtn {
     font-size: 13px;
-    color: #191919;
+    color: #dedede;
     margin: 15px 0;
     font-weight: 300;
     display: inline-block;
@@ -2923,7 +2961,7 @@ input::-webkit-inner-spin-button {
 
 .videoTable__header__h {
     font-size: 24px;
-    color: #3D3D3D;
+    color: #fff;
     text-align: center;
 }
 
@@ -2940,7 +2978,7 @@ input::-webkit-inner-spin-button {
 }
 
 .videoTable__item {
-    background: #fff;
+    background: #313131;
     border: 1px solid var(--grey);
     height: 140px;
     padding: 20px 40px;
@@ -2950,11 +2988,12 @@ input::-webkit-inner-spin-button {
     align-items: center;
     position: relative;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .videoTable__item h3 {
     font-weight: 300;
-    color: #3d3d3d;
+    color: #fff;
     text-align: center;
 }
 
@@ -2994,6 +3033,7 @@ input::-webkit-inner-spin-button {
 .videoTable__uploadBtn {
     width: 20px;
     background: transparent;
+    filter: brightness(0) invert(1);
 }
 
 .videoTable__buttons {
@@ -3021,7 +3061,7 @@ input::-webkit-inner-spin-button {
 }
 
 .videoUploader {
-    background: #fff;
+    background: #313131;
     border-radius: 30px;
     width: clamp(200px, 80vw, 1200px);
     height: 700px;
@@ -3067,7 +3107,7 @@ input::-webkit-inner-spin-button {
 
 .progressBar__percent {
     font-size: 20px;
-    color: #313131;
+    color: #fff;
     font-weight: 700;
     font-family: 'Goldman', cursive;
     text-align: center;
@@ -3079,26 +3119,35 @@ input::-webkit-inner-spin-button {
     position: absolute;
     top: 50px;
     left: 80px;
+    color: var(--gold);
 }
 
 .videoUploader__imgWrapper {
-    background: #3d3d3d;
-    width: 250px;
-    height: 250px;
+    background: transparent;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    margin: 30px 0;
+    margin: 30px 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.btn--addVideo {
+    max-width: 100%;
+    width: 400px !important;
+    height: 50px;
+    border-radius: 8px;
+    font-size: 21px;
+}
+
 .videoUploader__img {
-    width: 50%;
+    width: 90%;
 }
 
 .videoUploader__text {
     text-align: center;
-    color: #3d3d3d;
+    color: #fff;
     margin: 20px 0;
     font-size: 28px;
     max-width: 400px;
@@ -3109,6 +3158,7 @@ input::-webkit-inner-spin-button {
     margin-bottom: 30px;
     text-align: center;
     max-width: 500px;
+    color: #fff;
 }
 
 .button--videoUploader {
@@ -3166,6 +3216,10 @@ input::-webkit-inner-spin-button {
 
 .videoUploadContent .modalVideoPlayer__video .video-react .video-react-video {
     max-height: 80vh;
+}
+
+.videoUploadContent {
+    margin-bottom: 80px;
 }
 
 .video-react-big-play-button {
@@ -5859,7 +5913,7 @@ input::-webkit-inner-spin-button {
     display: block;
     font-size: 20px;
     outline: none;
-    color: #313131;
+    color: #fff;
     padding: 6px 15px;
 }
 
@@ -6270,7 +6324,7 @@ input::-webkit-inner-spin-button {
 }
 
 .deleteCvModal .modal__header {
-    color: #313131;
+    color: #fff;
 }
 
 .deleteCvModal .modal__close {
@@ -6282,7 +6336,7 @@ input::-webkit-inner-spin-button {
 }
 
 .modal__header--stuffAdded__header {
-    color: #313131;
+    color: #fff;
 }
 
 .modal__header--stuffAdded__btn {
@@ -7337,7 +7391,7 @@ label.userInfoEdition__form__field {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 480px;
+    width: 520px;
     height: auto;
 }
 
@@ -8019,7 +8073,11 @@ input.btn--feedTopOption::before {
     width: 150px;
     height: auto;
     margin: 0 auto 40px;
-    filter: invert(100%) sepia(30%) saturate(4783%) hue-rotate(311deg) brightness(91%) contrast(95%);
+}
+
+button[disabled] {
+    pointer-events: none;
+    cursor: default;
 }
 
 .modal__inner--after {
@@ -8171,4 +8229,131 @@ abbr[title] {
 
 .addPostInfo--negative {
     color: red;
+}
+
+.eventInfoModal__text {
+    color: #fff !important;
+    font-size: 14px !important;
+    padding-right: 10px;
+}
+
+.modal--eventInfo .calendarWrapper__value > span:last-of-type {
+    font-size: 18px !important;
+    color: #fff;
+}
+
+.modal--eventInfo .calendarWrapper {
+    width: 48%;
+}
+
+.btn--addFile {
+    width: 300px;
+    max-width: 90%;
+    font-size: 20px;
+    height: 50px;
+}
+
+.modal__inner__header--clubList {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+}
+
+.btn--sendCv {
+    height: 60px;
+    font-size: 24px;
+    color: #201E1B !important;
+    border-radius: 5px;
+}
+
+.modal__club {
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+}
+
+.modal__club::after {
+    content: "";
+    width: calc(100% - 20px);
+    height: 1px;
+    background: var(--grey);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.modal__club:last-of-type::after {
+    display: none;
+}
+
+.modal__club__name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    padding-right: 20px;
+}
+
+.modal__club__btn {
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-right: 15px;
+}
+
+.modal__club__btn[disabled] {
+    opacity: .5;
+}
+
+.modal__clubs {
+    margin: 20px auto;
+    max-height: 60%;
+    overflow-y: auto;
+}
+
+.scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) #C1DCFF;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+.scroll::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border: 33px none #ffffff;
+    border-radius: 36px;
+}
+.scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+.scroll::-webkit-scrollbar-thumb:active {
+    background: var(--gold);
+}
+.scroll::-webkit-scrollbar-track {
+    background: #000;
+    border: 49px none #313131;
+    border-radius: 50px;
+}
+.scroll::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.modal__club__sendInfo {
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    margin-right: 20px;
 }

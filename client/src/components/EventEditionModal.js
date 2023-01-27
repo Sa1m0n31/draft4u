@@ -8,8 +8,7 @@ import AfterAddEvent from "./AfterAddEvent";
 import AfterAddEventError from "./AfterAddEventError";
 import DraftLoader from "./Loader";
 
-
-const EventEditionModal = ({closeModal}) => {
+const EventEditionModal = ({closeModal, clubId}) => {
     const [title, setTitle] = useState('');
     const [entriesDate, setEntriesDate] = useState('');
     const [eventDate, setEventDate] = useState('');
@@ -26,8 +25,7 @@ const EventEditionModal = ({closeModal}) => {
 
     const addNewEvent = () => {
         setLoading(true);
-        addEvent('b2fea7ae-a9cf-419f-b473-1709c1d2a930', // TODO
-            title, entriesDate, eventDate, eventHour, description)
+        addEvent(clubId, title, entriesDate, eventDate, eventHour, description)
             .then((res) => {
                 if(res?.data?.result) {
                     setStatus(1);

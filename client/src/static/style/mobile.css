@@ -622,6 +622,11 @@
         height: auto;
     }
 
+    .modal--clubList .modal__inner {
+        height: 80vh;
+        min-height: 400px;
+    }
+
     .modal__header--event {
         font-size: 42px;
         margin-bottom: 25px;
@@ -1646,8 +1651,46 @@
         display: block !important;
     }
 
+    .eventInfoModal__text {
+        font-size: 12px !important;
+    }
+
+    .modal__inner__header--clubList {
+        font-size: 13px !important
+    }
+
+    .modal--clubList .btn--addEvent {
+        height: 40px;
+        min-height: 40px;
+        font-size: 14px;
+    }
+
     .react-calendar {
         max-width: 90%;
+    }
+
+    .modal__club__sendInfo {
+        font-size: 12px;
+    }
+
+    .modal__club__btn {
+        width: 80px;
+        min-width: 80px;
+        max-width: 80px;
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .modal__club__name {
+        font-size: 14px;
+    }
+
+    .modal--eventInfo .calendarWrapper__value > span:last-of-type {
+        font-size: 14px !important;
+    }
+
+    .modal--eventInfo .calendarWrapper {
+        width: 100%;
     }
 
     .react-calendar__month-view__weekdays__weekday {

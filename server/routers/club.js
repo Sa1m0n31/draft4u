@@ -284,6 +284,78 @@ router.post("/update", basicAuth, upload.single("image"), (request, response) =>
     }
 });
 
+router.post('/accept', (request, response) => {
+   const { clubId } = request.body;
+
+   const query = `UPDATE clubs SET accepted = TRUE WHERE id = $1`;
+   const values = [clubId];
+
+   db.query(query, values, (err, res) => {
+      if(res) {
+          response.send({
+              result: 1
+          });
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
+});
+
+router.post('/register', (request, response) => {
+    const { name, login, password, email, city } = request.body;
+
+    const hash = crypto.createHash('sha256').update(password).digest('hex');
+    const id = uuidv4();
+
+    const query = 'INSERT INTO clubs VALUES ($1, $2, NULL, $3, $4, NULL, NULL, NULL, NULL, NULL, $5, $6, 1)';
+    const values = [id, name, login, hash, city, email];
+
+    db.query(query, values, (err, res) => {
+       if(res) {
+           const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL, false)';
+           const values = [id, hash];
+
+           db.query(query, values, (err, res) => {
+               // Send email to administrator
+               let transporter = nodemailer.createTransport(smtpTransport ({
+                   auth: {
+                       user: process.env.EMAIL_ADDRESS,
+                       pass: process.env.EMAIL_PASSWORD
+                   },
+                   host: process.env.EMAIL_HOST,
+                   secureConnection: true,
+                   port: 465,
+                   tls: {
+                       rejectUnauthorized: false
+                   },
+               }));
+
+               let mailOptions = {
+                   from: process.env.EMAIL_ADDRESS,
+                   to: process.env.CONTACT_FORM_ADDRESS,
+                   subject: 'Nowy klub dołączył do Draft4U!',
+                   html: `<h2>Nowy klub zarejestrował się na Draft4U!</h2>
+            <p>Przejdź do panelu admina by aktywować jego konto</p>`
+               }
+
+               transporter.sendMail(mailOptions, function(error, info) {
+                   response.send({
+                       result: 1
+                   });
+               });
+           });
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
+    });
+});
+
 router.post("/add", basicAuth, upload.single("image"), (request, response) => {
     let {  name, login, password, league, x, y, nip, krs, city, email, country } = request.body;
 
@@ -310,7 +382,7 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
 
                     db.query(query, values, (err, res) => {
                         if(res) {
-                            const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL)';
+                            const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL, false)';
                             const values = [id, hash];
 
                             db.query(query, values, (err, res) => {
@@ -418,11 +490,8 @@ router.post('/activate', (request, response) => {
    const query = 'UPDATE identities SET active = true WHERE id = $1';
    const values = [id];
 
-   console.log('/activate');
    db.query(query, values, (err, res) => {
-       console.log(err);
         if(res) {
-            console.log('res ok');
             sendInfoAboutNewClubActivated(id);
             response.send({
                 result: 1

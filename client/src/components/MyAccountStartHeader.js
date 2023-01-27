@@ -24,8 +24,8 @@ const MyAccountStartHeader = ({fullName, image}) => {
                 <p className="player__flex__text">
                     {content.welcome_text}
                 </p>
-                <a className="button button--hover button--club" href="/edycja-profilu">
-                    <img className="btn__img" src={getImageUrl(content.img15)} alt="edytuj-profil" />
+                <a className="button button--hover center button--club btn--gradient goldman btn--editProfile" href="/edycja-profilu">
+                    Edytuj profil
                 </a>
             </article>
 

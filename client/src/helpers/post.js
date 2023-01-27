@@ -44,4 +44,12 @@ const getPosts = (page) => {
     });
 }
 
-export { addComment, addPost, deleteComment, deletePost, getPosts }
+const updateCommentsList = (postId) => {
+    return axios.get(`${API_URL}/post/get-comments`, {
+        params: {
+            id: postId
+        }
+    });
+}
+
+export { addComment, addPost, deleteComment, deletePost, getPosts, updateCommentsList }
