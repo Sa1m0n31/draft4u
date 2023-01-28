@@ -35,8 +35,8 @@ const AddAccountTypeSection = () => {
                 <p className="player__flex__text">
                     {isStuff ? content.add_account_type_text_staff : content.add_account_type_text_user}
                 </p>
-                <button className="button button--hover button--player--register" onClick={() => { addSecondAccountType(); }}>
-                    <img className="btn__img" src={getImageUrl(content.img8)} alt="zarejestruj-sie" />
+                <button className="button button--hover button--player--register center btn--gradient goldman" onClick={() => { addSecondAccountType(); }}>
+                    {content.register}
                 </button>
             </article>
         </section>

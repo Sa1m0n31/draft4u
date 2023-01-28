@@ -609,6 +609,23 @@
         padding: 40px 0;
     }
 
+    .registerForm__select * {
+        font-size: 12px !important;
+    }
+
+    .authBox label {
+        height: 40px;
+    }
+
+    .label--checkBtn {
+        font-size: 10px;
+    }
+
+    .loginBox__error {
+        max-width: 80%;
+        font-size: 8px;
+    }
+
     .modal--event .modal__inner {
         width: 85%;
         height: auto;
@@ -866,8 +883,8 @@
     }
 
     .registerForm__checkBtn {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
 
     .aboutUs__captionWrapper {
@@ -1283,6 +1300,7 @@
     .registerForm--nextBtn {
         width: 220px;
         height: auto;
+        min-height: 40px;
     }
 
     .loginBox__error {
@@ -1655,6 +1673,14 @@
         font-size: 32px;
     }
 
+    .faq__header {
+        background: transparent !important;
+    }
+
+    .afterRegister__header {
+        font-size: 15px;
+    }
+
     .scrollCarousel__slide--3--club > div,
     .scrollCarousel__slide--5--club > div,
     .scrollCarousel__slide--1--club > div,
@@ -1807,6 +1833,18 @@
         left: 0;
         width: 100%;
         height: auto;
+    }
+
+    .authImg::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -80px;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: red;
+        z-index: 3;
     }
 
     .siteHeader--mobileDark {
@@ -2540,7 +2578,7 @@
 
     .mobileMenu__header {
         text-align: center;
-        font-family: 'Oxanium', cursive;
+        font-family: 'Goldman', sans-serif;
         font-weight: 500;
         font-size: 30px;
         color: #fff;
@@ -2922,7 +2960,7 @@
         right: 0;
         text-transform: uppercase;
         padding: 3px 5px 0;
-        font-family: 'Oxanium', cursive;
+        font-family: 'Goldman', sans-serif;
         font-weight: 300;
     }
 
@@ -3167,7 +3205,7 @@
         color: #fff;
         font-size: 21px;
         font-weight: 400;
-        font-family: 'Oxanium', cursive;
+        font-family: 'Goldman', sans-serif;
         text-align: center;
     }
 
@@ -3552,8 +3590,8 @@
     }
 
     .notifications__header {
-        color: rgba(255, 255, 255, .7);
-        font-family: 'Oxanium', cursive;
+        color: #fff;
+        font-family: 'Goldman', sans-serif;
         font-weight: 500;
         font-size: 24px;
         margin-bottom: 30px;
@@ -3586,7 +3624,7 @@
     }
 
     .mobileMenu__btn {
-        margin-top: 0;
+        margin-top: 7%;
         width: 32px;
     }
 

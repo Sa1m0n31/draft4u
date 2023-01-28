@@ -17,7 +17,7 @@ const RegisterPage = () => {
             <ChooseAccountType chooseAccountType={setAccountType} />
         </div>
 
-        <div className="authBox">
+        <div className={accountType === 2 ? "authBox authBox--club" : "authBox"}>
             <ul className="authBox__socialMedia">
                 <li className="footer__col__list__item">
                     <a className="footer__col__socialMediaLink" href="https://www.facebook.com/Draft4uPolska/" target="_blank">

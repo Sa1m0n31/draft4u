@@ -2,10 +2,12 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isMail, isPasswordStrength} from "../helpers/validation";
 import {isEmailAvailable} from "../helpers/user";
 import {registerFromThirdParty, registerUser} from "../helpers/auth";
-import closeIcon from "../static/img/close-grey.svg";
-import {getImageUrl} from "../helpers/others";
+import phoneIcon from '../static/img/phone.svg';
+import calendarIcon from '../static/img/calendar.svg';
 import triangleDown from "../static/img/triangle-down.svg";
 import {ContentContext} from "../App";
+import AfterRegister from "./AfterRegister";
+import DraftLoader from "./Loader";
 
 const RegisterUser = (props) => {
     const { content } = useContext(ContentContext);
@@ -36,7 +38,7 @@ const RegisterUser = (props) => {
     const [phoneNumberError, setPhoneNumberError] = useState("");
     const [checkboxError, setCheckboxError] = useState(false);
 
-    const [userRegistered, setUserRegistered] = useState(-1);
+    const [userRegistered, setUserRegistered] = useState(0);
     const [loading, setLoading] = useState(false);
 
     let formStep1 = useRef(null);
@@ -145,6 +147,9 @@ const RegisterUser = (props) => {
 
     const validateStep2 = (e) => {
         e.preventDefault();
+
+        console.log('validate');
+
         let error = false;
 
         if(!firstName?.length) {
@@ -227,7 +232,7 @@ const RegisterUser = (props) => {
         }
     }
 
-    return <>
+    return userRegistered === 0 ? <>
         {/* STEP 1 */}
         <section className="registerForm__section registerForm__section--1" ref={formStep1}>
             <label>
@@ -332,7 +337,7 @@ const RegisterUser = (props) => {
                        onChange={(e) => { hideBirthdayOverlay(); setBirthday(e.target.value); }}
                        placeholder={birthdayError === "" ? content.register_input7 : ""} />
             </label>
-            <label>
+            <label className="inputPhoneWrapper">
                 {phoneNumberError !== "" ? <span className="loginBox__error">
                         {phoneNumberError}
                 </span> : ""}
@@ -359,15 +364,17 @@ const RegisterUser = (props) => {
                     </span>
                 <a href="/polityka-prywatnosci">
                     {content.register_consent1.split(';')[3]}
-                </a>.
+                </a>
             </label>
 
-            <button className="registerForm--nextBtn registerForm--nextBtn--last goldman btn--gradient"
-                    onClick={(e) => { validateStep2(e); }}>
+            {!loading ? <button className="registerForm--nextBtn registerForm--nextBtn--last goldman btn--gradient"
+                                onClick={(e) => { validateStep2(e); }}>
                 {content.register}
-            </button>
+            </button> : <div className="center registerLoader">
+                <DraftLoader />
+            </div>}
         </section>
-    </>
+    </> : <AfterRegister />
 };
 
 export default RegisterUser;

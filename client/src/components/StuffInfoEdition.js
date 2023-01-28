@@ -137,9 +137,9 @@ const StuffInfoEdition = ({id, club}) => {
 
     const closeModal = () => {
         document.querySelector('html').style.height = 'auto';
-        document.querySelector('html').style.overflow = 'scroll';
+        document.querySelector('html').style.overflowY = 'scroll';
         document.querySelector('body').style.height = 'auto';
-        document.querySelector('body').style.overflow = 'default';
+        document.querySelector('body').style.overflowY = 'default';
 
         setModal(false);
         setCvToEditId(null);
@@ -222,15 +222,15 @@ const StuffInfoEdition = ({id, club}) => {
                 {error ? <span className="stuffModal__error">
                     {error}
                 </span> : ''}
-                <button className="stuffModal__submitBtn" onClick={() => { cvToEditId ? updateCvById() : addNewCv(); }}>
-                    <img className="btn__img" src={getImageUrl(content.img12)} alt="dodaj" />
+                <button className="modal__header--stuffAdded__btn btn--addExperience btn--gradient center goldman stuffModal__submitBtn" onClick={() => { cvToEditId ? updateCvById() : addNewCv(); }}>
+                    Dalej
                 </button>
             </main> : <div className="modal__header--stuffAdded">
                 <h3 className="modal__header modal__header--stuffAdded__header">
                     {status}
                 </h3>
-                <button className="modal__header--stuffAdded__btn" onClick={() => { setStatus(null); closeModal(); }}>
-                    <img className="btn__img" src={getImageUrl(content.img12)} alt="dalej" />
+                <button className="modal__header--stuffAdded__btn btn--addExperience btn--gradient center goldman" onClick={() => { setStatus(null); closeModal(); }}>
+                    Powrót
                 </button>
             </div>}
         </div> : ''}

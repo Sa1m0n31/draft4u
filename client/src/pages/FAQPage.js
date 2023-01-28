@@ -6,10 +6,10 @@ import Footer from "../components/Footer";
 const FAQPage = ({user, isLocal}) => {
     return <div className="container container--light">
         <Header player={true} loggedIn={true} menu="dark" profileImage={user.file_path} isLocal={isLocal} />
-        <main className="siteWidthSuperNarrow faqPage">
+        <main className="faqPage">
             <PlayerFAQ />
         </main>
-        <Footer theme="light" border={true} />
+        <Footer border={true} />
     </div>
 }
 

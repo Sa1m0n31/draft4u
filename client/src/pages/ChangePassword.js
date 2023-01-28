@@ -100,8 +100,9 @@ const ChangePassword = ({user, club, isLocal}) => {
                                placeholder={error3 ? "" : content.register_input3} />
                     </label>
 
-                    <button className="button button--resetPassword button--hover" onClick={(e) => { handleSubmit(e); }}>
-                        <img className="btn__img" src={getImageUrl(content.img12)} alt="dalej" />
+                    <button className="button button--resetPassword button--hover btn--gradient center goldman"
+                            onClick={(e) => { handleSubmit(e); }}>
+                        Zmień hasło
                     </button>
                 </> : (success === 1 ? <>
                     <section className="resetPassword__flex">
@@ -114,8 +115,8 @@ const ChangePassword = ({user, club, isLocal}) => {
                                 {content.change_password3}
                             </h2>
                         </div>
-                        <a className="button button--back button--hover" href="/">
-                            <img className="btn__img" src={getImageUrl(content.img12)} alt="powrot" />
+                        <a className="button button--back button--hover center goldman btn--gradient" href="/">
+                            Wróć na stronę główną
                         </a>
                     </section>
                 </> : (success === -2 ? <>
@@ -129,8 +130,8 @@ const ChangePassword = ({user, club, isLocal}) => {
                                 {content.change_password5}
                             </h2>
                         </div>
-                        <a className="button button--back button--hover" href="/">
-                            <img className="btn__img" src={getImageUrl(content.img12)} alt="powrot" />
+                        <a className="button button--back button--hover center goldman btn--gradient" href="/">
+                            Wróć na stronę główną
                         </a>
                     </section>
                 </> : <>
@@ -141,15 +142,15 @@ const ChangePassword = ({user, club, isLocal}) => {
                                 {content.error}
                             </h2>
                         </div>
-                        <a className="button button--back button--hover" href="/">
-                            <img className="btn__img" src={getImageUrl(content.img12)} alt="powrot" />
+                        <a className="button button--back button--hover center goldman btn--gradient" href="/">
+                            Wróć na stronę główną
                         </a>
                     </section>
                 </>))}
             </section>
         </main>
 
-        <Footer theme={club ? "dark" : "light"} border={true} />
+        <Footer border={true} />
     </div>
 }
 

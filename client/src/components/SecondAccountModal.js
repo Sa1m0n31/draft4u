@@ -35,8 +35,8 @@ const SecondAccountModal = ({mobile}) => {
                     {isStuff ? content.after_add_account_type_staff : content.after_add_account_type_user}
                 </h4>
 
-                <button className="registerForm--nextBtn registerForm--nextBtn--login" onClick={() => { switchAccounts(); }}>
-                    <img className="registerForm--nextBtn__img" src={getImageUrl(content.img12)} alt="dalej" />
+                <button className="registerForm--nextBtn btn--black button--back btn--gradient goldman center registerForm--nextBtn--login" onClick={() => { switchAccounts(); }}>
+                    Dalej
                 </button>
             </section>
         </main>

@@ -77,7 +77,7 @@ const Notifications = ({club, user, isLocal}) => {
                 </menu>
             </main>
 
-            <Footer theme={club ? "dark" : "light"} border={true} />
+            <Footer border={true} />
         </> : <LoadingPage />}
     </div>
 }

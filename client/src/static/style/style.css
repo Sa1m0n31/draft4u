@@ -340,7 +340,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .profileMenu__list__link:hover {
-    background: #313131;
+    background: #201E1B;
 }
 
 .profileMenu--club .profileMenu__list__link {
@@ -852,7 +852,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .container .loginBox {
-    background: #313131;
+    background: #201E1B;
 }
 
 .container .loginBox__or,
@@ -919,6 +919,10 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     color: rgba(70, 70, 70, .4);
+}
+
+.inputDateWrapper .loginBox__error {
+    left: 45px;
 }
 
 .button--submit {
@@ -1234,21 +1238,31 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .registerForm__select__options {
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     left: 0;
     transform: translateY(100%);
     z-index: 7;
-    background: #201E1B;
+    background: transparent;
     width: 100%;
+    border: 1px solid var(--grey);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .registerForm__select__option {
     border-top: none;
     color: #000;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.registerForm__select__option:last-of-type {
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
 }
 
 .registerForm__select__option:hover {
-    background: #020202;
+    background: #423b31;
 }
 
 .inputDateWrapper {
@@ -1267,7 +1281,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     align-items: center;
     margin-left: 15px;
     top: 5%;
-    left: 0;
+    left: 6.5%;
     width: 50%;
     height: 90%;
     background: #201E1B;
@@ -1291,7 +1305,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .registerResult__header {
-    color: var(--grey);
+    color: #fff;
     font-size: 32px;
     font-weight: 500;
     text-align: center;
@@ -1338,14 +1352,17 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .verificationResult__header {
     font-size: 32px;
-    color: var(--grey);
+    color: #fff;
     font-weight: 500;
 }
 
 .verificationResult__comeBackBtn {
     width: 320px;
+    max-width: 320px;
     height: 60px;
     opacity: .9;
+    border-radius: 5px;
+    font-size: 20px;
 }
 
 .verificationResult__comeBackBtn:hover {
@@ -1513,6 +1530,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     padding: 0 10px;
     margin: 50px 0;
     max-width: 100%;
+    border-radius: 5px;
 }
 
 .resetPassword--newPassword .input {
@@ -1820,6 +1838,9 @@ button {
     margin: 50px 0 30px;
     width: 100%;
     max-width: 450px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 5px;
 }
 
 .tmpWrapper {
@@ -1888,8 +1909,9 @@ button {
 }
 
 .faqPage {
-    margin-top: 140px;
-    margin-bottom: 140px;
+    max-width: 90%;
+    width: 1200px;
+    margin: 100px auto;
 }
 
 .faq__header {
@@ -2620,7 +2642,7 @@ button {
 }
 
 .userInfoEdition__form {
-    background: #474747;
+    background: #201E1B;
     border-radius: 15px;
     padding: 30px;
     width: 60%;
@@ -2952,7 +2974,7 @@ input::-webkit-inner-spin-button {
 }
 
 .videoTable__error {
-    color: #3d3d3d;
+    color: #fff;
     text-align: center;
     margin: 90px auto 200px;
 }
@@ -2993,7 +3015,7 @@ input::-webkit-inner-spin-button {
 }
 
 .videoTable__item {
-    background: #313131;
+    background: #201E1B;
     border: 1px solid var(--grey);
     height: 140px;
     padding: 20px 40px;
@@ -3076,7 +3098,7 @@ input::-webkit-inner-spin-button {
 }
 
 .videoUploader {
-    background: #313131;
+    background: #201E1B;
     border-radius: 30px;
     width: clamp(200px, 80vw, 1200px);
     height: 700px;
@@ -5356,7 +5378,8 @@ input::-webkit-inner-spin-button {
 }
 
 .single__article * {
-    font-family: 'Goldman', cursive !important;
+    color: #fff !important;
+    font-family: 'Roboto', sans-serif;
 }
 
 .single__article img {
@@ -5367,11 +5390,10 @@ input::-webkit-inner-spin-button {
 
 /* Change password */
 .button--resetPassword {
-    background: transparent;
-}
-
-.container .resetPassword {
-    background: #313131;
+    height: 50px;
+    font-size: 20px;
+    max-width: 300px;
+    border-radius: 5px;
 }
 
 .container .resetPassword__header {
@@ -5623,6 +5645,11 @@ input::-webkit-inner-spin-button {
 .label--checkBtn a {
     padding: 0 4px;
     text-decoration: underline;
+    opacity: .8;
+}
+
+.label--checkBtn a:hover {
+    opacity: 1;
 }
 
 .container--homepage .clubCarousel::before {
@@ -6217,7 +6244,7 @@ input::-webkit-inner-spin-button {
     transform: translate(-50%, -50%);
     width: 60%;
     height: 600px;
-    background: #F5F5F5;
+    background: #201E1B;
     box-shadow: 5px 5px 6px #00000029;
     border: 1px solid #707070;
     border-radius: 14px;
@@ -6237,6 +6264,8 @@ input::-webkit-inner-spin-button {
     top: 20px;
     right: 20px;
     transition: .2s all;
+    background: transparent;
+    filter: brightness(0) invert(1);
 }
 
 .stuffModal__close:hover {
@@ -6255,10 +6284,11 @@ input::-webkit-inner-spin-button {
     padding: 5px 10px;
     height: 60px;
     border-radius: 3px;
-    border: none;
+    border: 1px solid var(--grey);
     outline: none;
     width: 100%;
     margin-top: 12px;
+    color: #fff !important;
 }
 
 .stuffModal__label--title {
@@ -6308,6 +6338,8 @@ input::-webkit-inner-spin-button {
 .stuffModal__submitBtn {
     height: 50px;
     margin: auto;
+    margin-top: 10px !important;
+    font-size: 20px;
     transition: .2s all;
 }
 
@@ -6325,7 +6357,7 @@ input::-webkit-inner-spin-button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #F5F5F5;
+    background: #201E1B;
     box-shadow: 5px 5px 6px #00000029;
     border: 1px solid #707070;
     border-radius: 14px;
@@ -6365,18 +6397,13 @@ input::-webkit-inner-spin-button {
     margin-bottom: -90px;
 }
 
-.container .stuffSection{
-    background: #474747;
-}
-
 .container .cv__date,
 .container .cv__desc {
     color: #fff;
 }
 
-.container .stuff__addNewBtn,
 .container .cv__btn {
-    display: none;
+    filter: brightness(0) invert(1);
 }
 
 .container .userInfoEdition--stuff {
@@ -6395,7 +6422,7 @@ input::-webkit-inner-spin-button {
 }
 
 .container .stuffSection {
-    padding-bottom: 30px;
+    padding-bottom: 60px;
 }
 
 .container .cv {
@@ -7398,8 +7425,7 @@ label.userInfoEdition__form__field {
 .authBox {
     position: relative;
     z-index: 3;
-    margin-left: 10%;
-    margin-top: 50px;
+    margin: 50px 0 40px 10%;
     background: #201E1B;
     padding: 30px;
     display: flex;
@@ -7468,6 +7494,10 @@ label.userInfoEdition__form__field {
 .authBox label {
     display: block;
     height: 52px;
+    margin-top: 12px !important;
+}
+
+.authBox--login label {
     margin-top: 8px !important;
 }
 
@@ -7529,8 +7559,27 @@ label.userInfoEdition__form__field {
     content: url("../img/login.svg");
 }
 
-.registerForm__section > label::after {
+.registerForm__section:first-of-type > label:nth-of-type(2)::after,
+.registerForm__section:first-of-type > label:nth-of-type(3)::after {
     content: url("../img/password.svg");
+}
+
+.registerForm__section > .inputPhoneWrapper::after,
+.registerForm__section > .inputDateWrapper::after {
+    content: "";
+    background: url("../img/calendar.svg") no-repeat;
+    background-size: 17px auto;
+    width: 17px;
+    height: 20px;
+}
+
+.registerForm__section > .inputPhoneWrapper::after {
+    background: url("../img/phone.svg") no-repeat;
+    background-size: 17px auto;
+}
+
+.registerForm__section--2 {
+    width: 100%;
 }
 
 .authBox .label--checkBtn::after {
@@ -7564,6 +7613,14 @@ label.userInfoEdition__form__field {
     margin-bottom: 8px !important;
     border: none;
     outline: none;
+}
+
+.registerForm__select__option {
+    margin-bottom: 0 !important;
+}
+
+.registerForm__select__option:first-of-type {
+    border-bottom: 1px solid var(--grey);
 }
 
 .registerForm__select * {
@@ -8159,7 +8216,7 @@ abbr[title] {
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-    background: #313131;
+    background: #201E1B;
     color: #fff;
     border-radius: 6px;
 }
@@ -8359,7 +8416,7 @@ abbr[title] {
 }
 .scroll::-webkit-scrollbar-track {
     background: #000;
-    border: 49px none #313131;
+    border: 49px none #201E1B;
     border-radius: 50px;
 }
 .scroll::-webkit-scrollbar-corner {
@@ -8388,4 +8445,58 @@ abbr[title] {
 .scrollCarousel__slide--5 > div,
 .scrollCarousel__slide--1--player > div {
     padding-top: 80px !important;
+}
+
+.sexFieldPlaceholder {
+    margin-left: -5px;
+}
+
+.afterRegister__header {
+    color: #fff;
+    text-align: center;
+    margin: 20px auto;
+    font-family: 'Goldman', sans-serif;
+    font-weight: 400;
+}
+
+.btn--afterRegister {
+    height: 50px;
+    border-radius: 5px;
+}
+
+.afterRegister .checkImg {
+    width: 120px;
+    margin: 20px auto;
+    display: block;
+}
+
+.registerLoader {
+    padding-top: 20px;
+    transform: scale(.65);
+    margin-bottom: -20px;
+}
+
+.button--back {
+    height: 55px;
+    max-width: 350px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.btn--black {
+    color: #201E1B;
+}
+
+.btn--addExperience {
+    height: 50px;
+    max-width: 350px;
+    border-radius: 5px;
+}
+
+.registerForm__section--club {
+    width: 100%;
+}
+
+.authBox--club {
+    margin-top: 10vh;
 }

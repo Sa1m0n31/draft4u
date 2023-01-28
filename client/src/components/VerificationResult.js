@@ -1,6 +1,5 @@
 import React from 'react'
 import successImg from '../static/img/success.svg'
-import backBtnIcon from '../static/img/powrot-btn.png'
 
 const VerificationResult = () => {
     return <main className="verificationResult">
@@ -11,8 +10,8 @@ const VerificationResult = () => {
             </h2>
         </section>
 
-        <a className="verificationResult__comeBackBtn" href="/">
-            <img className="btn__img" src={backBtnIcon} alt="powrot" />
+        <a className="verificationResult__comeBackBtn btn--gradient center goldman" href="/">
+            Powrót
         </a>
     </main>
 }

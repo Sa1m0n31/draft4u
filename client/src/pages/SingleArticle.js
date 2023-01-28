@@ -37,7 +37,7 @@ const SingleArticle = ({user, isLocal}) => {
                 <article className="single__article" dangerouslySetInnerHTML={{__html: content}}></article>
             </main>
 
-            <Footer theme="light" border={true} />
+            <Footer border={true} />
         </> : <LoadingPage />}
     </div>
 }
