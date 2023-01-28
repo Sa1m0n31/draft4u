@@ -45,6 +45,10 @@ const Player = () => {
     }
 
     useEffect(() => {
+        document.querySelector('body').classList.add('noscroll');
+    }, []);
+
+    useEffect(() => {
 
         window.addEventListener('wheel', (event) => {
             /* Sprawdzamy czy nie FAQ */
@@ -139,7 +143,7 @@ const Player = () => {
                     beforeChange={(e) => { setCurrentSlide(e); }}
                 >
                     <PlayerSlide1 openRegisterModal={openRegisterModal} />
-                    <PlayerSlide2 />
+                    {/*<PlayerSlide2 />*/}
                     <PlayerSlide3 />
                     <PlayerSlide4 currentSlide={currentSlide} />
                     <PlayerSlide5 openRegisterModal={openRegisterModal} />

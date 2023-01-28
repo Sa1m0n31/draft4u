@@ -48,7 +48,7 @@ const Map = () => {
                     theme={isClub ? "dark" : null}
                     profileImage={club ? club.file_path : (user ? user.file_path : null)} />
             <MapContent />
-            <Footer theme={!isClub ? "light" : "dark"} border={true} />
+            <Footer border={true} />
         </> : <LoadingPage />}
     </div>
 }

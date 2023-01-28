@@ -24,7 +24,7 @@ const LandingPage = () => {
                 <p className="text">
                     {content.player_zone_text1}
                 </p>
-                <a href="/zaloz-konto" className="button button--landingFlex">
+                <a href="/zaloz-konto" className="button button--landingFlex btn--gradient goldman center">
                     {content.register}
                 </a>
             </div>

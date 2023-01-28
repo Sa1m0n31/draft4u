@@ -140,7 +140,7 @@ ul {
 }
 
 .siteHeader__menu {
-    background: #fff;
+    background: #201E1B;
     border-radius: 4px;
     height: 70px;
     padding: 0 50px;
@@ -194,7 +194,13 @@ ul {
 }
 
 .btn--gradient {
+    font-weight: 400 !important;
     background: transparent linear-gradient(268deg, #E9C37C 0%, #BE7C3E 100%) 0% 0% no-repeat padding-box !important;
+}
+
+.siteHeader__btn:hover,
+.btn--gradient:hover {
+    transform: translateY(-3px);
 }
 
 .siteHeader__btn--login {
@@ -224,7 +230,7 @@ ul {
 }
 
 .container--homepage .mobileMenu__btn__img {
-    filter: brightness(1) invert(1);
+    filter: brightness(0) invert(1);
 }
 
 .siteHeader__player {
@@ -284,7 +290,6 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     bottom: -10px;
     right: 29px;
     transform: translate(0, 100%);
-    background: #fff;
     width: 200px;
     padding: 15px 0;
     background: #3d3d3d;
@@ -820,7 +825,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .loginBox {
     position: absolute;
-    background: #fff;
+    background: #201E1B;
     bottom: -40px;
     right: 0;
     width: 400px;
@@ -922,11 +927,6 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     height: 60px;
     font-size: 30px;
     text-transform: uppercase;
-    opacity: .9;
-}
-
-.button--submit:hover {
-    opacity: 1;
 }
 
 .button--submit__img {
@@ -1238,7 +1238,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     left: 0;
     transform: translateY(100%);
     z-index: 7;
-    background: #fff;
+    background: #201E1B;
     width: 100%;
 }
 
@@ -1257,7 +1257,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .input--date {
-    background: #fff !important;
+    background: #201E1B !important;
 }
 
 .input--date__overlay {
@@ -1270,7 +1270,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     left: 0;
     width: 50%;
     height: 90%;
-    background: #fff;
+    background: #201E1B;
     z-index: 3;
     color: rgba(70, 70, 70, .4);
     font-size: 22px;
@@ -1313,7 +1313,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 /* Verification result */
 .verificationResult {
     margin: 12vh auto 0;
-    background: #fff;
+    background: #201E1B;
     width: clamp(200px, 80vw, 1000px);
     height: 400px;
     border-radius: 15px;
@@ -1409,7 +1409,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .registerPage .registerForm__select {
-    background: #fff;
+    background: #201E1B;
 }
 
 .loginMobile__header {
@@ -1476,7 +1476,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 .resetPassword {
     width: clamp(300px, 90%, 1200px);
     height: 500px;
-    background: #fff;
+    background: #201E1B;
     border-radius: 15px;
     margin: auto;
     display: flex;
@@ -1548,6 +1548,10 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .resetPassword__flex .resetPassword__header {
     margin-bottom: 10px;
+}
+
+button {
+    transition: .2s all ease-in-out;
 }
 
 .resetPassword__flex .button {
@@ -1831,7 +1835,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     display: block;
     width: 28%;
     padding: 30px;
-    background: #fff;
+    background: #201E1B;
     border-radius: 7px;
     border: 1px solid var(--grey);
 }
@@ -1876,7 +1880,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .container .faq__header {
     color: #fff;
-    background: #474747;
+    background: #201E1B;
 }
 
 .faq * {
@@ -1924,7 +1928,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .faq__btn--current {
-    background: #fff;
+    border-bottom: 3px solid var(--gold);
 }
 
 .player__section--faq {
@@ -1936,8 +1940,16 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     margin: 0;
 }
 
+.noscroll {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.noscroll::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
 .faq__question {
-    background: #fff;
+    background: #201E1B;
     margin-bottom: 20px;
 }
 
@@ -1948,7 +1960,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 .container .faq__question,
 .container .faq__question__main,
 .container .faq__question__header {
-    background: #474747;
+    background: #201E1B;
 }
 
 .faq__question__header {
@@ -1957,7 +1969,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     align-items: center;
     height: 90px;
     padding: 0 2%;
-    background: #fff;
+    background: #201E1B;
     width: 100%;
     cursor: pointer;
     z-index: 10;
@@ -1999,7 +2011,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .player__firstImgWrapper {
     position: relative;
-    background: #fff;
+    background: #201E1B;
     border-radius: 15px;
 }
 
@@ -2086,7 +2098,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     font-weight: 400;
     font-size: 17px;
     margin-bottom: 20px;
-    color: var(--grey);
+    color: #fff;
 }
 
 .mapImg {
@@ -2099,6 +2111,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 
 .mapImg__img {
     width: 100%;
+    filter: brightness(0) invert(1);
 }
 
 .container .mapDot__btn__details,
@@ -2121,7 +2134,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     cursor: pointer;
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: #201E1B;
     border-radius: 50%;
     position: relative;
 }
@@ -2133,7 +2146,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     transform: translate(-50%, -100%);
     height: auto;
     border-radius: 9px;
-    background: #fff;
+    background: #201E1B;
     display: none;
     flex-direction: column;
     justify-content: flex-start;
@@ -2210,6 +2223,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 .mapContent__header__item__labels__img {
     width: 15px;
     height: auto;
+    filter: brightness(0) invert(1);
 }
 
 .mapContent__header__item > div > div {
@@ -2232,7 +2246,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .mapContent__header__item__labels span {
-    color: var(--grey);
+    color: #fff;
     font-family: 'Goldman', sans-serif;
     font-size: 17px;
 }
@@ -2249,6 +2263,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
 }
 
 .mapContent__clubs {
+    border-radius: 8px;
     width: 260px;
     display: flex;
     justify-content: space-between;
@@ -2545,7 +2560,7 @@ header > section.siteHeader__content > section > button:nth-of-type(2) {
     right: 0;
     width: 80px;
     height: 80px;
-    background: #fff;
+    background: #201E1B;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -3368,7 +3383,7 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #fff;
+    background: #201E1B;
     position: relative;
 }
 
@@ -3378,7 +3393,7 @@ input::-webkit-inner-spin-button {
 
 .modal__inner--deleteVideo {
     padding: 40px;
-    background: #fff !important;
+    background: #201E1B !important;
     border-radius: 10px;
     width: clamp(200px, 85vw, 800px) !important;
     height: 500px;
@@ -3418,7 +3433,7 @@ input::-webkit-inner-spin-button {
 }
 
 .paymentItemWrapper {
-    background: #fff;
+    background: #201E1B;
     border: 1px solid var(--grey);
     width: clamp(200px, 100%, 800px);
     margin: 0 auto 30px;
@@ -3498,7 +3513,7 @@ input::-webkit-inner-spin-button {
 }
 
 .paymentMethod {
-    background: #fff;
+    background: #201E1B;
     width: clamp(200px, 100%, 800px);
     margin: auto;
     padding: 20px 50px;
@@ -3564,7 +3579,7 @@ input::-webkit-inner-spin-button {
     height: 60px;
     border: 1px solid var(--grey);
     border-radius: 3px;
-    background: #fff;
+    background: #201E1B;
     outline: none;
     font-size: 20px;
     padding: 5px 10px;
@@ -3851,7 +3866,7 @@ input::-webkit-inner-spin-button {
 }
 
 .playerCard__moreBtn:hover {
-    background: #fff;
+    background: #201E1B;
     color: var(--dark);
 }
 
@@ -5011,7 +5026,7 @@ input::-webkit-inner-spin-button {
     right: -15px;
     opacity: 0;
     z-index: 3;
-    background: #fff;
+    background: #201E1B;
     filter: none;
     border-radius: 50%;
 }
@@ -5904,7 +5919,7 @@ input::-webkit-inner-spin-button {
 
 .contact__main .textarea,
 .contact__main .input {
-    background: #fff;
+    background: #201E1B;
     width: 100%;
     margin: 25px auto;
     height: 42px;
@@ -6106,7 +6121,7 @@ input::-webkit-inner-spin-button {
 }
 
 .stuffSection {
-    background: #fff;
+    background: #201E1B;
     border-radius: 20px;
     padding: 20px 40px 70px;
     width: 100%;
@@ -6236,7 +6251,7 @@ input::-webkit-inner-spin-button {
 
 .stuffModal__input {
     display: block;
-    background: #fff;
+    background: #201E1B;
     padding: 5px 10px;
     height: 60px;
     border-radius: 3px;
@@ -6525,7 +6540,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .mapContent__countrySelectWrapper {
     background: transparent;
     position: absolute;
-    bottom: -80px;
+    bottom: -90px;
     left: 0;
 }
 
@@ -6536,13 +6551,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: transparent;
     font-size: 22px;
     text-transform: uppercase;
-    color: #707070;
+    color: #fff;
     opacity: .9;
 }
 
 .mapContent__countrySelect__arrow {
     width: 20px;
     margin-left: 10px;
+    filter: brightness(0) invert(1);
 }
 
 .mapContent__countrySelect--hidden {
@@ -6762,7 +6778,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 18px;
     border-radius: 50%;
     border: 1px solid grey;
-    background: #fff;
+    background: #201E1B;
     cursor: pointer;
     outline: none;
     margin: 4px 0;
@@ -6803,7 +6819,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .slick-dots button {
     width: 15px !important;
     height: 15px !important;
-    background: #fff !important;
+    background: #201E1B !important;
     border: 1px solid grey !important;
     border-radius: 50% !important;
     margin: 6px 0 !important;
@@ -6865,7 +6881,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .whiteBackground {
-    background: #fff;
+    border-radius: 10px;
+    border: 1px solid var(--grey);
+    background: #201E1B;
     width: 100%;
     height: fit-content;
     padding: 50px;
@@ -6910,7 +6928,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .circle__header {
-    color: #707070;
+    color: #fff;
     text-transform: uppercase;
     text-align: center;
     font-size: 28px;
@@ -6999,15 +7017,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .scrollCarousel__slide--3--club figure {
-    display: none !important;
+    width: 28% !important;
 }
 
 .container--club--background {
-    background-image: url("../img/background-big.png");
+    /*background-image: url("../img/background-big.png");*/
 }
 
 .scrollCarousel__slide--5--club {
-    background-image: url("../img/profil-background.png");
+    /*background-image: url("../img/profil-background.png");*/
     background-position: 58% 50%;
 }
 
@@ -7067,10 +7085,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .scrollCarousel__slide--1--stuff figure .img {
     transform: translate(-15%, -7%);
-}
-
-.scrollCarousel__slide--3--stuff .whiteBackground__bottom {
-    padding-top: 40px;
 }
 
 .comparedPlayer__top {
@@ -7308,7 +7322,8 @@ label.userInfoEdition__form__field {
     justify-content: center;
     align-items: center;
     margin-top: 25px;
-    width: 400px;
+    width: 100%;
+    max-width: 320px;
     height: 55px;
     border-radius: 6px;
     color: #000;
@@ -7434,7 +7449,7 @@ label.userInfoEdition__form__field {
     text-align: left;
     color: var(--gold);
     font-family: 'Goldman', cursive;
-    font-size: 28px;
+    font-size: 22px;
     margin: 0 0 20px;
     font-weight: 400;
 }
@@ -8356,4 +8371,21 @@ abbr[title] {
     font-weight: 400;
     color: #fff;
     margin-right: 20px;
+}
+
+.btn--playerSlide1 {
+    border-radius: 5px;
+    font-size: 20px;
+    height: 50px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.scrollCarousel__slide--3--club > div,
+.scrollCarousel__slide--5--club > div,
+.scrollCarousel__slide--1--club > div,
+.scrollCarousel__slide--1--stuff > div,
+.scrollCarousel__slide--5 > div,
+.scrollCarousel__slide--1--player > div {
+    padding-top: 80px !important;
 }

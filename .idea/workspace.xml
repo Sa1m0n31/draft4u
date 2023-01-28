@@ -14,58 +14,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/AfterAddEntry.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/ClubListModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/EventInfoModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/static/img/check-gold.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/posts/43a212d2e9a838c13754a70a4f85c90e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/posts/653f69376391262128773c08307e630e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/media/posts/8b8251327c619471465fb8063046929c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/AfterAddEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AfterAddEvent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ClubActivities.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubActivities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/EventEditionModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/EventEditionModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ClubSlide1.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubSlide1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ClubSlide3.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ClubSlide3.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LandingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/MyAccountStartHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/MyAccountStartHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerVideosView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/SinglePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SinglePost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/VideoUploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/VideoUploader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/others.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/others.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/AboutUs.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AboutUs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Feed.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Feed.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/MyAccountStart.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MyAccountStart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/PlayerProfileEdition.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/PlayerProfileEdition.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/RegisterPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/RegisterPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/VideoUploadPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/VideoUploadPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerSlide1.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerSlide1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PlayerSlide5.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PlayerSlide5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/StuffSlide1.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/StuffSlide1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Club.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Player.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Player.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Stuff.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Stuff.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/0a3c67976ac0f3c22161db69250db423" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/19d55577b89b81d2ce3a2a94b1285f08" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/2b531bb28438baa2c1566323531142a9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/2ba34991fabf0c172a10d297f26d7da7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/320137730c55aca2a0889dd3473b978b" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/43a212d2e9a838c13754a70a4f85c90e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/653f69376391262128773c08307e630e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/6ad7caa9f0a5d3965107fb56452cfbd4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/79a3a4f8ea32639efd8fbb39e414ed94" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/8b8251327c619471465fb8063046929c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/b6c0d6c81a72a14ff902a46b1ed7b002" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/c32e928660199e06c7c3838b472d4149" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/e670f51c32ad070a316ca63a9bd3882f" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/f4840275efbb60498c6ffc3cab749009" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/f9b3e68296160e71d68f0dbfeee39415" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/skra.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/clubs/zaksa.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,7 +349,7 @@
       <workItem from="1674700479017" duration="5000" />
       <workItem from="1674732965489" duration="272000" />
       <workItem from="1674735632278" duration="3129000" />
-      <workItem from="1674832894855" duration="20213000" />
+      <workItem from="1674832894855" duration="25132000" />
     </task>
     <servers />
   </component>
@@ -411,10 +373,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1186" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1673965060686" />
-    <state x="-1234" y="211" key="FileChooserDialogImpl" timestamp="1674860310579">
+    <state x="-1234" y="211" key="FileChooserDialogImpl" timestamp="1674867174563">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1234" y="211" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674860310579" />
+    <state x="-1234" y="211" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674867174563" />
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1673522518818" />
     <state width="498" height="446" key="SwitcherDM" timestamp="1674680816807">
       <screen x="-1920" y="0" width="1920" height="1040" />
@@ -425,14 +387,14 @@
     </state>
     <state x="-1322" y="183" width="724" height="674" key="find.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674861822876" />
     <state x="478" y="145" width="579" height="534" key="find.popup/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1672258399155" />
-    <state x="-1304" y="240" key="run.anything.popup" timestamp="1674747355787">
+    <state x="-1304" y="240" key="run.anything.popup" timestamp="1674865859090">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1304" y="240" key="run.anything.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674747355787" />
-    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1674861120780">
+    <state x="-1304" y="240" key="run.anything.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674865859090" />
+    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1674867822844">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674861120780" />
+    <state x="-1381" y="183" width="840" height="856" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1674867822844" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1672326083394" />
   </component>
   <component name="XDebuggerManager">

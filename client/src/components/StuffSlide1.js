@@ -14,8 +14,9 @@ const StuffSlide1 = ({openRegisterModal}) => {
             <p className="text">
                 {content.stuff_zone_text1}
             </p>
-            <button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>
-                <img className="btn__img" src={getImageUrl(content.img8)} alt="zarejestruj-sie" />
+            <button className="button button--hover button--player--register btn--gradient goldman btn--playerSlide1"
+                    onClick={() => { openRegisterModal(); }}>
+                {content.register}
             </button>
         </div>
         <figure>

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import img1 from '../static/img/sklad.png'
+import img1 from '../static/img/profil.png'
 import {ContentContext} from "../App";
 
 const ClubSlide3 = () => {

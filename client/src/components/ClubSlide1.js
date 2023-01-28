@@ -14,8 +14,9 @@ const ClubSlide1 = ({openRegisterModal}) => {
             <p className="text">
                 {content.club_zone_text1}
             </p>
-            <a className="button button--hover button--player--register" href="mailto:biuro@draft4u.com.pl">
-                <img className="btn__img" src={getImageUrl(content.img11)} alt="zarejestruj-sie" />
+            <a className="button button--hover button--player--register btn--gradient goldman center btn--playerSlide1"
+               href="/zaloz-konto">
+                {content.register}
             </a>
         </div>
         <figure>

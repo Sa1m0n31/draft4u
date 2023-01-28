@@ -1,22 +1,7 @@
-import React, {useContext, useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import img1 from '../static/img/strefa-zawodnika-1.png'
-import img2 from '../static/img/strefa-zawodnika-2.png'
-import img3 from '../static/img/czat.png'
-import step1 from '../static/img/doswiadczenie.png'
-import step2 from '../static/img/wyksztalcenie.png'
-import step3 from '../static/img/kursy.png'
 import PlayerFAQ from "../components/PlayerFAQ";
-import ClubSlider from "../components/ClubSlider";
-import discountImg from '../static/img/discount.png'
-import phone from '../static/img/ekran-glowny.png'
-import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
 import Slider from "react-slick";
-import PlayerSlide1 from "../components/PlayerSlide1";
-import PlayerSlide2 from "../components/PlayerSlide2";
-import PlayerSlide3 from "../components/PlayerSlide3";
 import PlayerSlide4 from "../components/PlayerSlide4";
 import PlayerSlide5 from "../components/PlayerSlide5";
 import StuffSlide1 from "../components/StuffSlide1";
@@ -56,6 +41,10 @@ const Stuff = () => {
             behavior: "smooth"
         });
     }
+
+    useEffect(() => {
+        document.querySelector('body').classList.add('noscroll');
+    }, []);
 
     useEffect(() => {
 
@@ -154,7 +143,7 @@ const Stuff = () => {
             <div className="scrollCarousel">
                 <Slider ref={slider} {...settings}>
                     <StuffSlide1 openRegisterModal={openRegisterModal} />
-                    <StuffSlide2 />
+                    {/*<StuffSlide2 />*/}
                     <StuffSlide3 />
                     <PlayerSlide4 />
                     <PlayerSlide5 openRegisterModal={openRegisterModal} />

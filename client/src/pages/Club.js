@@ -1,22 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import header from '../static/img/header-klub.jpg'
-import img1 from '../static/img/strefa-zawodnika-1.png'
-import img2 from '../static/img/strefa-klubowa-2.png'
-import img3 from '../static/img/strefa-zawodnika-2.png'
-import img4 from '../static/img/klub-porownywarka.png'
-import img5 from '../static/img/czat.png'
-import PlayerFAQ from "../components/PlayerFAQ";
-import ClubForm from "../components/ClubForm";
 import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
 import Slider from "react-slick";
-import PlayerSlide1 from "../components/PlayerSlide1";
-import PlayerSlide2 from "../components/PlayerSlide2";
-import PlayerSlide3 from "../components/PlayerSlide3";
-import PlayerSlide4 from "../components/PlayerSlide4";
-import PlayerSlide5 from "../components/PlayerSlide5";
 import ClubSlide1 from "../components/ClubSlide1";
 import ClubSlide2 from "../components/ClubSlide2";
 import ClubSlide3 from "../components/ClubSlide3";
@@ -46,6 +31,10 @@ const Club = () => {
             behavior: "smooth"
         });
     }
+
+    useEffect(() => {
+        document.querySelector('body').classList.add('noscroll');
+    }, []);
 
     useEffect(() => {
         window.addEventListener('wheel', (event) => {
@@ -99,7 +88,7 @@ const Club = () => {
 
     const slider = useRef(null);
 
-    return <div className={currentSlide === 1 ? "container container--dark container--club container--club--background" : "container container--dark container--club"}>
+    return <div className="container container--dark container--club">
         <Header theme="dark" menu="light" clubPage={true} />
         <main className="club">
             <div className="scrollCarousel">
@@ -107,7 +96,7 @@ const Club = () => {
                         beforeChange={(e) => { setCurrentSlide(e); }}
                 >
                     <ClubSlide1 />
-                    <ClubSlide2 />
+                    {/*<ClubSlide2 />*/}
                     <ClubSlide3 />
                     <ClubSlide4 currentSlide={currentSlide} />
                     <ClubSlide5 />

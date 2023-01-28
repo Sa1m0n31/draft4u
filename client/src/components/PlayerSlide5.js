@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import img1 from '../static/img/para.png'
 import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
 
 const PlayerSlide5 = ({openRegisterModal}) => {
     const { content } = useContext(ContentContext);
@@ -14,8 +13,9 @@ const PlayerSlide5 = ({openRegisterModal}) => {
             <p className="text">
                 {content.player_zone_text5}
             </p>
-            <button className="button button--hover button--player--register" onClick={() => { openRegisterModal(); }}>
-                <img className="btn__img" src={getImageUrl(content.img8)} alt="zarejestruj-sie" />
+            <button className="button button--hover button--player--register btn--playerSlide1 goldman btn--gradient"
+                    onClick={() => { openRegisterModal(); }}>
+                {content.register}
             </button>
         </div>
         <figure>
