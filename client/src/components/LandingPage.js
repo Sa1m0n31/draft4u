@@ -20,8 +20,11 @@ const LandingPage = () => {
         <div className="landingPage__flex">
             <div className="landingPage__flex__content">
                 <h1 className="bigHeader bigHeader--slide1 whitespace">
-                    {content.player_zone_header1}
+                    Czym jest Draft4U?
                 </h1>
+                <figure className="landingPage__flex__img d-mobile">
+                    <img className="img" src={secondImage} alt="dolacz-do-nas" />
+                </figure>
                 <p className="text">
                     {content.player_zone_text1}
                 </p>
@@ -29,13 +32,13 @@ const LandingPage = () => {
                     {content.register}
                 </a>
             </div>
-            <figure className="landingPage__flex__img">
+            <figure className="landingPage__flex__img d-desktop">
                 <img className="img" src={secondImage} alt="dolacz-do-nas" />
             </figure>
         </div>
 
         <div className="landingPage__benefits">
-            <h2 className="landingPage__benefits__header">
+            <h2 className="landingPage__benefits__header goldman">
                 Korzyści
             </h2>
             <p className="landingPage__benefits__text">
@@ -49,8 +52,7 @@ const LandingPage = () => {
                         </h3>
                         <p className="landingPage__benefits__flex__item__content__text">
                             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                            Stet clita kasd gubergren, no sea takimata
+                            et dolore magna aliquyam erat, sed diam voluptua.
                         </p>
                     </div>
                     <figure className="landingPage__benefits__flex__item__image">
@@ -64,12 +66,11 @@ const LandingPage = () => {
                         </h3>
                         <p className="landingPage__benefits__flex__item__content__text">
                             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                            Stet clita kasd gubergren, no sea takimata
+                            et dolore magna aliquyam erat, sed diam voluptua.
                         </p>
                     </div>
                     <figure className="landingPage__benefits__flex__item__image">
-                        <img className="img" src={img2} alt="img1" />
+                        <img className="img" src={img3} alt="img1" />
                     </figure>
                 </div>
                 <div className="landingPage__benefits__flex__item">
@@ -79,12 +80,11 @@ const LandingPage = () => {
                         </h3>
                         <p className="landingPage__benefits__flex__item__content__text">
                             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                            Stet clita kasd gubergren, no sea takimata
+                            et dolore magna aliquyam erat, sed diam voluptua.
                         </p>
                     </div>
                     <figure className="landingPage__benefits__flex__item__image">
-                        <img className="img" src={img3} alt="img1" />
+                        <img className="img" src={img2} alt="img1" />
                     </figure>
                 </div>
             </div>

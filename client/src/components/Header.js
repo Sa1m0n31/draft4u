@@ -35,8 +35,9 @@ import polandIcon from '../static/img/poland-flag.svg'
 import ukIcon from '../static/img/united-kingdom.svg'
 import arrowDownIcon from '../static/img/arrow-down-menu.svg'
 import switchIcon from '../static/img/switch.svg'
+import EventEntryConfirmModal from "./EventEntryConfirmModal";
 
-const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
+const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepage,
                     clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
     const [render, setRender] = useState(false);
@@ -57,6 +58,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
     const [dropdownPlayer, setDropdownPlayer] = useState([]);
     const [dropdownClub, setDropdownClub] = useState([]);
     const [accountSwitch, setAccountSwitch] = useState(false);
+
+    const [eventEntryConfirmModal, setEventEntryConfirmModal] = useState(0);
+    const [currentEventId, setCurrentEventId] = useState(0);
+    const [notificationId, setNotificationId] = useState(0);
 
     let registerModal = useRef(null);
 
@@ -291,7 +296,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
             });
     }
 
-    return <header className={mobileBackground === 'black' ? "siteHeader siteHeader--dark siteHeader--mobileDark" : "siteHeader siteHeader--dark"}>
+    return <header className={mobileBackground === 'black' ? "siteHeader siteHeader--dark siteHeader--mobileDark" : (homepage ? "siteHeader siteHeader--dark siteHeader--home" : "siteHeader siteHeader--dark")}>
+        {eventEntryConfirmModal ? <EventEntryConfirmModal closeModal={() => { setEventEntryConfirmModal(0); }}
+                                                          eventId={currentEventId}
+                                                          notificationId={notificationId}
+                                                          userId={eventEntryConfirmModal} /> : ''}
+
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>
@@ -580,8 +590,8 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
                         {notifications?.map((item, index) => {
                             if(index < 5) {
                                 return <li className="profileMenu__list__item" key={index}>
-                                    <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
-                                       href={item.link} target="_blank">
+                                    {item.link?.split(':')[0] === 'ID' ? <button className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
+                                                                                 onClick={() => { setEventEntryConfirmModal(parseInt(item.link.split(':')[1])); setCurrentEventId(parseInt(item.link.split(':')[2])); setNotificationId(item.id); }}>
                                         {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
                                             <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure> : ""}
@@ -593,7 +603,20 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
                                                 {item.content}
                                             </p>
                                         </section>
-                                    </a>
+                                    </button> : <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
+                                                   href={item.link} target="_blank">
+                                        {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                        </figure> : ""}
+                                        <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
+                                            <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
+                                                {item.title}
+                                            </h3>
+                                            <p className="messageMenu__list__item__text">
+                                                {item.content}
+                                            </p>
+                                        </section>
+                                    </a>}
                                 </li>
                             }
                             else return "";
@@ -700,7 +723,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
             {/*</button> : ""}*/}
 
             {/* Mobile menu */}
-            <button className="mobileMenu__btn d-mobile" onClick={() => { openMobileMenu(); }}>
+            <button className={!club && !player ? "mobileMenu__btn mobileMenu__btn--notLogged d-mobile" : "mobileMenu__btn d-mobile"} onClick={() => { openMobileMenu(); }}>
                 <img className="mobileMenu__btn__img mobileMenu__btn__img--dark" src={hamburger} alt="menu" />
             </button>
 

@@ -194,6 +194,9 @@ function App() {
             <Route path="/zmien-haslo-klubu">
                 <ClubWrapper page={10} />
             </Route>
+          <Route path="/wydarzenia">
+              <ClubWrapper page={13} />
+          </Route>
 
           {/* Admin panel */}
           <Route path="/admin">
@@ -255,6 +258,9 @@ function App() {
           </Route>
           <Route path="/regulaminy-angielski">
               <AdminWrapper page={19} />
+          </Route>
+          <Route path="/posty">
+              <AdminWrapper page={20} />
           </Route>
       </Router>
       </StuffContext.Provider>

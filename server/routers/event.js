@@ -11,7 +11,7 @@ router.get('/get', (request, response) => {
     FROM events e
     JOIN clubs c ON e.club_id = c.id
     LEFT OUTER JOIN images i ON c.logo = i.id
-    WHERE event_date > NOW() 
+    WHERE event_date > NOW() AND expire_date > NOW()  
     ORDER BY event_date DESC`;
 
     db.query(query, [], (err, res) => {
@@ -38,9 +38,13 @@ router.get('/get', (request, response) => {
 router.get('/get-events-by-club', (request, response) => {
    const clubId = request.query.id;
 
-   const query = `SELECT * FROM events e 
+   const query = `SELECT e.id as event_id, e.club_id, e.event_date, e.expire_date, e.title, e.description, 
+       u.id as user_id, u.first_name, u.last_name, i.id as id, ee.accepted 
+       FROM events e 
        LEFT OUTER JOIN events_entries ee ON ee.event_id = e.id 
-       WHERE e.club_id = $1`;
+       LEFT OUTER JOIN users u ON ee.user_id = u.id 
+       LEFT OUTER JOIN identities i ON u.id = i.user_id 
+       WHERE e.club_id = $1 ORDER BY u.last_name`;
    const values = [clubId];
 
    db.query(query, values, (err, res) => {
@@ -50,6 +54,7 @@ router.get('/get-events-by-club', (request, response) => {
            });
        }
        else {
+           console.log(err);
            response.send({
                result: 0
            });
@@ -133,7 +138,7 @@ router.post('/add-entry', (request, response) => {
                 if(res) {
                     // Send notification to club
                     const query = `INSERT INTO notifications VALUES (nextval('notifications_id_sequence'), NULL, $1, $2, $3, NOW()) RETURNING id`;
-                    const values = [`Potwierdź zaproszenie zawodnika na wydarzenie: ${eventTitle}`, `ID:${userId}`, 'Nowy zawodnik zapisał się na Twoje wydarzenie'];
+                    const values = [`Potwierdź zaproszenie zawodnika na wydarzenie: ${eventTitle}`, `ID:${userId}:${eventId}`, 'Nowy zawodnik zapisał się na Twoje wydarzenie'];
 
                     db.query(query, values, (err, res) => {
                         if(res) {
@@ -176,7 +181,7 @@ router.post('/add-entry', (request, response) => {
 });
 
 router.put('/accept-entry', (request, response) => {
-   const { eventId, userId } = request.body;
+   const { eventId, userId, userIdentity } = request.body;
 
    const query = `SELECT title FROM events WHERE id = $1`;
    const values = [eventId];
@@ -197,7 +202,7 @@ router.put('/accept-entry', (request, response) => {
                        const notificationId = res.rows[0].id;
 
                        const query = `INSERT INTO notifications_receivers VALUES ($1, $2, false)`;
-                       const values = [notificationId, userId];
+                       const values = [notificationId, userIdentity];
 
                        db.query(query, values, (err, res) => {
                            if(res) {

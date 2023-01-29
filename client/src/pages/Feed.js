@@ -43,6 +43,7 @@ const Feed = () => {
         getCurrentEvents()
             .then((res) => {
                 if(res?.data?.result) {
+                    console.log(res.data.result);
                     setClubEvents(res.data.result);
                 }
             });
@@ -82,7 +83,7 @@ const Feed = () => {
 
     useEffect(() => {
         if(user) {
-            getUserEntries(user)
+            getUserEntries(user.id)
                 .then((res) => {
                     if(res?.data?.result) {
                         setUserEntries(res.data.result.map((item) => (item.event_id)));
@@ -180,9 +181,9 @@ const Feed = () => {
                     aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
                 </p>
 
-                <a href={!loggedIn ? "/zaloz-konto" : "/edycja-profilu"} className="btn btn--gradient goldman btn--signUpOnFeed">
+                {!isClub ? <a href={!loggedIn ? "/zaloz-konto" : "/edycja-profilu"} className="btn btn--gradient goldman btn--signUpOnFeed">
                     {!loggedIn ? content.register : content.dropdown_menu_player?.split(';')[1]}
-                </a>
+                </a> : ''}
             </div>
 
             <div className="feed__main w">

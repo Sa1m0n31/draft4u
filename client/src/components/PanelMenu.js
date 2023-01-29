@@ -7,6 +7,7 @@ import settings from '../static/img/admin-settings.svg'
 import mail from '../static/img/letter-icon.svg'
 import pen from '../static/img/pen-white.png'
 import camera from '../static/img/camera.svg'
+import calendar from '../static/img/login.svg';
 
 const PanelMenu = ({menuOpen, menuSelected}) => {
     const [submenu, setSubmenu] = useState(-1);
@@ -14,6 +15,7 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
     const menu = [
         { name: 'Kluby', icon: clubs },
         { name: 'Zawodnicy', icon: players },
+        { name: 'Posty i wydarzenia', icon: calendar },
         { name: 'Powiadomienia', icon: notifications },
         { name: 'Artykuły', icon: articles },
         { name: 'Kody rabatowe', icon: settings },
@@ -30,6 +32,9 @@ const PanelMenu = ({menuOpen, menuSelected}) => {
         ],
         [
             {name: 'Lista zawodników', link: '/lista-zawodnikow'}
+        ],
+        [
+            {name: 'Przeglądaj i usuwaj', link: '/posty' }
         ],
         [
             {name: 'Dodaj powiadomienie', link: '/dodaj-powiadomienie'},

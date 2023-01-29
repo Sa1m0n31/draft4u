@@ -6,11 +6,15 @@ import LoadingPage from "./LoadingPage";
 import settings from "../settings";
 import example from "../static/img/profile-picture.png";
 import {ContentContext} from "../App";
+import EventEntryConfirmModal from "../components/EventEntryConfirmModal";
 
 const Notifications = ({club, user, isLocal}) => {
     const [loaded, setLoaded] = useState(false);
     const [updateNotifications, setUpdateNotifications] = useState(false);
     const [notifications, setNotifications] = useState([]);
+    const [eventEntryConfirmModal, setEventEntryConfirmModal] = useState(0);
+    const [currentEventId, setCurrentEventId] = useState(0);
+    const [notificationId, setNotificationId] = useState(0);
 
     const { content } = useContext(ContentContext);
 
@@ -43,6 +47,11 @@ const Notifications = ({club, user, isLocal}) => {
     }
 
     return <div className={club ? "container container--dark" : "container container--light"}>
+        {eventEntryConfirmModal ? <EventEntryConfirmModal closeModal={() => { setEventEntryConfirmModal(0); }}
+                                                          eventId={currentEventId}
+                                                          notificationId={notificationId}
+                                                          userId={eventEntryConfirmModal} /> : ''}
+
         {loaded ? <>
             <Header loggedIn={true} club={!!club} player={!!user} menu={club ? "light" : "dark"} theme={club ? "dark" : "light"} profileImage={club ? club.file_path : user.file_path} isLocal={isLocal} />
 
@@ -54,21 +63,34 @@ const Notifications = ({club, user, isLocal}) => {
                     <ul className="profileMenu__list">
                         {notifications.map((item, index) => {
                             if(index < 5) {
-                                return <li className="profileMenu__list__item" key={index} onClick={() => { addNotificationToRead(item.id); }}>
-                                    <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
-                                       href={item.link}>
-                                        <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
+                                return <li className="profileMenu__list__item" key={index}>
+                                    {item.link?.split(':')[0] === 'ID' ? <button className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
+                                                                                 onClick={() => { setEventEntryConfirmModal(parseInt(item.link.split(':')[1])); setCurrentEventId(parseInt(item.link.split(':')[2])); setNotificationId(item.id); }}>
+                                        {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
                                             <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
-                                        </figure>
-                                        <section className="messageMenu__list__item__content">
-                                            <h3 className="messageMenu__list__item__header">
+                                        </figure> : ""}
+                                        <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
+                                            <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
                                                 {item.title}
                                             </h3>
                                             <p className="messageMenu__list__item__text">
                                                 {item.content}
                                             </p>
                                         </section>
-                                    </a>
+                                    </button> : <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
+                                                   href={item.link} target="_blank">
+                                        {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                        </figure> : ""}
+                                        <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
+                                            <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
+                                                {item.title}
+                                            </h3>
+                                            <p className="messageMenu__list__item__text">
+                                                {item.content}
+                                            </p>
+                                        </section>
+                                    </a>}
                                 </li>
                             }
                             else return "";

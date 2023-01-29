@@ -19,7 +19,7 @@ const Homepage = () => {
 
     return <>
         {loaded ? <div className="container container--homepage">
-            <Header />
+            <Header homepage={true} />
             <CookieConsent
                 buttonText="OK"
             >

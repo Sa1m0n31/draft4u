@@ -562,7 +562,18 @@ const getPostDate = (dateString) => {
     return `${addTrailingZero(postDate.getDate())}.${addTrailingZero(postDate.getMonth()+1)}.${postDate.getFullYear()}`;
 }
 
+const groupBy = (items, key) => items.reduce(
+    (result, item) => ({
+        ...result,
+        [item[key]]: [
+            ...(result[item[key]] || []),
+            item,
+        ],
+    }),
+    {},
+)
+
 export { removePolishChars, unicodeToUTF8, calculateAge, isElementInArray, getPositionById,
-    countriesEn, countriesPl,
+    countriesEn, countriesPl, groupBy,
     getMessagePreview, getUniqueListBy, getDate, getNotificationsNumber, convertStringToURL,
     addTrailingZero, getImageUrl, getDateForInput, getPostDate }

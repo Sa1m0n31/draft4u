@@ -18,7 +18,7 @@ const EventInfoModal = ({closeModal, event, userId, entryDisabled}) => {
     const signUpForEvent = () => {
         setLoading(true);
 
-        addEventEntry(event.id, userId)
+        addEventEntry(event.id, userId.id)
             .then((res) => {
                 if(res?.data?.result) {
                     setStatus(1);

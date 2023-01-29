@@ -17,6 +17,7 @@ import AdminPlayerInfo from "../pages/AdminPlayerInfo";
 import AdminContent from "../pages/AdminContent";
 import AdminImages from "../pages/AdminImages";
 import AdminTerms from "../pages/AdminTerms";
+import AdminFeed from "../pages/AdminFeed";
 
 const AdminWrapper = ({page}) => {
     const [loaded, setLoaded] = useState(false);
@@ -86,6 +87,9 @@ const AdminWrapper = ({page}) => {
                             break;
                         case 19:
                             setRenderSwitch(<AdminTerms admin={result} lang="en" />);
+                            break;
+                        case 20:
+                            setRenderSwitch(<AdminFeed admin={result} />);
                             break;
                         default:
                             break;

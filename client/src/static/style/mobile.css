@@ -350,6 +350,19 @@
         left: 28%;
     }
 
+    .landingPage__benefits__flex {
+        margin-top: 40px;
+    }
+
+    .landingPage__benefits__flex__item__content__header {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .landingPage__benefits__flex__item__content__text {
+        font-size: 12px;
+    }
+
     .feed {
         width: 90%;
     }
@@ -607,6 +620,21 @@
     .d-below-1200 {
         display: block;
         padding: 40px 0;
+    }
+
+    .button--landingFlex {
+        height: 40px;
+        width: 200px;
+        font-size: 15px;
+    }
+
+    .landingPage__flex__content > h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .landingPage__flex .text {
+        font-size: 14px;
     }
 
     .chooseAccountTypeModal--register .registerModal__inner {
@@ -1081,6 +1109,31 @@
 
     .d-mobile-900-flex {
         display: flex !important;
+    }
+
+    .landingPage__benefits__header {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .landingPage__benefits__text {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .landingPage__benefits__flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .landingPage__benefits__flex__item {
+        width: 100%;
+        margin-bottom: 20px;
+        max-width: 330px;
+    }
+
+    .landingPage__benefits__flex__item:nth-of-type(2) {
+        order: -10000;
     }
 
     .chooseAccountTypeModal--register .registerModal__inner {
@@ -1688,6 +1741,87 @@
         display: block !important;
     }
 
+    .landingPage__flex {
+        margin-bottom: 20px;
+        margin-top: 35vw !important;
+    }
+
+    .landingPage__flex__img,
+    .landingPage__flex__content {
+        width: 100%;
+    }
+
+    .landingPage__benefits {
+        width: 90%;
+    }
+
+    .landingPage__benefits__flex {
+        margin-bottom: -50px;
+    }
+
+    .landingPage__flex__img {
+        margin: 30px auto 20px;
+        transform: translateX(-3%);
+    }
+
+    .landingPage__flex__img ~ .text {
+        text-align: center;
+    }
+
+    .button--landingFlex {
+        margin: 20px auto;
+    }
+
+    .landingPage__image {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 190px;
+        margin: 0;
+    }
+
+    .events__item {
+        padding-bottom: 50px;
+    }
+
+    .btn--deleteEvent {
+        top: unset;
+        bottom: 20px;
+        left: 50%;
+        right: unset;
+        transform: translateX(-50%);
+    }
+
+    .feed__comments__btn {
+        font-size: 12px;
+    }
+
+    .feed__right {
+        order: -1;
+    }
+
+    .modal__profileImage {
+        width: 80px;
+        height: 80px;
+    }
+
+    .btn--acceptEntry {
+        width: 180px;
+        height: 40px;
+        font-size: 15px;
+    }
+
+    .btn--acceptEntry:first-of-type {
+        margin-top: -20px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .modal--entryConfirmation .modal__header--event {
+        margin: 20px auto 40px;
+    }
+
     .chooseAccountTypeModal--register .registerModal__inner {
         height: auto;
         width: 100%;
@@ -1695,7 +1829,7 @@
     }
 
     .chooseAccountTypeModal {
-        background-size: rgba(0, 0, 0, .9);
+        background: rgba(0, 0, 0, .9);
     }
 
     .registerModal__step0__buttons {
@@ -1776,7 +1910,7 @@
     }
 
     .modal--event .modal__inner {
-        width: 100%;
+        width: 100% !important;
         border: none;
         border-radius: 0;
         position: absolute;
@@ -1784,6 +1918,24 @@
         left: 0;
         height: 100%;
         padding: 40px 15px;
+    }
+
+    .events__header {
+        text-align: center;
+    }
+
+    .modal--event .modal__inner--deleteVideo .registerModal__closeBtn {
+        top: 16px;
+        right: 16px;
+    }
+
+    .modal--event .modal__inner--deleteVideo {
+        width: 90% !important;
+        padding: 10px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .calendarWrapper,
@@ -1884,6 +2036,10 @@
         height: 80px;
         background: red;
         z-index: 3;
+    }
+
+    .siteHeader--home {
+        margin-bottom: 0;
     }
 
     .siteHeader--mobileDark {
@@ -2288,6 +2444,10 @@
     .landingPage__inner {
         margin-bottom: 120px;
         margin-top: -25%;
+    }
+
+    .siteHeader--home ~ .landingPage > .landingPage__inner {
+        margin-top: 0;
     }
 
     .landingPage__inner__section::after {
@@ -3667,6 +3827,10 @@
         width: 32px;
     }
 
+    .mobileMenu__btn--notLogged {
+        margin-top: 0;
+    }
+
     .playerCard__header {
         height: 45px;
     }
@@ -4009,10 +4173,6 @@
     .landingPage__inner {
         margin-bottom: 50px;
         justify-content: space-evenly;
-    }
-
-    .landingPage__inner {
-        min-height: 310px;
     }
 
     .landingPage__inner__section:first-of-type::before {

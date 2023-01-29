@@ -25,7 +25,7 @@ const EventEditionModal = ({closeModal, clubId}) => {
 
     const addNewEvent = () => {
         setLoading(true);
-        addEvent(clubId, title, entriesDate, eventDate, eventHour, description)
+        addEvent(clubId.id, title, entriesDate, eventDate, eventHour, description)
             .then((res) => {
                 if(res?.data?.result) {
                     setStatus(1);

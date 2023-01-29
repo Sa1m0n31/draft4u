@@ -35,9 +35,9 @@ const addEventEntry = (eventId, userId) => {
     });
 }
 
-const acceptEventEntry = (eventId, userId) => {
+const acceptEventEntry = (eventId, userId, userIdentity) => {
     return axios.put(`${API_URL}/event/accept-entry`, {
-        eventId, userId
+        eventId, userId, userIdentity
     });
 }
 

@@ -53,7 +53,7 @@ html, body {
     background: var(--gold);
     color: #3d3d3d;
     font-weight: 700;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-transform: uppercase;
     font-size: 21px;
     transition: .3s all;
@@ -145,7 +145,7 @@ html, body {
     background: transparent;
     padding: 10px 40px;
     font-size: 18px;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     transition: .2s all;
 }
 
@@ -220,7 +220,7 @@ html, body {
 }
 
 .admin__main__header {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-transform: uppercase;
     color: #fff;
     font-size: 32px;
@@ -234,7 +234,7 @@ html, body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     font-size: 13px;
     text-transform: uppercase;
     margin: 20px 0;
@@ -271,7 +271,7 @@ html, body {
 .admin__btn {
     background: var(--gold);
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -299,7 +299,7 @@ html, body {
 }
 
 .admin__smallHeader {
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     color: #fff;
     text-transform: uppercase;
     font-weight: 400;
@@ -490,7 +490,7 @@ html, body {
 
 .admin__main__notification__item__col > * {
     font-size: 15px;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-align: center;
 }
 
@@ -690,7 +690,7 @@ html, body {
 
 .updateMode__header {
     color: #fff;
-    font-family: 'Oxanium', cursive;
+    font-family: 'Goldman', cursive;
     text-transform: uppercase;
     margin: 25px 0;
 }
@@ -842,4 +842,24 @@ html, body {
     display: block;
     margin-left: 40px;
     margin-top: 5px;
+}
+
+.adminFeed__options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.btn--adminFeed {
+    background: transparent;
+    font-size: 18px;
+    color: #fff;
+    font-family: 'Goldman', cursive;
+    padding-bottom: 8px;
+    margin-right: 50px;
+}
+
+.btn--adminFeed--selected {
+    border-bottom: 2px solid var(--gold);
 }
