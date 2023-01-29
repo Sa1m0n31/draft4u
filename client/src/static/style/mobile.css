@@ -609,6 +609,16 @@
         padding: 40px 0;
     }
 
+    .chooseAccountTypeModal--register .registerModal__inner {
+        height: 490px;
+    }
+
+    .registerModal__step0__btn {
+        height: 300px;
+        font-size: 32px;
+        padding: 15px;
+    }
+
     .registerForm__select * {
         font-size: 12px !important;
     }
@@ -1071,6 +1081,15 @@
 
     .d-mobile-900-flex {
         display: flex !important;
+    }
+
+    .chooseAccountTypeModal--register .registerModal__inner {
+        height: 350px;
+    }
+
+    .registerModal__step0__btn {
+        font-size: 18px;
+        height: 200px;
     }
 
     .aboutUs__subheader {
@@ -1667,6 +1686,26 @@
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
+    }
+
+    .chooseAccountTypeModal--register .registerModal__inner {
+        height: auto;
+        width: 100%;
+        padding-bottom: 170px;
+    }
+
+    .chooseAccountTypeModal {
+        background-size: rgba(0, 0, 0, .9);
+    }
+
+    .registerModal__step0__buttons {
+        gap: 20px;
+        flex-direction: column;
+        height: 80px;
+    }
+
+    .registerModal__step0__btn {
+        width: 100%;
     }
 
     .bigHeader {

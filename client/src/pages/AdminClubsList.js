@@ -20,7 +20,7 @@ const AdminClubsList = ({admin}) => {
     useEffect(() => {
         getClubs()
             .then((res) => {
-                setClubs(res?.data?.result);
+                setClubs(res?.data?.result.reverse());
             });
 
         if(deleteStatus !== -1) {
@@ -144,7 +144,7 @@ const AdminClubsList = ({admin}) => {
                                 Aktywny
                             </h3>
                             <h4 className="admin__main__notification__item__value">
-                                {!item.file_path ? 'Konto testowe' : item.active ? <span className="green">Tak</span> : <span className="red">Zablokowany</span>}
+                                {item.login === 'programista' ? 'Konto testowe' : item.active ? <span className="green">Tak</span> : <span className="red">Zablokowany</span>}
                             </h4>
                         </section>
                         <section className="admin__main__notification__item__col col-4">

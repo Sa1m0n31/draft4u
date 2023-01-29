@@ -48,8 +48,8 @@ const ClubAccountFavorites = ({favoritesProp}) => {
             {content.no_favorite_players}
         </h3>}
 
-        <a className="button button--hover button--showPlayersPage" href="/ulubieni-zawodnicy">
-            <img className="btn__img" src={getImageUrl(content.img20)} alt="przegladaj" />
+        <a className="button button--hover button--showPlayersPage btn btn--gradient center goldman" href="/szukaj-zawodnika">
+            Przeglądaj
         </a>
     </section>
 }

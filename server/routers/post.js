@@ -114,9 +114,12 @@ router.get('/get-comments', (request, response) => {
 router.post("/add", basicAuth, upload.single("image"), (request, response) => {
     const { userId, clubId, content } = request.body;
 
+    console.log(userId);
+    console.log(isNaN(userId));
+
     const insertPost = (userId, clubId, content, imageId) => {
         const query = `INSERT INTO posts VALUES (nextval('posts_id_sequence'), $1, $2, NOW(), $3, $4)`;
-        const values = [isNaN(userId) ? null : userId, clubId, content, imageId];
+        const values = [isNaN(userId) ? null : userId, !clubId || clubId === 'undefined' ? null : clubId, content, imageId];
         db.query(query, values,(err, res) => {
             if(res) {
                 response.send({

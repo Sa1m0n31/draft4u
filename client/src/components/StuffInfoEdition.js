@@ -153,7 +153,7 @@ const StuffInfoEdition = ({id, club}) => {
             });
     }
 
-    return <section className="userInfoEdition userInfoEdition--stuff siteWidthSuperNarrow">
+    return <section className="userInfoEdition userInfoEdition--stuff userInfoEdition--stuff--club siteWidthSuperNarrow">
         {deleteModal ? <div className="deleteCvModal">
             <button className="modal__close" onClick={() => { setDeleteModal(false); }}>
                 <img className="btn__img" src={closeIcon} alt="zamknij" />
@@ -235,9 +235,9 @@ const StuffInfoEdition = ({id, club}) => {
             </div>}
         </div> : ''}
 
-        <StuffExperience cvs={experience} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
-        <StuffEducation cvs={education} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
-        <StuffCourses cvs={courses} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
+        <StuffExperience club={club} cvs={experience} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
+        <StuffEducation club={club} cvs={education} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
+        <StuffCourses club={club} cvs={courses} openCvModal={openCvModal} deleteCvModal={deleteCvModal} />
 
         {club && !testClub ? <a className="stuff__writeMsg" href={`/wiadomosci?new=${id}`}>
             <img className="btn__img" src={getImageUrl(content.img11)} alt="napisz" />

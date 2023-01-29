@@ -486,8 +486,9 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
                     </h3>
                 </section>
             })}
-            <a className="button button--hover button--compare" onClick={(e) => { areThreeToCompare(e); }} href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}`}>
-                <img className="btn__img" src={getImageUrl(content.img24)} alt="porownaj" />
+            <a className="button button--hover button--compare btn--gradient goldman center"
+               onClick={(e) => { areThreeToCompare(e); }} href={`/porownywarka?first=${comparator[0].user_id}&second=${comparator[1].user_id}`}>
+                Porównaj
             </a>
         </section>
 

@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import SingleCv from "./SingleCv";
 import {ContentContext} from "../App";
 
-const StuffExperience = ({cvs, openCvModal, deleteCvModal}) => {
+const StuffExperience = ({cvs, openCvModal, deleteCvModal, club}) => {
     const { content } = useContext(ContentContext);
 
     return <div className="stuffSection">
@@ -13,6 +13,7 @@ const StuffExperience = ({cvs, openCvModal, deleteCvModal}) => {
         {cvs?.map((item, index) => {
             return <SingleCv key={index}
                         id={item.id}
+                        club={club}
                         type="experience"
                         title={item.title}
                         from={item.from_date}
@@ -22,9 +23,9 @@ const StuffExperience = ({cvs, openCvModal, deleteCvModal}) => {
                         deleteCvModal={deleteCvModal} />
         })}
 
-        <button className="stuff__addNewBtn" onClick={() => { openCvModal(null, 'experience'); }}>
+        {!club ? <button className="stuff__addNewBtn" onClick={() => { openCvModal(null, 'experience'); }}>
             + {content.add_new}
-        </button>
+        </button> : ''}
     </div>
 };
 

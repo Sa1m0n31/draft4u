@@ -8,6 +8,7 @@ import {addComment, updateCommentsList} from "../helpers/post";
 const SinglePost = ({post, user, club, loggedIn}) => {
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([]);
+    const [allCommentsVisible, setAllCommentsVisible] = useState(false);
 
     useEffect(() => {
         if(post?.comments) {
@@ -16,7 +17,7 @@ const SinglePost = ({post, user, club, loggedIn}) => {
     }, [post]);
 
     const addNewComment = () => {
-        addComment(post.id, user, club, comment)
+        addComment(post.id, user?.id, club?.club_id, comment)
             .then((res) => {
                 setComment('');
 
@@ -29,17 +30,23 @@ const SinglePost = ({post, user, club, loggedIn}) => {
             });
     }
 
-    return <div className="feed__item">
+    return <div className={commentsList.length ? "feed__item" : "feed__item feed__item--noComments"}>
         <div className="feed__item__header">
-            <figure className="feed__item__header__image">
+            {post?.club_id ? <figure className="feed__item__header__image">
                 <img className="img"
                      src={post.club_id ? `${settings.API_URL}/image?url=/media/clubs/${post.club_logo}` : `${settings.API_URL}/image?url=/media/users/${post.user_profile_image}`}
                      alt="zdjecie-profilowe" />
-            </figure>
+            </figure> : <a className="feed__item__header__image" href={`/profil-zawodnika?id=${post.user_id}`}>
+                <img className="img"
+                     src={post.club_id ? `${settings.API_URL}/image?url=/media/clubs/${post.club_logo}` : `${settings.API_URL}/image?url=/media/users/${post.user_profile_image}`}
+                     alt="zdjecie-profilowe" />
+            </a>}
             <div className="feed__item__header__content">
-                <h4 className="feed__item__header__content__name goldman">
-                    {post.club_id ? post.club_name : `${post.first_name} ${post.last_name}`}
-                </h4>
+                {post?.club_id ? <h4 className="feed__item__header__content__name goldman">
+                    {post.club_name}
+                </h4> : <a className="feed__item__header__content__name goldman" href={`/profil-zawodnika?id=${post.user_id}`}>
+                    {`${post.first_name} ${post.last_name}`}
+                </a>}
                 <h5 className="feed__item__header__content__date goldman">
                     {getPostDate(post.date)}
                 </h5>
@@ -71,26 +78,32 @@ const SinglePost = ({post, user, club, loggedIn}) => {
                         </textarea>
         </div> : ''}
 
-        <div className="feed__comments">
+        {commentsList?.length ? <div className="feed__comments">
+            <button className="feed__comments__btn" onClick={() => { setAllCommentsVisible(p => !p); }}>
+                {commentsList.length} komentarzy
+            </button>
+
             {commentsList.map((item, index) => {
-                return <div className="feed__comments__item"
-                            key={index}>
-                    <figure className="feed__addComment__image">
-                        <img className="img"
-                             src={item.club_id ? `${settings.API_URL}/image?url=/media/clubs/${item.club_logo}` : `${settings.API_URL}/image?url=/media/users/${item.user_profile_image}`}
-                             alt="zdjecie-profilowe" />
-                    </figure>
-                    <div className="feed__comments__item__content">
-                        <h5 className="feed__comments__item__content__name goldman">
-                            {item.club_id ? item.club_name : `${item.first_name} ${item.last_name}`}
-                        </h5>
-                        <p className="feed__comments__item__content__text">
-                            {item.content}
-                        </p>
+                if(allCommentsVisible || index < 3) {
+                    return <div className="feed__comments__item"
+                                key={index}>
+                        <figure className="feed__addComment__image">
+                            <img className="img"
+                                 src={item.club_id ? `${settings.API_URL}/image?url=/media/clubs/${item.club_logo}` : `${settings.API_URL}/image?url=/media/users/${item.user_profile_image}`}
+                                 alt="zdjecie-profilowe" />
+                        </figure>
+                        <div className="feed__comments__item__content">
+                            <h5 className="feed__comments__item__content__name goldman">
+                                {item.club_id ? item.club_name : `${item.first_name} ${item.last_name}`}
+                            </h5>
+                            <p className="feed__comments__item__content__text">
+                                {item.content}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                }
             })}
-        </div>
+        </div> : ''}
     </div>
 };
 

@@ -17,8 +17,8 @@ const ClubAccountBottom = () => {
             <p className="clubAccountStart__bottom__text">
                 {content.club_zone_text5}
             </p>
-            <a className="button button--hover button--clubAccountBottom" href="/sklady">
-                <img className="btn__img" src={getImageUrl(content.img22)} alt="sprawdz" />
+            <a className="button button--hover button--clubAccountBottom btn btn--gradient center goldman" href="/szukaj-zawodnika">
+                Przeglądaj
             </a>
             <span className="orSpan">lub</span>
 

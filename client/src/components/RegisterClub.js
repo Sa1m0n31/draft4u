@@ -1,17 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isMail, isPasswordStrength} from "../helpers/validation";
-import {isEmailAvailable} from "../helpers/user";
-import {registerFromThirdParty, registerUser} from "../helpers/auth";
-import triangleDown from "../static/img/triangle-down.svg";
 import {ContentContext} from "../App";
 import AfterRegister from "./AfterRegister";
 import DraftLoader from "./Loader";
-import {registerClub} from "../helpers/club";
+import {isLoginAvailable, registerClub} from "../helpers/club";
 
 const RegisterClub = (props) => {
     const { content } = useContext(ContentContext);
 
-    const [step0, setStep0] = useState(true);
     const [accountType, setAccountType] = useState(-1);
 
     const [email, setEmail] = useState("");
@@ -21,9 +17,6 @@ const RegisterClub = (props) => {
     const [name, setName] = useState('');
     const [login, setLogin] = useState('');
     const [city, setCity] = useState('');
-
-    const [currentStep, setCurrentStep] = useState(1);
-    const [sexesVisible, setSexesVisible] = useState(false);
 
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -37,13 +30,9 @@ const RegisterClub = (props) => {
 
     let formStep1 = useRef(null);
     let formStep2 = useRef(null);
-    let birthdayOverlay = useRef(null);
-    let sexField = useRef(null);
-    let sexFieldPlaceholder = useRef(null);
 
     useEffect(() => {
         if(props.registerFromThirdParty && formStep1 && formStep2) {
-            setCurrentStep(2);
             if(formStep1.current && formStep2.current) {
                 formStep1.current.style.display = "none";
                 formStep2.current.style.display = "block";
@@ -72,15 +61,6 @@ const RegisterClub = (props) => {
         if(n === 1) setCheckboxCompulsory(!checkboxCompulsory);
     }
 
-    const showSexes = (e) => {
-        e.preventDefault();
-        setSexesVisible(!sexesVisible);
-    }
-
-    const hideBirthdayOverlay = () => {
-        birthdayOverlay.current.style.display = "none";
-    }
-
     const validateStep1 = (e) => {
         e.preventDefault();
         let error = false;
@@ -102,26 +82,11 @@ const RegisterClub = (props) => {
             setEmailError(content.email_error);
             setEmail("");
         }
-        else {
-            isEmailAvailable(email, accountType)
-                .then(res => {
-                    if(res?.data?.result !== 1) {
-                        setEmailError(content.email_already_in_use);
-                        setEmail("");
-                    }
-                    else if(!error) {
-                        setCurrentStep(2);
-                        formStep1.current.style.display = "none";
-                        formStep2.current.style.display = "block";
-                    }
-                });
-        }
-    }
 
-    const calculateAge = (birthday) => { // birthday is a date
-        const ageDifMs = Date.now() - new Date(birthday);
-        const ageDate = new Date(ageDifMs); // miliseconds from epoch
-        return ageDate.getUTCFullYear() - 1970;
+        if(!error) {
+            formStep1.current.style.display = "none";
+            formStep2.current.style.display = "block";
+        }
     }
 
     const validateStep2 = (e) => {
@@ -145,15 +110,25 @@ const RegisterClub = (props) => {
         if(!error) {
             setLoading(true);
 
-            /* REGISTER CLUB */
-            registerClub(name, login, password, email, city)
-                .then(res => {
-                    setLoading(false);
-                    if(res?.data?.result) {
-                        setUserRegistered(1);
+            isLoginAvailable(login)
+                .then((res) => {
+                    if(res?.data?.result === 1) {
+                        /* REGISTER CLUB */
+                        registerClub(name, login, password, email, city)
+                            .then(res => {
+                                setLoading(false);
+                                if(res?.data?.result) {
+                                    setUserRegistered(1);
+                                }
+                                else {
+                                    setUserRegistered(-1);
+                                }
+                            });
                     }
                     else {
-                        setUserRegistered(-1);
+                        setLogin('');
+                        setLoginError('Podany login jest zajęty');
+                        setLoading(false);
                     }
                 });
         }
@@ -198,7 +173,7 @@ const RegisterClub = (props) => {
         </section>
 
         {/* STEP 2 */}
-        <section className="registerForm__section registerForm__section--2" ref={formStep2}>
+        <section className="registerForm__section registerForm__section--2 registerForm__section--2--club" ref={formStep2}>
             <label>
                 {nameError !== "" ? <span className="loginBox__error">
                         {nameError}

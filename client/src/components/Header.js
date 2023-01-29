@@ -36,9 +36,8 @@ import ukIcon from '../static/img/united-kingdom.svg'
 import arrowDownIcon from '../static/img/arrow-down-menu.svg'
 import switchIcon from '../static/img/switch.svg'
 
-const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackground,
+const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground,
                     clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
-    const [loginVisible, setLoginVisible] = useState(false);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
     const [render, setRender] = useState(false);
     const [currentMenuVisible, setCurrentMenuVisible] = useState(-1);
@@ -59,7 +58,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
     const [dropdownClub, setDropdownClub] = useState([]);
     const [accountSwitch, setAccountSwitch] = useState(false);
 
-    let loginBoxWrapper = useRef(null);
     let registerModal = useRef(null);
 
     let mobileMenu = useRef(null);
@@ -568,7 +566,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, menu, theme, mobileBackg
             </ul> : ""}
         </menu>
 
-        <section className="siteHeader__content">
+        <section className={club ? "siteHeader__content" : "siteHeader__content siteHeader__content--player"}>
             {loggedIn ? (player || club ? <section className={club ? "siteHeader__player siteHeader__player--club" : "siteHeader__player"}>
                 <button className="siteHeader__player__btn siteHeader__player__btn--notification" onClick={(e) => { e.stopPropagation(); changeCurrentMenu(0); readAllNotificationsWrapper(); }}>
                     <img className="siteHeader__player__btn__img" src={club || newNotifications || window.innerWidth < 768 ? bellGold : bellGold} alt="powiadomienia" />

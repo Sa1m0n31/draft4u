@@ -315,7 +315,7 @@ router.post('/register', (request, response) => {
 
     db.query(query, values, (err, res) => {
        if(res) {
-           const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL, false)';
+           const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, NULL, NULL, false)';
            const values = [id, hash];
 
            db.query(query, values, (err, res) => {
@@ -354,6 +354,41 @@ router.post('/register', (request, response) => {
            });
        }
     });
+});
+
+router.post('/is-login-available', (request, response) => {
+   const { login } = request.body;
+
+   const query = `SELECT login FROM clubs`;
+
+   db.query(query, [], (err, res) => {
+      if(res) {
+          const allLogins = res.rows;
+
+          console.log(allLogins);
+          console.log(login);
+
+          const loginFound = allLogins.findIndex((item) => (item?.login === login));
+
+          console.log(loginFound);
+
+          if(loginFound === -1) {
+              response.send({
+                  result: 1
+              });
+          }
+          else {
+              response.send({
+                  result: 0
+              });
+          }
+      }
+      else {
+          response.send({
+              result: 0
+          });
+      }
+   });
 });
 
 router.post("/add", basicAuth, upload.single("image"), (request, response) => {
@@ -453,33 +488,35 @@ const sendInfoAboutNewClubActivated = (id) => {
 
     db.query(query, values, (err, res) => {
        if(res) {
-           const name = res.rows[0].name;
+           const name = res.rows[0]?.name;
 
-           let transporter = nodemailer.createTransport(smtpTransport ({
-               auth: {
-                   user: process.env.EMAIL_ADDRESS,
-                   pass: process.env.EMAIL_PASSWORD
-               },
-               host: process.env.EMAIL_HOST,
-               secureConnection: true,
-               port: 465,
-               tls: {
-                   rejectUnauthorized: false
-               },
-           }));
+           if(name) {
+               let transporter = nodemailer.createTransport(smtpTransport ({
+                   auth: {
+                       user: process.env.EMAIL_ADDRESS,
+                       pass: process.env.EMAIL_PASSWORD
+                   },
+                   host: process.env.EMAIL_HOST,
+                   secureConnection: true,
+                   port: 465,
+                   tls: {
+                       rejectUnauthorized: false
+                   },
+               }));
 
-           let mailOptions = {
-               from: process.env.EMAIL_ADDRESS,
-               to: process.env.CONTACT_FORM_ADDRESS,
-               subject: 'Nowy klub dołączył do Draft4U!',
-               html: `<h2>Nowy klub zaakceptował regulamin i dołączył do Draft4U!</h2>
+               let mailOptions = {
+                   from: process.env.EMAIL_ADDRESS,
+                   to: process.env.CONTACT_FORM_ADDRESS,
+                   subject: 'Nowy klub dołączył do Draft4U!',
+                   html: `<h2>Nowy klub zaakceptował regulamin i dołączył do Draft4U!</h2>
             <p>Klub, który zaakceptował regulamin to <b>${name}</b></p>`
-           }
+               }
 
-           transporter.sendMail(mailOptions, function(error, info) {
-                console.log(error);
-                console.log(info);
-           });
+               transporter.sendMail(mailOptions, function(error, info) {
+                   console.log(error);
+                   console.log(info);
+               });
+           }
        }
     });
 }

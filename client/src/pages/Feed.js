@@ -23,7 +23,7 @@ const Feed = () => {
     const [loaded, setLoaded] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isClub, setIsClub] = useState(false);
-    const [isPlayer, setIsPlayer] = useState(true);
+    const [isPlayer, setIsPlayer] = useState(false);
     const [user, setUser] = useState(null); // 20231
     const [club, setClub] = useState(null); // 'b2fea7ae-a9cf-419f-b473-1709c1d2a930'
     const [eventEditionModalVisible, setEventEditionModalVisible] = useState(false);
@@ -105,7 +105,7 @@ const Feed = () => {
     const addNewPost = () => {
         if(postContent) {
             setLoading(true);
-            addPost(user, 'b2fea7ae-a9cf-419f-b473-1709c1d2a930', postContent, postImage)
+            addPost(user?.id, club?.club_id, postContent, postImage)
                 .then((res) => {
                     if(res?.data?.result) {
                         setPostContent('');
@@ -180,8 +180,8 @@ const Feed = () => {
                     aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
                 </p>
 
-                <a href="/zaloz-konto" className="btn btn--gradient goldman btn--signUpOnFeed">
-                    {content.register}
+                <a href={!loggedIn ? "/zaloz-konto" : "/edycja-profilu"} className="btn btn--gradient goldman btn--signUpOnFeed">
+                    {!loggedIn ? content.register : content.dropdown_menu_player?.split(';')[1]}
                 </a>
             </div>
 

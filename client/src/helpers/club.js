@@ -3,6 +3,12 @@ import settings from "../settings";
 
 const { API_URL } = settings;
 
+const isLoginAvailable = (login) => {
+    return axios.post(`${API_URL}/club/is-login-available`, {
+        login
+    });
+}
+
 const isPlayerFavorite = (list, playerId) => {
     if(!list) return false;
     return list?.findIndex((item) => {
@@ -177,5 +183,5 @@ const registerClub = (name, login, password, email, city) => {
 
 export { isPlayerInFavorites, addToVisited, getAllClubs, getClubData, getAllPlayers, getFavoritesByClub,
     getClubLocations, isPlayerFavorite, addToFavorites, deleteFromFavorites, getThreeNewest, getPlayerHighlight,
-    getClubById, registerClub, getLeagues, addClub, updateClub,
+    getClubById, registerClub, getLeagues, addClub, updateClub, isLoginAvailable,
     changeClubPasswordFromAdminPanel, changeClubPassword, sendClubForm, activateClub }

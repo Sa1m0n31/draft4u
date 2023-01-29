@@ -13,10 +13,6 @@ const ChooseAccountType = ({chooseAccountType}) => {
     }
 
     return <main className="registerModal__inner" ref={registerModal}>
-        <button className="registerModal__closeBtn" onClick={() => { closeModal(); }}>
-            <img className="registerModal__closeBtn__img" src={closeIcon} alt="zamknij" />
-        </button>
-
         <h3 className="registerModal__header">
             {content.register_header}
         </h3>

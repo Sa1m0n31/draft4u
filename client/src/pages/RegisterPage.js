@@ -13,7 +13,7 @@ const RegisterPage = () => {
     return <div className="container container--light">
         <Header menu="dark" mobileBackground="black" />
 
-        <div className="chooseAccountTypeModal">
+        <div className="chooseAccountTypeModal chooseAccountTypeModal--register">
             <ChooseAccountType chooseAccountType={setAccountType} />
         </div>
 

@@ -32,7 +32,7 @@ const ClubAccountStart = ({club, favorites}) => {
 
     return <div className="container container--dark">
         {render ? <>
-            {!club?.active ? <TermsForClubs club={club} /> : ""}
+            {/*{!club?.active ? <TermsForClubs club={club} /> : ""}*/} {/* TODO */}
 
             <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
 
@@ -42,7 +42,7 @@ const ClubAccountStart = ({club, favorites}) => {
 
             <ClubAccountStartFindPlayer />
             <ClubAccountFavorites favoritesProp={favorites} />
-            <ClubAccountBottom />
+            {/*<ClubAccountBottom />*/}
 
             <Footer theme="dark" border={true} />
         </> : ""}

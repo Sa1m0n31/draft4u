@@ -75,8 +75,8 @@ const ResetPasswordEmailForm = () => {
                         <DraftLoader />
                     </div> }
 
-                    <button className="button button--resetPassword button--hover" onClick={(e) => { handleSubmit(e); }}>
-                        <img className="btn__img" src={getImageUrl(content.img12)} alt="dalej" />
+                    <button className="button button--resetPassword button--hover btn--gradient center goldman" onClick={(e) => { handleSubmit(e); }}>
+                        Dalej
                     </button>
                 </> : (success === 1 ? <>
                     <h2 className="resetPassword__header">

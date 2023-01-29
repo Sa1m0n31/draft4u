@@ -2,9 +2,10 @@ import React, {useContext} from 'react'
 import ClubSlider from "./ClubSlider";
 import {ContentContext} from "../App";
 import mainImage from '../static/img/landing-image.png';
-import img1 from '../static/img/sklad.png';
-import img2 from '../static/img/landing-img2.png';
-import img3 from '../static/img/dolacz-do-nas.png';
+import secondImage from '../static/img/homepage-mockup.png';
+import img1 from '../static/img/korzysc1.png';
+import img2 from '../static/img/korzysc2.png';
+import img3 from '../static/img/korzysc3.png';
 
 const LandingPage = () => {
     const { content } = useContext(ContentContext);
@@ -29,7 +30,7 @@ const LandingPage = () => {
                 </a>
             </div>
             <figure className="landingPage__flex__img">
-                <img className="img" src={mainImage} alt="dolacz-do-nas" />
+                <img className="img" src={secondImage} alt="dolacz-do-nas" />
             </figure>
         </div>
 
