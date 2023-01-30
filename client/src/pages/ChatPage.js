@@ -526,7 +526,7 @@ const ChatPage = ({club, user, isLocal}) => {
                 return <img onLoad={() => { updateStyle(); }}
                             onClick={() => { enlargeImage(filePath); }}
                             className="btn__img messageImg"
-                            src={`${settings.API_URL}/image?url=/media/chat/${filePath}`}
+                            src={`${settings.IMAGE_URL}/image?url=/media/chat/${filePath}`}
                             alt="zdjecie-wyslane" />
             }
             else {
@@ -584,7 +584,7 @@ const ChatPage = ({club, user, isLocal}) => {
                 <img className="btn__img" src={closeIcon} alt="zamknij" />
             </button>
             <img className="modal--largeImage__img" onClick={(e) => { e.stopPropagation(); }}
-                 src={currentLargeImage ? `${settings.API_URL}/image?url=/media/chat/${currentLargeImage}` : ''} alt="powiekszone-zdjecie" />
+                 src={currentLargeImage ? `${settings.IMAGE_URL}/image?url=/media/chat/${currentLargeImage}` : ''} alt="powiekszone-zdjecie" />
         </div>
 
         {loaded ? <header className="chat__header siteWidthSuperNarrow siteWidthSuperNarrow--1400">
@@ -595,14 +595,14 @@ const ChatPage = ({club, user, isLocal}) => {
             <header className="chat__header__user d-desktop">
                 {club ? <a className="chat__main__header__section" href={`/profil-zawodnika?id=${receiverId}`}>
                     {currentReceiver ? <figure className="chat__list__item__imgWrapper">
-                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
+                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.IMAGE_URL}/image?url=/media/users/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure> : ""}
                     <h3 className="chat__main__header__fullName">
                         {currentReceiver ? currentReceiver : ""}
                     </h3>
                 </a> : <section className="chat__main__header__section">
                     {currentReceiver ? <figure className="chat__list__item__imgWrapper">
-                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
+                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.IMAGE_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure> : ""}
                     <h3 className="chat__main__header__fullName">
                         {currentReceiver ? currentReceiver : ""}
@@ -616,7 +616,7 @@ const ChatPage = ({club, user, isLocal}) => {
             </button>
             <a className="chat__main__header__section" href={`/profil-zawodnika?id=${receiverId}`}>
                 <figure className="chat__list__item__imgWrapper">
-                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
+                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.IMAGE_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
                 </figure>
                 <h3 className="chat__main__header__fullName">
                     {currentReceiver ? currentReceiver : ""}
@@ -630,7 +630,7 @@ const ChatPage = ({club, user, isLocal}) => {
                         return <button className={(new Date(item.created_at) > new Date(item.read_at)) && ((!item.type && club) || (item.type && !club)) ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id); }}>
                             <figure className="chat__list__item__imgWrapper" key={index}>
                                 <img className="chat__list__item__img"
-                                     src={item.file_path ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example}
+                                     src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example}
                                      alt={club ? item.last_name : item.name} />
                             </figure>
                             <section className="chat__list__item__content">
@@ -762,7 +762,7 @@ const ChatPage = ({club, user, isLocal}) => {
                             {content.messages_read}: {chatRead.getDate() + '.' + (parseInt(chatRead.getMonth())+1) + '.' + chatRead.getFullYear()}
                             {' ' + (parseInt(chatRead.getHours()) < 10 ? '0' + chatRead.getHours() : chatRead.getHours()) + ':' + (parseInt(chatRead.getMinutes()) < 10 ? '0' + chatRead.getMinutes() : chatRead.getMinutes()) + '.' + (parseInt(chatRead.getSeconds()) < 10 ? '0' + chatRead.getSeconds() : chatRead.getSeconds())}
                             <figure className="chat__list__item__imgWrapper">
-                                <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
+                                <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.IMAGE_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${currentReceiverImg}` : example} alt={currentReceiver} />
                             </figure>
                         </span> : ""}
                     </main>
@@ -859,8 +859,7 @@ const ChatPage = ({club, user, isLocal}) => {
             </main>
         </main>
 
-        <Footer theme={club ? "dark" : "light"}
-                border={true} />
+        <Footer border={true} />
     </div>
 }
 

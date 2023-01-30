@@ -742,7 +742,7 @@ router.post('/send-user-to-club-notification', (request, response) => {
 
    db.query(query, values, (err, res) => {
       if(res) {
-          const userFullName = `${res.rows[0]?.first_name} ${res.rows[0]?.last_name}`;
+          const userFullName = `${res.rows[0].first_name} ${res.rows[0].last_name}`;
 
           const query = `INSERT INTO users_to_clubs_notifications VALUES ($1, $2, NOW())`;
           const values = [userId, clubId];
@@ -752,7 +752,7 @@ router.post('/send-user-to-club-notification', (request, response) => {
                   // Send notificaiton to club
                   const query = `INSERT INTO notifications VALUES (nextval('notifications_id_sequence'), NULL, $1, $2, $3, NOW()) RETURNING id`;
                   const values = [`${userFullName} jest zainteresowany grą w Twoim klubie! Kliknij, by przejść na jego profil`,
-                      `https//draft4u.com.pl/zawodnik?id=${userId}`,
+                      `/zawodnik?id=${userId}`,
                       'Nowy zawodnik wysłał do Ciebie swoje CV'];
 
                   db.query(query, values, (err, res) => {

@@ -17,7 +17,7 @@ const RegisterFromThirdParty = () => {
             .then((res) => {
                 if(res?.data?.result) {
                     if(res.data.result.active) {
-                        window.location = "/rozpocznij";
+                        window.location = "/tablica";
                     }
                     else {
                         setFirstName(res.data.result.first_name);

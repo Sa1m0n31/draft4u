@@ -52,7 +52,7 @@ const ClubListModal = ({closeModal, userId}) => {
             <h4 className="modal__inner__header modal__inner__header--clubList">
                 Możesz wysłać trzy CV miesięcznie do wybranych klubów. Po kliknięciu "Wyślij" klub otrzyma
                 powiadomienie oraz link do Twojego profilu.
-                {userNotifications?.length >= 3 ? 'W tym miesiącu wykorzystałeś już limit wysłanych CV do klubów' : ''}
+                {userNotifications?.length >= 3 ? ' W tym miesiącu wykorzystałeś już limit wysłanych CV do klubów' : ''}
             </h4>
 
             <div className="modal__clubs scroll">

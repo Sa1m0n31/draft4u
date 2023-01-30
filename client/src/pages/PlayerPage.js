@@ -10,7 +10,7 @@ import {addToVisited, isPlayerInFavorites} from "../helpers/club";
 import {StuffContext} from "../App";
 import StuffInfoEdition from "../components/StuffInfoEdition";
 
-const PlayerPage = ({club}) => {
+const PlayerPage = ({club, userInfo}) => {
     const [user, setUser] = useState(null);
     const [favorite, setFavorite] = useState(false);
 
@@ -42,7 +42,7 @@ const PlayerPage = ({club}) => {
 
     return <div className="container container--dark">
         {user ? <>
-            <Header loggedIn={true} club={true} menu="light" theme="dark" profileImage={club.file_path} />
+            <Header loggedIn={true} club={!!club} menu="light" theme="dark" profileImage={club.file_path ? club.file_path : userInfo?.file_path} />
 
             <UserInfoEdition player={user} clubProp={true} theme="dark" favorite={favorite} />
             {!isStuff ? <>

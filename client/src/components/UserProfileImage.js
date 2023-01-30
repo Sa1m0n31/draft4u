@@ -11,7 +11,7 @@ const UserProfileImage = ({user, club}) => {
     const [loader, setLoader] = useState(false);
 
     useEffect(() => {
-        if(user.file_path) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${user.file_path}`);
+        if(user.file_path) setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/users/${user.file_path}`);
     }, []);
 
     const getUploadParams = ({file}) => {

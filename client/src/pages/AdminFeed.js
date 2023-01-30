@@ -156,7 +156,7 @@ const AdminFeed = () => {
                                     </button>
 
                                     <figure className="feed__event__image">
-                                        <img className="img" src={item.club_logo ? `${settings.API_URL}/image?url=/media/clubs/${item.club_logo}` : profilePictureExample} alt="logo" />
+                                        <img className="img" src={item.club_logo ? `${settings.IMAGE_URL}/image?url=/media/clubs/${item.club_logo}` : profilePictureExample} alt="logo" />
                                     </figure>
                                     <p className="feed__event__description">
                                         <b>Opis:</b> {item.description}

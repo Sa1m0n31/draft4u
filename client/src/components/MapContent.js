@@ -395,7 +395,7 @@ const MapContent = () => {
                                 {currentDotClubs?.map((item, index) => {
                                     return <div className="mapDot__btn__details__singleClub">
                                         <figure className="mapDot__btn__details__imgWrapper" key={index}>
-                                            <img className="mapDot__btn__details__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="logo" />
+                                            <img className="mapDot__btn__details__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="logo" />
                                         </figure>
                                         <section className="mapDot__btn__details__data">
                                             {item.city ? <span>
@@ -420,7 +420,7 @@ const MapContent = () => {
             <section className="mapContent__clubs d-desktop-900" ref={clubsWrapper}>
                 {filteredClubs.length ? filteredClubs.map((item, index) => {
                     return <figure key={index} className="mapContent__clubs__imgWrapper">
-                        <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
+                        <img className="mapContent__clubs__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
                     </figure>
                 }) : <h3 className="noClubsHeader">
                     {content.no_clubs}
@@ -436,7 +436,7 @@ const MapContent = () => {
                 >
                     {filteredClubs.length ? filteredClubs?.map((item, index) => {
                         return <div key={index}>
-                            <img className="mapContent__clubs__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
+                            <img className="mapContent__clubs__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
                         </div>
                     }) : <h2 className="noClubsHeader">
                         {content.no_clubs}

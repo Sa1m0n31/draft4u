@@ -59,7 +59,7 @@ const AdminPlayerInfo = ({admin}) => {
                         setBlockRange(player.block_range);
                         setWeight(player.weight);
                         setHeight(player.height);
-                        if(player.file_path) setProfileImage(`${settings.API_URL}/image?url=/media/users/${player.file_path}`);
+                        if(player.file_path) setProfileImage(`${settings.IMAGE_URL}/image?url=/media/users/${player.file_path}`);
                         if(player.name) setPosition(unicodeToUTF8(player.name));
 
                         getUserVideos(player.id)

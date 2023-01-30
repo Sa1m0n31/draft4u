@@ -479,7 +479,7 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
                         <img className="btn__img" src={trashIcon} alt="usun" />
                     </button> : ""}
                     <figure className="playersWall__compareSection__item__imgWrapper">
-                        {item ? <img className="playersWall__compareSection__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profileImg} alt="porownaj-graczy" /> : ""}
+                        {item ? <img className="playersWall__compareSection__item__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${item.file_path}` : profileImg} alt="porownaj-graczy" /> : ""}
                     </figure>
                     <h3 className="playersWall__compareSection__item__name">
                         {!item ? content.first_and_last_name : item.first_name + " " + item.last_name}

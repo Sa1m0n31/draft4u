@@ -2,22 +2,21 @@ import React, {useContext, useEffect, useState} from 'react'
 import LoadingPage from "../pages/LoadingPage";
 import {isLoggedIn, logoutUser} from "../helpers/auth";
 import {getUserData} from "../helpers/user";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import MyAccountStart from "../pages/MyAccountStart";
 import PlayerProfileEdition from "../pages/PlayerProfileEdition";
 import FAQPage from "../pages/FAQPage";
 import VideoUploadPage from "../pages/VideoUploadPage";
 import PaymentPage from "../pages/PaymentPage";
-import {render} from "@testing-library/react";
 import PaymentReturnPage from "../pages/PaymentReturnPage";
 import {getClubData} from "../helpers/club";
-import ChatPageForUser from "../pages/ChatPageForUser";
 import Notifications from "../pages/Notifications";
 import {getAdminData} from "../helpers/admin";
 import SingleArticle from "../pages/SingleArticle";
 import ChangePassword from "../pages/ChangePassword";
 import ChatPage from "../pages/ChatPage";
 import {StuffContext} from "../App";
+import PlayerPage from "../pages/PlayerPage";
+import Feed from "../pages/Feed";
 
 const UserContext = React.createContext(5);
 
@@ -79,6 +78,12 @@ const UserWrapper = ({page}) => {
                                             break;
                                         case 10:
                                             setRenderSwitch(<ChangePassword user={user} isLocal={isLocal} />);
+                                            break;
+                                        case 11:
+                                            setRenderSwitch(<PlayerPage userInfo={user} isLocal={isLocal} />);
+                                            break;
+                                        case 12:
+                                            setRenderSwitch(<Feed user={user} />);
                                             break;
                                         default:
                                             setRenderSwitch(<PlayerProfileEdition user={user} isLocal={isLocal} />);

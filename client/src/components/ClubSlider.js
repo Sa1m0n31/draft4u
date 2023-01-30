@@ -67,7 +67,7 @@ const ClubSlider = () => {
             loop={true}>
                 {logos?.map((item, index) => {
                     return <figure className="clubCarousel__item" key={index}>
-                        <img className="clubCarousel__item__img" src={`${settings.API_URL}/image?url=/media/clubs/${item}`} alt="logo" />
+                        <img className="clubCarousel__item__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item}`} alt="logo" />
                     </figure>
                 })}
             </ReactSiema>

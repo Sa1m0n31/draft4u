@@ -29,7 +29,7 @@ const SingleArticle = ({user, isLocal}) => {
 
             <main className="single">
                 <figure className="single__imgWrapper">
-                    <img className="blogSection__img" src={`${settings.API_URL}/image?url=/media/blog/${article.file_path}`} alt={article.title} />
+                    <img className="blogSection__img" src={`${settings.IMAGE_URL}/image?url=/media/blog/${article.file_path}`} alt={article.title} />
                 </figure>
                 <h1 className="single__title">
                     {article.title}

@@ -368,7 +368,7 @@ router.post('/is-login-available', (request, response) => {
           console.log(allLogins);
           console.log(login);
 
-          const loginFound = allLogins.findIndex((item) => (item?.login === login));
+          const loginFound = allLogins.findIndex((item) => (item.login === login));
 
           console.log(loginFound);
 
@@ -488,34 +488,35 @@ const sendInfoAboutNewClubActivated = (id) => {
 
     db.query(query, values, (err, res) => {
        if(res) {
-           const name = res.rows[0]?.name;
+           if(res.rows[0]) {
+               const name = res.rows[0].name;
+               if(name) {
+                   let transporter = nodemailer.createTransport(smtpTransport ({
+                       auth: {
+                           user: process.env.EMAIL_ADDRESS,
+                           pass: process.env.EMAIL_PASSWORD
+                       },
+                       host: process.env.EMAIL_HOST,
+                       secureConnection: true,
+                       port: 465,
+                       tls: {
+                           rejectUnauthorized: false
+                       },
+                   }));
 
-           if(name) {
-               let transporter = nodemailer.createTransport(smtpTransport ({
-                   auth: {
-                       user: process.env.EMAIL_ADDRESS,
-                       pass: process.env.EMAIL_PASSWORD
-                   },
-                   host: process.env.EMAIL_HOST,
-                   secureConnection: true,
-                   port: 465,
-                   tls: {
-                       rejectUnauthorized: false
-                   },
-               }));
-
-               let mailOptions = {
-                   from: process.env.EMAIL_ADDRESS,
-                   to: process.env.CONTACT_FORM_ADDRESS,
-                   subject: 'Nowy klub dołączył do Draft4U!',
-                   html: `<h2>Nowy klub zaakceptował regulamin i dołączył do Draft4U!</h2>
+                   let mailOptions = {
+                       from: process.env.EMAIL_ADDRESS,
+                       to: process.env.CONTACT_FORM_ADDRESS,
+                       subject: 'Nowy klub dołączył do Draft4U!',
+                       html: `<h2>Nowy klub zaakceptował regulamin i dołączył do Draft4U!</h2>
             <p>Klub, który zaakceptował regulamin to <b>${name}</b></p>`
-               }
+                   }
 
-               transporter.sendMail(mailOptions, function(error, info) {
-                   console.log(error);
-                   console.log(info);
-               });
+                   transporter.sendMail(mailOptions, function(error, info) {
+                       console.log(error);
+                       console.log(info);
+                   });
+               }
            }
        }
     });

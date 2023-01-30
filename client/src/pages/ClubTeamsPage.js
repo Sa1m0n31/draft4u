@@ -212,7 +212,7 @@ const ClubTeamsPage = ({club}) => {
                                     <img className="createSquad__squad__item__dragging__img" src={playerDraggable} alt="zawodnik" />
 
                                     <figure className="createSquad__squad__item__dragging__imgWrapper">
-                                        <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}`: profilePicture} alt={"Jan"} />
+                                        <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${item.file_path}`: profilePicture} alt={"Jan"} />
                                     </figure>
 
                                     <section className="createSquad__squad__item__dragging__header">

@@ -129,8 +129,8 @@ router.post('/add-entry', (request, response) => {
 
     db.query(query, values, (err, res) => {
         if(res) {
-            const clubId = res.rows[0]?.club_id;
-            const eventTitle = res.rows[0]?.title;
+            const clubId = res.rows[0].club_id;
+            const eventTitle = res.rows[0].title;
             const query = `INSERT INTO events_entries VALUES ($1, $2, FALSE)`;
             const values = [eventId, userId];
 
@@ -187,7 +187,7 @@ router.put('/accept-entry', (request, response) => {
    const values = [eventId];
 
    db.query(query, values, (err, res) => {
-       const eventTitle = res?.rows[0]?.title;
+       const eventTitle = res.rows[0].title;
        const query = `UPDATE events_entries SET accepted = TRUE WHERE event_id = $1 AND user_id = $2`;
        const values = [eventId, userId];
 

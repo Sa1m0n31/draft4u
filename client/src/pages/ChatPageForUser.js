@@ -273,7 +273,7 @@ const ChatPageForUser = ({user, isLocal}) => {
             <header className="chat__header__user d-desktop">
                 <section className="chat__main__header__section">
                     {currentReceiver ? <figure className="chat__list__item__imgWrapper">
-                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
+                        <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.IMAGE_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
                     </figure> : ""}
                     <h3 className="chat__main__header__fullName">
                         {currentReceiver}
@@ -287,7 +287,7 @@ const ChatPageForUser = ({user, isLocal}) => {
             </button>
             <section className="chat__main__header__section">
                 <figure className="chat__list__item__imgWrapper">
-                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.API_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
+                    <img className="chat__list__item__img" src={currentReceiverImg ? `${settings.IMAGE_URL}/image?url=/media/clubs/${currentReceiverImg}` : example} alt={currentReceiver} />
                 </figure>
                 <h3 className="chat__main__header__fullName">
                     {currentReceiver}
@@ -300,7 +300,7 @@ const ChatPageForUser = ({user, isLocal}) => {
                     {messages?.length ? messages.map((item, index) => {
                         return <button className={new Date(item.created_at) > new Date(item.read_at) && item.type ? "chat__list__item chat__list__item--new" : "chat__list__item"} onClick={() => { getChat(item.chat_id, item.name, item.file_path); }}>
                             <figure className="chat__list__item__imgWrapper" key={index}>
-                                <img className="chat__list__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/clubs/${item.file_path}` : example} alt={item.last_name} />
+                                <img className="chat__list__item__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}` : example} alt={item.last_name} />
                             </figure>
                             <section className="chat__list__item__content">
                                 <h4 className="chat__list__item__name">
@@ -491,7 +491,7 @@ const ChatPageForUser = ({user, isLocal}) => {
         </main>
 
 
-        <Footer theme="light" border={true} />
+        <Footer border={true} />
     </div>
 }
 

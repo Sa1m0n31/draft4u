@@ -113,7 +113,7 @@ const RegisterModal = (props) => {
             document.querySelector(".loginBoxWrapper").style.display = "block";
         }
         else {
-            window.location = "/rozpocznij";
+            window.location = "/tablica";
         }
     }
 

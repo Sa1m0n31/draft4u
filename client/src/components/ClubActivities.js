@@ -35,7 +35,7 @@ const ClubActivities = ({userId}) => {
         </h3>
         <section className="clubActivities__list">
             {visitors.length ? visitors.map((item, index) => {
-                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
+                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
             }) : <h3 className="clubActivities__empty">
                 {content.club_activities_text1}
             </h3>}
@@ -46,7 +46,7 @@ const ClubActivities = ({userId}) => {
         </h3>
         <section className="clubActivities__list">
             {favorites.length ? favorites.map((item, index) => {
-                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.API_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
+                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
             }) : <h3 className="clubActivities__empty">
                 {content.club_activities_text2}
             </h3> }

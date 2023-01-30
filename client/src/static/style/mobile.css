@@ -1128,8 +1128,29 @@
 
     .landingPage__benefits__flex__item {
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 35px;
         max-width: 330px;
+    }
+
+    .playerVideoView__btn {
+        max-width: 80%;
+        margin-bottom: 40px !important;
+    }
+
+    .userInfoEdition__graphSection * {
+        color: #fff !important;
+    }
+
+    .cv:last-of-type {
+        padding-bottom: 0;
+    }
+
+    .container .userInfoEdition--stuff .stuffSection {
+        padding-bottom: 55px;
+    }
+
+    .siteHeader__content--player button:nth-of-type(2) {
+        margin-top: 0 !important;
     }
 
     .landingPage__benefits__flex__item:nth-of-type(2) {
@@ -2102,7 +2123,7 @@
     }
 
     .chatImages {
-        top: 300px;
+        top: 145px;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 90%;
@@ -2111,6 +2132,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+
+    .scrollCarousel__slide--4--club .chatImages {
+        top: 200px;
     }
 
     .chatImages figure {
@@ -2284,7 +2309,7 @@
     }
 
     .scrollCarousel__slide--4 figure {
-        margin-top: -40px;
+        margin-top: -160px;
     }
 
     .whiteBackground__bottom {
@@ -3130,10 +3155,6 @@
 
     .videoTable__item__element {
         width: 90%;
-    }
-
-    .videoUploadContent {
-        margin-bottom: -100px;
     }
 
     .videoUploader__imgWrapper {
@@ -4067,16 +4088,24 @@
         height: 67px;
     }
 
+    .videoUploader__imgWrapper {
+        margin-top: 5px;
+    }
+
     .player__header--videoUploader {
         width: 100%;
         left: 0;
         text-align: center;
-        margin-top: 50px;
+        margin-top: 20px;
     }
 
     .paymentMethod__btn {
         width: 100%;
         height: 70px;
+    }
+
+    .videoUploader__smallText {
+        font-size: 12px;
     }
 
     .paymentMethod__list {

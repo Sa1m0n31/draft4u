@@ -25,11 +25,9 @@ import {getClubData} from "../helpers/club";
 import {
     getClubNotifications,
     getUserNotifications,
-    readAllNotifications,
-    readNotification
+    readAllNotifications
 } from "../helpers/notification";
 import {getIdentityById, getSecondAccountData, getUserData, isUserWithTwoAccounts} from "../helpers/user";
-import ContactInfo from "./ContactInfo";
 import {ContentContext, StuffContext} from "../App";
 import polandIcon from '../static/img/poland-flag.svg'
 import ukIcon from '../static/img/united-kingdom.svg'
@@ -110,8 +108,8 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
 
     useEffect(() => {
         if(profileImage) {
-            if(player) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${profileImage}`);
-            else setProfilePicture(`${settings.API_URL}/image?url=/media/clubs/${profileImage}`);
+            if(player) setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/users/${profileImage}`);
+            else setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/clubs/${profileImage}`);
         }
     }, [profileImage]);
 
@@ -203,7 +201,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                     const { id, user_id } = result;
                     autoLogin(user_id, id)
                         .then((res) => {
-                            window.location = '/rozpocznij';
+                            window.location = '/tablica';
                         });
                 }
             });
@@ -332,6 +330,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[5]}</a>
                 </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
+                </li>
             </ul> : ""}
 
             {!player && !club ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
@@ -359,6 +360,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
             {player ? <ul className="mobileMenu__list" ref={mobileMenuList}>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/">{menuPlayer[0]}</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
                 </li>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/edycja-profilu">{menuPlayer[1]}</a>
@@ -407,6 +411,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                     <a className="mobileMenu__list__link" href="/">{menuClub[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/wydarzenia">Wydarzenia</a>
+                </li>
+                <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/szukaj-zawodnika">{menuClub[6]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
@@ -417,12 +427,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/ulubieni-sztab">{menuClub[9]}</a>
-                </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/sklady">{menuClub[3]}</a>
-                </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/zapisane-druzyny">{menuClub[4]}</a>
                 </li>
             </ul> : ""}
 
@@ -470,6 +474,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/tablica">
+                        Tablica
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/o-nas">
                         {menuBeforeLogin[1]}
                     </a>
@@ -504,6 +513,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/tablica">
+                        Tablica
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/edycja-profilu">
                         {menuPlayer[1]}
                     </a>
@@ -520,6 +534,16 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/">
                         {menuClub[0]}
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/tablica">
+                        Tablica
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/wydarzenia">
+                        Wydarzenia
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
@@ -558,16 +582,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                         </ul>
                     </div>
                 </li>
-                <li className="siteHeader__menu__list__item">
-                    <a className="siteHeader__menu__link" href="/sklady">
-                        {menuClub[3]}
-                    </a>
-                </li>
-                <li className="siteHeader__menu__list__item">
-                    <a className="siteHeader__menu__link" href="/zapisane-druzyny">
-                        {menuClub[4]}
-                    </a>
-                </li>
                 <li className="siteHeader__menu__list__item d-over-1200">
                     <a className="siteHeader__menu__link" href="/mapa">
                         {menuClub[5]}
@@ -593,7 +607,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                                     {item.link?.split(':')[0] === 'ID' ? <button className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                                                                  onClick={() => { setEventEntryConfirmModal(parseInt(item.link.split(':')[1])); setCurrentEventId(parseInt(item.link.split(':')[2])); setNotificationId(item.id); }}>
                                         {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
-                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure> : ""}
                                         <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
                                             <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
@@ -606,7 +620,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                                     </button> : <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                                    href={item.link} target="_blank">
                                         {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
-                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure> : ""}
                                         <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
                                             <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
@@ -641,7 +655,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                                     <a className={index < newMessages ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                        href={club ? `/wiadomosci/?new=${item.chat_id.split(';')[1]}` : `/czat/?new=${item.chat_id.split(';')[0]}`}>
                                         <figure className="messageMenu__imgWrapper">
-                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example} alt="zdjecie-profilowe" />
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/${club ? 'users' : 'clubs'}/${item.file_path}` : example} alt="zdjecie-profilowe" />
                                         </figure>
                                         <section className="messageMenu__list__item__content">
                                             <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>

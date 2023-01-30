@@ -67,7 +67,7 @@ const Notifications = ({club, user, isLocal}) => {
                                     {item.link?.split(':')[0] === 'ID' ? <button className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                                                                  onClick={() => { setEventEntryConfirmModal(parseInt(item.link.split(':')[1])); setCurrentEventId(parseInt(item.link.split(':')[2])); setNotificationId(item.id); }}>
                                         {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
-                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure> : ""}
                                         <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
                                             <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>
@@ -80,7 +80,7 @@ const Notifications = ({club, user, isLocal}) => {
                                     </button> : <a className={!item.read ? "profileMenu__list__link profileMenu__list__link--new" : "profileMenu__list__link"}
                                                    href={item.link} target="_blank">
                                         {item.file_path ? <figure className="messageMenu__imgWrapper messageMenu__imgWrapper--notification">
-                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
+                                            <img className="profileMenu__list__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/notifications/${item.file_path}` : example} alt="powiadomienie" />
                                         </figure> : ""}
                                         <section className={item.file_path ? "messageMenu__list__item__content" : "messageMenu__list__item__content messageMenu__list__item__content--fullWidth"}>
                                             <h3 className={club ? "messageMenu__list__item__header" : "messageMenu__list__item__header messageMenu__list__item__header--player"}>

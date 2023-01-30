@@ -105,7 +105,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                 </div> : ''}
             </div>
             <figure className="playerCard__imgWrapper">
-                <img className="playerCard__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
+                <img className="playerCard__img" src={player.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
             </figure>
         </div>
 

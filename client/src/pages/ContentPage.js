@@ -50,7 +50,7 @@ const ContentPage = ({type}) => {
                     theme={isClub ? "dark" : null}
                     profileImage={club ? club.file_path : (user ? user.file_path : null)} />
             {type === 1 ? <TermsOfService /> : (type === 2 ? <PrivacyPolicy /> : <CookiesPolicy />)}
-            <Footer theme={!isClub ? "light" : "dark"} border={true} />
+            <Footer border={true} />
         </> : <LoadingPage />}
     </div>
 }

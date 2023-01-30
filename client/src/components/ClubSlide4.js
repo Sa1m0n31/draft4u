@@ -57,7 +57,7 @@ const ClubSlide4 = ({currentSlide}) => {
         });
     }, [currentSlide]);
 
-    return <div className="scrollCarousel__slide scrollCarousel__slide--4">
+    return <div className="scrollCarousel__slide scrollCarousel__slide--4 scrollCarousel__slide--4--club">
         <h1 className="scrollCarousel__slide__backgroundHeader d-desktop" ref={backgroundHeader}>
             {language === 'pl' ? 'Czatuj' : 'Chat'}
             <span className="d-block">

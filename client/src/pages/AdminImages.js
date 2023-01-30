@@ -144,7 +144,7 @@ const AdminImages = ({lang}) => {
                             {item.label}
                             <span className="admin__label__imgUpload">
                                 {item.updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
-                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/fields/${item.updateImage}`} alt="foto" />
+                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.IMAGE_URL}/image?url=/media/fields/${item.updateImage}`} alt="foto" />
                                 </figure> : ""}
                                 {item.img || item.updateImage ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImg(index); }}>
                                     <img className="btn__img" src={trashIcon} alt="usun" />

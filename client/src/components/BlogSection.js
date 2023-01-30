@@ -24,7 +24,7 @@ const BlogSection = () => {
                 {article.title}
             </h2>
             {article.file_path ? <figure className="blogSection__imgWrapper">
-                <img className="blogSection__img" src={`${settings.API_URL}/image?url=/media/blog/${article.file_path}`} alt={article.title} />
+                <img className="blogSection__img" src={`${settings.IMAGE_URL}/image?url=/media/blog/${article.file_path}`} alt={article.title} />
             </figure> : ""}
             <p className="blogSection__extract">
                 {article.excerpt}

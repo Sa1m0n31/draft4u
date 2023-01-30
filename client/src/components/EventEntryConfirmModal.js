@@ -51,7 +51,7 @@ const EventEntryConfirmModal = ({notificationId, eventId, userId, closeModal}) =
 
             <figure className="modal__profileImage">
                 <img className="img"
-                     src={user.file_path ? `${settings.API_URL}/image?url=/media/users/${user.file_path}` : profileImageExample}
+                     src={user.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${user.file_path}` : profileImageExample}
                      alt="profilowe" />
             </figure>
 

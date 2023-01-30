@@ -18,7 +18,7 @@ const SecondAccountModal = ({mobile}) => {
                     const { id, user_id } = result;
                     autoLogin(user_id, id)
                         .then((res) => {
-                            window.location = '/rozpocznij';
+                            window.location = '/tablica';
                         });
                 }
             });

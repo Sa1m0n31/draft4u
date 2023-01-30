@@ -9,7 +9,7 @@ const MyAccountStartHeader = ({fullName, image}) => {
     const { content } = useContext(ContentContext);
 
     useEffect(() => {
-        if(image) setProfilePicture(`${settings.API_URL}/image?url=/media/users/${image}`);
+        if(image) setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/users/${image}`);
     }, []);
 
     return <header className="myAccountStart__header siteWidthSuperNarrow">

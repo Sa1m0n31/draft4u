@@ -117,7 +117,7 @@ const AdminAddArticle = () => {
 
     const copyToClipboard = () => {
         const input = document.createElement('textarea');
-        input.innerHTML = `${settings.API_URL}/image?url=/media/blog/${generatedLink}`;
+        input.innerHTML = `${settings.IMAGE_URL}/image?url=/media/blog/${generatedLink}`;
         document.body.appendChild(input);
         input.select();
         const result = document.execCommand('copy');
@@ -138,7 +138,7 @@ const AdminAddArticle = () => {
                     Link do zdjęcia:
                 </h3>
                 <h4 className="modal__link">
-                    {`${settings.API_URL}/image?url=/media/blog/${generatedLink}`}
+                    {`${settings.IMAGE_URL}/image?url=/media/blog/${generatedLink}`}
                 </h4>
 
                 <button className="modal__btn modal__btn--copy" onClick={() => { copyToClipboard(); }}>
@@ -188,7 +188,7 @@ const AdminAddArticle = () => {
                         Dodaj obrazek wyróżniający
                         <span className="admin__label__imgUpload">
                             {updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
-                                <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/blog/${updateImage}`} alt="foto" />
+                                <img className="admin__label__imgUpload__updateImg" src={`${settings.IMAGE_URL}/image?url=/media/blog/${updateImage}`} alt="foto" />
                             </figure> : ""}
                             {img || updateImage ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImg(); }}>
                                 <img className="btn__img" src={trashIcon} alt="usun" />

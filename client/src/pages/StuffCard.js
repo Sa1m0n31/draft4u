@@ -59,7 +59,7 @@ const StuffCard = ({index, player, favoriteView, favorite, addPlayerToFavorites}
 
     return <section key={index} className={favoriteView ? "playerCard playerCard--favorite playerCard--stuff" : "playerCard playerCard--stuff"}>
         <figure className="playerCard__imgWrapper">
-            <img className="playerCard__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
+            <img className="playerCard__img" src={player.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
         </figure>
         <header className={favoriteView ? "playerCard__header playerCard__header--favorite" : "playerCard__header"}>
             <h3 className="playerCard__header__h">

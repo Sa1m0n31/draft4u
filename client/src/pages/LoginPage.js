@@ -31,7 +31,7 @@ const LoginPage = () => {
                 .then(res => {
                     /* Login success */
                     if(res?.data?.result) {
-                        window.location = "/rozpocznij";
+                        window.location = "/tablica";
 
                         isUserWithTwoAccounts()
                             .then((res) => {
@@ -41,7 +41,7 @@ const LoginPage = () => {
                                 else {
                                     localStorage.setItem('2a', '0');
                                 }
-                                window.location = "/rozpocznij";
+                                window.location = "/tablica";
                             });
                     }
                     else {

@@ -159,7 +159,7 @@ ul {
 }
 
 .siteHeader__menu__link {
-    color: #9F9F9F;
+    color: #cdcdcd;
     font-size: 19px;
     padding: 0 25px;
     opacity: .8;
@@ -167,6 +167,7 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Goldman', cursive;
 }
 
 .siteHeader__menu--dark .siteHeader__menu__link {
@@ -1621,6 +1622,17 @@ button {
 .aboutUs__content {
     padding-bottom: 100px;
     z-index: 6;
+    position: relative;
+}
+
+.aboutUs__content::before {
+    content: "";
+    position: absolute;
+    top: -300px;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    z-index: 6;
 }
 
 .aboutUs__header {
@@ -2228,6 +2240,10 @@ button {
 .mapDot__btn__details__data {
     text-align: left;
     margin-left: 15px;
+}
+
+.mapDot__btn__details__data * {
+    color: #fff !important;
 }
 
 .mapDot__btn__details__data span {
@@ -7835,6 +7851,7 @@ label.userInfoEdition__form__field {
     margin-right: 10px;
     flex-basis: 100%;
     max-width: 50px;
+    overflow: hidden;
 }
 
 .feed__addComment__input {
@@ -8787,4 +8804,8 @@ abbr[title] {
 
 .modal--deleteVideo .modal__inner__header {
     color: #fff;
+}
+
+.container .userInfoEdition--stuff .stuffSection {
+    padding-bottom: 55px;
 }

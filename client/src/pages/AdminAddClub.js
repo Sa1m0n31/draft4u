@@ -401,7 +401,7 @@ const AdminAddClub = ({admin}) => {
                             Logo klubu
                             <span className="admin__label__imgUpload">
                                 {updateImage ? <figure className="admin__label__imgUpload__updateImgWrapper">
-                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.API_URL}/image?url=/media/clubs/${updateImage}`} alt="foto" />
+                                    <img className="admin__label__imgUpload__updateImg" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${updateImage}`} alt="foto" />
                                 </figure> : ""}
                                 {img || updateImage ? <button className="admin__label__imgUpload__trashBtn" onClick={(e) => { e.stopPropagation(); e.preventDefault(); deleteImg(); }}>
                                     <img className="btn__img" src={trashIcon} alt="usun" />

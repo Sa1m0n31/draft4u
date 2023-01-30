@@ -154,6 +154,9 @@ function App() {
             <Route path="/zmien-haslo-zawodnika">
                 <UserWrapper page={10} />
             </Route>
+            <Route path="/informacje-o-zawodniku">
+                <UserWrapper page={11} />
+            </Route>
 
             {/* Club routes */}
             <Route path="/konto-klubu">
@@ -194,9 +197,9 @@ function App() {
             <Route path="/zmien-haslo-klubu">
                 <ClubWrapper page={10} />
             </Route>
-          <Route path="/wydarzenia">
-              <ClubWrapper page={13} />
-          </Route>
+            <Route path="/wydarzenia">
+                <ClubWrapper page={13} />
+            </Route>
 
           {/* Admin panel */}
           <Route path="/admin">

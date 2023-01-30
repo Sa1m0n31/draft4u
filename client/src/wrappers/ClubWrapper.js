@@ -16,6 +16,7 @@ import ChangePassword from "../pages/ChangePassword";
 import SearchStuffPage from "../pages/SearchStuffPage";
 import FavoritesStuff from "../pages/FavoritesStuff";
 import ClubEvents from "../pages/ClubEvents";
+import Feed from "../pages/Feed";
 
 const TestClubContext = React.createContext(true);
 
@@ -61,9 +62,7 @@ const ClubWrapper = ({page}) => {
                                             if(club) {
                                                 switch(page) {
                                                     case 1:
-                                                        setRenderSwitch(<ClubAccountStart club={club}
-                                                                                          playersProp={players}
-                                                                                          favorites={favorites} />);
+                                                        setRenderSwitch(<Feed club={club} />);
                                                         break;
                                                     case 2:
                                                         setRenderSwitch(<SearchPlayersPage club={club}
@@ -116,7 +115,7 @@ const ClubWrapper = ({page}) => {
                                             else {
                                                 getUserData()
                                                     .then((res) => {
-                                                        if(res?.data?.result) window.location = "/rozpocznij";
+                                                        if(res?.data?.result) window.location = "/tablica";
                                                         else window.location = "/";
                                                     });
                                             }

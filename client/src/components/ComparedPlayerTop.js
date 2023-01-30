@@ -47,7 +47,7 @@ const ComparedPlayerTop = ({player, color, nameMinHeight}) => {
                 <figure className="comparedPlayer__imgWrapper" style={{
                     borderColor: color
                 }} onClick={() => { window.location = `/profil-zawodnika?id=${player?.id}`; }}>
-                    <img className="comparedPlayer__img" src={player.file_path ? `${settings.API_URL}/image?url=/media/users/${player.file_path}` : profile} alt="profilowe" />
+                    <img className="comparedPlayer__img" src={player.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${player.file_path}` : profile} alt="profilowe" />
                 </figure>
                 <section className="comparedPlayer__icons">
                     <button className="comparedPlayer__icons__item" onClick={() => { addPlayerToFavorites(); }}>

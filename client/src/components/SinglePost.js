@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import profilePictureExample from "../static/img/profile.png";
-import exImage from "../static/img/polska-siatkowka.png";
 import {getPostDate} from "../helpers/others";
 import settings from "../settings";
 import {addComment, updateCommentsList} from "../helpers/post";
+import exampleProfileImage from '../static/img/profile-picture.png';
 
 const SinglePost = ({post, user, club, loggedIn}) => {
     const [comment, setComment] = useState('');
@@ -34,17 +34,18 @@ const SinglePost = ({post, user, club, loggedIn}) => {
         <div className="feed__item__header">
             {post?.club_id ? <figure className="feed__item__header__image">
                 <img className="img"
-                     src={post.club_id ? `${settings.API_URL}/image?url=/media/clubs/${post.club_logo}` : `${settings.API_URL}/image?url=/media/users/${post.user_profile_image}`}
+                     src={post.club_logo ? `${settings.IMAGE_URL}/image?url=/media/clubs/${post.club_logo}` : exampleProfileImage}
                      alt="zdjecie-profilowe" />
-            </figure> : <a className="feed__item__header__image" href={`/profil-zawodnika?id=${post.user_id}`}>
+            </figure> : <a className="feed__item__header__image" href={club ? `/profil-zawodnika?id=${post.user_id}` : `/informacje-o-zawodniku?id=${post.user_id}`}>
                 <img className="img"
-                     src={post.club_id ? `${settings.API_URL}/image?url=/media/clubs/${post.club_logo}` : `${settings.API_URL}/image?url=/media/users/${post.user_profile_image}`}
+                     src={post.user_profile_image ? `${settings.IMAGE_URL}/image?url=/media/users/${post.user_profile_image}` : exampleProfileImage}
                      alt="zdjecie-profilowe" />
             </a>}
             <div className="feed__item__header__content">
                 {post?.club_id ? <h4 className="feed__item__header__content__name goldman">
                     {post.club_name}
-                </h4> : <a className="feed__item__header__content__name goldman" href={`/profil-zawodnika?id=${post.user_id}`}>
+                </h4> : <a className="feed__item__header__content__name goldman"
+                           href={club ? `/profil-zawodnika?id=${post.user_id}` : `/informacje-o-zawodniku?id=${post.user_id}`}>
                     {`${post.first_name} ${post.last_name}`}
                 </a>}
                 <h5 className="feed__item__header__content__date goldman">
@@ -68,7 +69,7 @@ const SinglePost = ({post, user, club, loggedIn}) => {
             <textarea className="feed__addComment__input"
                       value={comment}
                       onChange={(e) => { setComment(e.target.value); }}
-                      onKeyDown={(e) => { console.log(e.key); if(e.key === 'Enter') {
+                      onKeyDown={(e) => { if(e.key === 'Enter') {
                           e.preventDefault();
                           e.stopPropagation();
                           addNewComment();
@@ -89,7 +90,8 @@ const SinglePost = ({post, user, club, loggedIn}) => {
                                 key={index}>
                         <figure className="feed__addComment__image">
                             <img className="img"
-                                 src={item.club_id ? `${settings.API_URL}/image?url=/media/clubs/${item.club_logo}` : `${settings.API_URL}/image?url=/media/users/${item.user_profile_image}`}
+                                 src={item.club_id ? (item.club_logo ? `${settings.IMAGE_URL}/image?url=/media/clubs/${item.club_logo}` : exampleProfileImage) :
+                                     (item.user_profile_image ? `${settings.IMAGE_URL}/image?url=/media/users/${item.user_profile_image}` : exampleProfileImage)}
                                  alt="zdjecie-profilowe" />
                         </figure>
                         <div className="feed__comments__item__content">

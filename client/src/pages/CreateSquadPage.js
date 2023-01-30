@@ -708,7 +708,7 @@ const CreateSquadPage = ({club}) => {
                                             </button>
 
                                             <figure className="createSquad__squad__item__dragging__imgWrapper">
-                                                <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
+                                                <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
                                             </figure>
 
                                             <section className="createSquad__squad__item__dragging__header">
@@ -723,7 +723,7 @@ const CreateSquadPage = ({club}) => {
 
                                         {!isElementInArray(selectedPlayers, index) ? <div className="createSquad__squad__item">
                                             <figure className="createSquad__squad__item__imgWrapper">
-                                                <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
+                                                <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
                                             </figure>
                                             <section className="createSquad__squad__item__data">
                                                 <h3 className="createSquad__squad__item__name">
@@ -779,7 +779,7 @@ const CreateSquadPage = ({club}) => {
                                             </button>
 
                                             <figure className="createSquad__squad__item__dragging__imgWrapper">
-                                                <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
+                                                <img className="createSquad__squad__item__dragging__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.last_name} />
                                             </figure>
 
                                             <section className="createSquad__squad__item__dragging__header">
@@ -794,7 +794,7 @@ const CreateSquadPage = ({club}) => {
 
                                         {!isElementInArray(selectedPlayers, index) ? <div className="createSquad__squad__item">
                                             <figure className="createSquad__squad__item__imgWrapper">
-                                                <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.API_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
+                                                <img className="createSquad__squad__item__img" src={item.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${item.file_path}` : profilePicture} alt={item.first_name + " " + item.last_name} />
                                             </figure>
                                             <section className="createSquad__squad__item__data">
                                                 <h3 className="createSquad__squad__item__name">
