@@ -1502,6 +1502,7 @@
 
     .playerInfoEdition {
         margin-top: 30px;
+        margin-bottom: 95px;
     }
 
     .userInfoEdition__graphSection {
@@ -1762,6 +1763,50 @@
         display: block !important;
     }
 
+    .modal__inner__cv {
+        flex-direction: column;
+    }
+
+    .modal__clubs, .modal__cv {
+        width: 100%;
+        padding: 0;
+    }
+
+    .modal__cv {
+        display: none;
+    }
+
+    .modal--clubDetails .btn--modalClose {
+        top: 10px;
+        right: 10px;
+    }
+
+    .modal--clubDetails .modal__inner {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .events__header {
+        margin-bottom: 10px;
+        font-size: 24px;
+    }
+
+    .modal__header--clubDetails--subheader {
+        font-size: 14px !important;
+    }
+
+    .events .btn--addEvent {
+        height: 35px;
+        font-size: 14px;
+        max-width: 180px;
+    }
+
+    .events__top {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     .landingPage__flex {
         margin-bottom: 20px;
         margin-top: 35vw !important;
@@ -1844,9 +1889,15 @@
     }
 
     .chooseAccountTypeModal--register .registerModal__inner {
+        border-radius: 10px;
         height: auto;
         width: 100%;
         padding-bottom: 170px;
+    }
+
+    .chooseAccountTypeModal--register .btn--modalClose {
+        top: 10px;
+        right: 10px;
     }
 
     .chooseAccountTypeModal {

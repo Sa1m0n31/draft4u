@@ -3,11 +3,13 @@ import {getUserFavorites, getUserVisited} from "../helpers/user";
 import settings from "../settings";
 import {ContentContext} from "../App";
 import ClubListModal from "./ClubListModal";
+import ClubDetailsModal from "./ClubDetailsModal";
 
 const ClubActivities = ({userId}) => {
     const [visitors, setVisitors] = useState([]);
     const [favorites, setFavorites] = useState([]);
     const [clubListModalVisible, setClubListModalVisible] = useState(false);
+    const [clubDetails, setClubDetails] = useState(null);
 
     const { content } = useContext(ContentContext);
 
@@ -27,6 +29,9 @@ const ClubActivities = ({userId}) => {
         {clubListModalVisible ? <ClubListModal closeModal={() => { setClubListModalVisible(false); }}
                                                userId={userId} /> : ''}
 
+        {clubDetails ? <ClubDetailsModal club={clubDetails}
+                                         closeModal={() => { setClubDetails(null); }} /> : ''}
+
         {/*<figure className="clubActivities__imgHeader">*/}
         {/*    <img className="btn__img" src={getImageUrl(content.img4)} alt="aktywnosci-klubow" />*/}
         {/*</figure>*/}
@@ -35,7 +40,10 @@ const ClubActivities = ({userId}) => {
         </h3>
         <section className="clubActivities__list">
             {visitors.length ? visitors.map((item, index) => {
-                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
+                return item?.file_path ? <button className="clubActivities__list__btn"
+                                                 onClick={() => { setClubDetails(item); }}>
+                    <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
+                </button> : '';
             }) : <h3 className="clubActivities__empty">
                 {content.club_activities_text1}
             </h3>}
@@ -46,7 +54,10 @@ const ClubActivities = ({userId}) => {
         </h3>
         <section className="clubActivities__list">
             {favorites.length ? favorites.map((item, index) => {
-                return item?.file_path ? <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" /> : '';
+                return item?.file_path ? <button className="clubActivities__list__btn"
+                                                 onClick={() => { setClubDetails(item); }}>
+                        <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
+                </button>: '';
             }) : <h3 className="clubActivities__empty">
                 {content.club_activities_text2}
             </h3> }

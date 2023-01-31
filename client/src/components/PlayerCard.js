@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import man from "../static/img/profile-picture.png";
 import heart from "../static/img/heart.svg";
 import heartFilled from "../static/img/heart-filled.svg";
@@ -11,7 +11,7 @@ import cardBackground from '../static/img/card-background.png'
 import settings from "../settings";
 
 const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerToComparator,
-                        inComparator, addPlayerToFavorites}) => {
+                        inComparator, addPlayerToFavorites, userView}) => {
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
     const [clubLogo, setClubLogo] = useState(null);
@@ -27,7 +27,6 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                 const logo = clubLogos?.find((item) => {
                     return item.name.toLowerCase().includes(player?.club?.toLowerCase())
                 });
-                console.log(logo);
                 if(logo) {
                     setClubLogo(`https://draft4u.com.pl/image?url=/media/clubs/${logo.logo}`);
                 }
@@ -74,7 +73,7 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
     }
 
     return <a key={index}
-              href={`/profil-zawodnika?id=${player.user_id ? player.user_id : player.id}`}
+              href={`/${userView ? 'informacje-o-zawodniku' : 'profil-zawodnika'}?id=${player.user_id ? player.user_id : player.id}`}
               className={favoriteView ? "playerCard playerCard--favorite" : "playerCard"}>
 
         <img className="cardBackground" src={cardBackground} alt="tlo" />
@@ -82,10 +81,10 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
         <div className="playerCard__top">
             <div className="playerCard__top__left">
                 <div className="playerCard__top__left__buttons">
-                    <button className="playerCard__addToFavorites"
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); addPlayerToFavorites ? addPlayerToFavorites(player.user_id) : addPlayerToFavoritesFallback(); }}>
+                    {!userView ? <button className="playerCard__addToFavorites"
+                                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); addPlayerToFavorites ? addPlayerToFavorites(player.user_id) : addPlayerToFavoritesFallback(); }}>
                         {!favoritePlayer ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}
-                    </button>
+                    </button> : ''}
                     {balance ? <button className={comparator ? "playerCard__balanceBtn playerCard__balanceBtn--added" : "playerCard__balanceBtn"}
                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(addPlayerToComparator(player)) setComparator(!comparator); }}>
                          <img className="playerCard__balanceBtn__img" src={balanceIcon} alt="dodaj-do-porownywarki" />

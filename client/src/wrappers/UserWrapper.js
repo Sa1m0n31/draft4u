@@ -17,6 +17,7 @@ import ChatPage from "../pages/ChatPage";
 import {StuffContext} from "../App";
 import PlayerPage from "../pages/PlayerPage";
 import Feed from "../pages/Feed";
+import Community from "../pages/Community";
 
 const UserContext = React.createContext(5);
 
@@ -83,7 +84,7 @@ const UserWrapper = ({page}) => {
                                             setRenderSwitch(<PlayerPage userInfo={user} isLocal={isLocal} />);
                                             break;
                                         case 12:
-                                            setRenderSwitch(<Feed user={user} />);
+                                            setRenderSwitch(<Community user={user} isLocal={isLocal} />);
                                             break;
                                         default:
                                             setRenderSwitch(<PlayerProfileEdition user={user} isLocal={isLocal} />);

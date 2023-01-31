@@ -168,6 +168,17 @@ ul {
     justify-content: center;
     align-items: center;
     font-family: 'Goldman', cursive;
+    position: relative;
+}
+
+.siteHeader__menu__link::after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: transparent;
 }
 
 .siteHeader__menu--dark .siteHeader__menu__link {
@@ -1763,7 +1774,7 @@ button {
 /* Player */
 .club, .player {
     width: 100vw;
-    margin: 50px auto;
+    margin: 0 auto;
 }
 
 .club .player__flex {
@@ -2035,6 +2046,7 @@ button {
     margin: 0;
     height: 0;
     opacity: 0;
+    font-size: 15px;
     transition: .4s all;
 }
 
@@ -2514,7 +2526,6 @@ button {
 }
 
 .clubActivities__img {
-    margin-right: 35px;
     width: 100px;
     height: auto;
     margin-bottom: 20px;
@@ -2669,10 +2680,6 @@ button {
     width: 60%;
 }
 
-.userInfoEdition__form--dark {
-    background: #474747;
-}
-
 .userInfoEdition__form--dark .userInfoEdition__value label {
     padding-right: 0;
 }
@@ -2698,7 +2705,7 @@ button {
 }
 
 .playerInfoEdition .userInfoEdition__form {
-    width: 45%;
+    width: 100%;
     position: relative;
     z-index: 2;
 }
@@ -2750,7 +2757,7 @@ button {
 }
 
 .playerInfoEdition {
-    margin-top: 100px;
+    margin-top: 60px;
 }
 
 .playerInfoEdition .input--editProfile {
@@ -3912,11 +3919,6 @@ input::-webkit-inner-spin-button {
     justify-content: center;
     align-items: center;
     transition: .4s all;
-}
-
-.playerCard__moreBtn:hover {
-    background: #201E1B;
-    color: var(--dark);
 }
 
 .button--showPlayersPage {
@@ -5336,6 +5338,7 @@ input::-webkit-inner-spin-button {
     z-index: -1;
 }
 
+.modal--clubDetails,
 .modal--event {
     z-index: 999;
     opacity: 1;
@@ -5347,6 +5350,10 @@ input::-webkit-inner-spin-button {
     background: var(--dark);
     border: 1px solid var(--grey);
     padding: 40px;
+}
+
+.modal--clubDetails .modal__inner {
+    height: 350px;
 }
 
 .modal__header {
@@ -6807,18 +6814,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .player {
     position: relative;
-    margin-top: 50px;
 }
 
 .scrollCarousel__slide {
     width: calc(var(--siteWidthNarrow) - 20px);
     margin: auto;
     background: transparent;
-    /*color: red;*/
-    height: auto;
-    min-height: 70vh;
-    max-height: calc(100vh - 177px);
-    overflow-x: visible;
+    height: calc(100vh - 90px);
+    max-height: calc(100vh - 157px);
+    overflow: hidden;
 }
 
 .scrollCarousel__slide.faq {
@@ -7445,6 +7449,7 @@ label.userInfoEdition__form__field {
     position: absolute;
     bottom: 0;
     right: 15px;
+    max-width: 135px;
 }
 
 .landingPage__benefits__flex__item__image .img {
@@ -8166,6 +8171,13 @@ input.btn--feedTopOption::before {
     width: 100%;
 }
 
+.events__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .btn--addEvent {
     display: flex;
     justify-content: center;
@@ -8175,6 +8187,13 @@ input.btn--feedTopOption::before {
     border-radius: 10px;
     font-size: 18px;
     margin: 20px auto 0;
+}
+
+.events .btn--addEvent {
+    max-width: 280px;
+    color: #201E1B;
+    margin: 0;
+    border-radius: 5px;
 }
 
 .input--event--title {
@@ -8413,6 +8432,7 @@ abbr[title] {
     margin-left: auto;
     margin-right: auto;
     max-width: 80%;
+    color: #fff;
 }
 
 .btn--sendCv {
@@ -8466,10 +8486,19 @@ abbr[title] {
     opacity: .5;
 }
 
+.modal__inner__cv {
+    max-height: 65%;
+}
+
 .modal__clubs {
+    width: 65%;
     margin: 20px auto;
-    max-height: 60%;
+    max-height: 90%;
     overflow-y: auto;
+}
+
+.modal__cv {
+    width: 32%;
 }
 
 .scroll {
@@ -8808,4 +8837,151 @@ abbr[title] {
 
 .container .userInfoEdition--stuff .stuffSection {
     padding-bottom: 55px;
+}
+
+.btn--editEvent {
+    margin-left: 20px;
+    background: transparent;
+    opacity: .9;
+}
+
+.btn--editEvent:hover {
+    opacity: 1;
+}
+
+.well {
+    position: relative;
+    overflow: hidden;
+    transition: 1s cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+.top {
+    font-size: 80%;
+    color: hsla(0, 0%, 100%, .25);
+    position: relative;
+    top: -.2em;
+    cursor: pointer;
+}
+
+.panel {
+    position: relative;
+    min-height: 100vh;
+    height: auto;
+    overflow: scroll;
+    padding: 30px;
+    box-sizing: border-box;
+    cursor: default;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.panel::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+.container--player .siteHeader {
+    margin-bottom: 0;
+}
+
+.modal--clubDetails .modal__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal--clubDetails__img {
+    width: 80px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.modal__header--clubDetails {
+    text-align: center;
+}
+
+.modal__header--clubDetails--subheader {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+.clubActivities__list__btn {
+    padding: 0;
+    margin-right: 35px;
+    background: transparent;
+    transform-origin: center;
+    transition: .2s all;
+}
+
+.clubActivities__list__btn:hover {
+    transform: scale(1.05);
+}
+
+.siteHeader__menu__link {
+    background: transparent;
+}
+
+.modal__inner__cv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.modal__cv {
+    padding-left: 2vw;
+}
+
+.modal__cv * {
+    color: #fff;
+    font-family: 'Goldman', cursive;
+}
+
+.modal__cv__header {
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.modal__cv p {
+    font-size: 14px;
+}
+
+.modal__cv p.mb {
+    margin-bottom: 7px;
+}
+
+.searchFilters__position--invisible {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.community > .center {
+    width: 100%;
+}
+
+.playersWall--flex {
+    display: flex;
+}
+
+.community__top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn--community {
+    background: transparent;
+    color: #fff;
+    font-size: 24px;
+    margin: 20px 20px 40px;
+    padding-bottom: 7px;
+    border-bottom: 3px solid transparent;
+}
+
+.btn--community--selected {
+    border-color: var(--gold);
 }

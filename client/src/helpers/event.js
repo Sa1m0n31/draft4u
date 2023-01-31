@@ -9,6 +9,12 @@ const addEvent = (clubId, title, expireDate, eventDate, eventHour, description) 
     });
 }
 
+const updateEvent = (eventId, title, expireDate, eventDate, eventHour, description) => {
+    return axios.post(`${API_URL}/event/update`, {
+        eventId, title, expireDate, eventDate, eventHour, description
+    });
+}
+
 const deleteEvent = (id) => {
     return axios.delete(`${API_URL}/event/delete`, {
         params: {
@@ -50,4 +56,4 @@ const getUserEntries = (userId) => {
 }
 
 export { addEvent, getCurrentEvents, deleteEvent, getEventsByClub,
-    addEventEntry, acceptEventEntry, getUserEntries }
+    addEventEntry, acceptEventEntry, getUserEntries, updateEvent }

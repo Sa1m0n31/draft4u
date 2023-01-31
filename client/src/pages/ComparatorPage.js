@@ -332,7 +332,7 @@ const ComparatorPage = ({club}) => {
             })}
         </section>
 
-        {playersArray?.filter((item) => { return item; }).length > 1 ? <ComparatorChart datasets={playersArray?.filter((item) => { return item; })} /> : ""}
+        {/*{playersArray?.filter((item) => { return item; }).length > 1 ? <ComparatorChart datasets={playersArray?.filter((item) => { return item; })} /> : ""}*/}
 
         <Footer theme="dark" border={true} />
     </div>

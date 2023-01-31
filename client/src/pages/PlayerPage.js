@@ -17,9 +17,14 @@ const PlayerPage = ({club, userInfo}) => {
     const { isStuff, setIsStuff } = useContext(StuffContext);
 
     useEffect(() => {
-        const userId = new URLSearchParams(window.location.search).get('id');
+        if(club) {
+            const userId = new URLSearchParams(window.location.search).get('id');
+            addToVisited(userId);
+        }
+    }, [club, isStuff]);
 
-        addToVisited(userId);
+    useEffect(() => {
+        const userId = new URLSearchParams(window.location.search).get('id');
 
         getUserById(userId)
             .then((res) => {
@@ -42,13 +47,20 @@ const PlayerPage = ({club, userInfo}) => {
 
     return <div className="container container--dark">
         {user ? <>
-            <Header loggedIn={true} club={!!club} menu="light" theme="dark" profileImage={club.file_path ? club.file_path : userInfo?.file_path} />
+            <Header loggedIn={true}
+                    club={!!club}
+                    profileImage={club?.file_path ? club.file_path : userInfo?.file_path} />
 
-            <UserInfoEdition player={user} clubProp={true} theme="dark" favorite={favorite} />
+            <UserInfoEdition player={user}
+                             clubProp={true}
+                             user={!!userInfo}
+                             theme="dark"
+                             favorite={favorite} />
+
             {!isStuff ? <>
-                <PlayerInfoEdition player={user} theme="dark" />
+                {!userInfo ? <PlayerInfoEdition player={user} theme="dark" /> : ''}
                 <PlayerVideoView id={user.id} club={true} />
-            </> : <StuffInfoEdition id={user.identity} club={true} />}
+            </> : (!userInfo ? <StuffInfoEdition id={user.identity} club={true} /> : '')}
         </> : <LoadingPage />}
 
         <Footer theme="dark" border={true} />

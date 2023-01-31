@@ -38,7 +38,7 @@ router.get('/get', (request, response) => {
 router.get('/get-events-by-club', (request, response) => {
    const clubId = request.query.id;
 
-   const query = `SELECT e.id as event_id, e.club_id, e.event_date, e.expire_date, e.title, e.description, 
+   const query = `SELECT e.id as event_id, e.club_id, e.event_date, e.expire_date, e.title, e.description, e.event_hour, 
        u.id as user_id, u.first_name, u.last_name, i.id as id, ee.accepted 
        FROM events e 
        LEFT OUTER JOIN events_entries ee ON ee.event_id = e.id 
@@ -67,6 +67,26 @@ router.post("/add", basicAuth, (request, response) => {
 
     const query = `INSERT INTO events VALUES (nextval('posts_id_sequence'), $1, $2, $3, $4, $5, $6)`;
     const values = [title, expireDate, eventDate, eventHour, description, clubId];
+    db.query(query, values,(err, res) => {
+        if(res) {
+            response.send({
+                result: 1
+            });
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
+router.post("/update", basicAuth, (request, response) => {
+    const { eventId, title, expireDate, eventDate, eventHour, description } = request.body;
+
+    const query = `UPDATE events SET title = $1, expire_date = $2, event_date = $3, event_hour = $4, description = $5 WHERE id = $6`;
+    const values = [title, expireDate, eventDate, eventHour, description, eventId];
+
     db.query(query, values,(err, res) => {
         if(res) {
             response.send({

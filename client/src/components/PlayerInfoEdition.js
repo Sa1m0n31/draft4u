@@ -11,7 +11,6 @@ import {
     updateUserWeight
 } from "../helpers/user";
 
-import Chart from "react-apexcharts";
 import {unicodeToUTF8} from "../helpers/others";
 import {ContentContext} from "../App";
 
@@ -50,12 +49,6 @@ const PlayerInfoEdition = ({player, theme}) => {
     }, []);
 
     useEffect(() => {
-        const div = document.createElement("div");
-        div.textContent = "test";
-        document.querySelector(".apexcharts-grid").appendChild(div);
-    }, [height]);
-
-    useEffect(() => {
         setAttackRange(player.attack_range);
         setVerticalRange(player.vertical_range);
         setBlockRange(player.block_range);
@@ -63,96 +56,6 @@ const PlayerInfoEdition = ({player, theme}) => {
         setHeight(player.height);
         if(player.name) setPosition(unicodeToUTF8(player.name));
     }, [player]);
-
-    const options = {
-        chart: {
-            id: "basic-bar"
-        },
-        responsive: [
-            {
-              breakpoint: 1400,
-              options: {
-                  chart: {
-                      width: 800
-                  }
-              }
-            },
-            {
-                breakpoint: 958,
-                options: {
-                    chart: {
-                        width: 700
-                    },
-                    xaxis: {
-                        labels: {
-                            style: {
-                                fontSize: '13px'
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                breakpoint: 576,
-                options: {
-                    chart: {
-                        width: 500
-                    },
-                    xaxis: {
-                        labels: {
-                            style: {
-                                fontSize: '10px'
-                            }
-                        }
-                    }
-                }
-            }
-        ],
-        xaxis: {
-            categories: [content.player_parameter_11, content.player_parameter_12, content.player_parameter_8, content.player_parameter_9, content.player_parameter_10],
-            labels: {
-                show: true,
-                style: {
-                    colors: theme === 'dark' ? ["#fff", "#fff", "#fff", "#fff", "#fff", "#fff"] : ["#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d", "#3d3d3d"],
-                    fontSize: "18px",
-                    fontFamily: 'Arial'
-                }
-            }
-        },
-        fill: {
-            colors: ['#D9AA66'],
-            opacity: 1
-        },
-        stroke: {
-            show: false
-        },
-        markers: {
-            colors: "#fff",
-            strokeColors: "#fff",
-            size: 2
-        },
-        plotOptions: {
-            radar: {
-                polygons: {
-                    connectorColors: 'rgba(255, 255, 255, .3)',
-                    strokeColors: theme === 'dark' ? ['#fff', '#282828', '#282828', '#fff'] : '#3d3d3d',
-                    fill: {
-                        colors: theme === 'dark' ? ['#282828'] : ['#3d3d3d']
-                    }
-                }
-            }
-        },
-        yaxis: {
-            show: false
-        }
-    }
-
-    const series = [
-        {
-            name: theme === 'dark' ? content.result_text : content.your_result,
-            data: [height, weight * 2.1, attackRange, verticalRange * 2.5, blockRange]
-        }
-    ]
 
     const changeUserAttackRange = (tab) => {
         setEditAttackRange(false);
@@ -393,15 +296,6 @@ const PlayerInfoEdition = ({player, theme}) => {
                     </label>
                 </span>
             </label>
-        </section>
-
-        <section className="userInfoEdition__graphSection" id="playerGraph">
-            <Chart
-                options={options}
-                series={series}
-                type="radar"
-                width="900"
-            />
         </section>
     </section>
 }

@@ -19,7 +19,7 @@ import {isMail} from "../helpers/validation";
 import {ContentContext, StuffContext} from "../App";
 import {TestClubContext} from "../wrappers/ClubWrapper";
 
-const UserInfoEdition = ({player, theme, clubProp, favorite}) => {
+const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
     const { content, language } = useContext(ContentContext);
     const { testClub } = useContext(TestClubContext);
     const { isStuff } = useContext(StuffContext);

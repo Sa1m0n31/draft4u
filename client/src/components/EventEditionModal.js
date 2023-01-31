@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {addEvent} from "../helpers/event";
+import {addEvent, updateEvent} from "../helpers/event";
 import Calendar from 'react-calendar';
 import calendarIcon from '../static/img/calendar-icon.svg';
 import hourIcon from '../static/img/clock-icon.svg';
@@ -8,7 +8,8 @@ import AfterAddEvent from "./AfterAddEvent";
 import AfterAddEventError from "./AfterAddEventError";
 import DraftLoader from "./Loader";
 
-const EventEditionModal = ({closeModal, clubId}) => {
+const EventEditionModal = ({closeModal, clubId, update, eventData}) => {
+    const [id, setId] = useState(-1);
     const [title, setTitle] = useState('');
     const [entriesDate, setEntriesDate] = useState('');
     const [eventDate, setEventDate] = useState('');
@@ -23,20 +24,53 @@ const EventEditionModal = ({closeModal, clubId}) => {
         setLoading(false);
     }, [status]);
 
+    useEffect(() => {
+        if(eventData) {
+            const eventDateTmp = new Date(eventData.event_date);
+
+            setId(eventData.event_id);
+            setTitle(eventData.title);
+            setEntriesDate(new Date(eventData.expire_date));
+            setEventDate(eventDateTmp);
+            setEventHour(eventData.event_hour);
+            setDescription(eventData.description);
+        }
+    }, [eventData]);
+
     const addNewEvent = () => {
         setLoading(true);
-        addEvent(clubId.id, title, entriesDate, eventDate, eventHour, description)
-            .then((res) => {
-                if(res?.data?.result) {
-                    setStatus(1);
-                }
-                else {
+
+        const entriesDateToInsert = new Date(new Date(entriesDate).getTime() + (24 * 60 * 60 * 1000));
+        const eventDateToInsert = new Date(new Date(eventDate).getTime() + (24 * 60 * 60 * 1000));
+
+        if(update) {
+            updateEvent(id, title, entriesDateToInsert, eventDateToInsert, eventHour, description)
+                .then((res) => {
+                    if(res?.data?.result) {
+                        setStatus(1);
+                    }
+                    else {
+                        setStatus(-1);
+                    }
+                })
+                .catch(() => {
                     setStatus(-1);
-                }
-            })
-            .catch(() => {
-                setStatus(-1);
-            });
+                });
+        }
+        else {
+            addEvent(clubId.id, title, entriesDateToInsert, eventDateToInsert, eventHour, description)
+                .then((res) => {
+                    if(res?.data?.result) {
+                        setStatus(1);
+                    }
+                    else {
+                        setStatus(-1);
+                    }
+                })
+                .catch(() => {
+                    setStatus(-1);
+                });
+        }
     }
 
     const convertDateToString = (date) => {
@@ -121,11 +155,12 @@ const EventEditionModal = ({closeModal, clubId}) => {
             {!loading ? <button className="btn btn--addEvent btn--gradient goldman"
                                 disabled={!title || !entriesDate || !eventDate || !eventHour || !description}
                                 onClick={() => { addNewEvent(); }}>
-                Utwórz wydarzenie
+                {update ? 'Edytuj wydarzenie' : 'Utwórz wydarzenie'}
             </button> : <div className="center">
                 <DraftLoader />}
             </div>}
-        </div> : (status === 1 ? <AfterAddEvent closeModal={closeModal} /> : <AfterAddEventError closeModal={closeModal} />)}
+        </div> : (status === 1 ? <AfterAddEvent update={update}
+                                                closeModal={closeModal} /> : <AfterAddEventError closeModal={closeModal} />)}
     </div>
 };
 

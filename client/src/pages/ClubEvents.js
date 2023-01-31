@@ -4,12 +4,16 @@ import Footer from "../components/Footer";
 import {acceptEventEntry, deleteEvent, getEventsByClub} from "../helpers/event";
 import {addTrailingZero, groupBy} from "../helpers/others";
 import DeleteEventModal from "../components/DeleteEventModal";
+import EventEditionModal from "../components/EventEditionModal";
+import penIcon from '../static/img/pen-white.png';
 
 const ClubEvents = ({club}) => {
     const [events, setEvents] = useState([]);
     const [accepted, setAccepted] = useState(false);
     const [deleteCandidate, setDeleteCandidate] = useState(0);
     const [deleted, setDeleted] = useState(-1);
+    const [eventEditionModalVisible, setEventEditionModalVisible] = useState(false);
+    const [eventToEdit, setEventToEdit] = useState(null);
 
     useEffect(() => {
         if(club?.id) {
@@ -62,16 +66,29 @@ const ClubEvents = ({club}) => {
                                              deleted={deleted}
                                              confirmDelete={() => { deleteEventById(); }} /> : ''}
 
+        {eventEditionModalVisible ? <EventEditionModal closeModal={() => { setEventEditionModalVisible(false); }}
+                                                       clubId={club} /> : ''}
+
+        {eventToEdit ? <EventEditionModal closeModal={() => { setEventToEdit(null); }}
+                                          update={true}
+                                          eventData={eventToEdit}
+                                          clubId={club} /> : ''}
+
         <div className="events siteWidth">
-            <h1 className="events__header">
-                Twoje wydarzenia
-            </h1>
+            <div className="events__top">
+                <h1 className="events__header">
+                    Twoje wydarzenia
+                </h1>
+
+                <button className="btn btn--addEvent btn--gradient center goldman"
+                        onClick={() => { setEventEditionModalVisible(true); }}>
+                    Dodaj wydarzenie
+                </button>
+            </div>
 
             {events[0]?.length ? events.map((item, index) => {
                 const eventInfo = item[1][0];
                 const entries = item[1];
-
-                console.log(entries[0]);
 
                 return <div className="events__item"
                             key={index}>
@@ -82,6 +99,11 @@ const ClubEvents = ({club}) => {
 
                     <h3 className="events__item__text">
                        {eventInfo.title}
+
+                       <button className="btn--editEvent"
+                               onClick={() => { setEventToEdit(eventInfo); }}>
+                           <img className="img" src={penIcon} alt="edytuj" />
+                       </button>
                     </h3>
                     <h4 className="events__item__text events__item__text--date">
                         <b>Zapisy do: </b> {convertDateToString(eventInfo.expire_date)}

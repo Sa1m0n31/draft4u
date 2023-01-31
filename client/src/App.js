@@ -157,6 +157,9 @@ function App() {
             <Route path="/informacje-o-zawodniku">
                 <UserWrapper page={11} />
             </Route>
+            <Route path="/spolecznosc">
+                <UserWrapper page={12} />
+            </Route>
 
             {/* Club routes */}
             <Route path="/konto-klubu">

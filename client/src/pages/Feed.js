@@ -24,8 +24,8 @@ const Feed = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isClub, setIsClub] = useState(false);
     const [isPlayer, setIsPlayer] = useState(false);
-    const [user, setUser] = useState(null); // 20231
-    const [club, setClub] = useState(null); // 'b2fea7ae-a9cf-419f-b473-1709c1d2a930'
+    const [user, setUser] = useState(null);
+    const [club, setClub] = useState(null);
     const [eventEditionModalVisible, setEventEditionModalVisible] = useState(false);
     const [eventInfoModalId, setEventInfoModalId] = useState(0);
     const [feedItems, setFeedItems] = useState([]);
@@ -43,7 +43,6 @@ const Feed = () => {
         getCurrentEvents()
             .then((res) => {
                 if(res?.data?.result) {
-                    console.log(res.data.result);
                     setClubEvents(res.data.result);
                 }
             });
@@ -103,6 +102,18 @@ const Feed = () => {
         }
     }, [postImage]);
 
+    useEffect(() => {
+        if(status === 1 && page === 0) {
+            getPosts(0)
+                .then((res) => {
+                    if(res?.data?.result) {
+                        setFeedItems(res.data.result);
+                        setPage(1);
+                    }
+                });
+        }
+    }, [status, page]);
+
     const addNewPost = () => {
         if(postContent) {
             setLoading(true);
@@ -113,6 +124,7 @@ const Feed = () => {
                         setPostImage(null);
                         setPostImageUrl('');
                         setStatus(1);
+                        setPage(0);
                     }
                     else {
                         setStatus(-1);

@@ -34,15 +34,17 @@ import ukIcon from '../static/img/united-kingdom.svg'
 import arrowDownIcon from '../static/img/arrow-down-menu.svg'
 import switchIcon from '../static/img/switch.svg'
 import EventEntryConfirmModal from "./EventEntryConfirmModal";
+import ClubListModal from "./ClubListModal";
 
 const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepage,
-                    clubPage, player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
+                    player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
     const [render, setRender] = useState(false);
     const [currentMenuVisible, setCurrentMenuVisible] = useState(-1);
 
     const [newMessages, setNewMessages] = useState(0);
     const [newNotifications, setNewNotifications] = useState(0);
+    const [playerId, setPlayerId] = useState(-1);
 
     const [listenSocket, setListenSocket] = useState(null);
     const [updateNotifications, setUpdateNotifications] = useState(false);
@@ -60,6 +62,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
     const [eventEntryConfirmModal, setEventEntryConfirmModal] = useState(0);
     const [currentEventId, setCurrentEventId] = useState(0);
     const [notificationId, setNotificationId] = useState(0);
+    const [clubListModalVisible, setClubListModalVisible] = useState(false);
 
     let registerModal = useRef(null);
 
@@ -162,6 +165,8 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 .then((res) => {
                    const userId = res?.data?.result?.id;
                    if(userId) {
+                       setPlayerId(userId);
+
                        getIdentityById(userId)
                            .then((res) => {
                                const id = res?.data?.result?.id;
@@ -300,6 +305,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                                                           notificationId={notificationId}
                                                           userId={eventEntryConfirmModal} /> : ''}
 
+        {clubListModalVisible ? <ClubListModal closeModal={() => { setClubListModalVisible(false); }}
+                                               userId={playerId} /> : ''}
+
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
             <button className="mobileMenu__close" onClick={() => { closeMobileMenu(); }} ref={mobileMenuCloseBtn}>
@@ -363,6 +371,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/spolecznosc">Społeczność</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <button className="mobileMenu__list__link" onClick={() => { setClubListModalVisible(true); }}>Wyślij CV</button>
                 </li>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/edycja-profilu">{menuPlayer[1]}</a>
@@ -516,6 +530,16 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                     <a className="siteHeader__menu__link" href="/tablica">
                         Tablica
                     </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <a className="siteHeader__menu__link" href="/spolecznosc">
+                        Społeczność
+                    </a>
+                </li>
+                <li className="siteHeader__menu__list__item">
+                    <button className="siteHeader__menu__link" onClick={() => { setClubListModalVisible(true); }}>
+                        Wyślij CV
+                    </button>
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/edycja-profilu">

@@ -13,6 +13,11 @@ const ChooseAccountType = ({chooseAccountType}) => {
     }
 
     return <main className="registerModal__inner" ref={registerModal}>
+        <button className="btn btn--remove btn--modalClose"
+                onClick={() => { window.location.href = '/'; }}>
+            &times;
+        </button>
+
         <h3 className="registerModal__header">
             {content.register_header}
         </h3>

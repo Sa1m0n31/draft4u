@@ -9,7 +9,7 @@ import {addToFavorites, deleteFromFavorites} from "../helpers/club";
 import {ContentContext} from "../App";
 import {TestClubContext} from "../wrappers/ClubWrapper";
 
-const StuffCard = ({index, player, favoriteView, favorite, addPlayerToFavorites}) => {
+const StuffCard = ({index, player, favoriteView, favorite, addPlayerToFavorites, userView}) => {
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [post, setPost] = useState("-");
 
@@ -65,9 +65,9 @@ const StuffCard = ({index, player, favoriteView, favorite, addPlayerToFavorites}
             <h3 className="playerCard__header__h">
                 {player.first_name} {testClub ? '******' : player.last_name}
             </h3>
-            <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites ? addPlayerToFavorites(player.user_id) : addPlayerToFavoritesFallback(); }}>
+            {!userView ? <button className="playerCard__addToFavorites" onClick={() => { addPlayerToFavorites ? addPlayerToFavorites(player.user_id) : addPlayerToFavoritesFallback(); }}>
                 {!favoritePlayer ? <img className="btn__img" src={heart} alt="dodaj-do-ulubionych" /> : <img className="btn__img heartFilled" src={heartFilled} alt="dodano-do-ulubionych" />}
-            </button>
+            </button> : ''}
         </header>
         <main className="playerCard__stats">
             <section className="stuffCard__stats__item flex">
@@ -95,7 +95,7 @@ const StuffCard = ({index, player, favoriteView, favorite, addPlayerToFavorites}
                 </p>
             </section>
         </main>
-        <a className="playerCard__moreBtn" href={`/profil-zawodnika?id=${player.user_id ? player.user_id : player.id}`}>
+        <a className="playerCard__moreBtn" href={`/${userView ? 'informacje-o-zawodniku' : 'profil-zawodnika'}?id=${player.user_id ? player.user_id : player.id}`}>
             {content.more_about_player}
         </a>
     </section>
