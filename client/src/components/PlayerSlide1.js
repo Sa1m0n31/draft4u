@@ -6,7 +6,7 @@ const PlayerSlide1 = ({openRegisterModal}) => {
     const { content } = useContext(ContentContext);
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--1--player">
-        <div>
+        <div className="content--slide1">
             <h1 className="bigHeader bigHeader--slide1 whitespace">
                 {content.player_zone_header1}
             </h1>

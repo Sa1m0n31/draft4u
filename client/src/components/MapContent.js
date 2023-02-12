@@ -10,6 +10,7 @@ import settings from "../settings";
 import ReactSiema from 'react-siema'
 import {ContentContext} from "../App";
 import arrowDownBlack from '../static/img/arrow-down-black.svg'
+import ClubDetailsModal from "./ClubDetailsModal";
 
 const MapContent = () => {
     const { content, language } = useContext(ContentContext);
@@ -21,8 +22,9 @@ const MapContent = () => {
     const [loaded, setLoaded] = useState(false);
     const [currentDotClubs, setCurrentDotClubs] = useState([]);
     const [rangeValue, setRangeValue] = useState([0]);
+    const [clubModal, setClubModal] = useState(null);
 
-    const [country, setCountry] = useState(0);
+    const [country, setCountry] = useState(1);
     const [countries, setCountries] = useState(["Polska", "Wielka Brytania"]);
     const [countryMap, setCountryMap] = useState(europe);
 
@@ -234,22 +236,15 @@ const MapContent = () => {
     }, [country]);
 
     return <main className="mapContent">
+
+        {clubModal ? <ClubDetailsModal club={clubModal}
+                                       clubPage={true}
+                                       closeModal={() => { setClubModal(null); }} /> : ''}
+
         <header className="mapContent__header">
             <h2 className="player__header">
                 {content.map_header}
             </h2>
-            {country ? <section className="mapContent__countrySelectWrapper">
-                <button className="mapContent__countrySelect mapContent__countrySelect--main">
-                    {countries[0]}
-                    <img className="mapContent__countrySelect__arrow d-desktop-900" src={arrowDownBlack} alt="rozwin" />
-                </button>
-                <button className="mapContent__countrySelect mapContent__countrySelect--hidden" onClick={() => { setCountry(country === 1 ? 2 : 1); }}>
-                    {countries[1]}
-                </button>
-                <button className="mapContent__countrySelect mapContent__countrySelect--hidden" onClick={() => { setCountry(0); }}>
-                    {language === 'pl' ? 'Europa' : 'Europe'}
-                </button>
-            </section>: ""}
 
             {country ? <section className="mapContent__filters">
                 <section className="mapContent__header__item mapContent__filters--sex">
@@ -373,55 +368,12 @@ const MapContent = () => {
         </header>
 
         <section className="mapContent__clubsWrapper">
-            <section className="mapImg">
-                <img className="mapImg__img" src={countryMap} alt="mapa-polski" />
-
-                {/* Countries dots */}
-                {!country ? <>
-                    <section className="mapDot mapDot--poland">
-                        <button className="mapDot__btn" onClick={() => { setCountry(1); }}></button>
-                    </section>
-                    <section className="mapDot mapDot--england">
-                        <button className="mapDot__btn" onClick={() => { setCountry(2); }}></button>
-                    </section>
-                </> : ""}
-
-                {filteredDots.map((item, index) => {
-                    return <section className="mapDot" key={index} style={{top: `${item.y}%`, left: `${item.x}%`}}>
-                        <button className="mapDot__btn" id={`mapDot-${index}`} onClick={(e) => { getClubsByDot(item.x, item.y); showClubsOnMap(e, index); }}>
-                            <span className={item.x < 30 ? "mapDot__btn__details mapDot__btn__details--west" : (item.x > 70 ? "mapDot__btn__details mapDot__btn__details--east" : "mapDot__btn__details")}
-                                  id={`mapDot__btn-${index}`}>
-                                {/* Show club's logos */}
-                                {currentDotClubs?.map((item, index) => {
-                                    return <div className="mapDot__btn__details__singleClub">
-                                        <figure className="mapDot__btn__details__imgWrapper" key={index}>
-                                            <img className="mapDot__btn__details__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="logo" />
-                                        </figure>
-                                        <section className="mapDot__btn__details__data">
-                                            {item.city ? <span>
-                                                <b>{content.map_location}:</b> {item.city}
-                                            </span> : ""}
-                                            {item.nip ? <span>
-                                                <b>NIP:</b> {item.nip}
-                                            </span> : ""}
-                                            {item.krs ? <span>
-                                                <b>KRS:</b> {item.krs}
-                                            </span> : ""}
-                                        </section>
-                                    </div>
-                                })}
-                            </span>
-                        </button>
-                    </section>
-                })}
-            </section>
-
             {/* Desktop */}
             <section className="mapContent__clubs d-desktop-900" ref={clubsWrapper}>
                 {filteredClubs.length ? filteredClubs.map((item, index) => {
-                    return <figure key={index} className="mapContent__clubs__imgWrapper">
+                    return <button key={index} className="mapContent__clubs__imgWrapper" onClick={() => { setClubModal(item); }}>
                         <img className="mapContent__clubs__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
-                    </figure>
+                    </button>
                 }) : <h3 className="noClubsHeader">
                     {content.no_clubs}
                 </h3>}
@@ -435,9 +387,10 @@ const MapContent = () => {
                     loop={true}
                 >
                     {filteredClubs.length ? filteredClubs?.map((item, index) => {
-                        return <div key={index}>
+                        return <button key={index}
+                                       onClick={() => { setClubModal(item); }}>
                             <img className="mapContent__clubs__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt={item.name} />
-                        </div>
+                        </button>
                     }) : <h2 className="noClubsHeader">
                         {content.no_clubs}
                     </h2>}

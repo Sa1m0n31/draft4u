@@ -7,7 +7,6 @@ import homeIcon from '../static/img/home.svg'
 import RegisterModal from "./RegisterModal";
 import loginIcon from '../static/img/log-in.svg'
 import registerIcon from '../static/img/register.svg'
-import envelope from '../static/img/envelope.svg'
 import envelopeGold from '../static/img/envelope-gold.svg'
 import bellGold from '../static/img/bell-gold.svg'
 import padlock from '../static/img/padlock.svg'
@@ -35,6 +34,8 @@ import arrowDownIcon from '../static/img/arrow-down-menu.svg'
 import switchIcon from '../static/img/switch.svg'
 import EventEntryConfirmModal from "./EventEntryConfirmModal";
 import ClubListModal from "./ClubListModal";
+import OpinionModal from "./OpinionModal";
+import {getSendOpinionsTable} from "../helpers/admin";
 
 const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepage,
                     player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
@@ -63,6 +64,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
     const [currentEventId, setCurrentEventId] = useState(0);
     const [notificationId, setNotificationId] = useState(0);
     const [clubListModalVisible, setClubListModalVisible] = useState(false);
+    const [optionsModalVisible, setOptionsModalVisible] = useState(false);
 
     let registerModal = useRef(null);
 
@@ -83,6 +85,41 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
             setCurrentMenuVisible(-1);
         }
     });
+
+    useEffect(() => {
+        if(club || player) {
+            getSendOpinionsTable()
+                .then(async (res) => {
+                    try {
+                        if(club) {
+                            const clubsWithOpinionsSend = res?.data?.result?.map((item) => {
+                                return item.club_id;
+                            });
+                            const clubDataResponse = await getClubData();
+                            const clubId = clubDataResponse.data.result.identity;
+
+                            if(!clubsWithOpinionsSend.includes(clubId)) {
+                                setOptionsModalVisible(new Date() % 5 === 0);
+                            }
+                        }
+                        else {
+                            const usersWithOpinionsSend = res?.data?.result?.map((item) => {
+                                return item.user_id;
+                            });
+                            const userDataResponse = await getUserData();
+                            const userId = userDataResponse.data.result.identity;
+
+                            if(!usersWithOpinionsSend.includes(userId)) {
+                                setOptionsModalVisible(new Date() % 5 === 0);
+                            }
+                        }
+                    }
+                    catch(e) {
+                        console.log(e);
+                    }
+                });
+        }
+    }, [club, player]);
 
     useEffect(() => {
         isUserWithTwoAccounts()
@@ -299,6 +336,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
             });
     }
 
+    useEffect(() => {
+        if(clubListModalVisible) {
+            closeMobileMenu();
+        }
+    }, [clubListModalVisible]);
+
     return <header className={mobileBackground === 'black' ? "siteHeader siteHeader--dark siteHeader--mobileDark" : (homepage ? "siteHeader siteHeader--dark siteHeader--home" : "siteHeader siteHeader--dark")}>
         {eventEntryConfirmModal ? <EventEntryConfirmModal closeModal={() => { setEventEntryConfirmModal(0); }}
                                                           eventId={currentEventId}
@@ -307,6 +350,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
 
         {clubListModalVisible ? <ClubListModal closeModal={() => { setClubListModalVisible(false); }}
                                                userId={playerId} /> : ''}
+
+        {optionsModalVisible ? <OpinionModal player={player}
+                                               closeModal={() => { setOptionsModalVisible(false); }}
+                                               club={club} /> : ''}
 
         {/* MOBILE MENU */}
         <menu className="mobileMenu d-mobile" ref={mobileMenu}>
@@ -335,11 +382,14 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/sztab">{menuBeforeLogin[4]}</a>
                 </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[5]}</a>
-                </li>
+                {/*<li className="mobileMenu__list__item">*/}
+                {/*    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[5]}</a>*/}
+                {/*</li>*/}
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
+                </li>
+                <li className="mobileMenu__list__item">
+                    <a className="mobileMenu__list__link" href="/mapa">Kluby</a>
                 </li>
             </ul> : ""}
 
@@ -381,9 +431,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/edycja-profilu">{menuPlayer[1]}</a>
                 </li>
-                <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">{menuPlayer[2]}</a>
-                </li>
+                {/*<li className="mobileMenu__list__item">*/}
+                {/*    <a className="mobileMenu__list__link" href="/mapa">{menuPlayer[2]}</a>*/}
+                {/*</li>*/}
             </ul> : ""}
 
             {player ? <ul className="mobileMenu__bottom" ref={mobileMenuBottom}>
@@ -514,7 +564,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/mapa">
-                        {menuBeforeLogin[5]}
+                        Kluby
                     </a>
                 </li>
             </ul> : ""}
@@ -546,11 +596,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                         {menuPlayer[1]}
                     </a>
                 </li>
-                <li className="siteHeader__menu__list__item">
-                    <a className="siteHeader__menu__link" href="/mapa">
-                        {menuPlayer[2]}
-                    </a>
-                </li>
+                {/*<li className="siteHeader__menu__list__item">*/}
+                {/*    <a className="siteHeader__menu__link" href="/mapa">*/}
+                {/*        {menuPlayer[2]}*/}
+                {/*    </a>*/}
+                {/*</li>*/}
             </ul> : ""}
 
             {/* Club menu */}
@@ -606,11 +656,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                         </ul>
                     </div>
                 </li>
-                <li className="siteHeader__menu__list__item d-over-1200">
-                    <a className="siteHeader__menu__link" href="/mapa">
-                        {menuClub[5]}
-                    </a>
-                </li>
+                {/*<li className="siteHeader__menu__list__item d-over-1200">*/}
+                {/*    <a className="siteHeader__menu__link" href="/mapa">*/}
+                {/*        {menuClub[5]}*/}
+                {/*    </a>*/}
+                {/*</li>*/}
             </ul> : ""}
         </menu>
 

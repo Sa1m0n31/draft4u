@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import settings from "../settings";
 
-const ClubDetailsModal = ({closeModal, club}) => {
+const ClubDetailsModal = ({closeModal, clubPage, club}) => {
     useEffect(() => {
         document.addEventListener('keyup', (e) => {
             if(e.key === 'Escape') {
@@ -27,6 +27,15 @@ const ClubDetailsModal = ({closeModal, club}) => {
             <h5 className="modal__header modal__header--clubDetails--subheader">
                 {club?.city}
             </h5>
+
+            {clubPage ? <>
+                {club?.nip ? <h5 className="modal__header modal__header--clubDetails--subheader">
+                    NIP: {club?.nip}
+                </h5> : ''}
+                {club?.krs ? <h5 className="modal__header modal__header--clubDetails--subheader">
+                    KRS: {club?.krs}
+                </h5> : ''}
+            </> : ''}
         </div>
     </div>
 };

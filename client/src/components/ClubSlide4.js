@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useRef} from 'react';
 import img1 from '../static/img/phone-mockup.png'
 import imgMobile from '../static/img/phone-mock-mobile.png'
 import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
-import chat1 from "../static/img/czat1.png";
 import chat2 from "../static/img/czat2.png";
 import chat3 from "../static/img/czat3.png";
 

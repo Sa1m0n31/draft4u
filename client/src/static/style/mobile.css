@@ -190,6 +190,7 @@
         justify-content: flex-end;
         align-items: flex-start;
         width: 50%;
+        height: 74vh;
         margin-top: 10%;
     }
 
@@ -217,12 +218,6 @@
 
     .scrollCarousel__slide--6--club > div:first-of-type {
         width: 60%;
-    }
-
-    @media(min-width: 768px) {
-        .scrollCarousel__slide--1 > div:first-of-type {
-            height: 80vh;
-        }
     }
 
     .bigHeader {
@@ -348,6 +343,10 @@
 @media(max-width: 1400px) {
     .container--homepage::after {
         left: 28%;
+    }
+
+    .bigHeader--slide1 {
+        font-size: 34px;
     }
 
     .landingPage__benefits__flex {
@@ -612,6 +611,18 @@
     }
 }
 
+@media(max-height: 650px) {
+    .container--player, .container--club {
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+
+    .panel {
+        min-height: unset !important;
+        height: auto !important;
+    }
+}
+
 @media(max-width: 1200px) {
     .d-over-1200 {
         display: none;
@@ -622,10 +633,42 @@
         padding: 40px 0;
     }
 
+    .star-container {
+        padding-right: 3px !important;
+    }
+
+    .star-container > svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .textarea--opinion {
+        font-size: 14px;
+    }
+
+    .container .scrollCarousel__slide__backgroundHeader {
+        font-size: 150px;
+    }
+
+    .container--club,
+    .container--player {
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+
+    .panel {
+        min-height: unset !important;
+        height: auto !important;
+    }
+
     .button--landingFlex {
         height: 40px;
         width: 200px;
         font-size: 15px;
+    }
+
+    .container .faq {
+        margin-bottom: 30px;
     }
 
     .landingPage__flex__content > h1 {
@@ -962,7 +1005,7 @@
     }
 
     .faq__btn, .faq__question__header__h {
-        font-size: 17px;
+        font-size: 13px;
     }
 
     .faq__question__header__btn {
@@ -1763,6 +1806,10 @@
         display: block !important;
     }
 
+    .modal--opinion .modal__inner {
+        max-width: 90%;
+    }
+
     .modal__inner__cv {
         flex-direction: column;
     }
@@ -1784,6 +1831,16 @@
     .modal--clubDetails .modal__inner {
         width: 90%;
         max-width: 400px;
+    }
+
+    .btn--community {
+        font-size: 16px;
+        padding-bottom: 3px;
+        border-width: 2px;
+    }
+
+    .community {
+        margin: 20px auto 10px;
     }
 
     .events__header {
@@ -2174,7 +2231,7 @@
     }
 
     .chatImages {
-        top: 145px;
+        top: 195px;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 90%;
@@ -2360,7 +2417,7 @@
     }
 
     .scrollCarousel__slide--4 figure {
-        margin-top: -160px;
+        margin-top: -70px;
     }
 
     .whiteBackground__bottom {
@@ -2369,6 +2426,7 @@
 
     .whiteBackground__bottom .text {
         width: 100%;
+        font-size: 14px;
         text-align: center;
     }
 
@@ -2404,6 +2462,10 @@
     .scrollCarousel__slide > .whiteBackground {
         padding-top: 25px;
         padding-bottom: 25px;
+    }
+
+    .scrollCarousel__slide--3 {
+        padding: 0;
     }
 
     .scrollCarousel__slide--1 {
@@ -2445,8 +2507,16 @@
 
     .scrollCarousel__slide--1--club figure {
         transform: none;
-        margin-top: -80px;
-        max-height: 480px;
+        margin-top: -70px;
+        max-height: 400px;
+    }
+
+    .scrollCarousel__slide--5--club figure {
+        height: auto !important;
+    }
+
+    .scrollCarousel__slide--6--club figure {
+        margin-bottom: -105px;
     }
 
     .container--dark .scrollCarousel__slide--1:not(.scrollCarousel__slide--2) > div:first-of-type {
@@ -2455,6 +2525,7 @@
 
     .container--dark .scrollCarousel__slide--1:not(.scrollCarousel__slide--2) > div:first-of-type {
         margin-top: -50px;
+        z-index: 3;
     }
 
     .scrollCarousel__slide--3--club {
@@ -2874,6 +2945,7 @@
     .mobileMenu__list__link {
         color: rgba(212, 212, 212, .8);
         font-size: 17px;
+        background: transparent;
     }
 
     .mobileMenu__bottom {
@@ -3391,6 +3463,18 @@
     .playersWall--mobile {
         width: 100% !important;
         padding-bottom: 50px;
+    }
+
+    .playerCard--stuff {
+        padding-bottom: 15px;
+    }
+
+    .footer__col__header {
+        text-align: center;
+    }
+
+    .community ~ .playersWall--mobile {
+        margin-bottom: 30px;
     }
 
     .playersWall__mobileHeader {
@@ -4251,7 +4335,6 @@
     }
 
     .landingPage__inner {
-        margin-bottom: 50px;
         justify-content: space-evenly;
     }
 

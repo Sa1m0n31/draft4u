@@ -165,9 +165,9 @@ app.get("/mapa", (req, res) => {
 app.get("/dodaj-video", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
-app.get("/zaplac", (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+// app.get("/zaplac", (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
 app.get("/subskrypcja-przedluzona", (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

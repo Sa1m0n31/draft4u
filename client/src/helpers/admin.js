@@ -122,4 +122,19 @@ const sendInfoAboutTermsUpdate = () => {
     return axios.post(`${API_URL}/admin/send-info-about-terms-update`);
 }
 
-export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword, banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted, getAdvancedUsersInfo, getCustomFields, updateCustomFields, updateCustomImages, getCustomImages, updateTerms, getTerms, sendInfoAboutTermsUpdate }
+const sendOpinion = (rating, content, player, club) => {
+    return axios.post(`${API_URL}/admin/send-opinion`, {
+        rating, content, player, club
+    }, {
+        withCredentials: true
+    });
+}
+
+const getSendOpinionsTable = () => {
+    return axios.get(`${API_URL}/admin/get-send-opinions-table`);
+}
+
+export { getAdminById, getAdminData, getClubs, getUsers, changeAdminPassword,
+    banUser, unlockUser, deleteUser, changeUserName, getUsersVideosNumber, getUsersParametersCompleted,
+    getAdvancedUsersInfo, getCustomFields, updateCustomFields, getSendOpinionsTable,
+    updateCustomImages, getCustomImages, updateTerms, getTerms, sendInfoAboutTermsUpdate, sendOpinion }

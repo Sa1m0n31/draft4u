@@ -362,4 +362,74 @@ router.post('/send-info-about-terms-update', (request, response) => {
     });
 });
 
+router.get('/get-send-opinions-table', (request, response) => {
+   const query = `SELECT * FROM opinions_send`;
+
+   db.query(query, [], (err, res) => {
+      if(res) {
+          response.send({
+              result: res.rows
+          });
+      }
+      else {
+          response.send({
+              result: []
+          });
+      }
+   });
+});
+
+router.post('/send-opinion', (request, response) => {
+    const { rating, content, player, club } = request.body;
+    const id = request.user;
+
+    const query = 'INSERT INTO opinions_send VALUES ($1, $2)';
+    const values = [player ? id : null, club ? id : null];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            const result = res.rows;
+            if(result) {
+                let transporter = nodemailer.createTransport(smtpTransport ({
+                    auth: {
+                        user: process.env.EMAIL_ADDRESS,
+                        pass: process.env.EMAIL_PASSWORD
+                    },
+                    host: process.env.EMAIL_HOST,
+                    secureConnection: true,
+                    port: 465,
+                    tls: {
+                        rejectUnauthorized: false
+                    },
+                }));
+
+                let mailOptions = {
+                    from: process.env.EMAIL_ADDRESS,
+                    to: process.env.CONTACT_FORM_ADDRESS,
+                    subject: 'Ktoś wysłał opinię o Draft4U',
+                    html: `<h2 style="color: #000;">Ktoś wysłał opinię o Draft4U</h2>
+            <p style="color: #000;">Liczba gwiazdek: ${rating}</p>
+            <p style="color: #000;">Opinia: ${content ? content : 'Brak'}</p>`
+                }
+
+                transporter.sendMail(mailOptions, function(error, info) {
+                    response.send({
+                        result: 1
+                    });
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        }
+        else {
+            response.send({
+                result: 0
+            });
+        }
+    });
+});
+
 module.exports = router;

@@ -2319,24 +2319,31 @@ button {
 
 .mapContent__clubs {
     border-radius: 8px;
-    width: 260px;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    padding-top: 40px;
+    padding: 80px;
     opacity: 1;
     transition: .4s all;
+    gap: 50px 10%;
 }
 
 .mapContent__clubs__imgWrapper {
-    margin-bottom: 20px;
+    width: 12%;
+    transform-origin: center;
+    background: transparent;
+    transition: .2s transform;
+}
+
+.mapContent__clubs__imgWrapper:hover {
+    transform: scale(1.1);
 }
 
 .mapContent__clubs__img {
-    width: 80px;
+    width: 100%;
     height: auto;
-    margin-left: 15px;
 }
 
 .noClubsHeader {
@@ -2690,6 +2697,10 @@ button {
     color: #fff !important;
 }
 
+.userInfoEdition__form--dark .userInfoEdition__value .input--editProfile {
+    width: 100%;
+}
+
 .userInfoEdition__form--dark .userInfoEdition__fullName {
     display: flex;
     justify-content: flex-start;
@@ -2828,9 +2839,13 @@ button {
     outline: none !important;
     font-size: 22px;
     text-align: right;
-    color: #3D3D3D;
+    color: #fff;
     font-weight: 500;
     background: transparent;
+}
+
+.input--editProfile, .select--editProfile option {
+    color: #3d3d3d;
 }
 
 .input--editProfile {
@@ -3453,6 +3468,10 @@ input::-webkit-inner-spin-button {
     text-align: center;
     font-size: 24px;
     margin-bottom: 25px;
+}
+
+.modal--opinion .modal__inner__header {
+    color: #fff;
 }
 
 .modal__inner__btn {
@@ -5338,6 +5357,7 @@ input::-webkit-inner-spin-button {
     z-index: -1;
 }
 
+.modal--opinion,
 .modal--clubDetails,
 .modal--event {
     z-index: 999;
@@ -5657,8 +5677,12 @@ input::-webkit-inner-spin-button {
     padding: 25px;
 }
 
-.mapContent__clubs--mobile > div > div > div {
+.mapContent__clubs--mobile > div > div > button {
     padding-right: 10px;
+}
+
+.mapContent__clubs--mobile button {
+    background: transparent;
 }
 
 .clubAccountStart__bottom__section--laptop {
@@ -7122,7 +7146,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-transform: uppercase;
     text-align: center;
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .scrollCarousel__slide--6--club > div:first-of-type {
@@ -7299,13 +7323,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
 }
 
+.bigHeader--slide1 {
+    font-size: 48px;
+}
+
+@media(min-width: 1700px) {
+    .content--slide1 {
+        margin-top: 80px;
+    }
+}
+
 .chatImages {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 6vw;
     transform: translateY(-50%);
     opacity: 0;
     transition: .4s all;
+}
+
+.scrollCarousel__slide--1 figure {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 50%;
+    height: 74vh;
+    margin-top: 10%;
 }
 
 .chatImages figure {
@@ -7337,6 +7380,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .scrollCarousel__slide--1--stuff .img--siergiej {
         transform: translateY(-15%) !important;
     }
+}
+
+.img--siergiej {
+    width: 100%;
+    height: auto;
 }
 
 label.userInfoEdition__form__field {
@@ -7383,6 +7431,10 @@ label.userInfoEdition__form__field {
     font-size: 44px;
     font-weight: 400;
     text-transform: none !important;
+}
+
+.button {
+    color: #000 !important;
 }
 
 .button--landingFlex {
@@ -7748,6 +7800,7 @@ label.userInfoEdition__form__field {
 
 .btn--signUpOnFeed {
     width: 100%;
+    min-width: 150px;
     height: 45px;
     font-size: 20px;
     display: flex;
@@ -7755,6 +7808,10 @@ label.userInfoEdition__form__field {
     align-items: center;
     border-radius: 6px;
     font-weight: 500;
+}
+
+.flex > .btn--signUpOnFeed {
+    width: 48%;
 }
 
 .feed__main {
@@ -8546,6 +8603,7 @@ abbr[title] {
     font-size: 20px;
     height: 50px;
     width: 90%;
+    min-height: 50px;
     max-width: 400px;
 }
 
@@ -8865,7 +8923,7 @@ abbr[title] {
 
 .panel {
     position: relative;
-    min-height: 100vh;
+    min-height: max(800px, 100vh);
     height: auto;
     overflow: scroll;
     padding: 30px;
@@ -8873,6 +8931,14 @@ abbr[title] {
     cursor: default;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
+
+    height: calc(100vh - 90px) !important;
+    min-height: 100vh !important;
+}
+
+.scrollCarousel__slide {
+    height: auto !important;
+    max-height: none !important;
 }
 
 .panel::-webkit-scrollbar {
@@ -8984,4 +9050,44 @@ abbr[title] {
 
 .btn--community--selected {
     border-color: var(--gold);
+}
+
+.feed__main__top > .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+@media(min-width: 1000px) {
+    .scrollCarousel__slide--5 > div:first-of-type,
+    .scrollCarousel__slide--1--stuff > div:first-of-type {
+        margin-top: 10vh;
+    }
+}
+
+.textarea--opinion {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    resize: none;
+    margin-top: 30px;
+    font-size: 17px;
+    border-radius: 12px;
+    border: 2px solid #534C42;
+    background: #201E1B;
+    color: #fff;
+}
+
+.textarea--opinion::placeholder {
+    color: rgba(240, 240, 240, .8);
+}
+
+.btn--opinion {
+    width: 80%;
+    max-width: 250px;
+    margin: 30px auto 0;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 18px;
 }

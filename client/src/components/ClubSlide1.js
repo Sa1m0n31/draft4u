@@ -1,9 +1,8 @@
 import React, {useContext} from 'react';
 import img1 from '../static/img/manager.png'
 import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
 
-const ClubSlide1 = ({openRegisterModal}) => {
+const ClubSlide1 = () => {
     const { content } = useContext(ContentContext);
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--1--club">

@@ -99,10 +99,10 @@ const ClubListModal = ({closeModal, userId}) => {
                             Data urodzenia: <b>{userData.birthday?.substring(0, 10) || ''}</b>
                         </p>
                         <p>
-                            Wzrost: <b>{`${userData.height} cm` || '-'}</b>
+                            Wzrost: <b>{userData.height ? `${userData.height} cm` : '-'}</b>
                         </p>
                         <p className="mb">
-                            Waga: <b>{`${userData.weight} kg` || '-'}</b>
+                            Waga: <b>{userData.weight ? `${userData.weight} kg` : '-'}</b>
                         </p>
                         <p>
                             Aktualny klub: <b>{userData.club || '-'}</b>
@@ -111,13 +111,13 @@ const ClubListModal = ({closeModal, userId}) => {
                             Dośw. ligowe: <b>{userData.experience || '-'}</b>
                         </p>
                         <p>
-                            Zasięg w ataku: <b>{`${userData.attack_range} cm` || '-'}</b>
+                            Zasięg w ataku: <b>{userData.attack_range ? `${userData.attack_range} cm` : '-'}</b>
                         </p>
                         <p>
-                            Zasięg w bloku: <b>{`${userData.block_range} cm` || '-'}</b>
+                            Zasięg w bloku: <b>{userData.block_range ? `${userData.block_range} cm` : '-'}</b>
                         </p>
                         <p className="mb">
-                            Wyskok dosiężny: <b>{`${userData.vertical_range} cm` || '-'}</b>
+                            Wyskok dosiężny: <b>{userData.vertical_range ? `${userData.vertical_range} cm` : '-'}</b>
                         </p>
                         <p>
                             Tel: <b>{userData.phone_number || '-'}</b>

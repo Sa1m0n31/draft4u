@@ -54,6 +54,7 @@ const Community = ({user, isLocal}) => {
                         Sztab
                     </button>
                 </div>
+            </main>
 
                 {currentCommunity === 0 ? <>
                     {/* MOBILE */}
@@ -112,7 +113,6 @@ const Community = ({user, isLocal}) => {
                         </div>}
                     </main>
                 </>}
-            </main>
 
         <Footer border={true} />
     </div>

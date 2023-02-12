@@ -14,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import {getCurrentEvents, getUserEntries} from "../helpers/event";
 import settings from "../settings";
 import EventInfoModal from "../components/EventInfoModal";
+import OpinionModal from "../components/OpinionModal";
 
 const Feed = () => {
     const { content } = useContext(ContentContext);
@@ -203,9 +204,14 @@ const Feed = () => {
                     <h2 className="feed__main__top__header goldman">
                         Chcesz pisać posty i komentować?
                     </h2>
-                    <a href="/zaloz-konto" className="btn btn--gradient goldman btn--signUpOnFeed">
-                        {content.register}
-                    </a>
+                    <div className="flex">
+                        <a href="/zaloz-konto" className="btn btn--gradient goldman btn--signUpOnFeed">
+                            {content.register}
+                        </a>
+                        <a href="/logowanie" className="btn btn--gradient goldman btn--signUpOnFeed">
+                            Zaloguj się
+                        </a>
+                    </div>
                 </div> : <div className="feed__main__top feed__main__top--add">
                     <figure className="feed__addComment__image feed__addComment__image--main">
                         <img className="img" src={profilePictureExample} alt="zdjecie-profilowe" />

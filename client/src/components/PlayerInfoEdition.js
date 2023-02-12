@@ -14,7 +14,7 @@ import {
 import {unicodeToUTF8} from "../helpers/others";
 import {ContentContext} from "../App";
 
-const PlayerInfoEdition = ({player, theme}) => {
+const PlayerInfoEdition = ({player, theme, userView}) => {
     const { content } = useContext(ContentContext);
 
     const [editAttackRange, setEditAttackRange] = useState(false);

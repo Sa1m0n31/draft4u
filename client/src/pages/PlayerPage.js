@@ -32,8 +32,14 @@ const PlayerPage = ({club, userInfo}) => {
                 setUser(result);
 
                 const identitySplitted = result.identity.split('-');
+
+                console.log(identitySplitted);
+
                 if(identitySplitted[identitySplitted.length-1] === 'stuff') {
                     setIsStuff(true);
+                }
+                else {
+                    setIsStuff(false);
                 }
             });
 
@@ -49,6 +55,7 @@ const PlayerPage = ({club, userInfo}) => {
         {user ? <>
             <Header loggedIn={true}
                     club={!!club}
+                    player={userInfo ? userInfo : null}
                     profileImage={club?.file_path ? club.file_path : userInfo?.file_path} />
 
             <UserInfoEdition player={user}
@@ -57,9 +64,11 @@ const PlayerPage = ({club, userInfo}) => {
                              theme="dark"
                              favorite={favorite} />
 
-            {!isStuff ? <>
-                {!userInfo ? <PlayerInfoEdition player={user} theme="dark" /> : ''}
-                <PlayerVideoView id={user.id} club={true} />
+            {!isStuff && !userInfo ? <>
+                <PlayerInfoEdition player={user}
+                                   theme="dark" />
+                <PlayerVideoView id={user.id} 
+                                 club={true} />
             </> : (!userInfo ? <StuffInfoEdition id={user.identity} club={true} /> : '')}
         </> : <LoadingPage />}
 
