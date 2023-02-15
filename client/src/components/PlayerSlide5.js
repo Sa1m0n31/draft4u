@@ -7,7 +7,7 @@ const PlayerSlide5 = ({openRegisterModal}) => {
 
     return <div className="scrollCarousel__slide scrollCarousel__slide--1 scrollCarousel__slide--5">
         <div>
-            <h1 className="bigHeader bigHeader--slide1">
+            <h1 className="bigHeader bigHeader--slide1 bigHeader--slide5">
                 {content.player_zone_header5}
             </h1>
             <p className="text">

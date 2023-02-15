@@ -124,7 +124,7 @@ const AboutUs = () => {
                     }
                     else {
                         michalForeground.current.style.display = 'block';
-                        michalForeground.current.style.marginTop = '20px';
+                        michalForeground.current.style.marginTop = '5vw';
                         bartekBackground.current.style.display = 'block';
                         michalBackground.current.style.display = 'none';
                         bartekForeground.current.style.display = 'none';

@@ -188,11 +188,9 @@ const Feed = () => {
                 <h1 className="feed__header">
                     Witaj
                 </h1>
-                <p className="feed__left__text goldman">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                    aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                </p>
+                {!loggedIn ? <p className="feed__left__text goldman">
+                    Komentowanie i dodawanie postów na tablicy to tylko część, z wielu korzyści, jakie otrzymasz po zarejestrowaniu konta w Draft4U. Wykorzystaj w pełni sportowy potencjał!
+                </p> : ''}
 
                 {!isClub ? <a href={!loggedIn ? "/zaloz-konto" : "/edycja-profilu"} className="btn btn--gradient goldman btn--signUpOnFeed">
                     {!loggedIn ? content.register : content.dropdown_menu_player?.split(';')[1]}

@@ -1020,7 +1020,7 @@ ul {
 
 .button--facebook {
     background: #3B5998;
-    color: #fff;
+    color: #fff !important;
     font-weight: 400;
     margin: 15px 0;
 }
@@ -1607,7 +1607,7 @@ button {
 
 .aboutUs::after {
     content: "";
-    background: #000;
+    background: var(--gold);
     width: 55%;
     height: 100%;
     position: absolute;
@@ -2417,7 +2417,7 @@ button {
     display: block;
     background: transparent;
     font-size: 18px;
-    color: #fff;
+    color: #fff !important;
     font-weight: 700;
     margin-top: 15px;
     text-transform: uppercase;
@@ -6942,6 +6942,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
 }
 
+.bigHeader--slide5 {
+    font-size: 24px;
+}
+
 .scrollCarousel__slide--1 {
     justify-content: space-between;
 }
@@ -7351,6 +7355,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 10%;
 }
 
+@media(min-width: 1700px) {
+    .scrollCarousel__slide--1--club figure {
+        margin-top: 0;
+    }
+
+    .clubLastSlide {
+        margin-top: 0;
+        margin-left: 20%;
+    }
+}
+
 .chatImages figure {
     max-width: 390px;
     margin-bottom: 30px;
@@ -7415,7 +7430,7 @@ label.userInfoEdition__form__field {
 }
 
 .landingPage__flex__img {
-    width: 49%;
+    width: 51%;
 }
 
 .landingPage__flex__img .img {
@@ -7434,7 +7449,7 @@ label.userInfoEdition__form__field {
 }
 
 .button {
-    color: #000 !important;
+    color: #000;
 }
 
 .button--landingFlex {
@@ -7511,13 +7526,13 @@ label.userInfoEdition__form__field {
 .landingPage__benefits__flex__item__content__header {
     color: var(--gold);
     font-family: 'Goldman', cursive;
-    font-size: 28px;
+    font-size: 21px;
     font-weight: 400;
     margin-bottom: 20px;
 }
 
 .landingPage__benefits__flex__item__content__text {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .homeIcon {
@@ -7537,6 +7552,12 @@ label.userInfoEdition__form__field {
     align-items: flex-start;
     width: 520px;
     height: auto;
+}
+
+@media(min-width: 1700px) {
+    .authBox {
+        margin: 150px 0 40px 15%;
+    }
 }
 
 .authBox__socialMedia {
@@ -9060,7 +9081,6 @@ abbr[title] {
 }
 
 @media(min-width: 1000px) {
-    .scrollCarousel__slide--5 > div:first-of-type,
     .scrollCarousel__slide--1--stuff > div:first-of-type {
         margin-top: 10vh;
     }
@@ -9090,4 +9110,8 @@ abbr[title] {
     height: 50px;
     border-radius: 5px;
     font-size: 18px;
+}
+
+.text--chat {
+    max-width: 40%;
 }

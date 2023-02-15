@@ -2,9 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import img1 from '../static/img/phone-mockup.png'
 import imgMobile from '../static/img/phone-mock-mobile.png'
 import {ContentContext} from "../App";
-import chat1 from '../static/img/czat1.png'
-import chat2 from '../static/img/czat2.png'
-import chat3 from '../static/img/czat3.png'
 
 const PlayerSlide4 = ({currentSlide}) => {
     const { language } = useContext(ContentContext);
@@ -41,15 +38,15 @@ const PlayerSlide4 = ({currentSlide}) => {
                     backgroundHeader.current.style.opacity = '0';
                     setTimeout(() => {
                         chatImages.current.style.opacity = '1';
-                        setTimeout(() => {
-                            chat1Ref.current.style.opacity = '1';
-                            setTimeout(() => {
-                                chat2Ref.current.style.opacity = '1';
-                                setTimeout(() => {
-                                    chat3Ref.current.style.opacity = '1';
-                                }, 1000);
-                            }, 1000);
-                        }, 1000);
+                        // setTimeout(() => {
+                        //     chat1Ref.current.style.opacity = '1';
+                        //     setTimeout(() => {
+                        //         chat2Ref.current.style.opacity = '1';
+                        //         setTimeout(() => {
+                        //             chat3Ref.current.style.opacity = '1';
+                        //         }, 1000);
+                        //     }, 1000);
+                        // }, 1000);
                     }, 1000);
                 }, 500);
             }
@@ -71,15 +68,11 @@ const PlayerSlide4 = ({currentSlide}) => {
             <h2 className="bigHeader d-desktop">
                 {language === 'pl' ? <span>Czatuj<br/>z klubami</span> : <span>Chat<br/>with clubs</span>}
             </h2>
-            <figure ref={chat1Ref}>
-                <img className="img img--chat1" src={chat3} alt="czat" />
-            </figure>
-            <figure ref={chat2Ref}>
-                <img className="img img--chat2" src={chat2} alt="czat" />
-            </figure>
-            <figure ref={chat3Ref}>
-                <img className="img img--chat3" src={chat3} alt="czat" />
-            </figure>
+            <p className="text text--chat">
+                Bezpośrednia rozmowa klubu z zawodnikiem jeszcze nigdy nie była tak prosta.
+                Nawiązanie kontaktu, ustalenia i finalizacja kontraktu –
+                sprawnie, intuicyjnie i z pominięciem pośredników. Sam decyduj o swojej przyszłości i przebiegu kariery.
+            </p>
         </div>
 
         <figure className="mobilePhone" ref={mobilePhone}>

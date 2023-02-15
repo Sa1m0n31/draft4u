@@ -8,6 +8,11 @@
     .landingPage__inner__section:first-of-type:after {
         left: -12%;
     }
+
+    .aboutUs__profileImg--michal,
+    .aboutUs__profileImg--bartek {
+        margin-top: 130px;
+    }
 }
 
 @media(min-width: 1600px) {
@@ -1154,6 +1159,10 @@
         display: flex !important;
     }
 
+    .text--chat {
+        max-width: 100%;
+    }
+
     .landingPage__benefits__header {
         font-size: 26px;
         text-align: center;
@@ -1806,6 +1815,10 @@
         display: block !important;
     }
 
+    .siteHeader {
+        margin: 0 !important;
+    }
+
     .modal--opinion .modal__inner {
         max-width: 90%;
     }
@@ -1866,7 +1879,7 @@
 
     .landingPage__flex {
         margin-bottom: 20px;
-        margin-top: 35vw !important;
+        margin-top: 40px !important;
     }
 
     .landingPage__flex__img,
@@ -1897,10 +1910,10 @@
 
     .landingPage__image {
         width: 100%;
-        position: absolute;
+        position: relative;
         top: 0;
         left: 0;
-        height: 190px;
+        height: auto;
         margin: 0;
     }
 
@@ -2589,8 +2602,8 @@
     }
 
     .landingPage__inner {
-        margin-bottom: 120px;
-        margin-top: -25%;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
     }
 
     .siteHeader--home ~ .landingPage > .landingPage__inner {
@@ -4294,13 +4307,6 @@
 
     .mapDot__btn__details__data span {
         font-size: 12px;
-    }
-
-    .siteHeader {
-        position: sticky;
-        top: 0;
-        left: 0;
-        z-index: 101;
     }
 
     .videoTable__error {

@@ -45,7 +45,7 @@ const ClubActivities = ({userId}) => {
                     <img key={index} className="clubActivities__img" src={`${settings.IMAGE_URL}/image?url=/media/clubs/${item.file_path}`} alt="klub" />
                 </button> : '';
             }) : <h3 className="clubActivities__empty">
-                {content.club_activities_text1}
+                {content.club_activities_text2}
             </h3>}
         </section>
 

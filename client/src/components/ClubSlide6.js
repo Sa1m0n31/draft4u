@@ -66,7 +66,7 @@ const ClubSlide6 = () => {
                 </div>
             </div>
         </div>
-        <figure>
+        <figure className="clubLastSlide">
             <img className="img" src={img1} alt="dolacz-do-nas" />
         </figure>
     </div>
