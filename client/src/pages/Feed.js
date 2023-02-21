@@ -14,7 +14,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import {getCurrentEvents, getUserEntries} from "../helpers/event";
 import settings from "../settings";
 import EventInfoModal from "../components/EventInfoModal";
-import OpinionModal from "../components/OpinionModal";
 
 const Feed = () => {
     const { content } = useContext(ContentContext);

@@ -85,7 +85,7 @@ const AdminCodesList = () => {
         </div>
 
         <main className="admin">
-            <PanelMenu menuOpen={4} />
+            <PanelMenu menuOpen={5} />
             <main className="admin__main">
                 {codes?.reverse()?.map((item, index) => {
                     return <section className="admin__main__notification__item" key={index}>

@@ -1,20 +1,17 @@
 import React, {useState, useEffect, useRef, useContext} from 'react'
-import addVideosBtn from '../static/img/wgraj-filmik.png'
 import playBtn from '../static/img/play-button.svg'
 import {getUserVideos} from "../helpers/video";
 import { Player } from 'video-react'
 import settings from "../settings";
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import writeMsgBtn from '../static/img/napisz-wiadomosc.png'
 import ModalVideoPlayer from "./ModalVideoPlayer";
 import {getIdentityById} from "../helpers/user";
-import arrowIcon from '../static/img/white-arrow.svg'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 import {TestClubContext} from "../wrappers/ClubWrapper";
 
-const PlayerVideoView = ({id, club}) => {
+const PlayerVideoView = ({id, club, otherPlayerPage}) => {
     const [videos, setVideos] = useState([]);
     const [playVideo, setPlayVideo] = useState(-1);
     const [identity, setIdentity] = useState("");
@@ -50,7 +47,7 @@ const PlayerVideoView = ({id, club}) => {
         focus: 'center'
     }
 
-    return <section className="playerVideoView siteWidthSuperNarrow">
+    return <section className={otherPlayerPage ? "playerVideoView playerVideoView--otherPlayer siteWidthSuperNarrow" : "playerVideoView siteWidthSuperNarrow"}>
         {playVideo !== -1 ? <ModalVideoPlayer closeModal={closeModalVideoPlayer} source={`${settings.API_URL}/video/get?url=/videos/${videos[playVideo].file_path}`} /> : ""}
 
         {club || videos?.length ? <main className={club ? "playerVideoView__carousel playerVideoView__carousel--empty" : "playerVideoView__carousel"}>
@@ -79,7 +76,7 @@ const PlayerVideoView = ({id, club}) => {
             </a> : ""}
         </main> : ""}
         <section className={videos.length ? "playerVideoView__btnWrapper" : "playerVideoView__btnWrapper--center"}>
-            {!club ? <a className="button button--hover playerVideoView__btn btn--hover btn--gradient goldman center btn--addVideo" href="/dodaj-video">
+            {!club && !otherPlayerPage ? <a className="button button--hover playerVideoView__btn btn--hover btn--gradient goldman center btn--addVideo" href="/dodaj-video">
                 Wgraj filmik
             </a> : ""}
         </section>

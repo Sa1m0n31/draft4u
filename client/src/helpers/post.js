@@ -20,6 +20,17 @@ const addPost = (userId, clubId, content, image) => {
     return axios.post(`${API_URL}/post/add`, formData, config);
 }
 
+const updatePost = (content, image, id, deleteImage) => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    let formData = new FormData();
+    formData.append('content', content);
+    formData.append('image', image);
+    formData.append('id', id);
+    formData.append('deleteImage', deleteImage);
+
+    return axios.post(`${API_URL}/post/update`, formData, config);
+}
+
 const deleteComment = (id) => {
     return axios.delete(`${API_URL}/post/delete-comment`, {
         params: {
@@ -52,4 +63,5 @@ const updateCommentsList = (postId) => {
     });
 }
 
-export { addComment, addPost, deleteComment, deletePost, getPosts, updateCommentsList }
+export { addComment, addPost, deleteComment, updatePost,
+    deletePost, getPosts, updateCommentsList }

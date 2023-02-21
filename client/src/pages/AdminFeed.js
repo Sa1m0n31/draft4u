@@ -96,7 +96,7 @@ const AdminFeed = () => {
     return <div className="container container--dark container--admin">
         <AdminTop />
         <main className="admin">
-            <PanelMenu menuOpen={1} />
+            <PanelMenu menuOpen={2} />
             <main className="admin__main">
                 <header className="admin__flex">
                     <h1 className="admin__main__header">

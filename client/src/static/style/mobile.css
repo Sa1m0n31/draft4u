@@ -1376,10 +1376,6 @@
         width: 30%;
     }
 
-    .userInfoEdition__value--salary {
-        width: 140px;
-    }
-
     .container--homepage::after {
         width: 59%;
     }
@@ -1504,8 +1500,16 @@
         padding: 0 20px;
     }
 
+    .playerInfoEdition .input--editProfile[type=number] {
+        max-width: 70px;
+    }
+
     .userInfoEdition__key {
         width: 160px;
+    }
+
+    .userINfoEdition__value {
+        padding-left: 20px;
     }
 
     .mapContent__header, .mapContent__filters {
@@ -1576,8 +1580,9 @@
         margin-top: 50px;
     }
 
-    .userInfoEdition__key, .userInfoEdition__value *, .userInfoEdition__value {
-        font-size: 14px;
+    .userInfoEdition__key,
+    .userInfoEdition__value *, .userInfoEdition__value {
+        font-size: 12px !important;
     }
 
     .userInfoEdition__btn {
@@ -1815,8 +1820,54 @@
         display: block !important;
     }
 
+    .myPostEdition__btn {
+        width: 16px;
+    }
+
     .siteHeader {
         margin: 0 !important;
+    }
+
+    .playerVideoView--otherPlayer {
+        margin: 50px auto 0 !important;
+    }
+
+    .label--edit {
+        padding: 7px !important;
+    }
+
+    .myPostEdition__btn--postEdition,
+    .userInfoEdition__btn--save {
+        font-size: 8px;
+    }
+
+    .mapContent__clubsWrapper {
+        padding: 20px 0;
+        background: rgba(255, 255, 255, .6);
+        margin-top: -20px;
+        position: relative;
+    }
+
+    .mapContent__clubsWrapper::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -100px;
+        width: 100px;
+        height: 100%;
+        z-index: 100;
+        background: rgba(255, 255, 255, .6);
+    }
+
+    .mapContent__clubsWrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100px;
+        width: 100px;
+        height: 100%;
+        z-index: 100;
+        background: rgba(255, 255, 255, .6);
     }
 
     .modal--opinion .modal__inner {
@@ -2753,7 +2804,7 @@
     }
 
     .input--editProfile {
-        max-width: 145px;
+        max-width: 110px;
     }
 
     .playerInfoEdition .input--editProfile {
@@ -4526,7 +4577,7 @@
     }
 }
 
-@media(max-height: 700px) {
+@media(max-height: 800px) {
     .mobileMenu__list {
         transform: scale(.7);
         transform-origin: top;
@@ -4539,13 +4590,23 @@
     }
 }
 
-@media(max-height: 520px) {
+@media(max-height: 600px) {
     .mobileMenu__list {
         transform: scale(.6);
     }
 
     .mobileMenu__bottom {
         transform: scale(.6);
+    }
+}
+
+@media(max-height: 520px) {
+    .mobileMenu__list {
+        transform: scale(.5);
+    }
+
+    .mobileMenu__bottom {
+        transform: scale(.5);
     }
 }
 

@@ -2767,6 +2767,14 @@ button {
     filter: brightness(0) invert(1);
 }
 
+.userInfoEdition__btn--save {
+    background: var(--gold);
+    padding: 3px 10px;
+    font-size: 11px;
+    border-radius: 3px;
+    width: auto !important;
+}
+
 .playerInfoEdition {
     margin-top: 60px;
 }
@@ -2880,6 +2888,7 @@ select::-ms-expand {
     border: 1px solid #707070 !important;
     border-radius: 3px;
     width: fit-content;
+    padding: 5px 5px 8px;
 }
 
 input[type=number] {
@@ -5895,6 +5904,14 @@ input::-webkit-inner-spin-button {
     transition: .2s all;
 }
 
+.experienceSection span {
+    color: var(--gold);
+}
+
+.experienceSection__btn {
+    color: #fff;
+}
+
 .experienceSection__btn--selected,
 .experienceSection__btn:hover {
     color: var(--gold);
@@ -7910,6 +7927,13 @@ label.userInfoEdition__form__field {
     font-size: 14px;
     color: #fff;
     padding: 0 15px;
+    white-space: pre-line;
+}
+
+.feed__item__content a,
+.feed__comments__item__content__text a {
+    text-decoration: underline !important;
+    color: var(--gold) !important;
 }
 
 .feed__addComment__image > .img,
@@ -7987,6 +8011,7 @@ label.userInfoEdition__form__field {
 .feed__comments__item__content__text {
     color: #fff;
     font-size: 14px;
+    white-space: pre-line;
 }
 
 .feed__event {
@@ -9114,4 +9139,62 @@ abbr[title] {
 
 .text--chat {
     max-width: 40%;
+}
+
+.feed__item__headerWrapper,
+.myPostEdition {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.feed__item__headerWrapper {
+    padding-right: 15px;
+    justify-content: space-between;
+}
+
+.myPostEdition__btn {
+    background: transparent;
+    width: 18px;
+    height: auto;
+    opacity: .8;
+    transition: .2s all;
+}
+
+.myPostEdition__btn > .img {
+    width: 100%;
+}
+
+.myPostEdition__btn:hover {
+    opacity: 1;
+}
+
+.myPostEdition__btn--delete {
+    margin-left: 12px;
+}
+
+.myPostEdition__btn--delete > .img {
+    filter: brightness(0) invert(1);
+}
+
+.myPostEdition__btn--postEdition {
+    background: var(--gold);
+    padding: 5px 15px;
+    border-radius: 5px;
+    width: auto !important;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.feed__item__image--edit,
+.feed__addComment__input--edit {
+    border-radius: 3px;
+    margin: 0 15px;
+    width: calc(100% - 30px);
+}
+
+.feed__item__image--edit {
+    border-radius: 0;
+    margin: 20px 15px;
 }

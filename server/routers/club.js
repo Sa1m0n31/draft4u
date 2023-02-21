@@ -338,6 +338,7 @@ router.post('/register', (request, response) => {
                    to: process.env.CONTACT_FORM_ADDRESS,
                    subject: 'Nowy klub dołączył do Draft4U!',
                    html: `<h2>Nowy klub zarejestrował się na Draft4U!</h2>
+            <p>Klub: ${name} chce dołączyć do Draft4U</p>
             <p>Przejdź do panelu admina by aktywować jego konto</p>`
                }
 

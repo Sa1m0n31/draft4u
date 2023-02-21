@@ -149,7 +149,7 @@ const AdminAddArticle = () => {
 
         <AdminTop />
         <main className="admin">
-            <PanelMenu menuOpen={3} />
+            <PanelMenu menuOpen={4} />
             <main className="admin__main">
                 <header className="admin__flex">
                     <h1 className="admin__main__header">

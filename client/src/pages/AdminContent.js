@@ -756,7 +756,7 @@ const AdminContent = ({lang}) => {
     return <div className="container container--dark container--admin">
         <AdminTop />
         <main className="admin">
-            <PanelMenu menuOpen={6} />
+            <PanelMenu menuOpen={7} />
             {render ? <main className="admin__main">
                 <header className="admin__flex">
                     <h1 className="admin__main__header">

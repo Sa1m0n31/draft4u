@@ -84,7 +84,7 @@ const AdminNotificationList = () => {
         </div>
 
         <main className="admin">
-            <PanelMenu menuOpen={2} />
+            <PanelMenu menuOpen={3} />
             <main className="admin__main">
                 <h1 className="admin__main__header">
                     Lista powiadomień

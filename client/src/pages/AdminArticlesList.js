@@ -84,7 +84,7 @@ const AdminArticlesList = () => {
         </div>
 
         <main className="admin">
-            <PanelMenu menuOpen={3} />
+            <PanelMenu menuOpen={4} />
             <main className="admin__main">
                 {articles?.reverse()?.map((item, index) => {
                     return <section className="admin__main__notification__item" key={index}>

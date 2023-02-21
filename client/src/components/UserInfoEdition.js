@@ -179,7 +179,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
     }
 
     const getLeaguesFromLeaguesIndexes = () => {
-        return leagues.sort().map((item) => {
+        return [...new Set(leagues)].sort().map((item) => {
             switch(item) {
                 case 0:
                     if(player?.sex) return 'Plus Liga';
@@ -350,8 +350,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                                name="age" />
                         {!editAge ? <button className="userInfoEdition__btn" onClick={() => { setEditAge(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserAge(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserAge(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -387,8 +387,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                                    name="phoneNumber" />
                             {!editPhoneNumber ? <button className="userInfoEdition__btn" onClick={() => { setEditPhoneNumber(true); }}>
                                 <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                            </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPhoneNumber(); }}>
-                                <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                            </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserPhoneNumber(); }}>
+                                Zapisz
                             </button>}
                         </label>
                 </span>
@@ -408,36 +408,14 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                                name="club" />
                         {!editClub ? <button className="userInfoEdition__btn" onClick={() => { setEditClub(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserClub(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserClub(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
             </label>
             {isStuff ? '' : <>
-                {/*<label className="userInfoEdition__form__field">*/}
-                {/*    <span className="userInfoEdition__key">*/}
-                {/*        {content.player_parameter_5}*/}
-                {/*    </span>*/}
-                {/*        <span className="userInfoEdition__value">*/}
-                {/*        <label className={editLicence ? "label--edit" : ""}>*/}
-                {/*            <input value={licence ? licence : "-"}*/}
-                {/*                   ref={licenseRef}*/}
-                {/*                   onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserLicence(e.keyCode === 9); }}*/}
-                {/*                   onChange={(e) => { setLicence(e.target.value); }}*/}
-                {/*                   disabled={!editLicence}*/}
-                {/*                   className="input--editProfile"*/}
-                {/*                   name="club" />*/}
-                {/*            {!editLicence ? <button className="userInfoEdition__btn" onClick={() => { setEditLicence(true); }}>*/}
-                {/*                <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />*/}
-                {/*            </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserLicence(); }}>*/}
-                {/*                <img className="userInfoEdition__btn__img" src={check} alt="ok" />*/}
-                {/*            </button>}*/}
-                {/*        </label>*/}
-                {/*    </span>*/}
-                {/*</label>*/}
-
-                <div className={editExperience ? "userInfoEdition__form__field userInfoEdition__form__field--experience" : "userInfoEdition__form__field"}
+               <div className={editExperience ? "userInfoEdition__form__field userInfoEdition__form__field--experience" : "userInfoEdition__form__field"}
                      onKeyDown={(e) => { if(e.keyCode === 13 || e.keyCode === 9) changeUserExperience(e.keyCode === 9); }}
                 >
                 <span className="userInfoEdition__key">
@@ -450,12 +428,12 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                         </span>
                         {!editExperience ? <button className="userInfoEdition__btn"
                                                    disabled={!!user}
-                                                   onClick={() => { setEditExperience(true); }}>
+                                                   onClick={(e) => { e.stopPropagation(); e.preventDefault(); setEditExperience(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button type="button" className="userInfoEdition__btn"
+                        </button> : <button type="button" className="userInfoEdition__btn userInfoEdition__btn--save"
                                             disabled={!!user}
                                             onClick={() => { changeUserExperience(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -503,8 +481,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
 
                         {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPosition(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserPosition(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -538,8 +516,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
 
                         {!clubProp ? (!editCountry ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditCountry(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserCountry(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserCountry(); }}>
+                            Zapisz
                         </button>) : ''}
                     </label>
                 </span>
@@ -575,8 +553,8 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                     </>}
                     {!clubProp ? (!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
                         <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                    </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserSalary(); }}>
-                        <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                    </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserSalary(); }}>
+                        Zapisz
                     </button>) : ""}
                 </span>
             </label> : ''}

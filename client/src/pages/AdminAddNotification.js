@@ -178,7 +178,7 @@ const AdminAddNotification = () => {
     return <div className="container container--dark container--admin">
         <AdminTop />
         <main className="admin">
-            <PanelMenu menuOpen={2} />
+            <PanelMenu menuOpen={3} />
             <main className="admin__main">
                 <header className="admin__flex">
                     <h1 className="admin__main__header">

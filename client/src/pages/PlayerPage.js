@@ -33,8 +33,6 @@ const PlayerPage = ({club, userInfo}) => {
 
                 const identitySplitted = result.identity.split('-');
 
-                console.log(identitySplitted);
-
                 if(identitySplitted[identitySplitted.length-1] === 'stuff') {
                     setIsStuff(true);
                 }
@@ -67,9 +65,11 @@ const PlayerPage = ({club, userInfo}) => {
             {!isStuff && !userInfo ? <>
                 <PlayerInfoEdition player={user}
                                    theme="dark" />
-                <PlayerVideoView id={user.id} 
-                                 club={true} />
             </> : (!userInfo ? <StuffInfoEdition id={user.identity} club={true} /> : '')}
+
+            {!isStuff ? <PlayerVideoView id={user.id}
+                                         otherPlayerPage={!(!isStuff && !userInfo)}
+                                         club={!isStuff && !userInfo} /> : ''}
         </> : <LoadingPage />}
 
         <Footer theme="dark" border={true} />

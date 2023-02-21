@@ -111,11 +111,75 @@ router.get('/get-comments', (request, response) => {
     });
 });
 
+router.post("/update", basicAuth, upload.single("image"), (request, response) => {
+    const { id, userId, clubId, content, deleteImage } = request.body;
+
+    const insertPost = (id, content, imageId) => {
+        let query, values;
+
+        if(imageId) {
+            query = `UPDATE posts SET content = $1, image = $2 WHERE id = $3`;
+            values = [content, imageId, id];
+        }
+        else {
+            if(deleteImage) {
+                query = `UPDATE posts SET content = $1, image = $2 WHERE id = $3`;
+                values = [content, null, id];
+            }
+            else {
+                query = `UPDATE posts SET content = $1 WHERE id = $2`;
+                values = [content, id];
+            }
+        }
+
+        db.query(query, values,(err, res) => {
+            if(res) {
+                response.send({
+                    result: 1
+                });
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        });
+    }
+
+    let filename = null;
+    if(request.file) {
+        filename = request.file.filename;
+    }
+
+    if(filename) {
+        const query = `INSERT INTO images VALUES (nextval('images_id_sequence'), $1) RETURNING id`;
+        const values = [filename];
+
+        db.query(query, values, (err, res) => {
+            if(res) {
+                if(res.rows) {
+                    insertPost(id, content, res.rows[0].id);
+                }
+                else {
+                    response.send({
+                        result: 0
+                    });
+                }
+            }
+            else {
+                response.send({
+                    result: 0
+                });
+            }
+        });
+    }
+    else {
+        insertPost(id, content, null);
+    }
+});
+
 router.post("/add", basicAuth, upload.single("image"), (request, response) => {
     const { userId, clubId, content } = request.body;
-
-    console.log(userId);
-    console.log(isNaN(userId));
 
     const insertPost = (userId, clubId, content, imageId) => {
         const query = `INSERT INTO posts VALUES (nextval('posts_id_sequence'), $1, $2, NOW(), $3, $4)`;
@@ -146,12 +210,9 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
         db.query(query, values, (err, res) => {
             if(res) {
                 if(res.rows) {
-                    console.log('insert image');
                     insertPost(userId, clubId, content, res.rows[0].id);
                 }
                 else {
-                    console.log('error in image');
-                    console.log(err);
                     response.send({
                         result: 0
                     });

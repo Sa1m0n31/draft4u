@@ -98,7 +98,7 @@ const AdminMailingList = () => {
         </div>
 
         <main className="admin">
-            <PanelMenu menuOpen={5} />
+            <PanelMenu menuOpen={6} />
             <main className="admin__main">
                 <header className="admin__flex">
                     <h1 className="admin__main__header">

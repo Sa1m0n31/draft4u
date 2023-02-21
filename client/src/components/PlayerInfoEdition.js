@@ -156,8 +156,8 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                                name="attackRange" /> cm
                         {!editAttackRange ? <button className="userInfoEdition__btn" onClick={() => { setEditAttackRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserAttackRange(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserAttackRange(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -182,8 +182,8 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                                name="verticalRange" /> cm
                         {!editVerticalRange ? <button className="userInfoEdition__btn" onClick={() => { setEditVerticalRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserVerticalRange(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserVerticalRange(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -208,8 +208,8 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                                name="blockRange" /> cm
                         {!editBlockRange ? <button className="userInfoEdition__btn" onClick={() => { setEditBlockRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserBlockRange(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserBlockRange(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -234,8 +234,8 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                                name="height" /> cm
                         {!editHeight ? <button className="userInfoEdition__btn" onClick={() => { setEditHeight(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserHeight(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserHeight(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
@@ -260,8 +260,8 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                                name="weight" /> kg
                         {!editWeight ? <button className="userInfoEdition__btn" onClick={() => { setEditWeight(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserWeight(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserWeight(); }}>
+                           Zapisz
                         </button>}
                     </label>
                 </span>
@@ -290,8 +290,8 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
 
                         {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
-                        </button> : <button className="userInfoEdition__btn" onClick={() => { changeUserPosition(); }}>
-                            <img className="userInfoEdition__btn__img" src={check} alt="ok" />
+                        </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserPosition(); }}>
+                            Zapisz
                         </button>}
                     </label>
                 </span>
