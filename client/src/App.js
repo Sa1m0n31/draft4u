@@ -103,10 +103,10 @@ function App() {
               <Map />
           </Route>
           <Route path="/zarejestruj-przez-facebooka">
-              <RegisterFromThirdParty thirdParty="fb" />
+              <RegisterPage thirdParty="fb" />
           </Route>
           <Route path="/zarejestruj-przez-google">
-              <RegisterFromThirdParty thirdParty="gl" />
+              <RegisterPage thirdParty="gl" />
           </Route>
           <Route path="/regulamin">
               <ContentPage type={1} />

@@ -1,9 +1,7 @@
 import React, {useContext, useRef} from 'react';
-import closeIcon from "../static/img/close-grey.svg";
-import {getImageUrl} from "../helpers/others";
 import {ContentContext} from "../App";
 
-const ChooseAccountType = ({chooseAccountType}) => {
+const ChooseAccountType = ({chooseAccountType, thirdParty}) => {
     const { content } = useContext(ContentContext);
 
     let registerModal = useRef(null);
@@ -12,7 +10,7 @@ const ChooseAccountType = ({chooseAccountType}) => {
         document.querySelector(".chooseAccountTypeModal").style.display = "none";
     }
 
-    return <main className="registerModal__inner" ref={registerModal}>
+    return <main className={thirdParty ? "registerModal__inner registerModal__inner--narrow" : "registerModal__inner"} ref={registerModal}>
         <button className="btn btn--remove btn--modalClose"
                 onClick={() => { window.location.href = '/'; }}>
             &times;
@@ -30,9 +28,9 @@ const ChooseAccountType = ({chooseAccountType}) => {
                 <button className="registerModal__step0__btn goldman" onClick={() => { chooseAccountType(1); closeModal(); }}>
                     Strefa asystenta
                 </button>
-                <button className="registerModal__step0__btn goldman" onClick={() => { chooseAccountType(2); closeModal(); }}>
+                {!thirdParty ? <button className="registerModal__step0__btn goldman" onClick={() => { chooseAccountType(2); closeModal(); }}>
                     Strefa klubu
-                </button>
+                </button> : ''}
             </div>
         </div>
 

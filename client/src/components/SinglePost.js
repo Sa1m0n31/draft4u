@@ -21,8 +21,11 @@ const SinglePost = ({post, user, club, loggedIn}) => {
     const [postImageUrl, setPostImageUrl] = useState('');
     const [updateMode, setUpdateMode] = useState(false);
     const [deleteImage, setDeleteImage] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(profilePictureExample);
 
     useEffect(() => {
+        console.log(club);
+
         if(post) {
             if(club?.identity === post.club_id) {
                 setIsMyPost(true);
@@ -71,8 +74,22 @@ const SinglePost = ({post, user, club, loggedIn}) => {
         }
     }, [postImage]);
 
+    useEffect(() => {
+        if(club) {
+            if(club.file_path) {
+                setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/clubs/${club.file_path}`);
+            }
+        }
+
+        if(user) {
+            if(user.file_path) {
+                setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/users/${user.file_path}`);
+            }
+        }
+    }, [club, user]);
+
     const addNewComment = () => {
-        addComment(post.id, user?.id, club?.club_id, comment)
+        addComment(post.id, user?.id, club?.id, comment)
             .then((res) => {
                 setComment('');
 
@@ -182,7 +199,7 @@ const SinglePost = ({post, user, club, loggedIn}) => {
 
         {loggedIn ? <div className="feed__addComment">
             <figure className="feed__addComment__image">
-                <img className="img" src={profilePictureExample} alt="zdjecie-profilowe" />
+                <img className="img" src={profilePicture} alt="zdjecie-profilowe" />
             </figure>
             <textarea className="feed__addComment__input"
                       value={comment}

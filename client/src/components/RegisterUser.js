@@ -1,18 +1,16 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {isMail, isPasswordStrength} from "../helpers/validation";
-import {isEmailAvailable} from "../helpers/user";
+import {getUserData, isEmailAvailable} from "../helpers/user";
 import {registerFromThirdParty, registerUser} from "../helpers/auth";
-import phoneIcon from '../static/img/phone.svg';
-import calendarIcon from '../static/img/calendar.svg';
 import triangleDown from "../static/img/triangle-down.svg";
 import {ContentContext} from "../App";
 import AfterRegister from "./AfterRegister";
 import DraftLoader from "./Loader";
+import LoadingPage from "../pages/LoadingPage";
 
 const RegisterUser = (props) => {
     const { content } = useContext(ContentContext);
 
-    const [step0, setStep0] = useState(true);
     const [accountType, setAccountType] = useState(-1);
 
     const [email, setEmail] = useState("");
@@ -37,6 +35,7 @@ const RegisterUser = (props) => {
     const [birthdayError, setBirthdayError] = useState("");
     const [phoneNumberError, setPhoneNumberError] = useState("");
     const [checkboxError, setCheckboxError] = useState(false);
+    const [render, setRender] = useState(false);
 
     const [userRegistered, setUserRegistered] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -48,14 +47,35 @@ const RegisterUser = (props) => {
     let sexFieldPlaceholder = useRef(null);
 
     useEffect(() => {
-        if(props.registerFromThirdParty && formStep1 && formStep2) {
+        if(props.thirdParty) {
+            getUserData()
+                .then((res) => {
+                    if(res?.data?.result) {
+                        console.log(res.data.result);
+
+                        if(res.data.result.active) {
+                            window.location = "/tablica";
+                        }
+                    }
+                    else {
+                        setRender(true);
+                    }
+                });
+        }
+        else {
+            setRender(true);
+        }
+    }, [props.thirdParty]);
+
+    useEffect(() => {
+        if(props.thirdParty && formStep1 && formStep2) {
             setCurrentStep(2);
             if(formStep1.current && formStep2.current) {
                 formStep1.current.style.display = "none";
                 formStep2.current.style.display = "block";
             }
         }
-    }, [props.registerFromThirdParty, formStep1, formStep2]);
+    }, [props.thirdParty, formStep1, formStep2]);
 
     useEffect(() => {
         setAccountType(props.type);
@@ -91,15 +111,6 @@ const RegisterUser = (props) => {
 
     const hideBirthdayOverlay = () => {
         birthdayOverlay.current.style.display = "none";
-    }
-
-    const goToLogin = () => {
-        if(!props.registerFromThirdParty) {
-            document.querySelector(".loginBoxWrapper").style.display = "block";
-        }
-        else {
-            window.location = "/tablica";
-        }
     }
 
     const validateStep1 = (e) => {
@@ -148,8 +159,6 @@ const RegisterUser = (props) => {
     const validateStep2 = (e) => {
         e.preventDefault();
 
-        console.log('validate');
-
         let error = false;
 
         if(!firstName?.length) {
@@ -197,7 +206,7 @@ const RegisterUser = (props) => {
             setLoading(true);
 
             /* REGISTER USER */
-            if(!props.registerFromThirdParty) {
+            if(!props.thirdParty) {
                 registerUser(
                     email, password,
                     firstName, lastName, sex,
@@ -232,7 +241,7 @@ const RegisterUser = (props) => {
         }
     }
 
-    return userRegistered === 0 ? <>
+    return !render ? (userRegistered === 0 ? <>
         {/* STEP 1 */}
         <section className="registerForm__section registerForm__section--1" ref={formStep1}>
             <label>
@@ -374,7 +383,7 @@ const RegisterUser = (props) => {
                 <DraftLoader />
             </div>}
         </section>
-    </> : <AfterRegister />
+    </> : <AfterRegister thirdParty={props.thirdParty} />) : <LoadingPage />;
 };
 
 export default RegisterUser;

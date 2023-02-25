@@ -16,7 +16,6 @@ import ChangePassword from "../pages/ChangePassword";
 import ChatPage from "../pages/ChatPage";
 import {StuffContext} from "../App";
 import PlayerPage from "../pages/PlayerPage";
-import Feed from "../pages/Feed";
 import Community from "../pages/Community";
 
 const UserContext = React.createContext(5);

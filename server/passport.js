@@ -169,7 +169,7 @@ const init = (passport) => {
 
                                 db.query(query, values, (err, res) => {
                                     if(res) {
-                                        done(null, res.rows[0].id);
+                                        done(null, res.rows[0]?.id);
                                     }
                                     else {
                                         done(null, null);
@@ -217,6 +217,11 @@ const init = (passport) => {
                 });
             }
             else if(id.provider === 'facebook') {
+                console.log('facebook provider!');
+
+                console.log(id);
+                console.log(id.id);
+
                 /* Facebook */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
@@ -225,28 +230,37 @@ const init = (passport) => {
                             WHERE NOT EXISTS (
                                 SELECT 1 FROM users WHERE email = $1
                             ) RETURNING id`;
-                if(id.emails) {
-                    if(id.emails.length) {
-                        values = [id.emails[0].value, id.name.givenName, id.name.familyName];
-                    }
-                    else {
-                        values = [id.id + '@facebookauth', id.name.givenName, id.name.familyName];
-                    }
-                }
-                else {
-                    values = [id.id + '@facebookauth', id.name.givenName, id.name.familyName];
-                }
+                values = [id.id + '@facebookauth'];
+
+                // if(id.emails) {
+                //     if(id.emails.length) {
+                //         values = [id.emails[0].value];
+                //     }
+                //     else {
+                //         values = [id.id + '@facebookauth'];
+                //     }
+                // }
+                // else {
+                //     values = [id.id + '@facebookauth'];
+                // }
                 db.query(query, values, (err, res) => {
+                    console.log(err);
+
                     if(res) {
                         if(res.rows) {
                             /* Add new identity */
                             if(res.rows.length) {
                                 const userId = res.rows[0].id;
+
+                                console.log(`inserting user id: ${userId}`);
+
                                 if(userId) {
-                                    query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                                    values = [uuid, userId, 2, hash];
+                                    query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
+                                    values = [uuid, userId, hash];
 
                                     db.query(query, values, (err, res) => {
+                                        console.log(err);
+
                                         if(res) {
                                             done(null, uuid);
                                         }
@@ -260,6 +274,8 @@ const init = (passport) => {
                                     const values = [hash];
 
                                     db.query(query, values, (err, res) => {
+                                        console.log(err);
+
                                         if(res) {
                                             done(null, res.rows[0].id);
                                         }
@@ -270,6 +286,8 @@ const init = (passport) => {
                                 }
                             }
                             else {
+                                console.log('login?');
+
                                 const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
                                 const values = [hash];
 
@@ -288,6 +306,8 @@ const init = (passport) => {
                             const values = [hash];
 
                             db.query(query, values, (err, res) => {
+                                console.log(err);
+
                                 if(res) {
                                     done(null, res.rows[0].id);
                                 }
@@ -298,13 +318,18 @@ const init = (passport) => {
                         }
                     }
                     else {
+                        console.log('ERROR - login');
+
                         /* Error - user with the same email already exists */
                         const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 2`;
                         const values = [hash];
 
                         db.query(query, values, (err, res) => {
+                            console.log(res.rows);
+                            console.log(err);
+;
                             if(res) {
-                                done(null, res.rows[0].id);
+                                done(null, res.rows[0]?.id);
                             }
                             else {
                                 done(null, null);

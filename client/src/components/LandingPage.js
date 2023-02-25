@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import ClubSlider from "./ClubSlider";
 import {ContentContext} from "../App";
 import mainImage from '../static/img/landing-image.png';
@@ -6,9 +6,29 @@ import secondImage from '../static/img/mockup.png';
 import img1 from '../static/img/korzysc1.png';
 import img2 from '../static/img/korzysc2.png';
 import img3 from '../static/img/box-siergiej.png';
+import {getAllClubs, getAllPlayers} from "../helpers/club";
 
 const LandingPage = () => {
     const { content } = useContext(ContentContext);
+
+    const [playersCounter, setPlayersCounter] = useState(10);
+    const [clubCounter, setClubCounter] = useState(10);
+
+    useEffect(() => {
+        getAllClubs()
+            .then((res) => {
+                if(res?.data?.result) {
+                    setClubCounter(res.data.result.length);
+                }
+            });
+
+        getAllPlayers()
+            .then((res) => {
+                if(res?.data?.result) {
+                    setPlayersCounter(res.data.result.length);
+                }
+            });
+    }, []);
 
     return <main className="landingPage">
         <main className="landingPage__inner">
@@ -84,6 +104,25 @@ const LandingPage = () => {
                         <img className="img" src={img2} alt="img1" />
                     </figure>
                 </div>
+            </div>
+        </div>
+
+        <div className="landingPage__numbers">
+            <div className="landingPage__numbers__section">
+                <h4 className="landingPage__numbers__section__number">
+                    {playersCounter}
+                </h4>
+                <h5 className="landingPage__numbers__section__caption">
+                    Zawodników
+                </h5>
+            </div>
+            <div className="landingPage__numbers__section">
+                <h4 className="landingPage__numbers__section__number">
+                    {clubCounter}
+                </h4>
+                <h5 className="landingPage__numbers__section__caption">
+                    Klubów
+                </h5>
             </div>
         </div>
 

@@ -1105,6 +1105,10 @@ ul {
     padding: 50px 70px;
 }
 
+.registerModal__inner--narrow {
+    max-width: 800px;
+}
+
 .registerModal__closeBtn {
     background: transparent;
     position: absolute;
@@ -6205,6 +6209,10 @@ input::-webkit-inner-spin-button {
     transition: .2s all;
 }
 
+.registerModal__inner--narrow .registerModal__step0__btn {
+    width: 48%;
+}
+
 .registerModal__step0__btn:hover {
     background: var(--gold);
     color: #fff;
@@ -9197,4 +9205,32 @@ abbr[title] {
 .feed__item__image--edit {
     border-radius: 0;
     margin: 20px 15px;
+}
+
+.landingPage__numbers {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 80px auto 40px;
+}
+
+.landingPage__numbers__section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.landingPage__numbers__section__number {
+    font-size: 128px;
+    font-family: 'Goldman', cursive;
+    color: #fff;
+}
+
+.landingPage__numbers__section__caption {
+    font-size: 36px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
 }

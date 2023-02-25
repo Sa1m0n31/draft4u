@@ -1820,6 +1820,23 @@
         display: block !important;
     }
 
+    .landingPage__numbers {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .landingPage__numbers__section:first-of-type {
+        margin-bottom: 40px;
+    }
+
+    .landingPage__numbers__section__number {
+        font-size: 64px;
+    }
+
+    .landingPage__numbers__section__caption {
+        font-size: 21px;
+    }
+
     .myPostEdition__btn {
         width: 16px;
     }

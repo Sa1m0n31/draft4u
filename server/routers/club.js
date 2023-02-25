@@ -47,7 +47,13 @@ router.post('/send-form', basicAuth, (request, response) => {
 });
 
 router.get("/get-all", (request, response) => {
-    const query = 'SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, c.country, l.sex, i.file_path, id.active FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id JOIN leagues l ON c.league = l.id JOIN identities id ON c.id = id.id';
+    const query = `SELECT c.id, c.name, c.login, c.x, c.y, c.league, c.nip, c.krs, c.city, 
+    c.country, l.sex, i.file_path, id.active 
+    FROM clubs c 
+    LEFT OUTER JOIN images i ON c.logo = i.id 
+    JOIN leagues l ON c.league = l.id 
+    JOIN identities id ON c.id = id.id 
+    WHERE c.email != 'biuro@draft4u.com.pl'`;
     db.query(query, (err, res) => {
        if(res) {
             response.send({
@@ -82,7 +88,7 @@ router.get("/get-locations", (request, response) => {
 router.get("/get-club-data", (request, response) => {
    const clubId = request.user;
 
-   const query = 'SELECT c.id, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, c.league, i.file_path, id.active, id.identity FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id LEFT OUTER JOIN identities id ON id.id = c.id WHERE c.id = $1';
+   const query = 'SELECT c.id, c.accepted, c.name, c.x, c.y, c.nip, c.krs, c.city, c.email, c.league, i.file_path, id.active, id.id as identity FROM clubs c LEFT OUTER JOIN images i ON c.logo = i.id LEFT OUTER JOIN identities id ON id.id = c.id WHERE c.id = $1';
    const values = [clubId];
 
    db.query(query, values, (err, res) => {
@@ -170,7 +176,7 @@ router.get("/get-three-newest", basicAuth, (request, response) => {
 router.get("/get-favorites", basicAuth, (request, response) => {
     const club = request.user;
 
-    const query = `SELECT * FROM favorites f JOIN users u ON f.user_id = u.id WHERE f.club_id = $1 ORDER BY f.created_at`;
+    const query = `SELECT * FROM favorites f JOIN users u ON f.user_id = u.id WHERE f.club_id = $1 AND f.club_id != '64022304-8e75-41bf-8046-bb7e3dc79ce6' ORDER BY f.created_at`;
     const values = [club];
 
     db.query(query, values, (err, res) => {

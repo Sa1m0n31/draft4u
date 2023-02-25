@@ -7,14 +7,14 @@ import RegisterUser from "../components/RegisterUser";
 import RegisterClub from "../components/RegisterClub";
 import ChooseAccountType from "../components/ChooseAccountType";
 
-const RegisterPage = () => {
+const RegisterPage = ({thirdParty}) => {
     const [accountType, setAccountType] = useState(0); // 0 - player, 1 - stuff, 2 - club
 
     return <div className="container container--light">
         <Header menu="dark" mobileBackground="black" />
 
         <div className="chooseAccountTypeModal chooseAccountTypeModal--register">
-            <ChooseAccountType chooseAccountType={setAccountType} />
+            <ChooseAccountType thirdParty={thirdParty} chooseAccountType={setAccountType} />
         </div>
 
         <div className={accountType === 2 ? "authBox authBox--club" : "authBox"}>
@@ -38,7 +38,7 @@ const RegisterPage = () => {
                 Twojego konta
             </h2>
 
-            {accountType === 0 ? <RegisterUser type={0} /> :
+            {accountType === 0 ? <RegisterUser thirdParty={thirdParty} type={0} /> :
                 (accountType === 1 ? <RegisterUser type={1} /> : <RegisterClub />)}
         </div>
 

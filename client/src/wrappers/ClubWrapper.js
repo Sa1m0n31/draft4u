@@ -35,7 +35,7 @@ const ClubWrapper = ({page}) => {
                             setLoaded(true);
 
                             const club = res?.data?.result;
-                            if(club?.file_path) setTestClub(false);
+                            if(club?.active) setTestClub(false);
 
                             getAllPlayers()
                                 .then((res) => {

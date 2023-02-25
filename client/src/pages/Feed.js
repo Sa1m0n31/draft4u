@@ -38,6 +38,7 @@ const Feed = () => {
     const [page, setPage] = useState(0);
     const [clubEvents, setClubEvents] = useState([]);
     const [userEntries, setUserEntries] = useState([]);
+    const [profilePicture, setProfilePicture] = useState(profilePictureExample);
 
     useEffect(() => {
         getCurrentEvents()
@@ -81,6 +82,20 @@ const Feed = () => {
     },[]);
 
     useEffect(() => {
+        if(club) {
+            if(club.file_path) {
+                setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/clubs/${club.file_path}`);
+            }
+        }
+
+        if(user) {
+            if(user.file_path) {
+                setProfilePicture(`${settings.IMAGE_URL}/image?url=/media/users/${user.file_path}`);
+            }
+        }
+    }, [club, user]);
+
+    useEffect(() => {
         if(user) {
             getUserEntries(user.id)
                 .then((res) => {
@@ -117,7 +132,7 @@ const Feed = () => {
     const addNewPost = () => {
         if(postContent) {
             setLoading(true);
-            addPost(user?.id, club?.club_id, postContent, postImage)
+            addPost(user?.id, club?.id, postContent, postImage)
                 .then((res) => {
                     if(res?.data?.result) {
                         setPostContent('');
@@ -211,7 +226,7 @@ const Feed = () => {
                     </div>
                 </div> : <div className="feed__main__top feed__main__top--add">
                     <figure className="feed__addComment__image feed__addComment__image--main">
-                        <img className="img" src={profilePictureExample} alt="zdjecie-profilowe" />
+                        <img className="img" src={profilePicture} alt="zdjecie-profilowe" />
                     </figure>
                     <textarea className="feed__addComment__input noscroll"
                               value={postContent}
