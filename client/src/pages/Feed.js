@@ -16,7 +16,7 @@ import settings from "../settings";
 import EventInfoModal from "../components/EventInfoModal";
 
 const Feed = () => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     let postContentTextarea = useRef(null);
 
@@ -200,10 +200,10 @@ const Feed = () => {
         <main className="feed">
             <div className="feed__left">
                 <h1 className="feed__header">
-                    Witaj
+                    {content.welcome}
                 </h1>
                 {!loggedIn ? <p className="feed__left__text goldman">
-                    Komentowanie i dodawanie postów na tablicy to tylko część, z wielu korzyści, jakie otrzymasz po zarejestrowaniu konta w Draft4U. Wykorzystaj w pełni sportowy potencjał!
+                    {content.feed_text}
                 </p> : ''}
 
                 {!isClub ? <a href={!loggedIn ? "/zaloz-konto" : "/edycja-profilu"} className="btn btn--gradient goldman btn--signUpOnFeed">
@@ -214,14 +214,14 @@ const Feed = () => {
             <div className="feed__main w">
                 {!loggedIn ? <div className="feed__main__top">
                     <h2 className="feed__main__top__header goldman">
-                        Chcesz pisać posty i komentować?
+                        {content.feed_question}
                     </h2>
                     <div className="flex">
                         <a href="/zaloz-konto" className="btn btn--gradient goldman btn--signUpOnFeed">
                             {content.register}
                         </a>
                         <a href="/logowanie" className="btn btn--gradient goldman btn--signUpOnFeed">
-                            Zaloguj się
+                            {content.login}
                         </a>
                     </div>
                 </div> : <div className="feed__main__top feed__main__top--add">
@@ -233,7 +233,7 @@ const Feed = () => {
                               ref={postContentTextarea}
                               onChange={(e) => { setPostContent(e.target.value); }}
                               onKeyUp={(e) => { textAreaAdjust(); }}
-                              placeholder="Co u Ciebie?">
+                              placeholder={language === 'pl' ? "Co u Ciebie?" : 'How are you?'}>
 
                         </textarea>
 
@@ -244,10 +244,10 @@ const Feed = () => {
                         <img className="img" src={postImageUrl} alt="zdjecie-postu" />
                     </figure> : <div className="feed__main__top__options">
                         <div className="imageInputWrapper">
-                            <label htmlFor="postImage" className="btn--feedTopOption">Zdjęcie</label>
+                            <label htmlFor="postImage" className="btn--feedTopOption">{language === 'pl' ? 'Zdjęcie' : 'Image'}</label>
                             <input id="postImage"
                                    onChange={(e) => { setPostImage(e.target.files[0]); }}
-                                   placeholder="Zdjęcie"
+                                   placeholder={language === 'pl' ? "Zdjęcie" : "Image"}
                                    type="file" />
                         </div>
 
@@ -257,7 +257,7 @@ const Feed = () => {
                             </span>
                             <button className="btn--feedTopOption"
                                     onClick={() => { setEventEditionModalVisible(true); }}>
-                                Wydarzenie
+                                {language === 'pl' ? 'Wydarzenie' : 'Event'}
                             </button>
                         </>: ''}
                     </div>}
@@ -266,11 +266,11 @@ const Feed = () => {
                         <DraftLoader />
                     </div> : (!status ? <button className="btn btn--addPost btn--gradient goldman"
                                                 onClick={() => { addNewPost(); }}>
-                        Dodaj post
+                        {language === 'pl' ? 'Dodaj post' : 'Add post'}
                     </button> : (status === 1 ? <span className="addPostInfo goldman addPostInfo--positive">
-                        Twój post został dodany!
+                        {language === 'pl' ? 'Twój post został dodany!' : 'Your post was added successfully!'}
                     </span> :  <span className="addPostInfo goldman addPostInfo--negative">
-                        Coś poszło nie tak... Prosimy spróbować później
+                        {language === 'pl' ? 'Coś poszło nie tak... Prosimy spróbować później' : 'Something went wrong... Please try again later'}
                     </span>))}
                 </div>}
 
@@ -298,7 +298,7 @@ const Feed = () => {
 
             <div className="feed__right">
                 <h3 className="feed__header">
-                    Wydarzenia klubowe
+                    {language === 'pl' ? 'Wydarzenia klubowe' : 'Club events'}
                 </h3>
 
                 {clubEvents.map((item, index) => {
@@ -312,10 +312,10 @@ const Feed = () => {
                         </p>
                         {user && !userEntries.includes(item.id) ? <button className="btn btn--joinEvent btn--gradient goldman"
                                                                           onClick={() => { setEventInfoModalId(item.id); }}>
-                            Dołącz
+                            {language === 'pl' ? 'Dołącz' : 'Join'}
                         </button> : (user ? <button className="btn btn--joinEvent btn--gradient goldman"
                                                     onClick={() => { setEventInfoModalId(item.id); }}>
-                            Szczegóły
+                            {language === 'pl' ? 'Szczegóły' : 'Details'}
                         </button> : '')}
                     </div>
                 })}

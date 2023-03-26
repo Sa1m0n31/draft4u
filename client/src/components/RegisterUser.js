@@ -35,7 +35,7 @@ const RegisterUser = (props) => {
     const [birthdayError, setBirthdayError] = useState("");
     const [phoneNumberError, setPhoneNumberError] = useState("");
     const [checkboxError, setCheckboxError] = useState(false);
-    const [render, setRender] = useState(false);
+    const [render, setRender] = useState(true);
 
     const [userRegistered, setUserRegistered] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -51,8 +51,6 @@ const RegisterUser = (props) => {
             getUserData()
                 .then((res) => {
                     if(res?.data?.result) {
-                        console.log(res.data.result);
-
                         if(res.data.result.active) {
                             window.location = "/tablica";
                         }
@@ -60,6 +58,9 @@ const RegisterUser = (props) => {
                     else {
                         setRender(true);
                     }
+                })
+                .catch(() => {
+                    setRender(true);
                 });
         }
         else {
@@ -241,7 +242,7 @@ const RegisterUser = (props) => {
         }
     }
 
-    return !render ? (userRegistered === 0 ? <>
+    return render ? (userRegistered === 0 ? <>
         {/* STEP 1 */}
         <section className="registerForm__section registerForm__section--1" ref={formStep1}>
             <label>
@@ -282,7 +283,7 @@ const RegisterUser = (props) => {
             </label>
 
             <button className="registerForm--nextBtn btn--gradient goldman" onClick={(e) => { validateStep1(e); }}>
-                Dalej
+                {content.continue_text}
             </button>
         </section>
 

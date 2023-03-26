@@ -20,7 +20,7 @@ const AdminClubsList = ({admin}) => {
     useEffect(() => {
         getClubs()
             .then((res) => {
-                setClubs(res?.data?.result.reverse());
+                setClubs(res.data.result?.sort((a, b) => (a.login_time > b.login_time ? -1 : 1)));
             });
 
         if(deleteStatus !== -1) {
@@ -105,7 +105,7 @@ const AdminClubsList = ({admin}) => {
                 <h1 className="admin__main__header">
                     Lista klubów
                 </h1>
-                {clubs?.reverse()?.map((item, index) => {
+                {clubs?.map((item, index) => {
                     return <section className="admin__main__notification__item" key={index}>
                         <section className="admin__main__notification__item__col col-2">
                             <h3 className="admin__main__notification__item__key">

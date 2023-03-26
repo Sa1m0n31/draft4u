@@ -15,7 +15,7 @@ import {unicodeToUTF8} from "../helpers/others";
 import {ContentContext} from "../App";
 
 const PlayerInfoEdition = ({player, theme, userView}) => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     const [editAttackRange, setEditAttackRange] = useState(false);
     const [editVerticalRange, setEditVerticalRange] = useState(false);
@@ -157,7 +157,7 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                         {!editAttackRange ? <button className="userInfoEdition__btn" onClick={() => { setEditAttackRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserAttackRange(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -183,7 +183,7 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                         {!editVerticalRange ? <button className="userInfoEdition__btn" onClick={() => { setEditVerticalRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserVerticalRange(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -209,7 +209,7 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                         {!editBlockRange ? <button className="userInfoEdition__btn" onClick={() => { setEditBlockRange(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserBlockRange(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -235,7 +235,7 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                         {!editHeight ? <button className="userInfoEdition__btn" onClick={() => { setEditHeight(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserHeight(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -261,7 +261,7 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                         {!editWeight ? <button className="userInfoEdition__btn" onClick={() => { setEditWeight(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserWeight(); }}>
-                           Zapisz
+                           {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -291,7 +291,7 @@ const PlayerInfoEdition = ({player, theme, userView}) => {
                         {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserPosition(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>

@@ -372,12 +372,7 @@ router.post('/is-login-available', (request, response) => {
       if(res) {
           const allLogins = res.rows;
 
-          console.log(allLogins);
-          console.log(login);
-
           const loginFound = allLogins.findIndex((item) => (item.login === login));
-
-          console.log(loginFound);
 
           if(loginFound === -1) {
               response.send({

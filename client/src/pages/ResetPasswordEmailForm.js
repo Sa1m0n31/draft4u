@@ -76,7 +76,7 @@ const ResetPasswordEmailForm = () => {
                     </div> }
 
                     <button className="button button--resetPassword button--hover btn--gradient center goldman" onClick={(e) => { handleSubmit(e); }}>
-                        Dalej
+                        {content.continue_text}
                     </button>
                 </> : (success === 1 ? <>
                     <h2 className="resetPassword__header">

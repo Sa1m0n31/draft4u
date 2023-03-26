@@ -9,7 +9,7 @@ import DraftLoader from "../components/Loader";
 import StuffCard from "./StuffCard";
 
 const Community = ({user, isLocal}) => {
-    const { content } = useContext(ContentContext);
+    const { language } = useContext(ContentContext);
 
     const [players, setPlayers] = useState([]);
     const [stuff, setStuff] = useState([]);
@@ -47,11 +47,11 @@ const Community = ({user, isLocal}) => {
                 <div className="community__top">
                     <button className={currentCommunity === 0 ? "btn--community btn--community--selected" : "btn--community" }
                             onClick={() => { setCurrentCommunity(0); }}>
-                        Zawodnicy
+                        {language === 'pl' ? 'Zawodnicy' : 'Players'}
                     </button>
                     <button className={currentCommunity === 1 ? "btn--community btn--community--selected" : "btn--community" }
                             onClick={() => { setCurrentCommunity(1); }}>
-                        Sztab
+                        {language === 'pl' ? 'Sztab' : 'Staff'}
                     </button>
                 </div>
             </main>

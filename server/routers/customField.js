@@ -345,8 +345,23 @@ router.post('/update', (request, response) => {
         after_add_account_type_user = $318,
         after_add_account_type_staff = $319,
         switch_account_type_user = $320,
-        switch_account_type_staff = $321 
-        WHERE language = $322`;
+        switch_account_type_staff = $321,
+        auth = $322,
+        of_your_account = $323,
+        landing_header_1 = $324,
+        landing_text_1 = $325,
+        landing_header_2 = $326,
+        landing_text_2 = $327,
+        landing_benefit_header_1 = $328,
+        landing_benefit_header_2 = $329,
+        landing_benefit_header_3 = $330,
+        landing_benefit_text_1 = $331,
+        landing_benefit_text_2 = $332,
+        landing_benefit_text_3 = $333,
+        welcome = $334,
+        feed_text = $335,
+        feed_question = $336
+        WHERE language = $337`;
 
     db.query(query, values, (err, res) => {
         console.log(err);

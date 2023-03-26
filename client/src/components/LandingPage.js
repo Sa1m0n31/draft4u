@@ -9,7 +9,7 @@ import img3 from '../static/img/box-siergiej.png';
 import {getAllClubs, getAllPlayers} from "../helpers/club";
 
 const LandingPage = () => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     const [playersCounter, setPlayersCounter] = useState(10);
     const [clubCounter, setClubCounter] = useState(10);
@@ -18,7 +18,10 @@ const LandingPage = () => {
         getAllClubs()
             .then((res) => {
                 if(res?.data?.result) {
-                    setClubCounter(res.data.result.length);
+                    const allClubs = res.data.result.filter((item) => {
+                        return item?.active && item?.file_path;
+                    });
+                    setClubCounter(allClubs.length);
                 }
             });
 
@@ -40,13 +43,13 @@ const LandingPage = () => {
         <div className="landingPage__flex">
             <div className="landingPage__flex__content">
                 <h1 className="bigHeader bigHeader--slide1 whitespace">
-                    Poznaj Draft4U
+                    {content.landing_header_1}
                 </h1>
                 <figure className="landingPage__flex__img d-mobile">
                     <img className="img" src={secondImage} alt="dolacz-do-nas" />
                 </figure>
                 <p className="text">
-                    Szukasz dla siebie nowego klubu? Jesteś młody, ambitny i chcesz mieć wpływ na swój rozwój bez pośrednictwa managerów? Draft4U to miejsce dla ciebie! Załóż konto, uzupełnij profil i kontaktuj się z klubami. Dołącz do nas i sam wykreuj swoją sportową przyszłość.
+                    {content.landing_text_1}
                 </p>
                 <a href="/zaloz-konto" className="button button--landingFlex btn--gradient goldman center">
                     {content.register}
@@ -59,19 +62,19 @@ const LandingPage = () => {
 
         <div className="landingPage__benefits">
             <h2 className="landingPage__benefits__header goldman">
-                Korzyści
+                {content.landing_header_2}
             </h2>
             <p className="landingPage__benefits__text">
-                Szukasz dla siebie nowego klubu? Jesteś młody, ambitny i chcesz mieć wpływ na swój rozwój bez pośrednictwa managerów? Draft4U to miejsce dla ciebie! Załóż konto, uzupełnij profil i kontaktuj się z klubami. Dołącz do nas i sam wykreuj swoją sportową przyszłość.
+                {content.landing_text_2}
             </p>
             <div className="landingPage__benefits__flex">
                 <div className="landingPage__benefits__flex__item">
                     <div className="landingPage__benefits__flex__item__content">
                         <h3 className="landingPage__benefits__flex__item__content__header">
-                            Pokaż się z najlepszej strony
+                            {content.landing_benefit_header_1}
                         </h3>
                         <p className="landingPage__benefits__flex__item__content__text">
-                            Zaprezentuj najlepsze zagrania klubom w całej Polsce. Bądź z nimi w stałym kontakcie, wysyłaj swoje CV i zgłaszaj się na testy.
+                            {content.landing_benefit_text_1}
                         </p>
                     </div>
                     <figure className="landingPage__benefits__flex__item__image">
@@ -81,10 +84,10 @@ const LandingPage = () => {
                 <div className="landingPage__benefits__flex__item">
                     <div className="landingPage__benefits__flex__item__content">
                         <h3 className="landingPage__benefits__flex__item__content__header">
-                            Korzystaj bezpłatnie
+                            {content.landing_benefit_header_2}
                         </h3>
                         <p className="landingPage__benefits__flex__item__content__text">
-                            Nie płać prowizji managerowi, załóż bezpłatne konto w okresie promocyjnym i czerp korzyści z obecności w sportowym świecie bez ograniczeń.
+                            {content.landing_benefit_text_2}
                         </p>
                     </div>
                     <figure className="landingPage__benefits__flex__item__image">
@@ -94,10 +97,10 @@ const LandingPage = () => {
                 <div className="landingPage__benefits__flex__item">
                     <div className="landingPage__benefits__flex__item__content">
                         <h3 className="landingPage__benefits__flex__item__content__header">
-                            Trzymaj rękę na pulsie
+                            {content.landing_benefit_header_3}
                         </h3>
                         <p className="landingPage__benefits__flex__item__content__text">
-                            Sprawdzaj, które kluby oglądały twój profil, śledź klubowe wydarzenia, czatuj, publikuj i wymieniaj się siatkarskimi newsami na swojej tablicy.
+                            {content.landing_benefit_text_3}
                         </p>
                     </div>
                     <figure className="landingPage__benefits__flex__item__image">
@@ -113,7 +116,7 @@ const LandingPage = () => {
                     {playersCounter}
                 </h4>
                 <h5 className="landingPage__numbers__section__caption">
-                    Zawodników
+                    {language === 'pl' ? 'Zawodników' : 'Players'}
                 </h5>
             </div>
             <div className="landingPage__numbers__section">
@@ -121,13 +124,12 @@ const LandingPage = () => {
                     {clubCounter}
                 </h4>
                 <h5 className="landingPage__numbers__section__caption">
-                    Klubów
+                    {language === 'pl' ? 'Klubów' : 'Clubs'}
                 </h5>
             </div>
         </div>
 
         <ClubSlider />
-        {/*<Partners />*/}
     </main>
 }
 

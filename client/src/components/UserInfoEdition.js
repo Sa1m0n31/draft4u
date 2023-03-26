@@ -315,10 +315,6 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
         if(tab) setEditSalary(true);
     }
 
-    useEffect(() => {
-        console.log(isStuff);
-    }, [isStuff]);
-
     return <section className="userInfoEdition siteWidthSuperNarrow">
         <section className="userInfoEdition__section">
             <UserProfileImage user={player} club={clubProp} />
@@ -351,7 +347,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                         {!editAge ? <button className="userInfoEdition__btn" onClick={() => { setEditAge(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserAge(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -388,7 +384,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                             {!editPhoneNumber ? <button className="userInfoEdition__btn" onClick={() => { setEditPhoneNumber(true); }}>
                                 <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                             </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserPhoneNumber(); }}>
-                                Zapisz
+                                {language === 'pl' ? 'Zapisz' : 'Save'}
                             </button>}
                         </label>
                 </span>
@@ -409,7 +405,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                         {!editClub ? <button className="userInfoEdition__btn" onClick={() => { setEditClub(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserClub(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -433,7 +429,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                         </button> : <button type="button" className="userInfoEdition__btn userInfoEdition__btn--save"
                                             disabled={!!user}
                                             onClick={() => { changeUserExperience(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -482,7 +478,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                         {!editPosition ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditPosition(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserPosition(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>}
                     </label>
                 </span>
@@ -517,7 +513,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                         {!clubProp ? (!editCountry ? <button className="userInfoEdition__btn userInfoEdition__btn--position" onClick={() => { setEditCountry(true); }}>
                             <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                         </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserCountry(); }}>
-                            Zapisz
+                            {language === 'pl' ? 'Zapisz' : 'Save'}
                         </button>) : ''}
                     </label>
                 </span>
@@ -554,7 +550,7 @@ const UserInfoEdition = ({player, theme, clubProp, favorite, user}) => {
                     {!clubProp ? (!editSalary ? <button className="userInfoEdition__btn" onClick={() => { setEditSalary(true); }}>
                         <img className="userInfoEdition__btn__img" src={pen} alt="edytuj" />
                     </button> : <button className="userInfoEdition__btn userInfoEdition__btn--save" onClick={() => { changeUserSalary(); }}>
-                        Zapisz
+                        {language === 'pl' ? 'Zapisz' : 'Save'}
                     </button>) : ""}
                 </span>
             </label> : ''}

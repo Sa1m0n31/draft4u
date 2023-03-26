@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import profilePictureExample from "../static/img/profile.png";
 import {getPostDate} from "../helpers/others";
 import settings from "../settings";
@@ -6,8 +6,11 @@ import {addComment, deletePost, updateCommentsList, updatePost} from "../helpers
 import exampleProfileImage from '../static/img/profile-picture.png';
 import penIcon from '../static/img/pen-white.png';
 import deleteIcon from '../static/img/trash-black.svg';
+import {ContentContext} from "../App";
 
 const SinglePost = ({post, user, club, loggedIn}) => {
+    const { language } = useContext(ContentContext);
+
     let postContentTextarea = useRef(null);
 
     const [comment, setComment] = useState('');
@@ -24,8 +27,6 @@ const SinglePost = ({post, user, club, loggedIn}) => {
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
 
     useEffect(() => {
-        console.log(club);
-
         if(post) {
             if(club?.identity === post.club_id) {
                 setIsMyPost(true);
@@ -58,7 +59,7 @@ const SinglePost = ({post, user, club, loggedIn}) => {
 
     useEffect(() => {
         if(postDelete) {
-            if(window.confirm("Czy na pewno chcesz usunąć ten post?")) {
+            if(window.confirm(language === 'pl' ? "Czy na pewno chcesz usunąć ten post?" : 'Are you sure you want to delete that post?')) {
                 deletePost(post.id)
                     .then(() => {
                         window.location.reload();
@@ -156,7 +157,7 @@ const SinglePost = ({post, user, club, loggedIn}) => {
                     <img className="img" src={penIcon} alt="edytuj" />
                 </button> : <button className="myPostEdition__btn myPostEdition__btn--postEdition"
                                     onClick={() => { updatePostById(); }}>
-                    Zapisz
+                    {language === 'pl' ? 'Zapisz' : 'Save'}
                 </button>}
                 <button className="myPostEdition__btn myPostEdition__btn--delete"
                         onClick={() => { setPostDelete(true); }}>
@@ -174,7 +175,7 @@ const SinglePost = ({post, user, club, loggedIn}) => {
                            ref={postContentTextarea}
                            onChange={(e) => { setPostContent(e.target.value); }}
                            onKeyUp={(e) => { textAreaAdjust(); }}
-                           placeholder="Co u Ciebie?">
+                           placeholder={language === 'pl' ? "Co u Ciebie?" : "How are you?"}>
 
                         </textarea>}
 
@@ -209,14 +210,14 @@ const SinglePost = ({post, user, club, loggedIn}) => {
                           e.stopPropagation();
                           addNewComment();
                       } }}
-                      placeholder="Napisz komentarz...">
+                      placeholder={language === 'pl' ? "Napisz komentarz..." : "Add comment..."}>
 
                         </textarea>
         </div> : ''}
 
         {commentsList?.length ? <div className="feed__comments">
             <button className="feed__comments__btn" onClick={() => { setAllCommentsVisible(p => !p); }}>
-                {commentsList.length} komentarzy
+                {commentsList.length} {language === 'pl' ? 'Komentarzy' : 'Comments'}
             </button>
 
             {commentsList.map((item, index) => {

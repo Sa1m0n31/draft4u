@@ -16,7 +16,7 @@ const PlayerVideoView = ({id, club, otherPlayerPage}) => {
     const [playVideo, setPlayVideo] = useState(-1);
     const [identity, setIdentity] = useState("");
 
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
     const { testClub } = useContext(TestClubContext);
 
     let player = useRef(null);
@@ -77,7 +77,7 @@ const PlayerVideoView = ({id, club, otherPlayerPage}) => {
         </main> : ""}
         <section className={videos.length ? "playerVideoView__btnWrapper" : "playerVideoView__btnWrapper--center"}>
             {!club && !otherPlayerPage ? <a className="button button--hover playerVideoView__btn btn--hover btn--gradient goldman center btn--addVideo" href="/dodaj-video">
-                Wgraj filmik
+                {language === 'pl' ? 'Wgraj filmik' : 'Add video'}
             </a> : ""}
         </section>
     </section>

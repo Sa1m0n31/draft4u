@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {addEventEntry} from "../helpers/event";
 import calendarIcon from '../static/img/calendar-icon.svg';
 import hourIcon from '../static/img/clock-icon.svg';
@@ -6,8 +6,11 @@ import {addTrailingZero} from "../helpers/others";
 import AfterAddEventError from "./AfterAddEventError";
 import DraftLoader from "./Loader";
 import AfterAddEntry from "./AfterAddEntry";
+import {ContentContext} from "../App";
 
 const EventInfoModal = ({closeModal, event, userId, entryDisabled}) => {
+    const { language } = useContext(ContentContext);
+
     const [status, setStatus] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -51,7 +54,7 @@ const EventInfoModal = ({closeModal, event, userId, entryDisabled}) => {
             </button>
 
             <h4 className="modal__header modal__header--event goldman">
-                Szczegóły wydarzenia
+                {language === 'pl' ? 'Szczegóły wydarzenia' : 'Event details'}
             </h4>
 
             <input className="input input--event input--event--title"
@@ -62,7 +65,7 @@ const EventInfoModal = ({closeModal, event, userId, entryDisabled}) => {
                 <label className="calendarWrapper">
                     <span className="calendarWrapper__value">
                         <span className="eventInfoModal__text">
-                            Zapisy do:
+                            {language === 'pl' ? 'Zapisy do:' : 'Registration to:'}
                         </span>
                         <span>
                             {convertDateToString(event?.expire_date)}
@@ -77,7 +80,7 @@ const EventInfoModal = ({closeModal, event, userId, entryDisabled}) => {
                 <label className="calendarWrapper">
                     <span className="calendarWrapper__value">
                         <span className="eventInfoModal__text">
-                            Data:
+                            {language === 'pl' ? 'Data:' : 'Date:'}
                         </span>
                         <span>
                             {`${convertDateToString(event?.event_date)}, ${event?.event_hour}`}
@@ -96,12 +99,12 @@ const EventInfoModal = ({closeModal, event, userId, entryDisabled}) => {
 
             {!loading ? (entryDisabled ? <button className="btn btn--addEvent btn--gradient goldman"
                                                  onClick={() => { signUpForEvent(); }}>
-                Zapisz się na wydarzenie
+                {language === 'pl' ? 'Zapisz się na wydarzenie' : 'Join event'}
             </button> : <button className="btn btn--addEvent btn--gradient goldman"
                                 onClick={() => { closeModal(); }}>
-                Powrót
+                {language === 'pl' ? 'Powrót' : 'Back'}
             </button>) : <div className="center">
-                <DraftLoader />}
+                <DraftLoader />
             </div>}
         </div> : (status === 1 ? <AfterAddEntry closeModal={closeModal} /> : <AfterAddEventError closeModal={closeModal} />)}
     </div>

@@ -382,14 +382,11 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/sztab">{menuBeforeLogin[4]}</a>
                 </li>
-                {/*<li className="mobileMenu__list__item">*/}
-                {/*    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[5]}</a>*/}
-                {/*</li>*/}
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
+                    <a className="mobileMenu__list__link" href="/tablica">{menuBeforeLogin[5]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/mapa">Kluby</a>
+                    <a className="mobileMenu__list__link" href="/mapa">{menuBeforeLogin[6]}</a>
                 </li>
             </ul> : ""}
 
@@ -475,10 +472,10 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                     <a className="mobileMenu__list__link" href="/">{menuClub[0]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
+                    <a className="mobileMenu__list__link" href="/tablica">{menuBeforeLogin[5]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
-                    <a className="mobileMenu__list__link" href="/wydarzenia">Wydarzenia</a>
+                    <a className="mobileMenu__list__link" href="/wydarzenia">{menuClub[10]}</a>
                 </li>
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/szukaj-zawodnika">{menuClub[6]}</a>
@@ -539,7 +536,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/tablica">
-                        Tablica
+                        {menuBeforeLogin[5]}
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
@@ -564,7 +561,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/mapa">
-                        Kluby
+                        {menuBeforeLogin[6]}
                     </a>
                 </li>
             </ul> : ""}
@@ -578,17 +575,17 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/tablica">
-                        Tablica
+                        {menuBeforeLogin[5]}
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/spolecznosc">
-                        Społeczność
+                        {menuPlayer[2]}
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <button className="siteHeader__menu__link" onClick={() => { setClubListModalVisible(true); }}>
-                        Wyślij CV
+                        {menuPlayer[3]}
                     </button>
                 </li>
                 <li className="siteHeader__menu__list__item">
@@ -596,11 +593,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                         {menuPlayer[1]}
                     </a>
                 </li>
-                {/*<li className="siteHeader__menu__list__item">*/}
-                {/*    <a className="siteHeader__menu__link" href="/mapa">*/}
-                {/*        {menuPlayer[2]}*/}
-                {/*    </a>*/}
-                {/*</li>*/}
             </ul> : ""}
 
             {/* Club menu */}
@@ -612,12 +604,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/tablica">
-                        Tablica
+                        {menuBeforeLogin[5]}
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/wydarzenia">
-                        Wydarzenia
+                        {menuClub[10]}
                     </a>
                 </li>
                 <li className="siteHeader__menu__list__item">
@@ -656,11 +648,6 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                         </ul>
                     </div>
                 </li>
-                {/*<li className="siteHeader__menu__list__item d-over-1200">*/}
-                {/*    <a className="siteHeader__menu__link" href="/mapa">*/}
-                {/*        {menuClub[5]}*/}
-                {/*    </a>*/}
-                {/*</li>*/}
             </ul> : ""}
         </menu>
 
@@ -806,9 +793,9 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 </a>
             </span>}
 
-            {/*{!club && !player ? <button className="languageBtn" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>*/}
-            {/*    <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />*/}
-            {/*</button> : ""}*/}
+            {!club && !player ? <button className="languageBtn" onClick={() => { language === 'pl' ? setLanguage('en') : setLanguage('pl'); }}>
+                <img className="flag" src={language === 'pl' ? ukIcon : polandIcon} alt="english" />
+            </button> : ""}
 
             {/* Mobile menu */}
             <button className={!club && !player ? "mobileMenu__btn mobileMenu__btn--notLogged d-mobile" : "mobileMenu__btn d-mobile"} onClick={() => { openMobileMenu(); }}>

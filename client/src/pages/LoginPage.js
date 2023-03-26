@@ -81,10 +81,10 @@ const LoginPage = () => {
             </ul>
 
             <h1 className="authBox__header">
-                Autoryzacja
+                {content?.auth}
             </h1>
             <h2 className="authBox__subheader">
-                Twojego konta
+                {content?.of_your_account}
             </h2>
 
             <form className="loginBox__form" onSubmit={(e) => { handleSubmit(e); }}>

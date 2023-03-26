@@ -129,10 +129,10 @@ const init = (passport) => {
                 /* Google */
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
                 query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience, country)
-                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
-                            WHERE NOT EXISTS (
-                                SELECT 1 FROM users WHERE email = $1
-                            ) RETURNING id`;
+                        SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
+                        WHERE NOT EXISTS (
+                            SELECT 1 FROM users WHERE email = $1
+                        ) RETURNING id`;
                 if(id.emails) {
                     if(id.emails.length) {
                         values = [id.emails[0].value];
@@ -144,6 +144,9 @@ const init = (passport) => {
                 else {
                     values = [id.id + '@facebookauth'];
                 }
+
+                done(null, null);
+
                 db.query(query, values, (err, res) => {
                     if(res) {
                         if(res.rows) {
@@ -151,8 +154,8 @@ const init = (passport) => {
                             if(res.rows.length) {
                                 const uuid = uuidv4();
                                 const userId = res.rows[0].id;
-                                query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                                values = [uuid, userId, 3, hash];
+                                query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, TO_DATE($5, 'YYYY-MM-DD'), false) RETURNING user_id`;
+                                values = [uuid, userId, 3, hash, '2024-01-31'];
 
                                 db.query(query, values, (err, res) => {
                                     if(res) {
@@ -178,7 +181,7 @@ const init = (passport) => {
                             }
                         }
                         else {
-                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                            const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 3`;
                             const values = [hash];
 
                             db.query(query, values, (err, res) => {
@@ -194,7 +197,7 @@ const init = (passport) => {
                     else {
                         if(err) {
                             if(parseInt(err.code) === 23505) {
-                                const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash =  $1 AND i.adapter = 3`;
+                                const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 3`;
                                 const values = [hash];
 
                                 db.query(query, values, (err, res) => {
@@ -219,30 +222,16 @@ const init = (passport) => {
             else if(id.provider === 'facebook') {
                 console.log('facebook provider!');
 
-                console.log(id);
-                console.log(id.id);
-
                 /* Facebook */
                 const uuid = uuidv4();
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
                 query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience, country)
-                            SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
-                            WHERE NOT EXISTS (
-                                SELECT 1 FROM users WHERE email = $1
-                            ) RETURNING id`;
+                        SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
+                        WHERE NOT EXISTS (
+                            SELECT 1 FROM users WHERE email = $1
+                        ) RETURNING id`;
                 values = [id.id + '@facebookauth'];
 
-                // if(id.emails) {
-                //     if(id.emails.length) {
-                //         values = [id.emails[0].value];
-                //     }
-                //     else {
-                //         values = [id.id + '@facebookauth'];
-                //     }
-                // }
-                // else {
-                //     values = [id.id + '@facebookauth'];
-                // }
                 db.query(query, values, (err, res) => {
                     console.log(err);
 
@@ -255,8 +244,8 @@ const init = (passport) => {
                                 console.log(`inserting user id: ${userId}`);
 
                                 if(userId) {
-                                    query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, NOW() + INTERVAL '14 DAY', false) RETURNING user_id`;
-                                    values = [uuid, userId, hash];
+                                    query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, TO_DATE($4, 'YYYY-MM-DD'), false) RETURNING user_id`;
+                                    values = [uuid, userId, hash, '2024-01-31'];
 
                                     db.query(query, values, (err, res) => {
                                         console.log(err);
@@ -327,7 +316,7 @@ const init = (passport) => {
                         db.query(query, values, (err, res) => {
                             console.log(res.rows);
                             console.log(err);
-;
+                            ;
                             if(res) {
                                 done(null, res.rows[0]?.id);
                             }

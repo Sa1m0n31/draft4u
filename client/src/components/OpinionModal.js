@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import StarRatings from "react-star-ratings";
 import {sendOpinion} from "../helpers/admin";
 import DraftLoader from "./Loader";
+import {ContentContext} from "../App";
 
 const OpinionModal = ({player, club, closeModal}) => {
+    const { language } = useContext(ContentContext);
+
     const [rating, setRating] = useState(-1);
     const [content, setContent] = useState('');
     const [opinionSend, setOpinionSend] = useState(false);
@@ -33,7 +36,7 @@ const OpinionModal = ({player, club, closeModal}) => {
 
             {!opinionSend ? <>
                 <h3 className="modal__inner__header">
-                    Jak podoba Ci się strona Draft4U?
+                    {language === 'pl' ? 'Jak podoba Ci się strona Draft4U?' : 'How do you like Draft4U?'}
                 </h3>
                 <StarRatings rating={rating}
                              changeRating={(val) => { setRating(val); }}
@@ -44,24 +47,24 @@ const OpinionModal = ({player, club, closeModal}) => {
                              starSpacing="15px" />
 
                 {rating !== 5 && rating !== -1 ? <textarea className="textarea textarea--opinion"
-                                          placeholder="Co moglibyśmy poprawić?"
+                                          placeholder={language === 'pl' ? "Co moglibyśmy poprawić?" : 'What could we do better?'}
                                           value={content}
                                           onChange={(e) => { setContent(e.target.value); }} /> : ''}
 
                 {!loading ? <button className="btn btn--gradient goldman btn--opinion"
                                     disabled={rating === -1}
                                    onClick={() => { handleSubmit(); }}>
-                    Wyślij opinię
+                    {language === 'pl' ? 'Wyślij opinię' : 'Send opinion'}
                 </button> : <div className="center">
                     <DraftLoader />
                 </div>}
             </> : <>
                 <h3 className="modal__inner__header">
-                    Dziękujemy za Twoją opinię!
+                    {language === 'pl' ? 'Dziękujemy za Twoją opinię!' : 'Thanks for your opinion!'}
                 </h3>
                 <button className="btn btn--gradient goldman btn--opinion"
                         onClick={closeModal}>
-                    Wróć na stronę
+                    {language === 'pl' ? 'Wróć na stronę' : 'Back to homepage'}
                 </button>
             </>}
         </div>

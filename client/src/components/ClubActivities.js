@@ -11,7 +11,7 @@ const ClubActivities = ({userId}) => {
     const [clubListModalVisible, setClubListModalVisible] = useState(false);
     const [clubDetails, setClubDetails] = useState(null);
 
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     useEffect(() => {
         getUserVisited()
@@ -32,9 +32,6 @@ const ClubActivities = ({userId}) => {
         {clubDetails ? <ClubDetailsModal club={clubDetails}
                                          closeModal={() => { setClubDetails(null); }} /> : ''}
 
-        {/*<figure className="clubActivities__imgHeader">*/}
-        {/*    <img className="btn__img" src={getImageUrl(content.img4)} alt="aktywnosci-klubow" />*/}
-        {/*</figure>*/}
         <h3 className="clubActivities__subheader">
             {content.club_activities_header1}
         </h3>
@@ -65,7 +62,7 @@ const ClubActivities = ({userId}) => {
 
         <button className="btn btn--sendCv btn--hover btn--gradient center goldman"
                 onClick={() => { setClubListModalVisible(true); }}>
-            Wyślij CV do klubu
+            {language === 'pl' ? 'Wyślij CV do klubu' : 'Send CV to club'}
         </button>
     </section>
 }

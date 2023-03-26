@@ -2,7 +2,7 @@ import React, {useContext, useRef} from 'react';
 import {ContentContext} from "../App";
 
 const ChooseAccountType = ({chooseAccountType, thirdParty}) => {
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
     let registerModal = useRef(null);
 
@@ -23,13 +23,13 @@ const ChooseAccountType = ({chooseAccountType, thirdParty}) => {
         <div className="registerModal__step0">
             <div className="registerModal__step0__buttons d-flex">
                 <button className="registerModal__step0__btn goldman" onClick={() => { chooseAccountType(0); closeModal(); }}>
-                    Strefa zawodnika
+                    {language === 'pl' ? 'Strefa zawodnika' : 'Player zone'}
                 </button>
                 <button className="registerModal__step0__btn goldman" onClick={() => { chooseAccountType(1); closeModal(); }}>
-                    Strefa asystenta
+                    {language === 'pl' ? 'Strefa asystenta' : 'Staff zone'}
                 </button>
                 {!thirdParty ? <button className="registerModal__step0__btn goldman" onClick={() => { chooseAccountType(2); closeModal(); }}>
-                    Strefa klubu
+                    {language === 'pl' ? 'Strefa klubu' : 'Club zone'}
                 </button> : ''}
             </div>
         </div>

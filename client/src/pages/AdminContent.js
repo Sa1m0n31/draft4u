@@ -330,6 +330,22 @@ const AdminContent = ({lang}) => {
     const [switch_account_type_user, setSwitchAccountTypeUser] = useState("");
     const [switch_account_type_staff, setSwitchAccountTypeStaff] = useState("");
 
+    const [auth, setAuth] = useState('');
+    const [ofYourAccount, setOfYourAccount] = useState('');
+    const [landingHeader1, setLandingHeader1] = useState('');
+    const [landingText1, setLandingText1] = useState('');
+    const [landingHeader2, setLandingHeader2] = useState('');
+    const [landingText2, setLandingText2] = useState('');
+    const [landingBenefitHeader1, setLandingBenefitHeader1] = useState('');
+    const [landingBenefitHeader2, setLandingBenefitHeader2] = useState('');
+    const [landingBenefitHeader3, setLandingBenefitHeader3] = useState('');
+    const [landingBenefitText1, setLandingBenefitText1] = useState('');
+    const [landingBenefitText2, setLandingBenefitText2] = useState('');
+    const [landingBenefitText3, setLandingBenefitText3] = useState('');
+    const [welcome, setWelcome] = useState('');
+    const [feedText, setFeedText] = useState('');
+    const [feedQuestion, setFeedQuestion] = useState('');
+
     const [addResult, setAddResult] = useState(-1);
     const [render, setRender] = useState(false);
 
@@ -662,6 +678,22 @@ const AdminContent = ({lang}) => {
                     setSwitchAccountTypeUser(r.switch_account_type_user);
                     setSwitchAccountTypeStaff(r.switch_account_type_staff);
 
+                    setAuth(r.auth);
+                    setOfYourAccount(r.of_your_account);
+                    setLandingHeader1(r.landing_header_1);
+                    setLandingHeader2(r.landing_header_2);
+                    setLandingText1(r.landing_text_1);
+                    setLandingText2(r.landing_text_2);
+                    setLandingBenefitHeader1(r.landing_benefit_header_1);
+                    setLandingBenefitHeader2(r.landing_benefit_header_2);
+                    setLandingBenefitHeader3(r.landing_benefit_header_3);
+                    setLandingBenefitText1(r.landing_benefit_text_1);
+                    setLandingBenefitText2(r.landing_benefit_text_2);
+                    setLandingBenefitText3(r.landing_benefit_text_3);
+                    setWelcome(r.welcome);
+                    setFeedText(r.feed_text);
+                    setFeedQuestion(r.feed_question);
+
                     setRender(true);
                 }
             });
@@ -734,7 +766,10 @@ const AdminContent = ({lang}) => {
             cv_input1, cv_input2, cv_input3, club_search_dropdown1, club_search_dropdown2,
             delete_cv_text, cv_deleted, cv_added, cv_updated, cv_input_error1, cv_input_error2, cv_input_error3,
             delete_cv_yes, delete_cv_no, add_account_type_header, add_account_type_text_user, add_account_type_text_staff,
-            after_add_account_type_user, after_add_account_type_staff, switch_account_type_user, switch_account_type_staff
+            after_add_account_type_user, after_add_account_type_staff, switch_account_type_user, switch_account_type_staff,
+            auth, ofYourAccount, landingHeader1, landingText1, landingHeader2, landingText2, landingBenefitHeader1,
+            landingBenefitHeader2, landingBenefitHeader3, landingBenefitText1, landingBenefitText2, landingBenefitText3,
+            welcome, feedText, feedQuestion
         })
             .then((res) => {
                 if(res?.data?.result) {
@@ -1096,9 +1131,25 @@ const AdminContent = ({lang}) => {
                         <ChangeContentLabel label="Propozycja dodania konta - tekst dla zawodnika" value={add_account_type_text_user} func={setAddAccountTypeTextUser} name="add_account_type_text_user" />
                         <ChangeContentLabel label="Propozycja dodania konta - tekst dla sztabu" value={add_account_type_text_staff} func={setAddAccountTypeTextStaff} name="add_account_type_text_staff" />
                         <ChangeContentLabel label="Po dodaniu drugiego typu konta - zawodnik" value={after_add_account_type_user} func={setAfterAddAccountTypeUser} name="after_add_account_type_user" />
-                        <ChangeContentLabel label="Po dodaniu drugiego typu konta - zawodnik" value={after_add_account_type_staff} func={setAfterAddAccountTypeStaff} name="after_add_account_type_staff" />
+                        <ChangeContentLabel label="Po dodaniu drugiego typu konta - sztab" value={after_add_account_type_staff} func={setAfterAddAccountTypeStaff} name="after_add_account_type_staff" />
                         <ChangeContentLabel label="Zmiana typu konta - zawodnik" value={switch_account_type_user} func={setSwitchAccountTypeUser} name="switch_account_type_user" />
-                        <ChangeContentLabel label="Zmiana typu konta - zawodnik" value={switch_account_type_staff} func={setSwitchAccountTypeStaff} name="switch_account_type_staff" />
+                        <ChangeContentLabel label="Zmiana typu konta - sztab" value={switch_account_type_staff} func={setSwitchAccountTypeStaff} name="switch_account_type_staff" />
+
+                        <ChangeContentLabel label="Autoryzacja" value={auth} func={setAuth} name="auth" />
+                        <ChangeContentLabel label="Twojego konta" value={ofYourAccount} func={setOfYourAccount} name="of_your_account" />
+                        <ChangeContentLabel label="Home - nagłówek 1" value={landingHeader1} func={setLandingHeader1} name="landing_header_1" />
+                        <ChangeContentLabel label="Home - nagłówek 2" value={landingHeader2} func={setLandingHeader2} name="landing_header_2" />
+                        <ChangeContentLabel label="Home - tekst 1" value={landingText1} func={setLandingText1} name="landing_text_1" type="textarea" />
+                        <ChangeContentLabel label="Home - tekst 2" value={landingText2} func={setLandingText2} name="landing_text_2" type="textarea" />
+                        <ChangeContentLabel label="Home - korzyści - nagłówek 1" value={landingBenefitHeader1} func={setLandingBenefitHeader1} name="landing_benefits_header_1" />
+                        <ChangeContentLabel label="Home - korzyści - nagłówek 2" value={landingBenefitHeader2} func={setLandingBenefitHeader2} name="landing_benefits_header_2" />
+                        <ChangeContentLabel label="Home - korzyści - nagłówek 3" value={landingBenefitHeader3} func={setLandingBenefitHeader3} name="landing_benefits_header_3" />
+                        <ChangeContentLabel label="Home - korzyści - tekst 1" value={landingBenefitText1} func={setLandingBenefitText1} name="landing_benefits_text_1" type="textarea" />
+                        <ChangeContentLabel label="Home - korzyści - tekst 2" value={landingBenefitText2} func={setLandingBenefitText2} name="landing_benefits_text_1" type="textarea" />
+                        <ChangeContentLabel label="Home - korzyści - tekst 3" value={landingBenefitText3} func={setLandingBenefitText3} name="landing_benefits_text_1" type="textarea" />
+                        <ChangeContentLabel label="Witaj" value={welcome} func={setWelcome} name="welcome" />
+                        <ChangeContentLabel label="Tablica - tekst" value={feedText} func={setFeedText} name="feed_text" type="textarea" />
+                        <ChangeContentLabel label="Tablica - pytanie" value={feedQuestion} func={setFeedQuestion} name="feed_question" />
 
                         <button className="admin__btn admin__btn--addNotification admin__btn--cms"
                                 onClick={() => { handleSubmit(); }}>
