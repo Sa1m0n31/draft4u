@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import check from '../static/img/check-gold.svg';
+import {ContentContext} from "../App";
 
 const AfterRegister = ({club, thirdParty}) => {
+    const { language } = useContext(ContentContext);
+
     const [confirmText, setConfirmText] = useState('');
 
     useEffect(() => {
         if(club) {
-            setConfirmText('Twoje konto zostało założone! Poinformujemy Cię drogą mailową, gdy administratorzy zatwierdzą Twój klub.');
+            setConfirmText('Twoje zgłoszenie zostały wysłane! Poinformujemy Cię drogą mailową, gdy administratorzy zatwierdzą Twój klub.');
         }
         else {
             if(thirdParty) {
@@ -26,7 +29,7 @@ const AfterRegister = ({club, thirdParty}) => {
         </h3>
 
         <a href="/" className="btn btn--gradient goldman center btn--afterRegister">
-            Wróć na stronę główną
+            {language === 'pl' ? 'Wróć na stronę główną' : 'Back to homepage'}
         </a>
     </div>
 };

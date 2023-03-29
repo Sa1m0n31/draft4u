@@ -1820,6 +1820,10 @@
         display: block !important;
     }
 
+    .languageBtn {
+        display: none !important;
+    }
+
     .landingPage__numbers {
         flex-direction: column;
         justify-content: center;

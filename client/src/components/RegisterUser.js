@@ -18,8 +18,8 @@ const RegisterUser = (props) => {
     const [repeatPassword, setRepeatPassword] = useState("");
     const [checkboxObligatory, setCheckboxObligatory] = useState(false);
     const [checkboxCompulsory, setCheckboxCompulsory] = useState(false);
-    const [firstName, setFirstName] = useState(props.firstName ? props.firstName : "");
-    const [lastName, setLastName] = useState(props.lastName ? props.lastName : "");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [sex, setSex] = useState(-1);
     const [birthday, setBirthday] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -35,7 +35,7 @@ const RegisterUser = (props) => {
     const [birthdayError, setBirthdayError] = useState("");
     const [phoneNumberError, setPhoneNumberError] = useState("");
     const [checkboxError, setCheckboxError] = useState(false);
-    const [render, setRender] = useState(true);
+    const [render, setRender] = useState(false);
 
     const [userRegistered, setUserRegistered] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -54,12 +54,17 @@ const RegisterUser = (props) => {
                         if(res.data.result.active) {
                             window.location = "/tablica";
                         }
+                        else {
+                            setFirstName(res.data.result.first_name);
+                            setLastName(res.data.result.last_name);
+                            setRender(true);
+                        }
                     }
                     else {
                         setRender(true);
                     }
                 })
-                .catch(() => {
+                .catch((e) => {
                     setRender(true);
                 });
         }
@@ -242,7 +247,11 @@ const RegisterUser = (props) => {
         }
     }
 
-    return render ? (userRegistered === 0 ? <>
+    return userRegistered === 0 ? <>
+        {!render ? <div className="fixed">
+            <LoadingPage />
+        </div> : ''}
+
         {/* STEP 1 */}
         <section className="registerForm__section registerForm__section--1" ref={formStep1}>
             <label>
@@ -384,7 +393,7 @@ const RegisterUser = (props) => {
                 <DraftLoader />
             </div>}
         </section>
-    </> : <AfterRegister thirdParty={props.thirdParty} />) : <LoadingPage />;
+    </> : <AfterRegister thirdParty={props.thirdParty} />;
 };
 
 export default RegisterUser;

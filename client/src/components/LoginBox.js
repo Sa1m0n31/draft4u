@@ -93,7 +93,7 @@ const LoginBox = () => {
             {content.login_box2}
         </span>
 
-        <a className="button button--facebook" href="http://localhost:5000/auth/facebook">
+        <a className="button button--facebook" href="/auth/facebook">
             <img className="button--facebook__img" src={facebookIcon} alt="facebook" />
             Continue with Facebook
         </a>

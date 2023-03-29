@@ -127,6 +127,7 @@ const init = (passport) => {
         if(id) {
             if(id.provider === 'google') {
                 /* Google */
+                console.log('provider google');
                 hash = crypto.createHash('sha256').update(id.id).digest('hex');
                 query = `INSERT INTO users(id, email, first_name, last_name, sex, birthday, phone_number, attack_range, vertical_range, block_range, height, weight, position, profile_picture, salary_from, salary_to, licence_number, club, experience, country)
                         SELECT nextval('users_id_sequence'), $1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160
@@ -134,6 +135,7 @@ const init = (passport) => {
                             SELECT 1 FROM users WHERE email = $1
                         ) RETURNING id`;
                 if(id.emails) {
+                    console.log(id.emails);
                     if(id.emails.length) {
                         values = [id.emails[0].value];
                     }
@@ -144,8 +146,6 @@ const init = (passport) => {
                 else {
                     values = [id.id + '@facebookauth'];
                 }
-
-                done(null, null);
 
                 db.query(query, values, (err, res) => {
                     if(res) {
@@ -181,6 +181,7 @@ const init = (passport) => {
                             }
                         }
                         else {
+                            console.log('not inserted 1');
                             const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 3`;
                             const values = [hash];
 
@@ -195,8 +196,11 @@ const init = (passport) => {
                         }
                     }
                     else {
+                        console.log(err);
+                        console.log('not inserted 2');
                         if(err) {
                             if(parseInt(err.code) === 23505) {
+                                console.log('already exists');
                                 const query = `SELECT i.id FROM identities i JOIN users u ON i.user_id = u.id WHERE i.hash = $1 AND i.adapter = 3`;
                                 const values = [hash];
 
@@ -210,10 +214,12 @@ const init = (passport) => {
                                 });
                             }
                             else {
+                                console.log('not inserted 3');
                                 done(null, null);
                             }
                         }
                         else {
+                            console.log('not inserted 4');
                             done(null, null);
                         }
                     }
@@ -240,8 +246,6 @@ const init = (passport) => {
                             /* Add new identity */
                             if(res.rows.length) {
                                 const userId = res.rows[0].id;
-
-                                console.log(`inserting user id: ${userId}`);
 
                                 if(userId) {
                                     query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, TO_DATE($4, 'YYYY-MM-DD'), false) RETURNING user_id`;
