@@ -203,8 +203,9 @@ router.post("/register-local", (request, response) => {
        if(res) {
            const insertedUserId = res.rows[0].id;
            const id = uuidv4() + (stuff === 'true' ? '-stuff' : '');
-           const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, TO_DATE($4, 'YYYY-MM-DD'), $5)`;
-           const values = [id, insertedUserId, hash, '2024-01-31', checkboxObligatory];
+
+           const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, TO_DATE($4, 'YYYY-MM-DD'), $5, $6, $7, $8)`;
+           const values = [id, insertedUserId, hash, '2024-01-31', checkboxObligatory, null, null, null];
            db.query(query, values, (err, res) => {
                if(res) {
                    const token = uuidv4();
@@ -262,8 +263,8 @@ router.post('/register-second-type', (request, response) => {
                                 if(res.rows) {
                                     const { hash, newsletter, adapter } = res.rows[0];
                                     const newId = uuidv4() + (identity.split('-')[identity.split('-').length-1] !== 'stuff' ? '-stuff' : '');
-                                    const query = `INSERT INTO identities VALUES ($1, $2, $3, $4, true, TO_DATE($5, 'YYYY-MM-DD'), $6)`;
-                                    const values = [newId, insertedUserId, adapter, hash, '2024-01-31', newsletter];
+                                    const query = `INSERT INTO identities VALUES ($1, $2, $3, $4, true, TO_DATE($5, 'YYYY-MM-DD'), $6, $7, $8, $9)`;
+                                    const values = [newId, insertedUserId, adapter, hash, '2024-01-31', newsletter, null, null, null];
 
                                     db.query(query, values, (err, res) => {
                                         if(res) {

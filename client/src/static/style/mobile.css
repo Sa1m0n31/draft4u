@@ -1820,6 +1820,16 @@
         display: block !important;
     }
 
+    .payment__types {
+        flex-direction: column;
+    }
+
+    .button--paymentType {
+        width: auto;
+        margin: 20px 0;
+        font-size: 17px;
+    }
+
     .languageBtn {
         display: none !important;
     }

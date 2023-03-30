@@ -6,7 +6,6 @@ import {getPaymentMethods} from "../helpers/payment";
 import {getAllCoupons} from "../helpers/coupon";
 
 const PaymentPage = ({user, isLocal}) => {
-    const [cost, setCost] = useState(99);
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [coupons, setCoupons] = useState([]);
 
@@ -30,12 +29,11 @@ const PaymentPage = ({user, isLocal}) => {
                 menu="dark"
                 profileImage={user.file_path}
                 isLocal={isLocal} />
-        <PaymentForm cost={cost}
-                     methods={paymentMethods}
+        <PaymentForm methods={paymentMethods}
                      coupons={coupons}
                      userId={user.id}
                      email={user.email} />
-        <Footer theme="light" border={true} />
+        <Footer border={true} />
     </div>
 }
 

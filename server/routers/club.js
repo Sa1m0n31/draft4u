@@ -321,8 +321,8 @@ router.post('/register', (request, response) => {
 
     db.query(query, values, (err, res) => {
        if(res) {
-           const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, NULL, NULL, false)';
-           const values = [id, hash];
+           const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, NULL, NULL, false, $3, $4, $5)';
+           const values = [id, hash, null, null, null];
 
            db.query(query, values, (err, res) => {
                // Send email to administrator
@@ -419,8 +419,8 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
 
                     db.query(query, values, (err, res) => {
                         if(res) {
-                            const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL, false)';
-                            const values = [id, hash];
+                            const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL, false, $3, $4, $5)';
+                            const values = [id, hash, null, null, null];
 
                             db.query(query, values, (err, res) => {
                                 if(res) {
@@ -458,8 +458,8 @@ router.post("/add", basicAuth, upload.single("image"), (request, response) => {
 
         db.query(query, values, (err, res) => {
             if(res) {
-                const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL)';
-                const values = [id, hash];
+                const query = 'INSERT INTO identities VALUES ($1, NULL, NULL, $2, false, NULL, $3, $4, $5)';
+                const values = [id, hash, null, null, null];
 
                 db.query(query, values, (err, res) => {
                     if(res) {

@@ -10,25 +10,42 @@ import payPalIcon from '../static/img/paypal.png'
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 
-const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
-    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+const PaymentForm = ({type, methods, coupons, userId, email}) => {
+    const [{ options }, dispatch] = usePayPalScriptReducer();
 
-    const { content } = useContext(ContentContext);
+    const { content, language } = useContext(ContentContext);
 
+    const [cost, setCost] = useState(29);
+    const [subscriptionType, setSubscriptionType] = useState(0);
     const [coupon, setCoupon] = useState("");
     const [paymentItem, setPaymentItem] = useState(-1);
     const [przelewy24Method, setPrzelewy24Method] = useState(-1);
     const [discount, setDiscount] = useState(0);
     const [amount, setAmount] = useState(cost);
+    const [cardMethodId, setCardMethodId] = useState(-1);
 
     const [p24Sign, setP24Sign] = useState("");
 
     const arrow1 = useRef(null);
     const arrow2 = useRef(null);
+    const arrow3 = useRef(null);
 
     useEffect(() => {
-        setAmount(cost);
-    }, []);
+        if(methods?.length) {
+            const card = methods.find((item) => {
+                return item.name === 'Karta płatnicza';
+            });
+
+            if(card) {
+                setCardMethodId(card.id);
+            }
+        }
+    }, [methods]);
+
+    useEffect(() => {
+        setAmount(subscriptionType === 1 ? 159 : 29);
+        setCost(subscriptionType === 1 ? 159 : 29);
+    }, [subscriptionType]);
 
     useEffect(() => {
         if(amount) {
@@ -43,24 +60,34 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
     }, [amount]);
 
     const changePaymentItem = (n) => {
-        if(n === 1) {
-            if(paymentItem === 1) {
+        if(n === 0) {
+            if(paymentItem === 0) {
                 setPaymentItem(-1);
                 arrow1.current.style.transform = "translateY(-50%) rotateX(0)";
             }
             else {
-                setPaymentItem(1);
+                setPaymentItem(0);
                 arrow1.current.style.transform = "translateY(-50%) rotateX(180deg)";
+            }
+        }
+        else if(n === 1) {
+            if(paymentItem === 1) {
+                setPaymentItem(-1);
+                arrow2.current.style.transform = "translateY(-50%) rotateX(0)";
+            }
+            else {
+                setPaymentItem(1);
+                arrow2.current.style.transform = "translateY(-50%) rotateX(180deg)";
             }
         }
         else {
             if(paymentItem === 2) {
                 setPaymentItem(-1);
-                arrow2.current.style.transform = "translateY(-50%) rotateX(0)";
+                arrow3.current.style.transform = "translateY(-50%) rotateX(0)";
             }
             else {
                 setPaymentItem(2);
-                arrow2.current.style.transform = "translateY(-50%) rotateX(180deg)";
+                arrow3.current.style.transform = "translateY(-50%) rotateX(180deg)";
             }
         }
     }
@@ -75,8 +102,9 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
         }
     }, [coupon]);
 
-    const pay = () => {
-        registerPayment(amount ? amount : cost, przelewy24Method, email, userId, type, coupon)
+    const pay = (card = false) => {
+        registerPayment(amount ? amount : cost, card ? cardMethodId : przelewy24Method, email,
+            userId, type, coupon, card, subscriptionType === 0)
             .then((res) => {
                 const paymentUri = "https://secure.przelewy24.pl/trnRequest/";
                 const token = res.data.result;
@@ -96,37 +124,68 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
         <h2 className="payment__header">
             {content.payment_header}
         </h2>
-        <p className="payment__text">
-            {content.payment_text}
-        </p>
-        <p className="payment__text payment__text--marginBottom">
-            {content.payment_text2} <b>{amount ? amount : cost} PLN</b>
-        </p>
 
-        <section className="paymentItemWrapper">
-            <button className="payment__item" onClick={() => { changePaymentItem(1); }}>
+        <div className="payment__types">
+            <button className={subscriptionType === 0 ? "button--paymentType button--paymentType--current" : "button--paymentType"}
+                    onClick={() => { setSubscriptionType(0); }}>
+                {language === 'pl' ? 'Płatność miesięczna' : 'Monthly payment'} (29 PLN)
+            </button>
+            <button className={subscriptionType === 1 ? "button--paymentType button--paymentType--current" : "button--paymentType"}
+                    onClick={() => { setSubscriptionType(1); }}>
+                {language === 'pl' ? 'Płatność roczna' : 'Yearly payment'} (159 PLN)
+            </button>
+        </div>
+
+        {subscriptionType === 0 ? <section className="paymentItemWrapper">
+            <button className="payment__item" onClick={() => { changePaymentItem(0); }}>
                 <h3 className="payment__item__header">
-                    {content.pay_with}
+                    {language === 'pl' ? 'Płatność subskrypcyjna' : 'Subscription payment'}
                 </h3>
                 <img className="payment__item__icon" src={przelewy24Icon} alt="przelewy-24" />
 
                 <img ref={arrow1} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
             </button>
 
+            <section className={paymentItem === 0 ? "paymentMethod paymentMethod--1" : "hidden"}>
+                <main className="paymentMethod__content">
+                    <p>
+                        {language === 'pl' ? `Płatność zarejestrowaną kartą będzie naliczana co miesiąc. Anulowanie subskrypcji
+                       jest możliwe w każdej chwili w zakładce Moje Konto -> Anuluj subskrypcję.` : 'Card payment will be preceeded automatically every month. Subscription can be cancelled any time by My Account -> Cancel subscrption option.'}
+                    </p>
+                </main>
+
+                <button className="button button--hover button--payment" onClick={() => { pay(true); }}>
+                    {language === 'pl' ? 'Zapłać' : 'Pay'}
+                </button>
+            </section>
+        </section> : ''}
+
+        <section className="paymentItemWrapper">
+            <button className="payment__item" onClick={() => { changePaymentItem(1); }}>
+                <h3 className="payment__item__header">
+                    {language === 'pl' ? 'Płatność jednorazowa' : 'Payment'}
+                </h3>
+                <img className="payment__item__icon" src={przelewy24Icon} alt="przelewy-24" />
+
+                <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
+            </button>
+
              <section className={paymentItem === 1 ? "paymentMethod paymentMethod--1" : "hidden"}>
                 <main className="paymentMethod__list">
                     {methods.map((item, index) => {
-                        return <button key={index} className={przelewy24Method === item.id ? "paymentMethod__btn paymentMethod__btn--selected" : "paymentMethod__btn"} onClick={() => { setPrzelewy24Method(item.id); }}>
-                            <img className="paymentMethod__btn__img" src={item.imgUrl} alt={item.name} />
-                            <h3 className="paymentMethod__name">
-                                {item.name}
-                            </h3>
-                        </button>
+                        if(item.name !== 'Karta płatnicza') {
+                            return <button key={index} className={przelewy24Method === item.id ? "paymentMethod__btn paymentMethod__btn--selected" : "paymentMethod__btn"} onClick={() => { setPrzelewy24Method(item.id); }}>
+                                <img className="paymentMethod__btn__img" src={item.imgUrl} alt={item.name} />
+                                <h3 className="paymentMethod__name">
+                                    {item.name}
+                                </h3>
+                            </button>
+                        }
                     })}
                 </main>
 
                 <button className="button button--hover button--payment" onClick={() => { pay(); }}>
-                    <img className="btn__img" src={getImageUrl(content.img19)} alt="zaplac" />
+                    {language === 'pl' ? 'Zapłać' : 'Pay'}
                 </button>
             </section>
         </section>
@@ -138,7 +197,7 @@ const PaymentForm = ({type, cost, methods, coupons, userId, email}) => {
                 </h3>
                 <img className="payment__item__icon" src={payPalIcon} alt="paypal" />
 
-                <img ref={arrow2} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
+                <img ref={arrow3} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
             </button>
 
             <section className={paymentItem === 2 ? "paymentMethod paymentMethod--2" : "hidden"}>

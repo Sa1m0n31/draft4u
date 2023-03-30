@@ -14,16 +14,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cefb53e5-7e2c-415a-86bb-54358056071a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/paymentCron.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/AfterRegister.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AfterRegister.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/LoginBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RegisterClub.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RegisterClub.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/RegisterUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RegisterUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PaymentForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PaymentForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/helpers/payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/payment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/PaymentPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/PaymentPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/mobile.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/mobile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/static/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/static/style/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/access.log" beforeDir="false" afterPath="$PROJECT_DIR$/server/access.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/passport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/club.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/club.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routers/payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routers/payment.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -382,7 +385,8 @@
       <workItem from="1679667683618" duration="100000" />
       <workItem from="1679833527983" duration="10485000" />
       <workItem from="1679860077798" duration="3390000" />
-      <workItem from="1680126453114" duration="5470000" />
+      <workItem from="1680126453114" duration="5714000" />
+      <workItem from="1680190066786" duration="19607000" />
     </task>
     <servers />
   </component>

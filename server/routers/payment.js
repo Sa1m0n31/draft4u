@@ -20,7 +20,7 @@ router.get("/get-payment-methods", (request, response) => {
 });
 
 router.post("/register-payment", (request, response) => {
-    const { amount, method, email, userId, code } = request.body;
+    const { amount, method, email, userId, code, card, monthly } = request.body;
 
     const CLIENT_ID = process.env.PRZELEWY_24_CLIENT_ID;
     const CRC = process.env.PRZELEWY_24_CRC;
@@ -91,10 +91,23 @@ router.post("/register-payment", (request, response) => {
                 .then((res) => {
                     let responseToClient = res.body.data.token;
 
-                    response.send({
-                        result: responseToClient,
-                        sign: gen_hash
-                    });
+                    if(card) {
+                        const query = 'UPDATE identities SET token = $1, monthly_subscription = $2 WHERE user_id = $3';
+                        const values = [responseToClient, monthly, userId];
+
+                        db.query(query, values, (err, res) => {
+                            response.send({
+                                result: responseToClient,
+                                sign: gen_hash
+                            });
+                        });
+                    }
+                    else {
+                        response.send({
+                            result: responseToClient,
+                            sign: gen_hash
+                        });
+                    }
                 });
         }
         else {
@@ -183,7 +196,7 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
                 buyer_email: buyerEmail,
                 buyer_name: buyerName,
                 positions:[
-                    {name:"Opłata abonementowa serwisu draft4u.com.pl", "tax": 23, "total_price_gross": sum, "quantity": 1}
+                    {name:"Opłata abonamentowa serwisu draft4u.com.pl", "tax": 23, "total_price_gross": sum, "quantity": 1}
                 ]
             }
         },
@@ -234,15 +247,42 @@ router.post('/add-paypal-payment', (request, response) => {
     });
 });
 
-router.post("/verify", (request, response) => {
-    let { merchantId, posId, sessionId, amount, currency, orderId } = request.body;
+const addTrailingZero = (n) => {
+    if(n < 10) {
+        return `0${n}`;
+    }
+    else {
+        return n;
+    }
+}
 
-    /* Calculate SHA384 checksum */
-    let hash, data, gen_hash;
-    hash = crypto.createHash('sha384');
-    data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${process.env.PRZELEWY_24_CRC}"}`, 'utf-8');
-    gen_hash= data.digest('hex');
+const updateSubscriptionAndSendInvoice = (user_id, first_name, last_name, email, amount, response, monthly = true) => {
+    const currentDate = new Date();
 
+    if(monthly) {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+    }
+    else {
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+    }
+
+    const query = `UPDATE identities SET subscription = $1 WHERE user_id = $2`;
+    const values = [`${currentDate.getFullYear()}-${addTrailingZero(currentDate.getMonth()+1)}-${addTrailingZero(currentDate.getDate())}`, user_id];
+
+    db.query(query, values, (err, res) => {
+        if(res) {
+            addInvoice(`${first_name} ${last_name}`, email, amount, response);
+        }
+        else {
+            response.send({
+                status: 0
+            });
+        }
+    });
+}
+
+const verifyTransaction = (merchantId, posId, sessionId, amount,
+                           currency, orderId, gen_hash, response, cardReferenceNumber = null) => {
     got.put("https://secure.przelewy24.pl/api/v1/transaction/verify", {
         json: {
             merchantId,
@@ -266,17 +306,27 @@ router.post("/verify", (request, response) => {
                 db.query(query, values, (err, res) => {
                     if(res) {
                         const { first_name, last_name, email, user_id } = res.rows[0];
-                        const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
+
+                        const query = `SELECT monthly_subscription FROM identities WHERE user_id = $1`;
                         const values = [user_id];
 
                         db.query(query, values, (err, res) => {
+                            let monthly = true;
+
                             if(res) {
-                                addInvoice(`${first_name} ${last_name}`, email, amount, response);
+                                monthly = res.rows[0]?.monthly_subscription;
+                            }
+
+                            if(cardReferenceNumber) {
+                                const query = `UPDATE identities SET ref_id = $1 WHERE user_id = $2`;
+                                const values = [cardReferenceNumber, user_id];
+
+                                db.query(query, values, (err, res) => {
+                                    updateSubscriptionAndSendInvoice(user_id, first_name, last_name, email, amount, response, monthly);
+                                });
                             }
                             else {
-                                response.send({
-                                    status: 0
-                                });
+                                updateSubscriptionAndSendInvoice(user_id, first_name, last_name, email, amount, response, monthly);
                             }
                         });
                     }
@@ -292,6 +342,45 @@ router.post("/verify", (request, response) => {
                     status: 0
                 });
             }
+        });
+}
+
+router.post("/verify", (request, response) => {
+    let { merchantId, posId, sessionId, amount, currency, orderId } = request.body;
+
+    const query = `UPDATE payments SET session_id = $1 WHERE session_id = $2`;
+    const values = [orderId, 'de732969-da1b-4293-bb11-a161feccd23a'];
+
+    db.query(query, values);
+
+    /* Calculate SHA384 checksum */
+    let hash, data, gen_hash;
+    hash = crypto.createHash('sha384');
+    data = hash.update(`{"sessionId":"${sessionId}","orderId":${orderId},"amount":${amount},"currency":"PLN","crc":"${process.env.PRZELEWY_24_CRC}"}`, 'utf-8');
+    gen_hash= data.digest('hex');
+
+    // Get card refId
+    got.get(`https://secure.przelewy24.pl/api/v1/card/info/${orderId}`, {
+        responseType: 'json',
+        headers: {
+            'Authorization': `Basic ${process.env.PRZELEWY_24_AUTH_HEADER}`
+        }
+    })
+        .then((res) => {
+            let cardReferenceNumber = null;
+            if(res?.body?.data) {
+                const query = `UPDATE payments SET session_id = $1 WHERE session_id = $2`;
+                const values = [JSON.stringify(res.body.data), 'c6b00f96-47e0-4642-afc2-1f0a5bc12c33'];
+
+                db.query(query, values);
+
+                cardReferenceNumber = res.body.data.refId;
+            }
+
+            verifyTransaction(merchantId, posId, sessionId, amount, currency, orderId, gen_hash, response, cardReferenceNumber);
+        })
+        .catch(() => {
+            verifyTransaction(merchantId, posId, sessionId, amount, currency, orderId, gen_hash, response);
         });
 });
 

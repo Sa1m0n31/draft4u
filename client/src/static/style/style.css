@@ -3500,7 +3500,7 @@ input::-webkit-inner-spin-button {
 
 .payment__header, .payment__text {
     text-align: center;
-    color: #3d3d3d;
+    color: #fff;
 }
 
 .payment__header {
@@ -3534,7 +3534,7 @@ input::-webkit-inner-spin-button {
 }
 
 .payment__item__header {
-    color: var(--grey);
+    color: #fff;
     font-size: 18px;
     text-align: left;
     margin-right: 25px;
@@ -3577,6 +3577,8 @@ input::-webkit-inner-spin-button {
     font-size: 17px;
     padding: 0 10px;
     outline: none !important;
+    background: #201E1B !important;
+    border: 1px solid var(--grey);
 }
 
 .input--couponCode::placeholder {
@@ -3645,10 +3647,14 @@ input::-webkit-inner-spin-button {
 }
 
 .button--payment {
+    background: var(--gold);
     width: 400px;
     max-width: 90%;
     display: block;
     margin: 30px auto;
+    height: 50px;
+    color: #313131 !important;
+    font-size: 20px;
 }
 
 .payment__item__formWrapper {
@@ -3684,10 +3690,45 @@ input::-webkit-inner-spin-button {
 }
 
 .payment__disclaimer {
-    color: var(--grey);
+    color: #fff;
     font-size: 12px;
     text-align: center;
     margin: 20px auto 40px;
+}
+
+.paymentMethod * {
+    color: #fff !important;
+}
+
+.button--payment {
+    color: #313131 !important;
+    font-weight: 700;
+}
+
+.payment__types {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+}
+
+.paymentMethod__content p {
+    text-align: center;
+}
+
+.button--paymentType {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 24px;
+    background: transparent;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--gold);
+    opacity: .55;
+    margin: 0 20px;
+}
+
+.button--paymentType--current {
+    opacity: 1;
 }
 
 /* Chart */

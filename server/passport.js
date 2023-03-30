@@ -154,8 +154,8 @@ const init = (passport) => {
                             if(res.rows.length) {
                                 const uuid = uuidv4();
                                 const userId = res.rows[0].id;
-                                query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, TO_DATE($5, 'YYYY-MM-DD'), false) RETURNING user_id`;
-                                values = [uuid, userId, 3, hash, '2024-01-31'];
+                                query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, TO_DATE($5, 'YYYY-MM-DD'), false, $5, $6, $7) RETURNING user_id`;
+                                values = [uuid, userId, 3, hash, '2024-01-31', null, null, null];
 
                                 db.query(query, values, (err, res) => {
                                     if(res) {
@@ -248,8 +248,8 @@ const init = (passport) => {
                                 const userId = res.rows[0].id;
 
                                 if(userId) {
-                                    query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, TO_DATE($4, 'YYYY-MM-DD'), false) RETURNING user_id`;
-                                    values = [uuid, userId, hash, '2024-01-31'];
+                                    query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, TO_DATE($4, 'YYYY-MM-DD'), false, $5, $6, $7) RETURNING user_id`;
+                                    values = [uuid, userId, hash, '2024-01-31', null, null, null];
 
                                     db.query(query, values, (err, res) => {
                                         console.log(err);
