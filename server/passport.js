@@ -1,6 +1,7 @@
 const db = require("./database/db");
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
+const {addTrailingZero} = require("../client/src/helpers/others");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -154,8 +155,12 @@ const init = (passport) => {
                             if(res.rows.length) {
                                 const uuid = uuidv4();
                                 const userId = res.rows[0].id;
+
+                                const expireDate = new Date();
+                                expireDate.setDate(expireDate.getDate() + 3);
+
                                 query = `INSERT INTO identities VALUES ($1, $2, $3, $4, false, TO_DATE($5, 'YYYY-MM-DD'), false, $5, $6, $7) RETURNING user_id`;
-                                values = [uuid, userId, 3, hash, '2024-01-31', null, null, null];
+                                values = [uuid, userId, 3, hash, `${expireDate.getFullYear()}-${addTrailingZero(expireDate.getMonth() + 1)}.${addTrailingZero(expireDate.getDate())}`, null, null, null];
 
                                 db.query(query, values, (err, res) => {
                                     if(res) {
@@ -247,9 +252,12 @@ const init = (passport) => {
                             if(res.rows.length) {
                                 const userId = res.rows[0].id;
 
+                                const expireDate = new Date();
+                                expireDate.setDate(expireDate.getDate() + 1);
+
                                 if(userId) {
                                     query = `INSERT INTO identities VALUES ($1, $2, 2, $3, false, TO_DATE($4, 'YYYY-MM-DD'), false, $5, $6, $7) RETURNING user_id`;
-                                    values = [uuid, userId, hash, '2024-01-31', null, null, null];
+                                    values = [uuid, userId, hash, `${expireDate.getFullYear()}-${addTrailingZero(expireDate.getMonth() + 1)}.${addTrailingZero(expireDate.getDate())}`, null, null, null];
 
                                     db.query(query, values, (err, res) => {
                                         console.log(err);

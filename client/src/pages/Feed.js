@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import {ContentContext} from "../App";
 import {isLoggedIn} from "../helpers/auth";
 import {getClubData} from "../helpers/club";
-import {getUserData} from "../helpers/user";
+import {getUserData, getUserSubscription} from "../helpers/user";
 import profilePictureExample from '../static/img/profile.png'
 import SinglePost from "../components/SinglePost";
 import {addPost, getPosts} from "../helpers/post";
@@ -39,6 +39,7 @@ const Feed = () => {
     const [clubEvents, setClubEvents] = useState([]);
     const [userEntries, setUserEntries] = useState([]);
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
+    const [days, setDays] = useState(100);
 
     useEffect(() => {
         getCurrentEvents()
@@ -73,6 +74,26 @@ const Feed = () => {
                                 getUserData()
                                     .then((res) => {
                                         setUser(res?.data?.result);
+
+                                        getUserSubscription(res.data.result.id)
+                                            .then((res) => {
+                                                const result = res?.data?.result[0];
+                                                setLoaded(true);
+                                                if(result) {
+                                                    if(result.subscription) {
+                                                        const currentDate = new Date().getTime() - 1000 * 60 * 60;
+                                                        const expireDate = new Date(Date.parse(result.subscription)).getTime();
+                                                        const nextPaymentDateObject = new Date(Date.parse(result.subscription));
+                                                        nextPaymentDateObject.setDate(nextPaymentDateObject.getDate() - 1);
+
+                                                        const daysToExpire = Math.ceil((expireDate - currentDate) / 86400000);
+                                                        setDays(daysToExpire);
+                                                    }
+                                                    else {
+                                                        setDays(0);
+                                                    }
+                                                }
+                                            });
                                     });
                             }
                         });
@@ -184,6 +205,13 @@ const Feed = () => {
     }
 
     return <div className="container container--light">
+        {days <= 0 ? <h3 className="expireSubscriptionInfo">
+            {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}
+            <a href="/zaplac">
+                {language === 'pl' ? 'Zaplac teraz' : 'Pay now'}
+            </a>
+        </h3> : ''}
+
         <Header loggedIn={loggedIn} player={isPlayer} club={isClub}
                 menu="dark"
                 mobileBackground="black"

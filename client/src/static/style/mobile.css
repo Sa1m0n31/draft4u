@@ -350,6 +350,10 @@
         left: 28%;
     }
 
+    .player__option__price {
+        font-size: 80px;
+    }
+
     .bigHeader--slide1 {
         font-size: 34px;
     }
@@ -1818,6 +1822,11 @@
 @media(max-width: 768px) {
     .d-mobile {
         display: block !important;
+    }
+
+    .expireSubscriptionInfo {
+        padding: 5px 10px;
+        font-size: 12px;
     }
 
     .payment__types {

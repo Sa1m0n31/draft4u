@@ -16,7 +16,7 @@ const PaymentReturnPage = ({user, isLocal}) => {
                 {content.ty_page_text}
             </h3>
         </main>
-        <Footer theme="light" />
+        <Footer />
     </div>
 }
 

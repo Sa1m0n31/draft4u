@@ -36,7 +36,7 @@ const MyAccountStart = ({user, isLocal}) => {
         {!doubleAccount ? <AddAccountTypeSection /> : ''}
         <BlogSection />
         <ClubActivities userId={user?.id} />
-        {/*<MyAccountStartBottom userId={user.id} />*/}
+        <MyAccountStartBottom userId={user.id} />
 
         <Footer border={true} />
     </div>

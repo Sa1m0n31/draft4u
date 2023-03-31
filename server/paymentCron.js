@@ -150,6 +150,9 @@ db.query(query, values, (err, res) => {
             const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
             const values = [userId, sessionId, amount];
 
+            console.log('ref_id: ' + refId);
+            console.log('genHash: ' + gen_hash);
+
             db.query(query, values, (err, res) => {
                 if(res) {
                     /* Dane */
@@ -164,6 +167,7 @@ db.query(query, values, (err, res) => {
                         country: "PL",
                         language: "pl",
                         encoding: "utf-8",
+                        method: 242,
                         urlReturn: `${process.env.API_URL}/subskrypcja-przedluzona`,
                         urlStatus: `${process.env.API_URL}/payment/verify`,
                         sign: gen_hash,
@@ -212,6 +216,10 @@ db.query(query, values, (err, res) => {
                                             updateSubscriptionAndSendInvoice(userId, firstName, lastName, email, amount);
                                         });
                                     }
+                                })
+                                .catch((err) => {
+                                    console.log('ERROR');
+                                    console.log(err);
                                 });
                         });
                 }

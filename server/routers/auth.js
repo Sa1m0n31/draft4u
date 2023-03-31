@@ -10,6 +10,7 @@ const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
 
 const apiAuth = require("../apiAuth");
+const {addTrailingZero} = require("../../client/src/helpers/others");
 const basicAuth = new apiAuth().basicAuth;
 
 function isNumeric(str) {
@@ -204,8 +205,11 @@ router.post("/register-local", (request, response) => {
            const insertedUserId = res.rows[0].id;
            const id = uuidv4() + (stuff === 'true' ? '-stuff' : '');
 
+           const expireDate = new Date();
+           expireDate.setDate(expireDate.getDate() + 3);
+
            const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, TO_DATE($4, 'YYYY-MM-DD'), $5, $6, $7, $8)`;
-           const values = [id, insertedUserId, hash, '2024-01-31', checkboxObligatory, null, null, null];
+           const values = [id, insertedUserId, hash, `${expireDate.getFullYear()}-${addTrailingZero(expireDate.getMonth() + 1)}.${addTrailingZero(expireDate.getDate())}`, checkboxObligatory, null, null, null];
            db.query(query, values, (err, res) => {
                if(res) {
                    const token = uuidv4();
@@ -263,8 +267,12 @@ router.post('/register-second-type', (request, response) => {
                                 if(res.rows) {
                                     const { hash, newsletter, adapter } = res.rows[0];
                                     const newId = uuidv4() + (identity.split('-')[identity.split('-').length-1] !== 'stuff' ? '-stuff' : '');
+
+                                    const expireDate = new Date();
+                                    expireDate.setDate(expireDate.getDate() + 3);
+
                                     const query = `INSERT INTO identities VALUES ($1, $2, $3, $4, true, TO_DATE($5, 'YYYY-MM-DD'), $6, $7, $8, $9)`;
-                                    const values = [newId, insertedUserId, adapter, hash, '2024-01-31', newsletter, null, null, null];
+                                    const values = [newId, insertedUserId, adapter, hash, `${expireDate.getFullYear()}-${addTrailingZero(expireDate.getMonth() + 1)}.${addTrailingZero(expireDate.getDate())}`, newsletter, null, null, null];
 
                                     db.query(query, values, (err, res) => {
                                         if(res) {
@@ -315,7 +323,7 @@ router.post('/register-second-type', (request, response) => {
 
 router.get("/get-user-subscription", basicAuth, (request, response) => {
    const userId = request.query.user;
-   const query = 'SELECT subscription FROM identities WHERE user_id = $1';
+   const query = 'SELECT subscription, ref_id FROM identities WHERE user_id = $1';
    const values = [userId];
 
    db.query(query, values, (err, res) => {

@@ -366,6 +366,12 @@ const sendUserToClubNotification = (userId, clubId) => {
     });
 }
 
+const cancelSubscription = (userId) => {
+    return axios.post(`${API_URL}/user/cancel-subscription`, {
+       userId
+    });
+}
+
 export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk, changeUserPassword, getUserData,
     updateUserLicenceNumber, updateUserPhoneNumber, updateUserEmail, updateUserExperience,
     updateUserClub, updateUserSalary, updateUserBirthday,
@@ -374,6 +380,6 @@ export { isEmailAvailable, setPasswordRemindToken, checkIfRemindPasswordTokenOk,
     getAllPositions, getPlayElementsByPosition, editProfileImage, getUserProfileImage, getUserSubscription,
     getUserById, getUserFavorites, getUserVisited,
     getIdentityById, resetPassword, updateUserCountry,
-    addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition,
+    addCv, updateCv, deleteCv, getCvs, getAllStuffPositions, updateUserStuffPosition, cancelSubscription,
     isUserWithTwoAccounts, getSecondAccountData, sendUserToClubNotification, getUserToClubNotifications
 }

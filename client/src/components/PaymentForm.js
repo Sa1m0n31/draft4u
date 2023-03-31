@@ -21,7 +21,7 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
     const [paymentItem, setPaymentItem] = useState(-1);
     const [przelewy24Method, setPrzelewy24Method] = useState(-1);
     const [discount, setDiscount] = useState(0);
-    const [amount, setAmount] = useState(cost);
+    const [amount, setAmount] = useState(29);
     const [cardMethodId, setCardMethodId] = useState(-1);
 
     const [p24Sign, setP24Sign] = useState("");
@@ -43,8 +43,8 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
     }, [methods]);
 
     useEffect(() => {
-        setAmount(subscriptionType === 1 ? 159 : 29);
-        setCost(subscriptionType === 1 ? 159 : 29);
+        setAmount(subscriptionType === 1 ? 149 : 29);
+        setCost(subscriptionType === 1 ? 149 : 29);
     }, [subscriptionType]);
 
     useEffect(() => {
@@ -98,7 +98,7 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
         });
         if(index !== -1) {
             setDiscount(coupons[index].value);
-            setAmount(Math.round(cost - cost * (coupons[index].value / 100)));
+            setAmount(Math.ceil(cost - cost * (coupons[index].value / 100)));
         }
     }, [coupon]);
 
@@ -120,6 +120,10 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
             });
     }
 
+    useEffect(() => {
+        console.log(cardMethodId);
+    }, [cardMethodId]);
+
     return <main className="payment siteWidthSuperNarrow">
         <h2 className="payment__header">
             {content.payment_header}
@@ -132,7 +136,7 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
             </button>
             <button className={subscriptionType === 1 ? "button--paymentType button--paymentType--current" : "button--paymentType"}
                     onClick={() => { setSubscriptionType(1); }}>
-                {language === 'pl' ? 'Płatność roczna' : 'Yearly payment'} (159 PLN)
+                {language === 'pl' ? 'Płatność roczna' : 'Yearly payment'} (149 PLN)
             </button>
         </div>
 
@@ -150,7 +154,8 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
                 <main className="paymentMethod__content">
                     <p>
                         {language === 'pl' ? `Płatność zarejestrowaną kartą będzie naliczana co miesiąc. Anulowanie subskrypcji
-                       jest możliwe w każdej chwili w zakładce Moje Konto -> Anuluj subskrypcję.` : 'Card payment will be preceeded automatically every month. Subscription can be cancelled any time by My Account -> Cancel subscrption option.'}
+                       jest możliwe w każdej chwili po przejściu na podstronę Home i kliknięciu "Anuluj subskrypcję"` :
+                            'Card payment will be preceeded automatically every month. Subscription can be cancelled any time by visiting page Home and clicking "Cancel subscription"'}
                     </p>
                 </main>
 
@@ -193,7 +198,7 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
         <section className="paymentItemWrapper">
             <button className="payment__item" onClick={() => { changePaymentItem(2); }}>
                 <h3 className="payment__item__header">
-                    {content.pay_with2}
+                    {language === 'pl' ? 'Płatność jednorazowa' : 'Payment'}
                 </h3>
                 <img className="payment__item__icon" src={payPalIcon} alt="paypal" />
 

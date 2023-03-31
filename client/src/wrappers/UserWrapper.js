@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import LoadingPage from "../pages/LoadingPage";
 import {isLoggedIn, logoutUser} from "../helpers/auth";
-import {getUserData} from "../helpers/user";
+import {getUserData, getUserSubscription} from "../helpers/user";
 import MyAccountStart from "../pages/MyAccountStart";
 import PlayerProfileEdition from "../pages/PlayerProfileEdition";
 import FAQPage from "../pages/FAQPage";
@@ -14,17 +14,20 @@ import {getAdminData} from "../helpers/admin";
 import SingleArticle from "../pages/SingleArticle";
 import ChangePassword from "../pages/ChangePassword";
 import ChatPage from "../pages/ChatPage";
-import {StuffContext} from "../App";
+import {ContentContext, StuffContext} from "../App";
 import PlayerPage from "../pages/PlayerPage";
 import Community from "../pages/Community";
+import {addTrailingZero} from "../helpers/others";
 
 const UserContext = React.createContext(5);
 
 const UserWrapper = ({page}) => {
+    const [days, setDays] = useState(100);
     const [loaded, setLoaded] = useState(false);
     const [renderSwitch, setRenderSwitch] = useState(null);
 
     const { isStuff, setIsStuff } = useContext(StuffContext);
+    const { language } = useContext(ContentContext);
 
     useEffect(() => {
         isLoggedIn()
@@ -48,6 +51,26 @@ const UserWrapper = ({page}) => {
                                 }
 
                                 if(user.active) {
+                                    getUserSubscription(user.id)
+                                        .then((res) => {
+                                            const result = res?.data?.result[0];
+                                            setLoaded(true);
+                                            if(result) {
+                                                if(result.subscription) {
+                                                    const currentDate = new Date().getTime() - 1000 * 60 * 60;
+                                                    const expireDate = new Date(Date.parse(result.subscription)).getTime();
+                                                    const nextPaymentDateObject = new Date(Date.parse(result.subscription));
+                                                    nextPaymentDateObject.setDate(nextPaymentDateObject.getDate() - 1);
+
+                                                    const daysToExpire = Math.ceil((expireDate - currentDate) / 86400000);
+                                                    setDays(daysToExpire);
+                                                }
+                                                else {
+                                                    setDays(0);
+                                                }
+                                            }
+                                        });
+
                                     switch(page) {
                                         case 1:
                                             setRenderSwitch(<MyAccountStart user={user} isLocal={isLocal} />);
@@ -118,7 +141,16 @@ const UserWrapper = ({page}) => {
     }, []);
 
     return <>
-        {loaded ? renderSwitch : <LoadingPage />}
+        {loaded ? <>
+            {renderSwitch}
+
+            {days <= 0 ? <h3 className="expireSubscriptionInfo">
+                {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}
+                <a href="/zaplac">
+                    {language === 'pl' ? 'Zaplac teraz' : 'Pay now'}
+                </a>
+            </h3> : ''}
+        </> : <LoadingPage />}
     </>
 }
 

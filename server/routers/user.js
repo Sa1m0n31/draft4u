@@ -785,4 +785,17 @@ router.post('/send-user-to-club-notification', (request, response) => {
    });
 });
 
+router.post('/cancel-subscription', (request, response) => {
+   const { userId } = request.body;
+
+   const query = `UPDATE identities SET ref_id = NULL, token = NULL WHERE user_id = $1`;
+   const values = [userId];
+
+   db.query(query, values, (err, res) => {
+      response.send({
+          result: 1
+      });
+   });
+});
+
 module.exports = router;

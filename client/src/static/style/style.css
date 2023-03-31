@@ -1887,7 +1887,7 @@ button {
 .player__option {
     display: block;
     width: 28%;
-    padding: 30px;
+    padding: 20px 30px 30px;
     background: #201E1B;
     border-radius: 7px;
     border: 1px solid var(--grey);
@@ -1907,6 +1907,10 @@ button {
     font-size: 28px;
 }
 
+.white {
+    color: #fff;
+}
+
 .player__option__price {
     color: var(--gold);
     font-size: 110px;
@@ -1919,6 +1923,14 @@ button {
 
 .button--buyNow {
     width: 100%;
+    height: 50px;
+    background: var(--gold);
+    color: #313131;
+    font-size: 24px;
+    font-weight: 500;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .faq {
@@ -2445,6 +2457,7 @@ button {
     margin-left: 100%;
     transform: translateX(-100%) scale(1.1);
     transform-origin: top right;
+    filter: brightness(0.7);
 }
 
 .myAccountStart__bottom__content__section {
@@ -2473,12 +2486,12 @@ button {
 }
 
 .myAccountStart__bottom__content__days--big {
-    font-size: 140px;
+    font-size: 100px;
 }
 
 .myAccountStart__subheader {
     margin: 30px 0;
-    color: #3D3D3D;
+    color: #fff;
     font-size: 24px;
 }
 
@@ -3756,7 +3769,7 @@ input::-webkit-inner-spin-button {
 
 .pageContent__header, .pageContent__subheader {
     text-align: center;
-    color: #3d3d3d;
+    color: #fff;
 }
 
 .pageContent__header {
@@ -9304,4 +9317,44 @@ abbr[title] {
     width: 100%;
     height: 100vh;
     z-index: 100;
+}
+
+.btn--cancelSubscription {
+    margin: 20px 0;
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    background: var(--gold);
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .2s all;
+}
+
+.btn--cancelSubscription:hover {
+    background: var(--goldDark);
+}
+
+.expireSubscriptionInfo {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: #dd0000;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    z-index: 100;
+    text-align: center;
+    padding: 15px 10px;
+}
+
+.expireSubscriptionInfo a {
+    text-decoration: underline;
+    color: #fff;
+    font-weight: 700;
+    display: inline !important;
 }
