@@ -87,7 +87,7 @@ const MyAccountStartBottom = ({userId}) => {
                 <h4 className="myAccountStart__subheader">
                     {days <= 0 ? content.your_subscription_text_expire : content.your_subscription_text_ok.replace('x', days)}
                 </h4>
-                {days <= 50 && !subscriptionPaymentsActive ? <a className="player__option" href="/zaplac">>
+                {days <= 50 && !subscriptionPaymentsActive ? <a className="player__option" href="/zaplac">
                     <h3 className="player__option__name white">
                         {content.player_zone_buy_frame1}
                     </h3>

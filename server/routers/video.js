@@ -98,24 +98,31 @@ router.delete("/delete", basicAuth, (request, response) => {
 
     /* Get video category id */
     const query = 'SELECT id FROM video_categories WHERE name = $1';
-    const values = [play];
+    const values = [play?.toLowerCase()];
 
     db.query(query, values, (err, res) => {
-       const query = 'DELETE FROM videos WHERE user_id = $1 AND video_category = $2';
-       const values = [userId, res.rows[0].id];
+       if(res) {
+           const query = 'DELETE FROM videos WHERE user_id = $1 AND video_category = $2';
+           const values = [userId, res.rows[0].id];
 
-       db.query(query, values, (err, res) => {
-          if(res) {
-              response.send({
-                  result: 1
-              });
-          }
-          else {
-              response.send({
-                  result: 0
-              });
-          }
-       });
+           db.query(query, values, (err, res) => {
+               if(res) {
+                   response.send({
+                       result: 1
+                   });
+               }
+               else {
+                   response.send({
+                       result: 0
+                   });
+               }
+           });
+       }
+       else {
+           response.send({
+               result: 0
+           });
+       }
     });
 });
 

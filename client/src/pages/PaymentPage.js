@@ -5,7 +5,7 @@ import PaymentForm from "../components/PaymentForm";
 import {getPaymentMethods} from "../helpers/payment";
 import {getAllCoupons} from "../helpers/coupon";
 
-const PaymentPage = ({user, isLocal}) => {
+const PaymentPage = ({user, isLocal, days}) => {
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [coupons, setCoupons] = useState([]);
 
@@ -32,6 +32,7 @@ const PaymentPage = ({user, isLocal}) => {
         <PaymentForm methods={paymentMethods}
                      coupons={coupons}
                      userId={user.id}
+                     daysToExpire={days}
                      email={user.email} />
         <Footer border={true} />
     </div>

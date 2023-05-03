@@ -12,10 +12,15 @@ const ClubListModal = ({closeModal, userId}) => {
     const [userNotifications, setUserNotifications] = useState([]);
     const [sendFlag, setSendFlag] = useState(false);
     const [userData, setUserData] = useState({});
+    const [isStuff, setIsStuff] = useState(false);
 
     useEffect(() => {
         if(userData && clubs?.length) {
             setLoaded(true);
+
+            if(userData?.identity?.split('-')[userData?.identity?.split('-')?.length-1] === 'stuff') {
+                setIsStuff(true);
+            }
         }
     }, [clubs, userData]);
 
@@ -101,27 +106,36 @@ const ClubListModal = ({closeModal, userId}) => {
                         <p>
                             {content.player_parameter_1}: <b>{userData.birthday?.substring(0, 10) || ''}</b>
                         </p>
-                        <p>
-                            {content.player_parameter_11}: <b>{userData.height ? `${userData.height} cm` : '-'}</b>
-                        </p>
-                        <p className="mb">
-                            {content.player_parameter_12}: <b>{userData.weight ? `${userData.weight} kg` : '-'}</b>
-                        </p>
-                        <p>
-                            {content.player_parameter_4}: <b>{userData.club || '-'}</b>
-                        </p>
-                        <p className="mb">
-                            {content.player_parameter_6}: <b>{userData.experience || '-'}</b>
-                        </p>
-                        <p>
-                            {content.player_parameter_8}: <b>{userData.attack_range ? `${userData.attack_range} cm` : '-'}</b>
-                        </p>
-                        <p>
-                            {content.player_parameter_10}: <b>{userData.block_range ? `${userData.block_range} cm` : '-'}</b>
-                        </p>
-                        <p className="mb">
-                            {content.player_parameter_9}: <b>{userData.vertical_range ? `${userData.vertical_range} cm` : '-'}</b>
-                        </p>
+                        {isStuff ? <>
+                            <p>
+                                {language === 'pl' ? 'Posada' : 'Position'}: <b>{userData.stuff_position}</b>
+                            </p>
+                            <p>
+                                {content.player_parameter_4}: <b>{userData.club || '-'}</b>
+                            </p>
+                        </> : <>
+                            <p>
+                                {content.player_parameter_11}: <b>{userData.height ? `${userData.height} cm` : '-'}</b>
+                            </p>
+                            <p className="mb">
+                                {content.player_parameter_12}: <b>{userData.weight ? `${userData.weight} kg` : '-'}</b>
+                            </p>
+                            <p>
+                                {content.player_parameter_4}: <b>{userData.club || '-'}</b>
+                            </p>
+                            <p className="mb">
+                                {content.player_parameter_6}: <b>{userData.experience || '-'}</b>
+                            </p>
+                            <p>
+                                {content.player_parameter_8}: <b>{userData.attack_range ? `${userData.attack_range} cm` : '-'}</b>
+                            </p>
+                            <p>
+                                {content.player_parameter_10}: <b>{userData.block_range ? `${userData.block_range} cm` : '-'}</b>
+                            </p>
+                            <p className="mb">
+                                {content.player_parameter_9}: <b>{userData.vertical_range ? `${userData.vertical_range} cm` : '-'}</b>
+                            </p>
+                        </>}
                         <p>
                             {content.player_parameter_3}: <b>{userData.phone_number || '-'}</b>
                         </p>

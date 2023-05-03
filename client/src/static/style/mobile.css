@@ -3247,8 +3247,13 @@
         max-height: 300px;
     }
 
+    .landingPage__numbers.center {
+        width: 90%;
+        margin: auto;
+    }
+
     .player__option {
-        max-width: 350px;
+        max-width: max(350px, 90vw);
         margin-bottom: 25px;
     }
 

@@ -215,6 +215,7 @@ const Feed = () => {
         <Header loggedIn={loggedIn} player={isPlayer} club={isClub}
                 menu="dark"
                 mobileBackground="black"
+                daysProp={days}
                 profileImage={club ? club.file_path : (user ? user.file_path : null)} />
 
         {eventEditionModalVisible ? <EventEditionModal closeModal={() => { setEventEditionModalVisible(false); }}

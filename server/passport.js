@@ -1,7 +1,6 @@
 const db = require("./database/db");
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
-const {addTrailingZero} = require("../client/src/helpers/others");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -23,6 +22,15 @@ const sendInfoAboutLogin = (id) => {
     const values = [id];
 
     db.query(query, values);
+}
+
+const addTrailingZero = (n) => {
+    if(n < 10) {
+        return `0${n}`;
+    }
+    else {
+        return n;
+    }
 }
 
 const init = (passport) => {

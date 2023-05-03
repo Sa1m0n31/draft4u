@@ -10,13 +10,21 @@ const nodemailer = require("nodemailer");
 const smtpTransport = require('nodemailer-smtp-transport');
 
 const apiAuth = require("../apiAuth");
-const {addTrailingZero} = require("../../client/src/helpers/others");
 const basicAuth = new apiAuth().basicAuth;
 
 function isNumeric(str) {
     if (typeof str != "string") return false // we only process strings!
     return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
+const addTrailingZero = (n) => {
+    if(n < 10) {
+        return `0${n}`;
+    }
+    else {
+        return n;
+    }
 }
 
 const sendVerificationEmail = (email, token, response) => {

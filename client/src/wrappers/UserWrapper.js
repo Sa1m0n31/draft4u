@@ -17,9 +17,8 @@ import ChatPage from "../pages/ChatPage";
 import {ContentContext, StuffContext} from "../App";
 import PlayerPage from "../pages/PlayerPage";
 import Community from "../pages/Community";
-import {addTrailingZero} from "../helpers/others";
 
-const UserContext = React.createContext(5);
+const UserContext = React.createContext({});
 
 const UserWrapper = ({page}) => {
     const [days, setDays] = useState(100);
@@ -85,7 +84,7 @@ const UserWrapper = ({page}) => {
                                             setRenderSwitch(<VideoUploadPage user={user} isLocal={isLocal} />);
                                             break;
                                         case 5:
-                                            setRenderSwitch(<PaymentPage user={user} isLocal={isLocal} />);
+                                            setRenderSwitch(<PaymentPage user={user} isLocal={isLocal} days={days} />);
                                             break;
                                         case 6:
                                             setRenderSwitch(<PaymentReturnPage user={user} isLocal={isLocal} />);
@@ -142,7 +141,11 @@ const UserWrapper = ({page}) => {
 
     return <>
         {loaded ? <>
-            {renderSwitch}
+            <UserContext.Provider value={{
+                days
+            }}>
+                {renderSwitch}
+            </UserContext.Provider>
 
             {days <= 0 ? <h3 className="expireSubscriptionInfo">
                 {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}

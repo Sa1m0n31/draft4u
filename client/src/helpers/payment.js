@@ -19,9 +19,9 @@ const chargeCard = (token, cardNumber, cardDate, cvv, clientName) => {
     });
 }
 
-const addPayPalPayment = (userId, amount, code) => {
+const addPayPalPayment = (userId, amount, code, monthly) => {
     return axios.post(`${API_URL}/payment/add-paypal-payment`, {
-        userId, amount, code
+        userId, amount, code, monthly
     });
 }
 

@@ -36,8 +36,9 @@ import EventEntryConfirmModal from "./EventEntryConfirmModal";
 import ClubListModal from "./ClubListModal";
 import OpinionModal from "./OpinionModal";
 import {getSendOpinionsTable} from "../helpers/admin";
+import {UserContext} from "../wrappers/UserWrapper";
 
-const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepage,
+const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepage, daysProp,
                     player, club, profileImage, messageRead, isLocal, registerFromThirdParty}) => {
     const [profilePicture, setProfilePicture] = useState(profilePictureExample);
     const [render, setRender] = useState(false);
@@ -78,6 +79,7 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
 
     const { content, language, setLanguage } = useContext(ContentContext);
     const { isStuff } = useContext(StuffContext);
+    const { days } = useContext(UserContext);
 
     document.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -419,12 +421,12 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/tablica">Tablica</a>
                 </li>
-                <li className="mobileMenu__list__item">
+                {days > 0 || daysProp > 0 ? <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/spolecznosc">Społeczność</a>
-                </li>
-                <li className="mobileMenu__list__item">
+                </li> : ''}
+                {days > 0 || daysProp > 0 ? <li className="mobileMenu__list__item">
                     <button className="mobileMenu__list__link" onClick={() => { setClubListModalVisible(true); }}>Wyślij CV</button>
-                </li>
+                </li> : ''}
                 <li className="mobileMenu__list__item">
                     <a className="mobileMenu__list__link" href="/edycja-profilu">{menuPlayer[1]}</a>
                 </li>
@@ -578,16 +580,16 @@ const Header = ({loggedIn, firstName, lastName, mobile, mobileBackground, homepa
                         {menuBeforeLogin[5]}
                     </a>
                 </li>
-                <li className="siteHeader__menu__list__item">
+                {days > 0 || daysProp > 0 ? <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/spolecznosc">
                         {menuPlayer[2]}
                     </a>
-                </li>
-                <li className="siteHeader__menu__list__item">
+                </li> : ''}
+                {days > 0 || daysProp > 0 ? <li className="siteHeader__menu__list__item">
                     <button className="siteHeader__menu__link" onClick={() => { setClubListModalVisible(true); }}>
                         {menuPlayer[3]}
                     </button>
-                </li>
+                </li> : ''}
                 <li className="siteHeader__menu__list__item">
                     <a className="siteHeader__menu__link" href="/edycja-profilu">
                         {menuPlayer[1]}

@@ -6,13 +6,33 @@ import BlogSection from "../components/BlogSection";
 import ClubActivities from "../components/ClubActivities";
 import MyAccountStartBottom from "../components/MyAccountStartBottom";
 import AddAccountTypeSection from "../components/AddAccountTypeSection";
-import {isUserWithTwoAccounts} from "../helpers/user";
+import {getUserSubscription, isUserWithTwoAccounts} from "../helpers/user";
 
 const MyAccountStart = ({user, isLocal}) => {
     const [fullName, setFullName] = useState("");
     const [doubleAccount, setDoubleAccount] = useState(true);
+    const [days, setDays] = useState(100);
 
     useEffect(() => {
+        getUserSubscription(user.id)
+            .then((res) => {
+                const result = res?.data?.result[0];
+                if(result) {
+                    if(result.subscription) {
+                        const currentDate = new Date().getTime() - 1000 * 60 * 60;
+                        const expireDate = new Date(Date.parse(result.subscription)).getTime();
+                        const nextPaymentDateObject = new Date(Date.parse(result.subscription));
+                        nextPaymentDateObject.setDate(nextPaymentDateObject.getDate() - 1);
+
+                        const daysToExpire = Math.ceil((expireDate - currentDate) / 86400000);
+                        setDays(daysToExpire);
+                    }
+                    else {
+                        setDays(0);
+                    }
+                }
+            });
+
         // For Facebook and Google accounts
         isUserWithTwoAccounts()
             .then((res) => {
@@ -35,7 +55,7 @@ const MyAccountStart = ({user, isLocal}) => {
         <MyAccountStartHeader fullName={fullName} image={user.file_path} />
         {!doubleAccount ? <AddAccountTypeSection /> : ''}
         <BlogSection />
-        <ClubActivities userId={user?.id} />
+        {days > 0 ? <ClubActivities userId={user?.id} /> : ''}
         <MyAccountStartBottom userId={user.id} />
 
         <Footer border={true} />

@@ -103,6 +103,16 @@ router.post("/register-payment", (request, response) => {
                         });
                     }
                     else {
+                        const query = 'UPDATE identities SET monthly_subscription = $1 WHERE user_id = $2';
+                        const values = [monthly, userId];
+
+                        db.query(query, values, (err, res) => {
+                            response.send({
+                                result: responseToClient,
+                                sign: gen_hash
+                            });
+                        });
+
                         response.send({
                             result: responseToClient,
                             sign: gen_hash
@@ -212,7 +222,7 @@ const addInvoice = (buyerName, buyerEmail, amount, response = null) => {
 }
 
 router.post('/add-paypal-payment', (request, response) => {
-    const { userId, amount, code } = request.body;
+    const { userId, amount, code, monthly } = request.body;
     const sessionId = uuidv4();
     const query = 'INSERT INTO payments VALUES ($1, $2, $3)';
     const values = [userId, sessionId, amount];
@@ -225,7 +235,15 @@ router.post('/add-paypal-payment', (request, response) => {
     db.query(query, values, (err, res) => {
         if(res) {
             const { first_name, last_name, email } = res.rows[0];
-            const query = `UPDATE identities SET subscription = '2023-01-31' WHERE user_id = $1`;
+            let query;
+
+            if(monthly) {
+                query = `UPDATE identities SET subscription = subscription + INTERVAL '1 MONTH' WHERE user_id = $1`
+            }
+            else {
+                query = `UPDATE identities SET subscription = subscription + INTERVAL '1 YEAR' WHERE user_id = $1`
+            }
+
             const values = [userId];
 
             db.query(query, values, (err, res) => {
@@ -257,17 +275,16 @@ const addTrailingZero = (n) => {
 }
 
 const updateSubscriptionAndSendInvoice = (user_id, first_name, last_name, email, amount, response, monthly = true) => {
-    const currentDate = new Date();
+    let query;
 
     if(monthly) {
-        currentDate.setMonth(currentDate.getMonth() + 1);
+        query = `UPDATE identities SET subscription = subscription + INTERVAL '1 MONTH' WHERE user_id = $1`;
     }
     else {
-        currentDate.setFullYear(currentDate.getFullYear() + 1);
+        query = `UPDATE identities SET subscription = subscription + INTERVAL '1 YEAR' WHERE user_id = $1`;
     }
 
-    const query = `UPDATE identities SET subscription = $1 WHERE user_id = $2`;
-    const values = [`${currentDate.getFullYear()}-${addTrailingZero(currentDate.getMonth()+1)}-${addTrailingZero(currentDate.getDate())}`, user_id];
+    const values = [user_id];
 
     db.query(query, values, (err, res) => {
         if(res) {

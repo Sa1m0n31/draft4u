@@ -10,6 +10,7 @@ import {getIdentityById} from "../helpers/user";
 import {ContentContext} from "../App";
 import {getImageUrl} from "../helpers/others";
 import {TestClubContext} from "../wrappers/ClubWrapper";
+import {UserContext} from "../wrappers/UserWrapper";
 
 const PlayerVideoView = ({id, club, otherPlayerPage}) => {
     const [videos, setVideos] = useState([]);
@@ -18,6 +19,7 @@ const PlayerVideoView = ({id, club, otherPlayerPage}) => {
 
     const { content, language } = useContext(ContentContext);
     const { testClub } = useContext(TestClubContext);
+    const { days } = useContext(UserContext);
 
     let player = useRef(null);
     let carousel = useRef(null);
@@ -84,4 +86,3 @@ const PlayerVideoView = ({id, club, otherPlayerPage}) => {
 }
 
 export default PlayerVideoView;
-//

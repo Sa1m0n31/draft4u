@@ -12,6 +12,7 @@ import DeleteVideoModal from "./DeleteVideoModal";
 import threeDotsMenu from '../static/img/threeDotsMenu.svg'
 import {removePolishChars, unicodeToUTF8} from "../helpers/others";
 import {ContentContext} from "../App";
+import {UserContext} from "../wrappers/UserWrapper";
 
 const VideoUploadContent = () => {
     const [videos, setVideos] = useState([1, 2, 3, 4, 5]);
@@ -27,6 +28,7 @@ const VideoUploadContent = () => {
     const [loader, setLoader] = useState(true);
 
     const { content } = useContext(ContentContext);
+    const { days } = useContext(UserContext);
 
     useEffect(() => {
         if(content) {
@@ -125,51 +127,57 @@ const VideoUploadContent = () => {
             </h3>
         </header> : ""}
 
-        {videoNames?.length ? videoNames?.map((item, index) => {
+        {videoNames?.length ? videoNames?.map((item, index, array) => {
             let positionName = '';
             if(item === 'przyjecie') positionName = 'przyjęcie';
             else if(item === 'pelen mecz') positionName = 'pełen mecz';
             else positionName = item;
 
-            return <section className="videoTable__item" id={item} key={index} onClick={() => { setMobileMenuVisible(-1); openUploader(item); }}>
-                <section className="videoTable__item__miniature" onClick={(e) => { if(getVideoIndexByPlay(item) !== -1) e.stopPropagation(); setPlayVideo(getVideoIndexByPlay(item)); }}>
-                    {getVideoIndexByPlay(item) !== -1 ? <Player
-                        width={150}
-                        height={90}
-                        playsInline
-                        src={`${settings.API_URL}/video/get?url=/videos/${videos[getVideoIndexByPlay(item)].file_path}`}
-                    /> : <img className="videoTable__uploadIcon" src={uploadIcon} alt="wyslij" />}
+            if(days > 0 || index === array.length - 1) {
+                return <section className="videoTable__item" id={item} key={index} onClick={() => { setMobileMenuVisible(-1); openUploader(item); }}>
+                    <section className="videoTable__item__miniature" onClick={(e) => { if(getVideoIndexByPlay(item) !== -1) e.stopPropagation(); setPlayVideo(getVideoIndexByPlay(item)); }}>
+                        {getVideoIndexByPlay(item) !== -1 ? <Player
+                            width={150}
+                            height={90}
+                            playsInline
+                            src={`${settings.API_URL}/video/get?url=/videos/${videos[getVideoIndexByPlay(item)].file_path}`}
+                        /> : <img className="videoTable__uploadIcon" src={uploadIcon} alt="wyslij" />}
+                    </section>
+
+                    <h3 className="videoTable__item__element">
+                        {positionName}
+                    </h3>
+
+                    <h3 className="videoTable__item__element">
+                        {getVideoIndexByPlay(item) !== -1 ? videos[getVideoIndexByPlay(item)].date?.substr(0, 10) : ""}
+                    </h3>
+
+                    <section className="videoTable__mobileButtons d-mobile">
+                        <button className="videoTable__mobile__more" onClick={(e) => { e.stopPropagation(); setMobileMenuVisible(index); }}>
+                            <img className="videoTable__mobile__more__img" src={threeDotsMenu} alt="dzialania" />
+                        </button>
+                        {mobileMenuVisible === index ? <button className="videoTable__mobile__activity" onClick={(e) => { if(getVideoIndexByPlay(item) !== -1) {
+                            e.stopPropagation();
+                            deleteVideo(item);
+                        } }}>
+                            {getVideoIndexByPlay(item) !== -1 ? "Usuń" : "Dodaj"}
+                        </button> : ""}
+                    </section>
+
+                    <section className="videoTable__buttons d-desktop">
+                        {getVideoIndexByPlay(item) !== -1 ? <button className="videoTable__uploadBtn videoTable__uploadBtn--trash" onClick={(e) => { e.stopPropagation(); deleteVideo(item) }}>
+                            <img className="btn__img" src={trashIcon} alt="usun" />
+                        </button> : ""}
+                        <button className="videoTable__uploadBtn">
+                            <img className="btn__img" src={uploadBlackIcon} alt="dodaj-video" />
+                        </button>
+                    </section>
                 </section>
+            }
+            else {
+                return '';
+            }
 
-                <h3 className="videoTable__item__element">
-                    {positionName}
-                </h3>
-
-                <h3 className="videoTable__item__element">
-                    {getVideoIndexByPlay(item) !== -1 ? videos[getVideoIndexByPlay(item)].date?.substr(0, 10) : ""}
-                </h3>
-
-                <section className="videoTable__mobileButtons d-mobile">
-                    <button className="videoTable__mobile__more" onClick={(e) => { e.stopPropagation(); setMobileMenuVisible(index); }}>
-                        <img className="videoTable__mobile__more__img" src={threeDotsMenu} alt="dzialania" />
-                    </button>
-                    {mobileMenuVisible === index ? <button className="videoTable__mobile__activity" onClick={(e) => { if(getVideoIndexByPlay(item) !== -1) {
-                        e.stopPropagation();
-                        deleteVideo(item);
-                    } }}>
-                        {getVideoIndexByPlay(item) !== -1 ? "Usuń" : "Dodaj"}
-                    </button> : ""}
-                </section>
-
-                <section className="videoTable__buttons d-desktop">
-                    {getVideoIndexByPlay(item) !== -1 ? <button className="videoTable__uploadBtn videoTable__uploadBtn--trash" onClick={(e) => { e.stopPropagation(); deleteVideo(item) }}>
-                        <img className="btn__img" src={trashIcon} alt="usun" />
-                    </button> : ""}
-                    <button className="videoTable__uploadBtn">
-                        <img className="btn__img" src={uploadBlackIcon} alt="dodaj-video" />
-                    </button>
-                </section>
-            </section>
         }) : (!loader ? <h2 className="videoTable__error">
             {content.choose_position}
         </h2> : "")}

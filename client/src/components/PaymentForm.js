@@ -8,9 +8,9 @@ import {
 } from "@paypal/react-paypal-js";
 import payPalIcon from '../static/img/paypal.png'
 import {ContentContext} from "../App";
-import {getImageUrl} from "../helpers/others";
+import {addTrailingZero} from "../helpers/others";
 
-const PaymentForm = ({type, methods, coupons, userId, email}) => {
+const PaymentForm = ({type, methods, coupons, userId, email, daysToExpire}) => {
     const [{ options }, dispatch] = usePayPalScriptReducer();
 
     const { content, language } = useContext(ContentContext);
@@ -23,12 +23,38 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
     const [discount, setDiscount] = useState(0);
     const [amount, setAmount] = useState(29);
     const [cardMethodId, setCardMethodId] = useState(-1);
+    const [expireDate, setExpireDate] = useState(new Date());
 
     const [p24Sign, setP24Sign] = useState("");
 
     const arrow1 = useRef(null);
     const arrow2 = useRef(null);
     const arrow3 = useRef(null);
+
+    useEffect(() => {
+        if(daysToExpire > 0) {
+            setExpireDate(prevState => {
+                const today = prevState;
+                today.setDate(today.getDate() + daysToExpire);
+                return today;
+            });
+        }
+    }, [daysToExpire]);
+
+    useEffect(() => {
+        setExpireDate(prevState => {
+            const today = prevState;
+
+            if(subscriptionType === 0) {
+                today.setMonth(today.getMonth() + 1);
+            }
+            else {
+                today.setFullYear(today.getFullYear() + 1);
+            }
+
+            return today;
+        });
+    }, [subscriptionType]);
 
     useEffect(() => {
         if(methods?.length) {
@@ -114,15 +140,11 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
     }
 
     const payWithPayPal = () => {
-        addPayPalPayment(userId, amount, coupon)
+        addPayPalPayment(userId, amount, coupon, subscriptionType === 0)
             .then((res) => {
                 window.location = '/subskrypcja-przedluzona'
             });
     }
-
-    useEffect(() => {
-        console.log(cardMethodId);
-    }, [cardMethodId]);
 
     return <main className="payment siteWidthSuperNarrow">
         <h2 className="payment__header">
@@ -140,30 +162,35 @@ const PaymentForm = ({type, methods, coupons, userId, email}) => {
             </button>
         </div>
 
-        {subscriptionType === 0 ? <section className="paymentItemWrapper">
-            <button className="payment__item" onClick={() => { changePaymentItem(0); }}>
-                <h3 className="payment__item__header">
-                    {language === 'pl' ? 'Płatność subskrypcyjna' : 'Subscription payment'}
-                </h3>
-                <img className="payment__item__icon" src={przelewy24Icon} alt="przelewy-24" />
+        {/*<p className="payment__text">*/}
+        {/*    {language === 'pl' ? 'Opłacasz swoją subskrypcję do ' : 'Your subscription will be valid to '}*/}
+        {/*    {addTrailingZero(expireDate.getDate())}.{addTrailingZero(expireDate.getMonth() + 1)}.{expireDate.getFullYear()}*/}
+        {/*</p>*/}
 
-                <img ref={arrow1} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />
-            </button>
+        {/*{subscriptionType === 0 ? <section className="paymentItemWrapper">*/}
+        {/*    <button className="payment__item" onClick={() => { changePaymentItem(0); }}>*/}
+        {/*        <h3 className="payment__item__header">*/}
+        {/*            {language === 'pl' ? 'Płatność subskrypcyjna' : 'Subscription payment'}*/}
+        {/*        </h3>*/}
+        {/*        <img className="payment__item__icon" src={przelewy24Icon} alt="przelewy-24" />*/}
 
-            <section className={paymentItem === 0 ? "paymentMethod paymentMethod--1" : "hidden"}>
-                <main className="paymentMethod__content">
-                    <p>
-                        {language === 'pl' ? `Płatność zarejestrowaną kartą będzie naliczana co miesiąc. Anulowanie subskrypcji
-                       jest możliwe w każdej chwili po przejściu na podstronę Home i kliknięciu "Anuluj subskrypcję"` :
-                            'Card payment will be preceeded automatically every month. Subscription can be cancelled any time by visiting page Home and clicking "Cancel subscription"'}
-                    </p>
-                </main>
+        {/*        <img ref={arrow1} className="payment__item__iconAbsolute" src={arrowDown} alt="rozwin" />*/}
+        {/*    </button>*/}
 
-                <button className="button button--hover button--payment" onClick={() => { pay(true); }}>
-                    {language === 'pl' ? 'Zapłać' : 'Pay'}
-                </button>
-            </section>
-        </section> : ''}
+        {/*    <section className={paymentItem === 0 ? "paymentMethod paymentMethod--1" : "hidden"}>*/}
+        {/*        <main className="paymentMethod__content">*/}
+        {/*            <p>*/}
+        {/*                {language === 'pl' ? `Płatność zarejestrowaną kartą będzie naliczana co miesiąc. Anulowanie subskrypcji*/}
+        {/*               jest możliwe w każdej chwili po przejściu na podstronę Home i kliknięciu "Anuluj subskrypcję"` :*/}
+        {/*                    'Card payment will be preceeded automatically every month. Subscription can be cancelled any time by visiting page Home and clicking "Cancel subscription"'}*/}
+        {/*            </p>*/}
+        {/*        </main>*/}
+
+        {/*        <button className="button button--hover button--payment" onClick={() => { pay(true); }}>*/}
+        {/*            {language === 'pl' ? 'Zapłać' : 'Pay'}*/}
+        {/*        </button>*/}
+        {/*    </section>*/}
+        {/*</section> : ''}*/}
 
         <section className="paymentItemWrapper">
             <button className="payment__item" onClick={() => { changePaymentItem(1); }}>

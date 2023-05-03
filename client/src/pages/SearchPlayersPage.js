@@ -1,13 +1,11 @@
-import React, {useEffect, useState, useRef, useContext} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import Header from "../components/Header";
-import headerImg from "../static/img/header-wyszukiwarka.jpg";
 import Footer from "../components/Footer";
 import SingleFilter from "../components/SingleFilter";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
 import PlayerCard from "../components/PlayerCard";
 import {addToFavorites, deleteFromFavorites} from "../helpers/club";
-import {calculateAge, getImageUrl, isElementInArray} from "../helpers/others";
-import compareBtn from '../static/img/compare-btn.png'
+import {calculateAge, isElementInArray} from "../helpers/others";
 import settings from "../settings";
 import filterIcon from '../static/img/filter.svg'
 import rightArrow from '../static/img/right-arrow.svg'
@@ -18,6 +16,7 @@ import {ContentContext} from "../App";
 
 const SearchPlayersPage = ({club, favorites, playersProp}) => {
     const [players, setPlayers] = useState([]);
+    const [playersWithoutSubscription, setPlayersWithoutSubscription] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
 
     const [mobileFilters, setMobileFilters] = useState(false);
@@ -77,7 +76,18 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
                     &&((item.block_range >= blockRange[0] && item.block_range <= blockRange[1]) || !isBlockRangeOn)
                     &&((item.vertical_range >= verticalRange[0] && item.vertical_range <= verticalRange[1]) || !isVerticalRangeOn)
                     &&((item.salary_from >= salary[0] && item.salary_to <= salary[1]) || !isSalaryOn)
-        }));
+        })?.concat(playersWithoutSubscription.filter((item) => {
+            const playersAge = calculateAge(item.birthday);
+            return (item.sex === gender)
+                &&(isPlayerInFilteredGroup(item.position))
+                &&((playersAge >= age[0] && playersAge <= age[1]) || !isAgeOn)
+                &&((item.weight >= weight[0] && item.weight <= weight[1]) || !isWeightOn)
+                &&((item.height >= height[0] && item.height <= height[1]) || !isHeightOn)
+                &&((item.attack_range >= attackRange[0] && item.attack_range <= attackRange[1]) || !isAttackRangeOn)
+                &&((item.block_range >= blockRange[0] && item.block_range <= blockRange[1]) || !isBlockRangeOn)
+                &&((item.vertical_range >= verticalRange[0] && item.vertical_range <= verticalRange[1]) || !isVerticalRangeOn)
+                &&((item.salary_from >= salary[0] && item.salary_to <= salary[1]) || !isSalaryOn)
+        })));
     }
 
     useEffect(() => {
@@ -97,14 +107,23 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
     }, [filteredPlayers]);
 
     useEffect(() => {
-        setPlayers(playersProp);
-        setFilteredPlayers(playersProp);
+        const activePlayers = playersProp.filter((item) => {
+            return new Date() <= new Date(item.subscription);
+        });
+        const notActivePlayers = playersProp.filter((item) => {
+            if(!item.subscription) return true;
+            return new Date() > new Date(item.subscription);
+        });
+
+        setPlayersWithoutSubscription(notActivePlayers);
+        setPlayers(activePlayers.concat(notActivePlayers));
+        setFilteredPlayers(activePlayers.concat(notActivePlayers));
     }, [playersProp]);
 
     useEffect(() => {
         const shuffledPlayers = orderPlayersByInfo(shufflePlayers(players));
-        setFilteredPlayers(shuffledPlayers);
-    }, [players]);
+        setFilteredPlayers(shuffledPlayers.concat(playersWithoutSubscription));
+    }, [players, playersWithoutSubscription]);
 
     const orderPlayersByInfo = (players) => {
         return players.sort((a, b) => {

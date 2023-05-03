@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useContext} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {Splide, SplideSlide} from "@splidejs/react-splide";
@@ -12,6 +12,7 @@ import StuffCard from "./StuffCard";
 
 const SearchStuffPage = ({club, favorites, playersProp}) => {
     const [players, setPlayers] = useState([]);
+    const [playersWithoutSubscription, setPlayersWithoutSubscription] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
 
     const [mobileFilters, setMobileFilters] = useState(false);
@@ -34,7 +35,9 @@ const SearchStuffPage = ({club, favorites, playersProp}) => {
         /* Filter players */
         setFilteredPlayers(players?.filter((item) => {
             return (isPlayerInFilteredGroup(item.position));
-        }));
+        })?.concat(playersWithoutSubscription.filter((item) => {
+            return (isPlayerInFilteredGroup(item.position));
+        })));
     }
 
     useEffect(() => {
@@ -47,14 +50,23 @@ const SearchStuffPage = ({club, favorites, playersProp}) => {
     }, [filteredPlayers]);
 
     useEffect(() => {
-        setPlayers(playersProp);
-        setFilteredPlayers(playersProp);
+        const activePlayers = playersProp.filter((item) => {
+            return new Date() <= new Date(item.subscription);
+        });
+        const notActivePlayers = playersProp.filter((item) => {
+            if(!item.subscription) return true;
+            return new Date() > new Date(item.subscription);
+        });
+
+        setPlayersWithoutSubscription(notActivePlayers);
+        setPlayers(activePlayers.concat(notActivePlayers));
+        setFilteredPlayers(activePlayers.concat(notActivePlayers));
     }, [playersProp]);
 
     useEffect(() => {
         const shuffledPlayers = orderPlayersByInfo(shufflePlayers(players));
-        setFilteredPlayers(shuffledPlayers);
-    }, [players]);
+        setFilteredPlayers(shuffledPlayers.concat(playersWithoutSubscription));
+    }, [players, playersWithoutSubscription]);
 
     const orderPlayersByInfo = (players) => {
         return players.sort((a, b) => {
@@ -63,7 +75,13 @@ const SearchStuffPage = ({club, favorites, playersProp}) => {
             else if(a.file_path === null) return 1;
             else if(b.file_path === null) return -1;
             else return -1;
-        });
+        }).concat(playersWithoutSubscription.sort((a, b) => {
+            if(a.position === null) return 1;
+            else if(b.position === null) return -1;
+            else if(a.file_path === null) return 1;
+            else if(b.file_path === null) return -1;
+            else return -1;
+        }));
     }
 
     const shufflePlayers = (array) => {

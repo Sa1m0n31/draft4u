@@ -3527,6 +3527,12 @@ input::-webkit-inner-spin-button {
     margin-bottom: 50px;
 }
 
+.payment__text {
+    margin: 20px auto 40px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
 .paymentItemWrapper {
     background: #201E1B;
     border: 1px solid var(--grey);
