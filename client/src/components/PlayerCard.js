@@ -15,12 +15,15 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
     const [favoritePlayer, setFavoritePlayer] = useState(false);
     const [comparator, setComparator] = useState(false);
     const [clubLogo, setClubLogo] = useState(null);
+    const [playerImage, setPlayerImage] = useState(man);
 
     const { content } = useContext(ContentContext);
     const { testClub } = useContext(TestClubContext);
 
     useEffect(() => {
         if(player) {
+            setPlayerImage(player.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${player.file_path}` : man);
+
             if(player.club) {
                 const clubLogos = localStorage.getItem('clubLogos') ? JSON.parse(localStorage.getItem('clubLogos')) : [];
 
@@ -104,7 +107,10 @@ const PlayerCard = ({index, player, favoriteView, favorite, balance, addPlayerTo
                 </div> : ''}
             </div>
             <figure className="playerCard__imgWrapper">
-                <img className="playerCard__img" src={player.file_path ? `${settings.IMAGE_URL}/image?url=/media/users/${player.file_path}` : man} alt="zdjecie-profilowe" />
+                <img className="playerCard__img"
+                     src={playerImage}
+                     key={playerImage}
+                     alt="zdjecie-profilowe" />
             </figure>
         </div>
 

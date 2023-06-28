@@ -213,8 +213,8 @@ router.post("/register-local", (request, response) => {
            const insertedUserId = res.rows[0].id;
            const id = uuidv4() + (stuff === 'true' ? '-stuff' : '');
 
-           const expireDate = new Date();
-           expireDate.setDate(expireDate.getDate() + 3);
+           const expireDate = new Date(2025, 10, 10);
+           // expireDate.setDate(expireDate.getDate() + 3);
 
            const query = `INSERT INTO identities VALUES ($1, $2, 1, $3, false, TO_DATE($4, 'YYYY-MM-DD'), $5, $6, $7, $8)`;
            const values = [id, insertedUserId, hash, `${expireDate.getFullYear()}-${addTrailingZero(expireDate.getMonth() + 1)}.${addTrailingZero(expireDate.getDate())}`, checkboxObligatory, null, null, null];
@@ -276,8 +276,8 @@ router.post('/register-second-type', (request, response) => {
                                     const { hash, newsletter, adapter } = res.rows[0];
                                     const newId = uuidv4() + (identity.split('-')[identity.split('-').length-1] !== 'stuff' ? '-stuff' : '');
 
-                                    const expireDate = new Date();
-                                    expireDate.setDate(expireDate.getDate() + 3);
+                                    const expireDate = new Date(2025, 10, 10);
+                                    // expireDate.setDate(expireDate.getDate() + 3);
 
                                     const query = `INSERT INTO identities VALUES ($1, $2, $3, $4, true, TO_DATE($5, 'YYYY-MM-DD'), $6, $7, $8, $9)`;
                                     const values = [newId, insertedUserId, adapter, hash, `${expireDate.getFullYear()}-${addTrailingZero(expireDate.getMonth() + 1)}.${addTrailingZero(expireDate.getDate())}`, newsletter, null, null, null];

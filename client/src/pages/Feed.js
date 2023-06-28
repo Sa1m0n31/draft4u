@@ -205,12 +205,12 @@ const Feed = () => {
     }
 
     return <div className="container container--light">
-        {days <= 0 ? <h3 className="expireSubscriptionInfo">
-            {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}
-            <a href="/zaplac">
-                {language === 'pl' ? 'Zaplac teraz' : 'Pay now'}
-            </a>
-        </h3> : ''}
+        {/*{days <= 0 ? <h3 className="expireSubscriptionInfo">*/}
+        {/*    {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}*/}
+        {/*    <a href="/zaplac">*/}
+        {/*        {language === 'pl' ? 'Zaplac teraz' : 'Pay now'}*/}
+        {/*    </a>*/}
+        {/*</h3> : ''}*/}
 
         <Header loggedIn={loggedIn} player={isPlayer} club={isClub}
                 menu="dark"

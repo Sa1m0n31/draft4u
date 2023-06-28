@@ -29,11 +29,11 @@ const PaymentPage = ({user, isLocal, days}) => {
                 menu="dark"
                 profileImage={user.file_path}
                 isLocal={isLocal} />
-        <PaymentForm methods={paymentMethods}
-                     coupons={coupons}
-                     userId={user.id}
-                     daysToExpire={days}
-                     email={user.email} />
+        {/*<PaymentForm methods={paymentMethods}*/}
+        {/*             coupons={coupons}*/}
+        {/*             userId={user.id}*/}
+        {/*             daysToExpire={days}*/}
+        {/*             email={user.email} />*/}
         <Footer border={true} />
     </div>
 }

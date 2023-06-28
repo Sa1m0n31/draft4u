@@ -134,11 +134,11 @@ function App() {
             <Route path="/dodaj-video">
                 <UserWrapper page={4} />
             </Route>
-            <PayPalScriptProvider options={payPalOptions}>
-                <Route path="/zaplac">
-                    <UserWrapper page={5} />
-                </Route>
-            </PayPalScriptProvider>
+            {/*<PayPalScriptProvider options={payPalOptions}>*/}
+            {/*    <Route path="/zaplac">*/}
+            {/*        <UserWrapper page={5} />*/}
+            {/*    </Route>*/}
+            {/*</PayPalScriptProvider>*/}
             <Route path="/subskrypcja-przedluzona">
                 <UserWrapper page={6} />
             </Route>

@@ -333,6 +333,10 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
         }
     }
 
+    useEffect(() => {
+        console.log(filteredPlayers);
+    }, [filteredPlayers]);
+
     return <div className="container container--dark">
         <Header loggedIn={true} club={true} player={false} menu="light" theme="dark" profileImage={club.file_path} />
 
@@ -363,14 +367,14 @@ const SearchPlayersPage = ({club, favorites, playersProp}) => {
             <section className="searchFilters__filters">
                 <SingleFilter mobile={true} value={sex} changeValue={setSex} min={0} max={1} step={1} width="25%" header={content.map_gender} />
                 <SingleFilter mobile={true} value={age} changeValue={setAge} min={16} max={50} step={1} width="65%" header={content.age} />
-                <SingleFilter mobile={true} value={weight} changeValue={setWeight} min={40} max={150} step={1} width="100%" header={content.player_parameter12} />
-                <SingleFilter mobile={true} value={height} changeValue={setHeight} min={140} max={250} step={1} width="100%" header={content.player_parameter11} />
+                <SingleFilter mobile={true} value={weight} changeValue={setWeight} min={40} max={150} step={1} width="100%" header={content.player_parameter_12} />
+                <SingleFilter mobile={true} value={height} changeValue={setHeight} min={140} max={250} step={1} width="100%" header={content.player_parameter_11} />
 
-                <SingleFilter mobile={true} value={attackRange} changeValue={setAttackRange} min={150} max={350} step={1} width="100%" header={content.player_parameter8} />
-                <SingleFilter mobile={true} value={verticalRange} changeValue={setVerticalRange} min={20} max={130} step={1} width="100%" header={content.player_parameter9} />
-                <SingleFilter mobile={true} value={blockRange} changeValue={setBlockRange} min={150} max={350} step={1} width="100%" header={content.player_parameter10} />
+                <SingleFilter mobile={true} value={attackRange} changeValue={setAttackRange} min={150} max={350} step={1} width="100%" header={content.player_parameter_8} />
+                <SingleFilter mobile={true} value={verticalRange} changeValue={setVerticalRange} min={20} max={130} step={1} width="100%" header={content.player_parameter_9} />
+                <SingleFilter mobile={true} value={blockRange} changeValue={setBlockRange} min={150} max={350} step={1} width="100%" header={content.player_parameter_10} />
 
-                <SingleFilter mobile={true} value={salary} changeValue={setSalary} min={1000} max={30000} step={1} width="100%" header={content.player_parameter7} />
+                <SingleFilter mobile={true} value={salary} changeValue={setSalary} min={1000} max={30000} step={1} width="100%" header={content.player_parameter_7} />
             </section>
             <section className="searchFilters__position searchFilters__position--mobile">
                 <span className="searchFilters__position__header">

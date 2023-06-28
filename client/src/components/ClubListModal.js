@@ -77,7 +77,7 @@ const ClubListModal = ({closeModal, userId}) => {
                 <h4 className="modal__inner__header modal__inner__header--clubList">
                     {language === 'pl' ? 'Możesz wysłać trzy CV miesięcznie do wybranych klubów. Po kliknięciu "Wyślij" klub otrzyma ' +
                         '                    powiadomienie oraz link do Twojego profilu.' : "You can send max three CV monthly. After clicking \"Send\" club will receive notification and link to your profile."}
-                    {userNotifications?.length >= 3 ? (language === 'pl' ? ' W tym miesiącu wykorzystałeś już limit wysłanych CV do klubów' : ' You already use your monthly limit') : ''}
+                    {userNotifications?.length >= 7 ? (language === 'pl' ? ' W tym miesiącu wykorzystałeś już limit wysłanych CV do klubów' : ' You already use your monthly limit') : ''}
                 </h4>
 
                 <div className="modal__inner__cv">
@@ -91,7 +91,7 @@ const ClubListModal = ({closeModal, userId}) => {
                                 {userNotifications?.includes(item.id) ? <h6 className="modal__club__sendInfo goldman">
                                     {language === 'pl' ? 'Wysłano' : 'CV has been send'}
                                 </h6> : <button className="btn btn--gradient goldman center btn--hover modal__club__btn"
-                                                disabled={userNotifications?.length >= 3}
+                                                disabled={userNotifications?.length >= 7}
                                                 onClick={() => { sendCvToClub(item.id); }}>
                                     {language === 'pl' ? 'Wyślij' : 'Send'}
                                 </button>}

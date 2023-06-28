@@ -129,22 +129,22 @@ const LandingPage = () => {
             </div>
         </div>
 
-        <div className="landingPage__numbers center">
-            <a className="player__option" href="/zaloz-konto">
-                <h3 className="player__option__name white">
-                    {content.player_zone_buy_frame1}
-                </h3>
-                <h4 className="player__option__price">
-                    29
-                    <span className="player__option__currency">
-                                PLN
-                            </span>
-                </h4>
-                <div className="button button--hover button--buyNow">
-                    {language === 'pl' ? 'Kup teraz' : 'Buy now'}
-                </div>
-            </a>
-        </div>
+        {/*<div className="landingPage__numbers center">*/}
+        {/*    <a className="player__option" href="/zaloz-konto">*/}
+        {/*        <h3 className="player__option__name white">*/}
+        {/*            {content.player_zone_buy_frame1}*/}
+        {/*        </h3>*/}
+        {/*        <h4 className="player__option__price">*/}
+        {/*            29*/}
+        {/*            <span className="player__option__currency">*/}
+        {/*                        PLN*/}
+        {/*                    </span>*/}
+        {/*        </h4>*/}
+        {/*        <div className="button button--hover button--buyNow">*/}
+        {/*            {language === 'pl' ? 'Kup teraz' : 'Buy now'}*/}
+        {/*        </div>*/}
+        {/*    </a>*/}
+        {/*</div>*/}
 
         <ClubSlider />
     </main>

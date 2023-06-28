@@ -84,7 +84,8 @@ const UserWrapper = ({page}) => {
                                             setRenderSwitch(<VideoUploadPage user={user} isLocal={isLocal} />);
                                             break;
                                         case 5:
-                                            setRenderSwitch(<PaymentPage user={user} isLocal={isLocal} days={days} />);
+                                            setRenderSwitch(<VideoUploadPage user={user} isLocal={isLocal} />);
+                                            // setRenderSwitch(<PaymentPage user={user} isLocal={isLocal} days={days} />);
                                             break;
                                         case 6:
                                             setRenderSwitch(<PaymentReturnPage user={user} isLocal={isLocal} />);
@@ -147,12 +148,12 @@ const UserWrapper = ({page}) => {
                 {renderSwitch}
             </UserContext.Provider>
 
-            {days <= 0 ? <h3 className="expireSubscriptionInfo">
-                {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}
-                <a href="/zaplac">
-                    {language === 'pl' ? 'Zaplac teraz' : 'Pay now'}
-                </a>
-            </h3> : ''}
+            {/*{days <= 0 ? <h3 className="expireSubscriptionInfo">*/}
+            {/*    {language === 'pl' ? 'Twoja subskrypcja wygasła i nie jesteś widoczny dla klubów. ' : 'Your subscription expired and you are not visible for clubs '}*/}
+            {/*    <a href="/zaplac">*/}
+            {/*        {language === 'pl' ? 'Zaplac teraz' : 'Pay now'}*/}
+            {/*    </a>*/}
+            {/*</h3> : ''}*/}
         </> : <LoadingPage />}
     </>
 }
